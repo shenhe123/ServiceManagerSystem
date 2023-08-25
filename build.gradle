@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "1.5.31"
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+    }
+}
+
+/**
+ * 工程中所有的module 都将能使用common_config 中的配置
+ */
+subprojects {
+
+    apply from: "${rootProject.rootDir}/common_config.gradle"
+
+    dependencies {
+
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://dl.google.com/dl/android/maven2/' }
+        mavenCentral()
+        google()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

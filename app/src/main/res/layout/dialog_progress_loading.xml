@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="90dp"
+    android:minHeight="90dp"
+    app:cardCornerRadius="7dp"
+    android:gravity="center"
+    android:background="@drawable/loading_dialog_bg"
+    android:layout_height="wrap_content">
+
+
+    <!--    <com.airbnb.lottie.LottieAnimationView-->
+    <!--        app:lottie_rawRes="@raw/loading_logo"-->
+    <!--        android:layout_width="90dp"-->
+    <!--        app:lottie_autoPlay="true"-->
+    <!--        app:lottie_loop="true"-->
+    <!--        android:layout_height="90dp"/>-->
+
+    <ImageView
+        android:id="@+id/iv_anim"
+        android:layout_width="90dp"
+        android:layout_height="90dp"/>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progress_bar"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tipTextView"
+        android:layout_marginTop="14dp"
+        android:textColor="@color/x_text_03"
+        android:text="loading"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content" />
+
+
+</com.google.android.material.card.MaterialCardView>
