@@ -5,7 +5,9 @@
     <string name="app_login">登录</string>
     <string name="app_search">搜索</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_work_order">派工单</string>
+    <string name="title_onsite_options">现场操作</string>
+    <string name="title_travel_report">出差报告</string>
+    <string name="title_account_center">我的</string>
+    <string name="title_report">报表</string>
 </resources>

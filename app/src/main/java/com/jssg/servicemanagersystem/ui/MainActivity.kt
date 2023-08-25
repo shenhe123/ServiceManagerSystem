@@ -41,7 +41,9 @@ class MainActivity : BaseActivity() {
             when(it.itemId) {
                 R.id.navigation_dashboard -> binding.viewPager.currentItem = 0
                 R.id.navigation_home -> binding.viewPager.currentItem = 1
-                R.id.navigation_notifications -> binding.viewPager.currentItem = 2
+                R.id.navigation_travel_report -> binding.viewPager.currentItem = 2
+                R.id.navigation_report -> binding.viewPager.currentItem = 3
+                R.id.navigation_mine -> binding.viewPager.currentItem = 4
             }
 
             true

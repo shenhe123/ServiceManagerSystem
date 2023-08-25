@@ -4,7 +4,6 @@ import android.os.Bundle
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActLoginLayoutBinding
 import com.jssg.servicemanagersystem.ui.MainActivity
-import com.jssg.servicemanagersystem.ui.onsite.OnsiteOptionsActivity
 
 /**
  * ServiceManagerSystem
