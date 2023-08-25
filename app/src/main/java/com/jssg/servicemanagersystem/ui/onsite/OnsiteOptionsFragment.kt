@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.dashboard
+package com.jssg.servicemanagersystem.ui.onsite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.databinding.FragmentOnsiteOptionsBinding
-import com.jssg.servicemanagersystem.ui.onsite.OnsiteOptionsAdapter
-import com.jssg.servicemanagersystem.ui.onsite.OrderHandleActivity
 
 class OnsiteOptionsFragment : BaseFragment() {
 

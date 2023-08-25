@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.dashboard
+package com.jssg.servicemanagersystem.ui.onsite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

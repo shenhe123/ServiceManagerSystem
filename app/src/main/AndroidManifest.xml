@@ -33,9 +33,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.onsite.OnsiteOptionsActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.onsite.OrderHandleActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
