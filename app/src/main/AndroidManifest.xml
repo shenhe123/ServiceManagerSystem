@@ -13,6 +13,10 @@
         android:theme="@style/Theme.ServiceManagerSystem"
         tools:targetApi="31">
         <activity
+            android:name=".ui.onsite.OrderCheckActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:launchMode="singleTask"
@@ -27,11 +31,10 @@
         <activity
             android:name=".ui.onsite.OnsiteOptionsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.onsite.OrderHandleActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

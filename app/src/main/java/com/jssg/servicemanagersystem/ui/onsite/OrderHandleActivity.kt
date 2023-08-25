@@ -17,7 +17,9 @@ class OrderHandleActivity : BaseActivity() {
         setSupportActionBar(binding.toolBar)
         showBack()
 
-
+        binding.mbtCheckOrder.setOnClickListener {
+            OrderCheckActivity.goActivity(this)
+        }
     }
 
     companion object {

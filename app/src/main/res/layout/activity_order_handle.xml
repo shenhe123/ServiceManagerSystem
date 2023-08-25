@@ -283,6 +283,7 @@
     </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbt_check_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="去排查"
