@@ -19,12 +19,14 @@
             <TextView
                 android:id="@+id/tv_apply_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                style="@style/SubTitleStyle"/>
 
             <TextView
                 android:id="@+id/tv_apply_dept"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                style="@style/SubTitleStyle"
                 android:gravity="end"
                 android:layout_height="wrap_content"/>
 
@@ -40,14 +42,16 @@
             <TextView
                 android:id="@+id/tv_apply_factory"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                style="@style/SubTitleStyle"/>
 
             <TextView
                 android:id="@+id/tv_apply_date"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                style="@style/SubTitleStyle"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

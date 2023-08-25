@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.onsite.OrderHandleActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        app:navigationIcon="@drawable/svg_back"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ToolBarTitleStyle"
+            android:text="工单处理"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mcd_apply_info_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tool_bar"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_apply_factory"/>
+    
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TitleStyle"
+        android:elevation="2dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintTop_toTopOf="@id/mcd_apply_info_bg"
+        app:layout_constraintStart_toStartOf="@id/mcd_apply_info_bg"
+        android:text="申请人信息:"/>
+
+    <View
+        android:id="@+id/v_title_line"
+        style="@style/xDividerMarge12DP"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="0dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/mcd_apply_info_bg"
+        app:layout_constraintEnd_toEndOf="@id/mcd_apply_info_bg"/>
+
+    <TextView
+        android:id="@+id/tv_apply_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/SubTitleStyle"
+        android:text="申请人：shenhe"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/v_title_line"
+        app:layout_constraintStart_toStartOf="@id/v_title_line"
+        android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/tv_apply_dept"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        style="@style/SubTitleStyle"
+        android:gravity="end"
+        android:elevation="2dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tv_apply_name"
+        app:layout_constraintEnd_toEndOf="@id/mcd_apply_info_bg"
+        android:layout_marginEnd="12dp"
+        android:text="申请部门：销售部"/>
+
+    <TextView
+        android:id="@+id/tv_apply_factory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/SubTitleStyle"
+        android:text="申请工厂：工厂A"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_apply_name"
+        app:layout_constraintStart_toStartOf="@id/v_title_line"
+        android:layout_marginTop="12dp"
+        android:paddingBottom="12dp"/>
+
+    <TextView
+        android:id="@+id/tv_apply_date"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        style="@style/SubTitleStyle"
+        android:gravity="end"
+        android:elevation="2dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tv_apply_factory"
+        app:layout_constraintEnd_toEndOf="@id/mcd_apply_info_bg"
+        android:layout_marginEnd="12dp"
+        android:text="申请日期：2023-08-25"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_service_info_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/mcd_apply_info_bg"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/layout_service_desc"/>
+
+    <TextView
+        android:id="@+id/tv_service_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TitleStyle"
+        android:elevation="2dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintTop_toTopOf="@id/card_service_info_bg"
+        app:layout_constraintStart_toStartOf="@id/card_service_info_bg"
+        android:text="服务信息:"/>
+
+    <View
+        android:id="@+id/v_service_title_line"
+        style="@style/xDividerMarge12DP"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="0dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_service_title"
+        app:layout_constraintStart_toStartOf="@id/card_service_info_bg"
+        app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_client_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/v_service_title_line"
+        app:layout_constraintStart_toStartOf="@id/v_service_title_line"
+        app:layout_constraintEnd_toEndOf="@id/card_service_info_bg">
+
+        <TextView
+            android:id="@+id/tv_client_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SubTitleStyle"
+            android:text="服务客户名称：sSSS"/>
+
+        <TextView
+            android:id="@+id/tv_service_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            style="@style/SubTitleStyle"
+            android:gravity="end"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="服务人员名称：AAA"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_service_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/layout_client_name"
+        app:layout_constraintStart_toStartOf="@id/layout_client_name"
+        app:layout_constraintEnd_toEndOf="@id/card_service_info_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SubTitleStyle"
+            android:text="联系方式：12344444444"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            style="@style/SubTitleStyle"
+            android:gravity="end"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="排查数量：10"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_service_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/layout_service_phone"
+        app:layout_constraintStart_toStartOf="@id/layout_service_phone"
+        app:layout_constraintEnd_toEndOf="@id/card_service_info_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SubTitleStyle"
+            android:text="服务单价：1234"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            style="@style/SubTitleStyle"
+            android:gravity="end"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="预估服务周期：10"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_service_total"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/layout_service_price"
+        app:layout_constraintStart_toStartOf="@id/layout_service_price"
+        app:layout_constraintEnd_toEndOf="@id/card_service_info_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SubTitleStyle"
+            android:text="预估总费用：12344"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            style="@style/SubTitleStyle"
+            android:gravity="end"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="服务地点：北京市四季青"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <RelativeLayout
+        android:id="@+id/layout_service_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/layout_service_total"
+        app:layout_constraintStart_toStartOf="@id/layout_service_total"
+        app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@+id/tv_service_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SubTitleStyle"
+            android:text="服务内容描述：" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/trans"
+            android:layout_toEndOf="@id/tv_service_desc"
+            android:layout_marginEnd="12dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="8"
+                android:maxLines="10"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="去排查"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,7 @@ class OnsiteOptionsActivity: BaseActivity() {
         binding.recyclerView.adapter = adapter
 
         adapter.setOnItemClickListener { _, _, position ->
-
+            OrderHandleActivity.goActivity(this)
         }
 
         initViewModel()
