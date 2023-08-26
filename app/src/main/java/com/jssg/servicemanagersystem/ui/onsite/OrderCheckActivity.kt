@@ -38,6 +38,32 @@ class OrderCheckActivity : BaseActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
+        initViewModel()
+
+        getLocationInfo()
+
+        addListener()
+    }
+
+    private fun addListener() {
+        binding.ivAddBadPhoto.setOnClickListener {
+            SelectorPictureDialog.newInstance(0).show(supportFragmentManager, "selector_picture_dialog")
+        }
+
+        binding.ivAddBoxPhoto.setOnClickListener {
+            SelectorPictureDialog.newInstance(1).show(supportFragmentManager, "selector_picture_dialog")
+        }
+
+        binding.ivAddBatchInfoPhoto.setOnClickListener {
+            SelectorPictureDialog.newInstance(2).show(supportFragmentManager, "selector_picture_dialog")
+        }
+
+        binding.ivAddReworkPhoto.setOnClickListener {
+            SelectorPictureDialog.newInstance(3).show(supportFragmentManager, "selector_picture_dialog")
+        }
+    }
+
+    private fun initViewModel() {
         selectorPictureViewModel = ViewModelProvider(this).get(SelectorPictureViewModel::class.java)
 
         selectorPictureViewModel.badPicturesLiveData.observe(this) { pictures ->
@@ -61,7 +87,71 @@ class OrderCheckActivity : BaseActivity() {
             binding.ivAddBadPhoto.isVisible = binding.xflBadPicture.childCount < 3
         }
 
+        selectorPictureViewModel.boxPicturesLiveData.observe(this) { pictures ->
+            if (binding.xflBoxPicture.childCount >= 3) {
+                ToastUtils.showToast("外箱标签图片最多只能选择3张！")
+                return@observe
+            }
 
+            val availablePic: List<LocalMedia?> = if (pictures.size >= 3) {
+                pictures.take(3)
+            } else {
+                pictures
+            }
+
+            availablePic.forEach { localMedia ->
+                localMedia?.let {
+                    initImageWidget(it.availablePath, binding.xflBoxPicture, binding.ivAddBoxPhoto)
+                }
+            }
+
+            binding.ivAddBoxPhoto.isVisible = binding.xflBoxPicture.childCount < 3
+        }
+
+        selectorPictureViewModel.batchInfoPicturesLiveData.observe(this) { pictures ->
+            if (binding.xflBatchInfoPicture.childCount >= 3) {
+                ToastUtils.showToast("外箱标签图片最多只能选择3张！")
+                return@observe
+            }
+
+            val availablePic: List<LocalMedia?> = if (pictures.size >= 3) {
+                pictures.take(3)
+            } else {
+                pictures
+            }
+
+            availablePic.forEach { localMedia ->
+                localMedia?.let {
+                    initImageWidget(it.availablePath, binding.xflBatchInfoPicture, binding.ivAddBatchInfoPhoto)
+                }
+            }
+
+            binding.ivAddBatchInfoPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3
+        }
+
+        selectorPictureViewModel.reworkPicturesLiveData.observe(this) { pictures ->
+            if (binding.xflReworkPicture.childCount >= 5) {
+                ToastUtils.showToast("返回数量图片最多只能选择5张！")
+                return@observe
+            }
+
+            val availablePic: List<LocalMedia?> = if (pictures.size >= 5) {
+                pictures.take(5)
+            } else {
+                pictures
+            }
+
+            availablePic.forEach { localMedia ->
+                localMedia?.let {
+                    initImageWidget(it.availablePath, binding.xflReworkPicture, binding.ivAddReworkPhoto)
+                }
+            }
+
+            binding.ivAddReworkPhoto.isVisible = binding.xflReworkPicture.childCount < 5
+        }
+    }
+
+    private fun getLocationInfo() {
         val permissionHelper = PermissionHelper.Builder().with(this).build()
         permissionHelper.request("需要位置权限", arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
         ) { granted, isAlwaysDenied ->
@@ -80,10 +170,6 @@ class OrderCheckActivity : BaseActivity() {
                 locationClient.start()
             }
         }
-
-        binding.ivAddBadPhoto.setOnClickListener {
-            SelectorPictureDialog.newInstance().show(supportFragmentManager, "selector_picture_dialog")
-        }
     }
 
     private fun initImageWidget(path: String, parent: ViewGroup, addView: ImageView) {
@@ -98,9 +184,7 @@ class OrderCheckActivity : BaseActivity() {
                 .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
                     override fun onConfrimClick() {
                         parent.removeView(it)
-                        if (parent.childCount == 0) {
-                            addView.isVisible = true
-                        }
+                        addView.isVisible = true
                     }
 
                 })

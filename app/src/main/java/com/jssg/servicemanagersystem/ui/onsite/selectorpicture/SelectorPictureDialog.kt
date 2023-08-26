@@ -2,6 +2,7 @@ package com.jssg.servicemanagersystem.ui.onsite.selectorpicture
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ import net.arvin.permissionhelper.PermissionHelper
  */
 class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
 
+    private var type: Int? = 0
     private lateinit var selectorPictureViewModel: SelectorPictureViewModel
     private lateinit var binding: DialogSelectorPictureBinding
 
@@ -35,6 +37,11 @@ class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
         binding = DialogSelectorPictureBinding.inflate(layoutInflater)
         selectorPictureViewModel = ViewModelProvider(requireActivity()).get(SelectorPictureViewModel::class.java)
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        type = arguments?.getInt("type", 0)
     }
 
     @SuppressLint("CheckResult")
@@ -51,7 +58,7 @@ class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
                         .openCamera(SelectMimeType.ofImage())
                         .forResult(object : OnResultCallbackListener<LocalMedia?> {
                             override fun onResult(result: ArrayList<LocalMedia?>) {
-                                selectorPictureViewModel.badPicturesLiveData.value = result
+                                updateLiveData(result)
                                 dismiss()
                             }
                             override fun onCancel() {
@@ -71,7 +78,7 @@ class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
                         .openSystemGallery(SelectMimeType.ofImage())
                         .forSystemResult(object : OnResultCallbackListener<LocalMedia?> {
                             override fun onResult(result: ArrayList<LocalMedia?>) {
-                                selectorPictureViewModel.badPicturesLiveData.value = result
+                                updateLiveData(result)
                                 dismiss()
                             }
                             override fun onCancel() {
@@ -85,10 +92,21 @@ class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
 
     }
 
-    companion object {
-        fun newInstance(): SelectorPictureDialog {
-            val args = Bundle()
+    private fun updateLiveData(result: ArrayList<LocalMedia?>) {
+        type?.let {
+            when(it) {
+                0 -> selectorPictureViewModel.badPicturesLiveData.value = result
+                1 -> selectorPictureViewModel.boxPicturesLiveData.value = result
+                2 -> selectorPictureViewModel.batchInfoPicturesLiveData.value = result
+                3 -> selectorPictureViewModel.reworkPicturesLiveData.value = result
+            }
+        }
+    }
 
+    companion object {
+        fun newInstance(type: Int): SelectorPictureDialog {
+            val args = Bundle()
+            args.putInt("type", type)
             val fragment = SelectorPictureDialog()
             fragment.arguments = args
             return fragment

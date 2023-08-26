@@ -276,7 +276,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="8"
-                android:maxLines="10"/>
+                android:maxLines="10"
+                android:gravity="start|top"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

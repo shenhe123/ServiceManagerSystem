@@ -103,7 +103,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -120,7 +121,8 @@
                 <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_box_picture"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:flChildSpacing="12dp"/>
 
                 <ImageView
                     android:id="@+id/iv_add_box_photo"
@@ -151,7 +153,8 @@
                 <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_batch_info_picture"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:flChildSpacing="12dp"/>
 
                 <ImageView
                     android:id="@+id/iv_add_batch_info_photo"
@@ -243,7 +246,8 @@
                 <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_rework_picture"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:flChildSpacing="12dp"/>
 
                 <ImageView
                     android:id="@+id/iv_add_rework_photo"

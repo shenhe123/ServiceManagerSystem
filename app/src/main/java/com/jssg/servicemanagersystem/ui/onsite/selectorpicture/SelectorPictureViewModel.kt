@@ -13,5 +13,14 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
     //不良图片
     val badPicturesLiveData = MutableLiveData<ArrayList<LocalMedia?>>()
 
+    //外箱标签图片
+    val boxPicturesLiveData = MutableLiveData<ArrayList<LocalMedia?>>()
+
+    //批次信息图片
+    val batchInfoPicturesLiveData = MutableLiveData<ArrayList<LocalMedia?>>()
+
+    //返工图片
+    val reworkPicturesLiveData = MutableLiveData<ArrayList<LocalMedia?>>()
+
 
 }
