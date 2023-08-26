@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityMainBinding
+import com.jssg.servicemanagersystem.ui.accountcenter.AccountFragment
 import com.jssg.servicemanagersystem.ui.onsite.OnsiteOptionsFragment
 import com.jssg.servicemanagersystem.ui.home.HomeFragment
 
@@ -58,7 +59,7 @@ class MainActivity : BaseActivity() {
                 1 -> return HomeFragment.newInstance()
                 2 -> return HomeFragment.newInstance()
                 3 -> return HomeFragment.newInstance()
-                4-> return HomeFragment.newInstance()
+                4-> return AccountFragment.newInstance()
             }
             return OnsiteOptionsFragment.newInstance()
         }

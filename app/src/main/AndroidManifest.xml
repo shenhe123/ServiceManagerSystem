@@ -27,15 +27,14 @@
 
     <application
         android:name=".core.AppApplication"
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
+        android:allowBackup="false"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ServiceManagerSystem"
-        tools:replace="android:allowBackup"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:label,android:allowBackup,theme"
         tools:targetApi="31">
         <activity
             android:name=".ui.onsite.selectorpicture.PicturesPreviewActivity"
@@ -53,10 +52,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

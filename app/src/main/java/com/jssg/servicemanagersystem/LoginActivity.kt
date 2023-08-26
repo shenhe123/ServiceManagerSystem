@@ -1,5 +1,6 @@
 package com.jssg.servicemanagersystem
 
+import android.content.Intent
 import android.os.Bundle
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
@@ -17,6 +18,14 @@ class LoginActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (!isTaskRoot) {
+            val action = intent.action
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN == action) {
+                finish()
+                return
+            }
+        }
 
         binding = ActLoginLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
