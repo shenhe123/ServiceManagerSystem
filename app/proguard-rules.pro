@@ -301,4 +301,19 @@
 }
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 
+##百度地图定位-----开始
 -keep class com.baidu.location.** {*;}
+##百度地图定位-----结束
+
+
+##PicturesSelctor-----开始
+-keep class com.luck.picture.lib.** { *; }
+
+## use Camerax
+-keep class com.luck.lib.camerax.** { *; }
+
+## use uCr
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }
+##PicturesSelctor-----结束

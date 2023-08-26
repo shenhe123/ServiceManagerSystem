@@ -1,16 +1,26 @@
 package com.jssg.servicemanagersystem.base
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import com.baidu.location.LocationClient
-import com.bumptech.glide.Glide
 import com.jssg.servicemanagersystem.utils.LogUtil
+import com.jssg.servicemanagersystem.utils.toast.ToastTool
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
+import com.jssg.servicemanagersystem.utils.toast.style.BitMaxStyle
 import io.reactivex.plugins.RxJavaPlugins
+import java.util.LinkedList
 
 /**
  * ServiceManagerSystem
  * Created by he.shen on 2023/8/26.
  */
 class AppApplication: Application() {
+
+    var isRunInBackground = false
+    private var appCount = 0
+    private val activityList = LinkedList<Activity>()
 
     override fun onCreate() {
         super.onCreate()
@@ -34,5 +44,63 @@ class AppApplication: Application() {
         //false，表示用户不同意隐私合规政策
         LocationClient.setAgreePrivacy(true)
 
+        ToastTool.init(this, BitMaxStyle(false))
+
+        lookHomeUI()
+    }
+
+    private fun lookHomeUI() {
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                activityList.add(activity)
+            }
+
+            override fun onActivityStarted(activity: Activity) {
+                appCount++
+
+                if (isRunInBackground) {
+                    //应用从后台回到前台 需要做的操作
+                    back2App(activity)
+                }
+            }
+
+            override fun onActivityResumed(activity: Activity) {
+
+            }
+
+            override fun onActivityPaused(activity: Activity) {
+            }
+
+            override fun onActivityStopped(activity: Activity) {
+                appCount--
+                if (appCount == 0) {
+                    //应用进入后台 需要做的操作
+                    leaveApp()
+                }
+            }
+
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+            override fun onActivityDestroyed(activity: Activity) {
+                activityList.remove(activity)
+            }
+        })
+    }
+
+    /**
+     * 从后台回到前台 或者第一次进入app都会进入改方法
+     */
+    private fun back2App(activity: Activity) {
+        isRunInBackground = false
+    }
+
+    /**
+     * 离开应用 压入后台或者退出应用
+     */
+    private fun leaveApp() {
+        isRunInBackground = true
+    }
+
+    companion object {
+        var instance: AppApplication = AppApplication()
     }
 }

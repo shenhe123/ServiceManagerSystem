@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.onsite
+package com.jssg.servicemanagersystem.ui.onsite.selectorpicture
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.base.BaseBottomSheetDialogFragment
+import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.databinding.DialogSelectorPictureBinding
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -21,6 +24,7 @@ import net.arvin.permissionhelper.PermissionHelper
  */
 class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
 
+    private lateinit var selectorPictureViewModel: SelectorPictureViewModel
     private lateinit var binding: DialogSelectorPictureBinding
 
     override fun onCreateView(
@@ -29,6 +33,7 @@ class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DialogSelectorPictureBinding.inflate(layoutInflater)
+        selectorPictureViewModel = ViewModelProvider(requireActivity()).get(SelectorPictureViewModel::class.java)
         return binding.root
     }
 
@@ -45,8 +50,14 @@ class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
                     PictureSelector.create(this)
                         .openCamera(SelectMimeType.ofImage())
                         .forResult(object : OnResultCallbackListener<LocalMedia?> {
-                            override fun onResult(result: ArrayList<LocalMedia?>) {}
-                            override fun onCancel() {}
+                            override fun onResult(result: ArrayList<LocalMedia?>) {
+                                selectorPictureViewModel.badPicturesLiveData.value = result
+                                dismiss()
+                            }
+                            override fun onCancel() {
+                                ToastUtils.showToast("取消操作")
+                                dismiss()
+                            }
                         })
                 }
             }
@@ -59,8 +70,14 @@ class SelectorPictureDialog: BaseBottomSheetDialogFragment() {
                     PictureSelector.create(this)
                         .openSystemGallery(SelectMimeType.ofImage())
                         .forSystemResult(object : OnResultCallbackListener<LocalMedia?> {
-                            override fun onResult(result: ArrayList<LocalMedia?>) {}
-                            override fun onCancel() {}
+                            override fun onResult(result: ArrayList<LocalMedia?>) {
+                                selectorPictureViewModel.badPicturesLiveData.value = result
+                                dismiss()
+                            }
+                            override fun onCancel() {
+                                ToastUtils.showToast("取消操作")
+                                dismiss()
+                            }
                         })
                 }
             }

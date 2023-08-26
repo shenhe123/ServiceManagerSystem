@@ -5,8 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="12dp"
     tools:context=".ui.onsite.OrderCheckActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="工单排查"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/svg_back"
+        app:navigationIconTint="@color/x_text_01"/>
+
+    <View style="@style/xToolbarDivider"/>
 
     <TextView
         android:id="@+id/tv_images_tooltips"
@@ -15,6 +25,7 @@
         android:maxLines="1"
         android:ellipsize="marquee"
         android:textColor="@color/text_600"
+        android:layout_margin="12dp"
         android:text="注：不良图片、外箱标签图片、批次信息图片最多可添加3张, 返回图片可添加5张，图片格式支持PNG、JPG、JPEG等格式图片"
         style="@style/SubTitleStyle"/>
 
@@ -28,13 +39,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:paddingBottom="72dp">
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,11 +86,11 @@
                     android:text="不良图片："
                     style="@style/SubTitleStyle"/>
 
-                <com.jssg.servicemanagersystem.widgets.XFlowLayout
+                <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_bad_picture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    app:flChildSpacing="12dp"/>
 
                 <ImageView
                     android:id="@+id/iv_add_bad_photo"
@@ -105,11 +117,10 @@
                     android:text="外箱标签图片："
                     style="@style/SubTitleStyle"/>
 
-                <com.jssg.servicemanagersystem.widgets.XFlowLayout
+                <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_box_picture"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:layout_height="wrap_content"/>
 
                 <ImageView
                     android:id="@+id/iv_add_box_photo"
@@ -137,11 +148,10 @@
                     android:text="批次信息图片："
                     style="@style/SubTitleStyle"/>
 
-                <com.jssg.servicemanagersystem.widgets.XFlowLayout
+                <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_batch_info_picture"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:layout_height="wrap_content"/>
 
                 <ImageView
                     android:id="@+id/iv_add_batch_info_photo"
@@ -230,11 +240,10 @@
                     android:text="返工数量图片："
                     style="@style/SubTitleStyle"/>
 
-                <com.jssg.servicemanagersystem.widgets.XFlowLayout
+                <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_rework_picture"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:layout_height="wrap_content"/>
 
                 <ImageView
                     android:id="@+id/iv_add_rework_photo"
