@@ -13,4 +13,17 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.ServiceManagerSystem.Fullscreen" parent="Theme.ServiceManagerSystem">
+        <item name="android:actionBarStyle">
+            @style/Widget.Theme.ServiceManagerSystem.ActionBar.Fullscreen
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.ServiceManagerSystem.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/black_overlay</item>
+        <item name="fullscreenTextColor">@color/x_text_03</item>
+    </style>
 </resources>

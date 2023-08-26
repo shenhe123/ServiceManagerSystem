@@ -15,6 +15,8 @@ import com.baidu.location.BDLocation
 import com.bumptech.glide.Glide
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityOrderCheckBinding
+import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
+import com.jssg.servicemanagersystem.ui.onsite.selectorpicture.PicturesPreviewActivity
 import com.jssg.servicemanagersystem.ui.onsite.selectorpicture.SelectorPictureDialog
 import com.jssg.servicemanagersystem.ui.onsite.selectorpicture.SelectorPictureViewModel
 import com.jssg.servicemanagersystem.utils.DpPxUtils
@@ -49,11 +51,7 @@ class OrderCheckActivity : BaseActivity() {
             } else {
                 pictures
             }
-            if (availablePic.isNotEmpty()) {
-                binding.xflBadPicture.isVisible = true
-            }
 
-            binding.xflBadPicture.removeAllViews()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
                     initImageWidget(it.availablePath, binding.xflBadPicture, binding.ivAddBadPhoto)
@@ -95,12 +93,24 @@ class OrderCheckActivity : BaseActivity() {
         img.scaleType = ImageView.ScaleType.FIT_XY
         Glide.with(this).load(File(path)).into(img)
         img.setOnLongClickListener {
-            parent.removeView(it)
-            if (parent.childCount == 0) {
-                parent.isVisible = false
-                addView.isVisible = true
-            }
+
+            SingleBtnDialogFragment.newInstance("删除图片", "确定要删除图片吗？")
+                .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
+                    override fun onConfrimClick() {
+                        parent.removeView(it)
+                        if (parent.childCount == 0) {
+                            addView.isVisible = true
+                        }
+                    }
+
+                })
+                .show(supportFragmentManager, "delete")
+
             return@setOnLongClickListener true
+        }
+
+        img.setOnClickListener {//预览
+            PicturesPreviewActivity.goActivity(this, path)
         }
         parent.addView(img)
     }

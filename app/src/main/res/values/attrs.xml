@@ -4,4 +4,8 @@
         <attr name="x_toolbar_title" format="string" />
         <attr name="x_toolbar_sub_title" format="string" />
     </declare-styleable>
+    <declare-styleable name="FullscreenAttrs">
+        <attr name="fullscreenBackgroundColor" format="color" />
+        <attr name="fullscreenTextColor" format="color" />
+    </declare-styleable>
 </resources>

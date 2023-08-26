@@ -11,4 +11,8 @@
     <string name="title_account_center">我的</string>
     <string name="title_report">报表</string>
     <string name="app_common_http_loading">数据请求中，请稍后...</string>
+    <string name="app_confirm">确认</string>
+    <string name="title_activity_pictures_preview">PicturesPreviewActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
