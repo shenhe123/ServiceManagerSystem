@@ -1,14 +1,13 @@
-package com.jssg.servicemanagersystem.base
+package com.jssg.servicemanagersystem.core
 
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
 import com.baidu.location.LocationClient
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastTool
-import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.jssg.servicemanagersystem.utils.toast.style.BitMaxStyle
+import com.tencent.mmkv.MMKV
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.LinkedList
 
@@ -45,6 +44,12 @@ class AppApplication: Application() {
         LocationClient.setAgreePrivacy(true)
 
         ToastTool.init(this, BitMaxStyle(false))
+
+        try {
+            MMKV.initialize(this)
+        } catch (e: UnsatisfiedLinkError) {
+            //在一些低端机型会有小概率问题 isuse:02c72e5de1d6971970aa87d61ab0ab71
+        }
 
         lookHomeUI()
     }

@@ -1,7 +1,7 @@
 package com.jssg.servicemanagersystem.base.http.observer;
 
 
-import com.jssg.servicemanagersystem.base.AppApplication;
+import com.jssg.servicemanagersystem.core.AppApplication;
 import com.jssg.servicemanagersystem.base.http.observer.error.ApiException;
 import com.jssg.servicemanagersystem.base.http.observer.error.ExceptionEngin;
 
