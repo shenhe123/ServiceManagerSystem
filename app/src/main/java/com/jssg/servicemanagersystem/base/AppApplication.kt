@@ -2,6 +2,7 @@ package com.jssg.servicemanagersystem.base
 
 import android.app.Application
 import com.baidu.location.LocationClient
+import com.bumptech.glide.Glide
 import com.jssg.servicemanagersystem.utils.LogUtil
 import io.reactivex.plugins.RxJavaPlugins
 
@@ -32,7 +33,6 @@ class AppApplication: Application() {
         //true，表示用户同意隐私合规政策
         //false，表示用户不同意隐私合规政策
         LocationClient.setAgreePrivacy(true)
-
 
     }
 }

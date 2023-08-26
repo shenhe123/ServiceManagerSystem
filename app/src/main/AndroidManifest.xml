@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- 这个权限用于进行网络定位-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!-- 这个权限用于访问系统接口提供的卫星定位信息-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -15,8 +18,22 @@
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+
     <!-- 访问网络，网络定位需要上网-->
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--适配Android R包可见性 开始-->
+    <queries package="${applicationId}">
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE"/>
+        </intent>
+        <intent>
+            <action android:name="android.media.action.ACTION_VIDEO_CAPTURE"/>
+        </intent>
+    </queries>
+    <!--适配Android R包可见性 结束-->
 
     <application
         android:name=".base.AppApplication"
@@ -28,6 +45,7 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ServiceManagerSystem"
+        tools:replace="android:allowBackup"
         tools:targetApi="31">
         <activity
             android:name=".ui.MainActivity"
@@ -54,11 +72,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!--百度地图定位 开始-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="suGBnkkCuhroywfy6aYne3giGIsXYqFG" >
         </meta-data>
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
+        <!--百度地图定位 结束-->
+
     </application>
 
 </manifest>
