@@ -12,7 +12,7 @@ import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityMainBinding
 import com.jssg.servicemanagersystem.ui.accountcenter.AccountFragment
 import com.jssg.servicemanagersystem.ui.onsite.OnsiteOptionsFragment
-import com.jssg.servicemanagersystem.ui.home.HomeFragment
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 
 class MainActivity : BaseActivity() {
 
@@ -56,9 +56,9 @@ class MainActivity : BaseActivity() {
         override fun createFragment(position: Int): Fragment {
             when (position) {
                 0 -> return OnsiteOptionsFragment.newInstance()
-                1 -> return HomeFragment.newInstance()
-                2 -> return HomeFragment.newInstance()
-                3 -> return HomeFragment.newInstance()
+                1 -> return WorkOrderFragment.newInstance()
+                2 -> return WorkOrderFragment.newInstance()
+                3 -> return WorkOrderFragment.newInstance()
                 4-> return AccountFragment.newInstance()
             }
             return OnsiteOptionsFragment.newInstance()

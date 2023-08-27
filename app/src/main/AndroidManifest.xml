@@ -36,13 +36,23 @@
         tools:replace="android:label,android:allowBackup,theme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.workorder.WorkOrderAddNewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.workorder.WorkOrderActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.accountcenter.ProfileInfoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.onsite.selectorpicture.PicturesPreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_pictures_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ServiceManagerSystem.Fullscreen" />
         <activity
             android:name=".ui.MainActivity"

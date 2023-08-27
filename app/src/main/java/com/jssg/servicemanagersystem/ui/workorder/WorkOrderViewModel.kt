@@ -1,10 +1,10 @@
-package com.jssg.servicemanagersystem.ui.home
+package com.jssg.servicemanagersystem.ui.workorder
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class WorkOrderViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
