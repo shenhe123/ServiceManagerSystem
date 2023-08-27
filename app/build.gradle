@@ -56,9 +56,9 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.all { output ->
                     if (variant.buildType.name == "release") {
-                        outputFileName = "v${defaultConfig.versionName}_release}.apk"
+                        outputFileName = "v${defaultConfig.versionName}_release.apk"
                     } else if (variant.buildType.name == "debug") {
-                        outputFileName = "v${defaultConfig.versionName}_debug}.apk"
+                        outputFileName = "v${defaultConfig.versionName}_debug.apk"
                     }
                 }
             }
