@@ -40,11 +40,11 @@ class MainActivity : BaseActivity() {
 
         binding.navView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.navigation_dashboard -> binding.viewPager.currentItem = 0
-                R.id.navigation_home -> binding.viewPager.currentItem = 1
-                R.id.navigation_travel_report -> binding.viewPager.currentItem = 2
-                R.id.navigation_report -> binding.viewPager.currentItem = 3
-                R.id.navigation_mine -> binding.viewPager.currentItem = 4
+                R.id.navigation_dashboard -> binding.viewPager.setCurrentItem(0, false)
+                R.id.navigation_home -> binding.viewPager.setCurrentItem(1, false)
+                R.id.navigation_travel_report -> binding.viewPager.setCurrentItem(2, false)
+                R.id.navigation_report -> binding.viewPager.setCurrentItem(3, false)
+                R.id.navigation_mine -> binding.viewPager.setCurrentItem(4, false)
             }
 
             true

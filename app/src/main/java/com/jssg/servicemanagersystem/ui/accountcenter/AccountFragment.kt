@@ -27,6 +27,10 @@ class AccountFragment : BaseFragment() {
         binding.tvProfileInfo.setOnClickListener {
             ProfileInfoActivity.goActivity(requireActivity())
         }
+
+        binding.tvSystemSetting.setOnClickListener {
+            SystemSettingActivity.goActivity(requireActivity())
+        }
     }
 
     companion object {

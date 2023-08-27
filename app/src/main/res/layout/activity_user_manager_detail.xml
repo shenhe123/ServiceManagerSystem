@@ -29,7 +29,7 @@
                 app:expandedTitleMarginBottom="20dp"
                 app:expandedTitleMarginStart="22dp"
                 app:expandedTitleTextAppearance="@style/toolbar_layout_ex_title_style"
-                app:title="个人信息"
+                app:title="用户信息"
                 app:toolbarId="@+id/toolbar">
 
                 <androidx.appcompat.widget.Toolbar
@@ -109,12 +109,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/v_username_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -155,12 +149,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/v_phone_num_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -198,12 +186,6 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </LinearLayout>
-
-                <View
-                    android:id="@+id/v_password_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -245,12 +227,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/v_card_id_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -291,12 +267,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/v_address_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -328,129 +298,129 @@
 
                 </LinearLayout>
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="创建人"-->
-<!--                        android:textColor="@color/x_text_03"-->
-<!--                        android:textSize="16sp" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="创建人"
+                        android:textColor="@color/x_text_03"
+                        android:textSize="16sp" />
 
-<!--                    <androidx.appcompat.widget.AppCompatEditText-->
-<!--                        android:id="@+id/et_create_person"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@null"-->
-<!--                        android:enabled="false"-->
-<!--                        android:gravity="end"-->
-<!--                        android:paddingEnd="16dp"-->
-<!--                        android:text="2023-09-02"-->
-<!--                        android:textColor="@color/x_text_01"-->
-<!--                        android:textSize="16sp" />-->
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_create_person"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:gravity="end"
+                        android:paddingEnd="16dp"
+                        android:text="2023-09-02"
+                        android:textColor="@color/x_text_01"
+                        android:textSize="16sp" />
 
-<!--                </LinearLayout>-->
+                </LinearLayout>
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="创建时间"-->
-<!--                        android:textColor="@color/x_text_03"-->
-<!--                        android:textSize="16sp" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="创建时间"
+                        android:textColor="@color/x_text_03"
+                        android:textSize="16sp" />
 
-<!--                    <androidx.appcompat.widget.AppCompatEditText-->
-<!--                        android:id="@+id/et_create_time"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@null"-->
-<!--                        android:enabled="false"-->
-<!--                        android:gravity="end"-->
-<!--                        android:paddingEnd="16dp"-->
-<!--                        android:text="2023-09-02"-->
-<!--                        android:textColor="@color/x_text_01"-->
-<!--                        android:textSize="16sp" />-->
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_create_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:gravity="end"
+                        android:paddingEnd="16dp"
+                        android:text="2023-09-02"
+                        android:textColor="@color/x_text_01"
+                        android:textSize="16sp" />
 
-<!--                </LinearLayout>-->
+                </LinearLayout>
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="更新人"-->
-<!--                        android:textColor="@color/x_text_03"-->
-<!--                        android:textSize="16sp" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="更新人"
+                        android:textColor="@color/x_text_03"
+                        android:textSize="16sp" />
 
-<!--                    <androidx.appcompat.widget.AppCompatEditText-->
-<!--                        android:id="@+id/et_update_person"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@null"-->
-<!--                        android:enabled="false"-->
-<!--                        android:gravity="end"-->
-<!--                        android:paddingEnd="16dp"-->
-<!--                        android:text="2023-09-02"-->
-<!--                        android:textColor="@color/x_text_01"-->
-<!--                        android:textSize="16sp" />-->
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_update_person"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:gravity="end"
+                        android:paddingEnd="16dp"
+                        android:text="2023-09-02"
+                        android:textColor="@color/x_text_01"
+                        android:textSize="16sp" />
 
-<!--                </LinearLayout>-->
+                </LinearLayout>
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="更新时间"-->
-<!--                        android:textColor="@color/x_text_03"-->
-<!--                        android:textSize="16sp" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="更新时间"
+                        android:textColor="@color/x_text_03"
+                        android:textSize="16sp" />
 
-<!--                    <androidx.appcompat.widget.AppCompatEditText-->
-<!--                        android:id="@+id/et_update_time"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@null"-->
-<!--                        android:enabled="false"-->
-<!--                        android:gravity="end"-->
-<!--                        android:paddingEnd="16dp"-->
-<!--                        android:text="2023-09-02"-->
-<!--                        android:textColor="@color/x_text_01"-->
-<!--                        android:textSize="16sp" />-->
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_update_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:gravity="end"
+                        android:paddingEnd="16dp"
+                        android:text="2023-09-02"
+                        android:textColor="@color/x_text_01"
+                        android:textSize="16sp" />
 
-<!--                </LinearLayout>-->
+                </LinearLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

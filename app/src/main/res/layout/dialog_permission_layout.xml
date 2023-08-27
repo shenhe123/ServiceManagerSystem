@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dialog_width"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:minWidth="@dimen/dialog_width"
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp">
+
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:scaleType="center"
+            android:src="@drawable/svg_close"
+            app:tint="@color/x_text_03" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="操作权限设置"
+            android:textColor="@color/x_text_01"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <com.nex3z.flowlayout.FlowLayout
+        android:id="@+id/layout_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:flChildSpacing="12dp"
+        app:flRowSpacing="12dp">
+
+        <CheckBox
+            android:id="@+id/cb_admin"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:checked="true"
+            android:textColor="@color/text_600"
+            android:text="系统管理员（操作所有功能）"/>
+
+        <CheckBox
+            android:id="@+id/cb_onsite"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:textColor="@color/x_text_01"
+            android:checked="true"
+            android:text="现场操作"/>
+
+        <CheckBox
+            android:id="@+id/cb_work_order"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:checked="true"
+            android:textColor="@color/x_text_01"
+            android:text="派工单"/>
+
+        <CheckBox
+            android:id="@+id/cb_travel_report"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:checked="true"
+            android:textColor="@color/x_text_01"
+            android:text="出差报告"/>
+
+        <CheckBox
+            android:id="@+id/cb_CQE"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:checked="true"
+            android:textColor="@color/x_text_01"
+            android:text="CQE审核"/>
+
+        <CheckBox
+            android:id="@+id/cb_report"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:checked="true"
+            android:textColor="@color/x_text_01"
+            android:text="报表"/>
+
+
+    </com.nex3z.flowlayout.FlowLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="12dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbt_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:text="@string/app_confirm"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
