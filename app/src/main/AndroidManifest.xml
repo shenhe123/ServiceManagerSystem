@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- 这个权限用于进行网络定位 -->
     <uses-feature
         android:name="android.hardware.camera"
@@ -37,6 +36,9 @@
         tools:replace="android:label,android:allowBackup,theme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.accountcenter.ProfileInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.onsite.selectorpicture.PicturesPreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
@@ -52,10 +54,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:exported="true">
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,12 +70,12 @@
             android:screenOrientation="portrait" /> <!-- 百度地图定位 开始 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="suGBnkkCuhroywfy6aYne3giGIsXYqFG"></meta-data>
+            android:value="suGBnkkCuhroywfy6aYne3giGIsXYqFG" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
     </application>
 
 </manifest>

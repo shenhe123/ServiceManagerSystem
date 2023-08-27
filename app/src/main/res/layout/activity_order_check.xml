@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"
         app:title="工单排查"
         app:titleCentered="true"
-        app:navigationIcon="@drawable/svg_back"
-        app:navigationIconTint="@color/x_text_01"/>
+        app:titleTextColor="@color/white"
+        android:background="@color/purple_500"
+        app:navigationIcon="@drawable/svg_back"/>
 
     <View style="@style/xToolbarDivider"/>
 
