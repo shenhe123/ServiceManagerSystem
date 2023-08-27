@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@color/purple_700"
+        android:fitsSystemWindows="true"
+        app:elevation="1px">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleTextAppearance="@style/toolbar_layout_coll_title_style"
+            app:expandedTitleMarginBottom="20dp"
+            app:expandedTitleMarginStart="22dp"
+            app:expandedTitleTextAppearance="@style/toolbar_layout_ex_title_style"
+            app:title="网络线路"
+            app:toolbarId="@+id/toolbar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/svg_back">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        app:divider="@color/x_divider"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:showDividers="middle">
+
+        <CheckedTextView
+            android:id="@+id/ck_line1"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:checkMark="@drawable/selector_check"
+            android:checkMarkTint="@color/purple_700"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:text="192.168.1.1"
+            android:textColor="@color/x_text_01"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/ck_line2"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:checkMark="@drawable/selector_check"
+            android:checkMarkTint="@color/purple_700"
+            android:checked="false"
+            android:gravity="center_vertical"
+            android:text="192.168.1.2"
+            android:textColor="@color/x_text_01"
+            android:textSize="16sp" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

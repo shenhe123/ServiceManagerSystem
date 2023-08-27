@@ -75,8 +75,9 @@
         android:textColor="@color/x_text_01"
         android:textSize="18sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
-        app:drawableStartCompat="@drawable/svg_record_voice"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:drawableStartCompat="@drawable/svg_network"
+        app:layout_constraintTop_toTopOf="parent"
+        app:drawableTint="@color/x_text_01" />
 
     <View
         style="@style/xToolbarDivider"

@@ -1,11 +1,13 @@
 package com.jssg.servicemanagersystem
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActLoginLayoutBinding
 import com.jssg.servicemanagersystem.ui.MainActivity
+import com.jssg.servicemanagersystem.ui.accountcenter.ChooseHostActivity
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 /**
@@ -30,6 +32,11 @@ class LoginActivity: BaseActivity() {
         binding = ActLoginLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (AccountManager.instance.isLogin()) {
+            MainActivity.goActivity(this)
+            finish()
+        }
+
         val accountInfo = AccountManager.instance.getPassword()
         accountInfo?.let {
             val accountInfoStr = it.split("+")
@@ -46,11 +53,28 @@ class LoginActivity: BaseActivity() {
             }
 
             if (binding.cbRememberPwd.isChecked) { //记住密码
+                //保存用户名和密码
                 AccountManager.instance.savePassword(userName.toString(), password.toString())
             }
 
+            //保存登录状态
+            AccountManager.instance.saveUser()
+
             MainActivity.goActivity(this)
             finish()
+        }
+
+        binding.tvChooseHost.setOnClickListener {
+            ChooseHostActivity.goActivity(this)
+        }
+    }
+
+    companion object {
+        fun goActivity(context: Context) {
+            context.startActivity(Intent(context, LoginActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            })
         }
     }
 
