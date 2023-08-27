@@ -23,6 +23,10 @@ class SystemSettingActivity : AppCompatActivity() {
         binding.tvUserManager.setOnClickListener {
             UserManagerActivity.goActivity(this)
         }
+
+        binding.tvNetworkManager.setOnClickListener {
+            ChooseHostActivity.goActivity(this)
+        }
     }
 
     companion object {
