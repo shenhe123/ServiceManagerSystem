@@ -1,8 +1,7 @@
-package com.jssg.servicemanagersystem.ui.accountcenter
+package com.jssg.servicemanagersystem.ui.account
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,8 +9,6 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerBinding
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
-import com.jssg.servicemanagersystem.ui.onsite.OnsiteOptionsAdapter
-import com.jssg.servicemanagersystem.ui.onsite.OrderHandleActivity
 
 class UserManagerActivity : BaseActivity() {
     private lateinit var adapter: UserManagerAdapter

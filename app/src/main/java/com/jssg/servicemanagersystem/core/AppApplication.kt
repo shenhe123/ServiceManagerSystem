@@ -4,18 +4,22 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import com.baidu.location.LocationClient
+import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastTool
 import com.jssg.servicemanagersystem.utils.toast.style.BitMaxStyle
+import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.LinkedList
+import com.jssg.servicemanagersystem.BuildConfig
+import java.lang.IllegalStateException
 
 /**
  * ServiceManagerSystem
  * Created by he.shen on 2023/8/26.
  */
-class AppApplication: Application() {
+class AppApplication: BaseCoreApplication() {
 
     var isRunInBackground = false
     private var appCount = 0
@@ -23,11 +27,12 @@ class AppApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         init()
     }
 
     private fun init() {
+        RetrofitService.init()
+
         //RxJava2 当取消订阅后(dispose())，RxJava抛出的异常后续无法接收(此时后台线程仍在跑，可能会抛出IO等异常),全部由RxJavaPlugin接收，需要提前设置ErrorHandler
         RxJavaPlugins.setErrorHandler { throwable: Throwable ->
             //fix isuse:a9c0574286c01bac6c02bc99704a62e0
@@ -50,6 +55,8 @@ class AppApplication: Application() {
         } catch (e: UnsatisfiedLinkError) {
             //在一些低端机型会有小概率问题 isuse:02c72e5de1d6971970aa87d61ab0ab71
         }
+
+        CrashReport.initCrashReport(applicationContext, "6ade02869d", BuildConfig.DEBUG);
 
         lookHomeUI()
     }
@@ -106,6 +113,8 @@ class AppApplication: Application() {
     }
 
     companion object {
-        var instance: AppApplication = AppApplication()
+        fun get(): AppApplication {
+            return _instance as AppApplication
+        }
     }
 }

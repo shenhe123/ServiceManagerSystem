@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.accountcenter
+package com.jssg.servicemanagersystem.ui.account
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityChooseHostBinding
 
@@ -33,7 +32,7 @@ class ChooseHostActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateHostChoose() {
 //        hosts = HostManger.getHostService().getHostArray(false)
-        lastChooseHost = AccountManager.instance.getChoosehost() ?: "192.168.1.1"
+        lastChooseHost = AccountManager.instance.getChooseHost() ?: "192.168.1.1"
 //        if (hosts == null || hosts.size < 2) {
 //            finish()
 //            ToastUtils.show("host_error")

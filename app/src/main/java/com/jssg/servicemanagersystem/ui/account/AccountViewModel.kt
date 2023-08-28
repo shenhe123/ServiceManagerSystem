@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.accountcenter
+package com.jssg.servicemanagersystem.ui.account
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

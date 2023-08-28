@@ -317,3 +317,8 @@
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
 ##PicturesSelctor-----结束
+
+##Bugly----开始
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+##Bugly----结束

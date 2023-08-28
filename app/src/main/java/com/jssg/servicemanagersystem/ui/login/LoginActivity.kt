@@ -1,13 +1,14 @@
-package com.jssg.servicemanagersystem
+package com.jssg.servicemanagersystem.ui.login
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActLoginLayoutBinding
 import com.jssg.servicemanagersystem.ui.MainActivity
-import com.jssg.servicemanagersystem.ui.accountcenter.ChooseHostActivity
+import com.jssg.servicemanagersystem.ui.account.ChooseHostActivity
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 /**
@@ -16,6 +17,7 @@ import com.jssg.servicemanagersystem.utils.toast.ToastUtils
  */
 class LoginActivity: BaseActivity() {
 
+    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActLoginLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,37 @@ class LoginActivity: BaseActivity() {
             binding.inputPassword.setText(accountInfoStr[1])
         }
 
+        addListener()
+
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+
+        loginViewModel.loginLiveData.observe(this) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                if (binding.cbRememberPwd.isChecked) { //记住密码
+                    //保存用户名和密码
+                    AccountManager.instance.savePassword(binding.inputUsername.text.toString(), binding.inputPassword.text.toString())
+                }
+
+                result.data?.let {
+                    AccountManager.instance.saveAuthorization(it.token)
+                }
+
+                //保存登录状态
+                AccountManager.instance.saveUser()
+
+                MainActivity.goActivity(this)
+                finish()
+            }
+        }
+    }
+
+    private fun addListener() {
+
         binding.mbtLogin.setOnClickListener {
             val userName = binding.inputUsername.text
             val password = binding.inputPassword.text
@@ -52,16 +85,7 @@ class LoginActivity: BaseActivity() {
                 return@setOnClickListener
             }
 
-            if (binding.cbRememberPwd.isChecked) { //记住密码
-                //保存用户名和密码
-                AccountManager.instance.savePassword(userName.toString(), password.toString())
-            }
-
-            //保存登录状态
-            AccountManager.instance.saveUser()
-
-            MainActivity.goActivity(this)
-            finish()
+            loginViewModel.login(userName.toString(), password.toString())
         }
 
         binding.tvChooseHost.setOnClickListener {

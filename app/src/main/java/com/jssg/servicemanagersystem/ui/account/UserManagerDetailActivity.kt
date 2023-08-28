@@ -1,24 +1,23 @@
-package com.jssg.servicemanagersystem.ui.accountcenter
+package com.jssg.servicemanagersystem.ui.account
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.R
-import com.jssg.servicemanagersystem.databinding.ActivityProfileInfoBinding
+import com.jssg.servicemanagersystem.databinding.ActivityUserManagerDetailBinding
 
-class ProfileInfoActivity : AppCompatActivity() {
+class UserManagerDetailActivity : AppCompatActivity() {
     private var editable: Boolean = false
-    private lateinit var binding: ActivityProfileInfoBinding
+    private lateinit var binding: ActivityUserManagerDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityProfileInfoBinding.inflate(layoutInflater)
+        binding = ActivityUserManagerDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
@@ -101,7 +100,7 @@ class ProfileInfoActivity : AppCompatActivity() {
 
     companion object {
         fun goActivity(context: Context) {
-            context.startActivity(Intent(context, ProfileInfoActivity::class.java))
+            context.startActivity(Intent(context, UserManagerDetailActivity::class.java))
         }
     }
 }

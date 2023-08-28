@@ -1,11 +1,9 @@
-package com.jssg.servicemanagersystem.ui.accountcenter
+package com.jssg.servicemanagersystem.ui.account
 
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
-import com.jssg.servicemanagersystem.databinding.ItemOnsiteOptionsLayoutBinding
 import com.jssg.servicemanagersystem.databinding.ItemUserManagerLayoutBinding
-import com.jssg.servicemanagersystem.utils.DateUtil
 
 /**
  * ServiceManagerSystem

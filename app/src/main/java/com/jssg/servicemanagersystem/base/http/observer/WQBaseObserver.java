@@ -1,9 +1,9 @@
 package com.jssg.servicemanagersystem.base.http.observer;
 
 
-import com.jssg.servicemanagersystem.core.AppApplication;
 import com.jssg.servicemanagersystem.base.http.observer.error.ApiException;
 import com.jssg.servicemanagersystem.base.http.observer.error.ExceptionEngin;
+import com.jssg.servicemanagersystem.core.AppApplication;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -31,7 +31,7 @@ public abstract class WQBaseObserver<T> implements Observer<T> {
     public void onError(Throwable t) {
         ApiException exception = ExceptionEngin.handleException(t);
         handleErrorCode(exception.getCode(), exception.getDisplayMessage());
-        if (AppApplication.Companion.getInstance() .isRunInBackground()) {
+        if (AppApplication.Companion.get() .isRunInBackground()) {
             if (disposable != null && !disposable.isDisposed()) {
                 disposable.dispose();
             }

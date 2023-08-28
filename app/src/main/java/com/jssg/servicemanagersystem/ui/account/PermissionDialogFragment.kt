@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.accountcenter
+package com.jssg.servicemanagersystem.ui.account
 
 import android.os.Bundle
 import android.view.LayoutInflater

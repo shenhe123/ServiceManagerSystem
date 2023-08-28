@@ -10,7 +10,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityMainBinding
-import com.jssg.servicemanagersystem.ui.accountcenter.AccountFragment
+import com.jssg.servicemanagersystem.ui.account.AccountFragment
 import com.jssg.servicemanagersystem.ui.onsite.OnsiteOptionsFragment
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 

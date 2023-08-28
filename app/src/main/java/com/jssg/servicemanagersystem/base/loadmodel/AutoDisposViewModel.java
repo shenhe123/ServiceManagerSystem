@@ -45,7 +45,7 @@ public class AutoDisposViewModel extends ViewModel {
                     if (((BaseHttpResult) t).isSuccess()) {
                         liveData.setValue(new LoadDataModel<>(t));
                     } else {
-                        liveData.setValue(new LoadDataModel<>(((BaseHttpResult) t).code, ((BaseHttpResult) t).message));
+                        liveData.setValue(new LoadDataModel<>(((BaseHttpResult) t).code, ((BaseHttpResult) t).getMsg()));
                     }
                 } else {
                     liveData.postValue(new LoadDataModel<>(t));
@@ -74,7 +74,7 @@ public class AutoDisposViewModel extends ViewModel {
                 if (result.isSuccess()) {
                     liveData.setValue(new LoadDataModel<>(result));
                 } else {
-                    liveData.setValue(new LoadDataModel<>(result.code, result.message));
+                    liveData.setValue(new LoadDataModel<>(result.code, result.getMsg()));
                 }
             }
 
