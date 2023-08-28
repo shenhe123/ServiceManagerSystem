@@ -11,6 +11,7 @@ import com.jssg.servicemanagersystem.databinding.FragmentOnsiteOptionsBinding
 
 class OnsiteOptionsFragment : BaseFragment() {
 
+    private var closeCaseSwitch: Boolean = false
     private lateinit var binding: FragmentOnsiteOptionsBinding
     private lateinit var adapter: OnsiteOptionsAdapter
     private lateinit var onsiteOptionsViewModel: OnsiteOptionsViewModel
@@ -30,11 +31,18 @@ class OnsiteOptionsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = OnsiteOptionsAdapter()
+        adapter = OnsiteOptionsAdapter(closeCaseSwitch)
         binding.recyclerView.adapter = adapter
 
         adapter.setOnItemClickListener { _, _, position ->
             OrderHandleActivity.goActivity(requireContext())
+        }
+
+        binding.tvCloseCase.setOnClickListener {
+            closeCaseSwitch = !closeCaseSwitch
+            adapter.updateCloseSwitch(closeCaseSwitch)
+
+            binding.tvCloseCase.text = if (closeCaseSwitch) "提交" else "批量结案"
         }
 
         onsiteOptionsViewModel.text.observe(viewLifecycleOwner) {
