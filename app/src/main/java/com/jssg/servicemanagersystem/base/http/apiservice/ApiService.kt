@@ -25,4 +25,7 @@ interface ApiService {
     @GET("staging-api/getInfo")
     fun getInfo(): Observable<BaseHttpResult<UserInfo?>>
 
+    @POST("staging-api/system/user/profile")
+    fun updateUserInfo(body: RequestBody): Observable<BaseHttpResult<*>>
+
 }

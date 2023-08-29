@@ -1,14 +1,12 @@
-package com.jssg.servicemanagersystem.ui.account
+package com.jssg.servicemanagersystem.ui.account.systemmanager.usermanager
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerBinding
-import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 
 class UserManagerActivity : BaseActivity() {
@@ -31,7 +29,8 @@ class UserManagerActivity : BaseActivity() {
             when(v.id) {
                 R.id.card_layout -> UserManagerDetailActivity.goActivity(this)
 
-                R.id.mbt_permission -> PermissionDialogFragment.newInstance().show(supportFragmentManager, "permission_dialog")
+                R.id.mbt_permission -> PermissionDialogFragment.newInstance()
+                    .show(supportFragmentManager, "permission_dialog")
 
                 R.id.mbt_delete -> SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？").show(supportFragmentManager, "delete_user_dialog")
             }

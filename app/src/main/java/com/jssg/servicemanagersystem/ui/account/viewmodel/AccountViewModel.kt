@@ -1,12 +1,14 @@
 package com.jssg.servicemanagersystem.ui.account.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
 import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
+import com.jssg.servicemanagersystem.utils.HUtils
 
 /**
  * ServiceManagerSystem
@@ -14,8 +16,8 @@ import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
  */
 class AccountViewModel : AutoDisposViewModel() {
 
+    val updateLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
-    val logoutLiveData = MutableLiveData<LoadDataModel<Any>>()
 
     fun getUserInfo() {
         userInfoLiveData.value = LoadDataModel()
@@ -31,10 +33,23 @@ class AccountViewModel : AutoDisposViewModel() {
     }
 
     fun getPermission() {
-        logoutLiveData.value = LoadDataModel()
+//        logoutLiveData.value = LoadDataModel()
+//        RetrofitService.apiService
+//            .logout()
+//            .compose(RxSchedulersHelper.io_main())
+//            .subscribe(createObserver(logoutLiveData))
+    }
+
+    fun updateUserInfo(nickname: String, phoneNumber: String, cardId: String, address: String) {
+        updateLiveData.value = LoadDataModel()
+        val params = HashMap<String, String>()
+        params["nickName"] = nickname
+        params["phonenumber"] = phoneNumber
+        params["idNo"] = cardId
+        params["address"] = address
         RetrofitService.apiService
-            .logout()
+            .updateUserInfo(HUtils.createRequestBody(params))
             .compose(RxSchedulersHelper.io_main())
-            .subscribe(createObserver(logoutLiveData))
+            .subscribe(createObserver(updateLiveData))
     }
 }

@@ -1,10 +1,12 @@
-package com.jssg.servicemanagersystem.ui.account
+package com.jssg.servicemanagersystem.ui.account.systemmanager
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.jssg.servicemanagersystem.databinding.ActivitySystemSettingBinding
+import com.jssg.servicemanagersystem.ui.account.systemmanager.network.ChooseHostActivity
+import com.jssg.servicemanagersystem.ui.account.systemmanager.usermanager.UserManagerActivity
 
 class SystemSettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySystemSettingBinding

@@ -8,8 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.ui.login.LoginActivity
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AccountManager
-import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
+import com.jssg.servicemanagersystem.ui.account.profile.ProfileInfoActivity
+import com.jssg.servicemanagersystem.ui.account.systemmanager.SystemSettingActivity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.login.LoginViewModel
@@ -61,6 +62,10 @@ class AccountFragment : BaseFragment() {
 
                 })
                 .show(childFragmentManager, "logout_dialog")
+        }
+
+        binding.tvUpdatePassword.setOnClickListener {
+
         }
     }
 

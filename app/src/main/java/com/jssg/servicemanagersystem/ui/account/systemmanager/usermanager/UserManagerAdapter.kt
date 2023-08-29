@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.account
+package com.jssg.servicemanagersystem.ui.account.systemmanager.usermanager
 
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseBindingAdapter

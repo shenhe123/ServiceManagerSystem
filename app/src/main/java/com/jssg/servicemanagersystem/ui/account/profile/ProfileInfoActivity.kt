@@ -1,18 +1,23 @@
-package com.jssg.servicemanagersystem.ui.account
+package com.jssg.servicemanagersystem.ui.account.profile
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.R
+import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityProfileInfoBinding
+import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
-class ProfileInfoActivity : AppCompatActivity() {
+class ProfileInfoActivity : BaseActivity() {
+    private lateinit var accountViewModel: AccountViewModel
     private var editable: Boolean = false
     private lateinit var binding: ActivityProfileInfoBinding
 
@@ -23,11 +28,69 @@ class ProfileInfoActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-        updateEditWidgets()
+        initView()
 
+        addListener()
+
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
+
+        accountViewModel.userInfoLiveData.observe(this) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                result.data?.let {
+                    binding.etNickname.setText(it.user.nickName)
+                    binding.etPhoneNum.setText(it.user.phonenumber)
+                    binding.etCardId.setText(it.user.idNo)
+                    binding.etAddress.setText(it.user.address)
+                }
+            }
+        }
+
+        accountViewModel.updateLiveData.observe(this) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                editable = !editable
+                initView()
+                ToastUtils.showToast("修改成功")
+            }
+        }
+
+        accountViewModel.getUserInfo()
+    }
+
+    private fun addListener() {
         binding.tvEdit.setOnClickListener {
-            editable = !editable
-            updateEditWidgets()
+            if (editable) { //更改个人信息
+                val nickname = binding.etNickname.text.toString()
+                if (nickname.isEmpty()) {
+                    ToastUtils.showToast("用户名不能为空")
+                    return@setOnClickListener
+                }
+                val phoneNumber = binding.etPhoneNum.text.toString()
+                if (nickname.isEmpty()) {
+                    ToastUtils.showToast("手机号不能为空")
+                    return@setOnClickListener
+                }
+                val cardId = binding.etCardId.text.toString()
+                if (nickname.isEmpty()) {
+                    ToastUtils.showToast("身份证号不能为空")
+                    return@setOnClickListener
+                }
+                val address = binding.etAddress.text.toString()
+                if (nickname.isEmpty()) {
+                    ToastUtils.showToast("居住地址不能为空")
+                    return@setOnClickListener
+                }
+
+                accountViewModel.updateUserInfo(nickname, phoneNumber, cardId, address)
+            } else {
+                editable = true
+                initView()
+            }
         }
 
         binding.toolBar.setNavigationOnClickListener { finish() }
@@ -78,7 +141,7 @@ class ProfileInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateEditWidgets() {
+    private fun initView() {
         binding.etNickname.isEnabled = editable
         binding.etPhoneNum.isEnabled = editable
         binding.etCardId.isEnabled = editable

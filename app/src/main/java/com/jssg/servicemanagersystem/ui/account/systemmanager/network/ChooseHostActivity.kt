@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.account
+package com.jssg.servicemanagersystem.ui.account.systemmanager.network
 
 import android.content.Context
 import android.content.Intent
