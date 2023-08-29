@@ -6,6 +6,8 @@ import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -28,5 +30,9 @@ interface ApiService {
 
     @PUT("staging-api/system/user/profile")
     fun updateUserInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
+    @FormUrlEncoded
+    @PUT("staging-api/system/user/profile/updatePwd")
+    fun updatePassword(@Field("oldPassword") oldPassword: String, @Field("newPassword") newPassword: String): Observable<BaseHttpResult<Any>>
 
 }

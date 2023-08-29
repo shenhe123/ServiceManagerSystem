@@ -2,10 +2,8 @@ package com.jssg.servicemanagersystem.ui.account.profile
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.Toast
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -51,7 +49,7 @@ class ProfileInfoActivity : BaseActivity() {
             }
         }
 
-        accountViewModel.updateLiveData.observe(this) { result ->
+        accountViewModel.updateUserInfoLiveData.observe(this) { result ->
             updateLoading(result, true)
             if (result.isSuccess) {
                 editable = !editable
@@ -93,7 +91,7 @@ class ProfileInfoActivity : BaseActivity() {
             }
 
             AccountManager.instance.getUser()?.let {
-                accountViewModel.updateUserInfo(nickname, phoneNumber, cardId, address, it.user.userId.toString())
+                accountViewModel.updateUserInfo(nickname, phoneNumber, cardId, address, it.user.userId.toString(), it.user.roleIds)
             }
         }
 
@@ -166,9 +164,9 @@ class ProfileInfoActivity : BaseActivity() {
         layout.background = drawable
     }
 
-    private fun setLast(edit: EditText) {
-        val len = edit.text?.length
-        edit.setSelection(len ?: 0)
+    private fun setLast(edit: AppCompatEditText) {
+        val len = edit.text.toString().length
+        edit.setSelection(len)
     }
 
     companion object {

@@ -11,6 +11,7 @@ import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.profile.ProfileInfoActivity
 import com.jssg.servicemanagersystem.ui.account.systemmanager.SystemSettingActivity
+import com.jssg.servicemanagersystem.ui.account.updatepwd.UpdatePasswordActivity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.login.LoginViewModel
@@ -65,7 +66,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvUpdatePassword.setOnClickListener {
-
+            UpdatePasswordActivity.goActivity(requireContext())
         }
     }
 

@@ -36,6 +36,9 @@
         tools:replace="android:label,android:allowBackup,theme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.account.updatepwd.UpdatePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.account.systemmanager.network.ChooseHostActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

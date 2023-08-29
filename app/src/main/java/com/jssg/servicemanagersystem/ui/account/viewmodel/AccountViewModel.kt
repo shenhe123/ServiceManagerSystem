@@ -1,7 +1,6 @@
 package com.jssg.servicemanagersystem.ui.account.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
 import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
@@ -16,9 +15,13 @@ import com.jssg.servicemanagersystem.utils.HUtils
  */
 class AccountViewModel : AutoDisposViewModel() {
 
-    val updateLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
 
+    /**
+     * 获取个人信息并缓存
+     */
     fun getUserInfo() {
         userInfoLiveData.value = LoadDataModel()
         RetrofitService.apiService
@@ -40,17 +43,52 @@ class AccountViewModel : AutoDisposViewModel() {
 //            .subscribe(createObserver(logoutLiveData))
     }
 
-    fun updateUserInfo(nickname: String, phoneNumber: String, cardId: String, address: String, userId: String) {
-        updateLiveData.value = LoadDataModel()
-        val params = HashMap<String, String>()
+    /**
+     * 修改个人信息
+     * @param nickname String 用户名
+     * @param phoneNumber String 手机号码
+     * @param cardId String 身份证号
+     * @param address String 居住地址
+     * @param userId String 用户ID
+     * @param roleIds List<Long>? 角色ids
+     */
+    fun updateUserInfo(
+        nickname: String,
+        phoneNumber: String,
+        cardId: String,
+        address: String,
+        userId: String,
+        roleIds: List<Long>?
+    ) {
+        updateUserInfoLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any>()
         params["nickName"] = nickname
         params["phonenumber"] = phoneNumber
         params["idNo"] = cardId
         params["address"] = address
         params["userId"] = userId
+        roleIds?.let {
+            params["roleIds"] = roleIds
+        }
         RetrofitService.apiService
-            .updateUserInfo(HUtils.createRequestBody(params))
+            .updateUserInfo(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
-            .subscribe(createObserver(updateLiveData))
+            .subscribe(createObserver(updateUserInfoLiveData))
+    }
+
+    /**
+     * 修改Miami
+     * @param oldPwd String 旧密码
+     * @param newPwd String 新密码
+     */
+    fun updatePassword(oldPwd: String, newPwd: String) {
+        updatePasswordLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any>()
+        params["oldPassword"] = oldPwd
+        params["newPassword"] = newPwd
+        RetrofitService.apiService
+            .updatePassword(oldPwd, newPwd)
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(updatePasswordLiveData))
     }
 }
