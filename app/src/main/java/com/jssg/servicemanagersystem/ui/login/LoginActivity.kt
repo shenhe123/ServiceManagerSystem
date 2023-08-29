@@ -8,6 +8,7 @@ import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActLoginLayoutBinding
 import com.jssg.servicemanagersystem.ui.MainActivity
+import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.account.ChooseHostActivity
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
@@ -17,6 +18,7 @@ import com.jssg.servicemanagersystem.utils.toast.ToastUtils
  */
 class LoginActivity: BaseActivity() {
 
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActLoginLayoutBinding
 
@@ -53,6 +55,7 @@ class LoginActivity: BaseActivity() {
 
     private fun initViewModel() {
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
 
         loginViewModel.loginLiveData.observe(this) { result ->
             updateLoading(result, true)
@@ -63,11 +66,10 @@ class LoginActivity: BaseActivity() {
                 }
 
                 result.data?.let {
+                    //保存登录状态
                     AccountManager.instance.saveAuthorization(it.token)
+                    accountViewModel.getUserInfo()
                 }
-
-                //保存登录状态
-                AccountManager.instance.saveUser()
 
                 MainActivity.goActivity(this)
                 finish()

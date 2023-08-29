@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.core
 
 import android.text.TextUtils
+import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.tencent.mmkv.MMKV
 
 /**
@@ -9,32 +10,43 @@ import com.tencent.mmkv.MMKV
  */
 class AccountManager {
 
+    private var user: UserInfo? = null
     private var authorization: String? = ""
     private var cookieStr: String? = ""
 
     fun savePassword(userName: String, pwd: String) {
-        MMKV.defaultMMKV().putString("user_login_info", "$userName+$pwd")
+        MMKV.defaultMMKV().encode("user_login_info", "$userName+$pwd")
     }
 
     fun getPassword(): String? {
         return MMKV.defaultMMKV().getString("user_login_info", null)
     }
 
-    fun saveUser() {
-        MMKV.defaultMMKV().putString("user_account_info", "success")
+    fun getUser(): UserInfo? {
+        if (user == null) {
+            user = MMKV.defaultMMKV().decodeParcelable("user_account_info", UserInfo::class.java)
+        }
+
+        return user
+    }
+
+    fun saveUser(userInfo: UserInfo) {
+        MMKV.defaultMMKV().encode("user_account_info", userInfo)
     }
     fun isLogin(): Boolean {
-        return MMKV.defaultMMKV().getString("user_account_info", "")?.equals("success") == true
+        if (getUser() == null) return false
+
+        return !getAuthorization().isNullOrEmpty()
     }
 
     fun logout() {
-        MMKV.defaultMMKV().putString("user_account_info", null)
+        MMKV.defaultMMKV().remove("user_account_info")
         saveAuthorization("")
         saveCookie("")
     }
 
     fun saveChooseHost(lastChooseHost: String) {
-        MMKV.defaultMMKV().putString("choose_host", lastChooseHost)
+        MMKV.defaultMMKV().encode("choose_host", lastChooseHost)
     }
 
     fun getChooseHost(): String? {
@@ -50,7 +62,7 @@ class AccountManager {
 
     fun saveCookie(cookie: String) {
         cookieStr = cookie
-        MMKV.defaultMMKV().putString("cookie", cookie)
+        MMKV.defaultMMKV().encode("cookie", cookie)
     }
 
     fun getAuthorization(): String? {
@@ -62,7 +74,7 @@ class AccountManager {
 
     fun saveAuthorization(authorization: String) {
         this.authorization = authorization
-        MMKV.defaultMMKV().putString("authorization", authorization)
+        MMKV.defaultMMKV().encode("authorization", authorization)
     }
 
     companion object{

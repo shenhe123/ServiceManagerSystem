@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.EditText
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.R
@@ -83,14 +85,18 @@ class ProfileInfoActivity : AppCompatActivity() {
         binding.etAddress.isEnabled = editable
         binding.etPassword.isEnabled = editable
 
-        val drawable = if (editable) ResourcesCompat.getDrawable(resources, R.drawable.selector_input_stroke, null) else null
-        binding.layoutNickname.background = drawable
-        binding.layoutPhoneNum.background = drawable
-        binding.layoutCardId.background = drawable
-        binding.layoutAddress.background = drawable
-        binding.layoutPassword.background = drawable
+        updateLayoutBackground(binding.layoutNickname)
+        updateLayoutBackground(binding.layoutPhoneNum)
+        updateLayoutBackground(binding.layoutPassword)
+        updateLayoutBackground(binding.layoutCardId)
+        updateLayoutBackground(binding.layoutAddress)
 
         binding.btnUpdate.isVisible = editable
+    }
+
+    private fun updateLayoutBackground(layout: LinearLayoutCompat) {
+        val drawable = if (editable) ResourcesCompat.getDrawable(resources, R.drawable.selector_input_stroke, null) else null
+        layout.background = drawable
     }
 
     private fun setLast(edit: EditText) {

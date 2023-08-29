@@ -10,11 +10,13 @@ import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
+import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.login.LoginViewModel
 
 class AccountFragment : BaseFragment() {
 
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: FragmentAccountLayoutBinding
 
@@ -25,6 +27,7 @@ class AccountFragment : BaseFragment() {
     ): View {
         binding = FragmentAccountLayoutBinding.inflate(inflater, container, false)
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
         return binding.root
     }
 
@@ -38,6 +41,8 @@ class AccountFragment : BaseFragment() {
                 LoginActivity.goActivity(requireActivity())
             }
         }
+
+        accountViewModel.getUserInfo()
 
         binding.tvProfileInfo.setOnClickListener {
             ProfileInfoActivity.goActivity(requireActivity())
