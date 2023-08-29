@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityProfileInfoBinding
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
@@ -53,8 +54,10 @@ class ProfileInfoActivity : BaseActivity() {
         accountViewModel.updateLiveData.observe(this) { result ->
             updateLoading(result, true)
             if (result.isSuccess) {
-
+                editable = !editable
+                initView()
                 ToastUtils.showToast("修改成功")
+                accountViewModel.getUserInfo()
             }
         }
 
@@ -89,7 +92,9 @@ class ProfileInfoActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            accountViewModel.updateUserInfo(nickname, phoneNumber, cardId, address)
+            AccountManager.instance.getUser()?.let {
+                accountViewModel.updateUserInfo(nickname, phoneNumber, cardId, address, it.user.userId.toString())
+            }
         }
 
         binding.toolBar.setNavigationOnClickListener { finish() }

@@ -40,13 +40,14 @@ class AccountViewModel : AutoDisposViewModel() {
 //            .subscribe(createObserver(logoutLiveData))
     }
 
-    fun updateUserInfo(nickname: String, phoneNumber: String, cardId: String, address: String) {
+    fun updateUserInfo(nickname: String, phoneNumber: String, cardId: String, address: String, userId: String) {
         updateLiveData.value = LoadDataModel()
         val params = HashMap<String, String>()
         params["nickName"] = nickname
         params["phonenumber"] = phoneNumber
         params["idNo"] = cardId
         params["address"] = address
+        params["userId"] = userId
         RetrofitService.apiService
             .updateUserInfo(HUtils.createRequestBody(params))
             .compose(RxSchedulersHelper.io_main())
