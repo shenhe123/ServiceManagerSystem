@@ -53,8 +53,7 @@ class ProfileInfoActivity : BaseActivity() {
         accountViewModel.updateLiveData.observe(this) { result ->
             updateLoading(result, true)
             if (result.isSuccess) {
-                editable = !editable
-                initView()
+
                 ToastUtils.showToast("修改成功")
             }
         }
@@ -64,33 +63,33 @@ class ProfileInfoActivity : BaseActivity() {
 
     private fun addListener() {
         binding.tvEdit.setOnClickListener {
-            if (editable) { //更改个人信息
-                val nickname = binding.etNickname.text.toString()
-                if (nickname.isEmpty()) {
-                    ToastUtils.showToast("用户名不能为空")
-                    return@setOnClickListener
-                }
-                val phoneNumber = binding.etPhoneNum.text.toString()
-                if (nickname.isEmpty()) {
-                    ToastUtils.showToast("手机号不能为空")
-                    return@setOnClickListener
-                }
-                val cardId = binding.etCardId.text.toString()
-                if (nickname.isEmpty()) {
-                    ToastUtils.showToast("身份证号不能为空")
-                    return@setOnClickListener
-                }
-                val address = binding.etAddress.text.toString()
-                if (nickname.isEmpty()) {
-                    ToastUtils.showToast("居住地址不能为空")
-                    return@setOnClickListener
-                }
+            editable = !editable
+            initView()
+        }
 
-                accountViewModel.updateUserInfo(nickname, phoneNumber, cardId, address)
-            } else {
-                editable = true
-                initView()
+        binding.btnUpdate.setOnClickListener {
+            val nickname = binding.etNickname.text.toString()
+            if (nickname.isEmpty()) {
+                ToastUtils.showToast("用户名不能为空")
+                return@setOnClickListener
             }
+            val phoneNumber = binding.etPhoneNum.text.toString()
+            if (nickname.isEmpty()) {
+                ToastUtils.showToast("手机号不能为空")
+                return@setOnClickListener
+            }
+            val cardId = binding.etCardId.text.toString()
+            if (nickname.isEmpty()) {
+                ToastUtils.showToast("身份证号不能为空")
+                return@setOnClickListener
+            }
+            val address = binding.etAddress.text.toString()
+            if (nickname.isEmpty()) {
+                ToastUtils.showToast("居住地址不能为空")
+                return@setOnClickListener
+            }
+
+            accountViewModel.updateUserInfo(nickname, phoneNumber, cardId, address)
         }
 
         binding.toolBar.setNavigationOnClickListener { finish() }

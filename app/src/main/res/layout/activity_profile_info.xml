@@ -145,6 +145,7 @@
                             android:layout_marginEnd="16dp"
                             android:layout_weight="1"
                             android:background="@null"
+                            android:inputType="phone"
                             android:enabled="false"
                             android:gravity="end|center_vertical"
                             android:text="13153458968"

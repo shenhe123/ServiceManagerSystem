@@ -8,6 +8,7 @@ import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 /**
  * Created by gongdongyang on 2018/9/25.
@@ -16,7 +17,7 @@ interface ApiService {
 
     //退出登录
     @POST("staging-api/logout")
-    fun logout(): Observable<BaseHttpResult<*>>
+    fun logout(): Observable<BaseHttpResult<Any>>
 
     //登录
     @POST("staging-api/login")
@@ -25,7 +26,7 @@ interface ApiService {
     @GET("staging-api/getInfo")
     fun getInfo(): Observable<BaseHttpResult<UserInfo?>>
 
-    @POST("staging-api/system/user/profile")
-    fun updateUserInfo(body: RequestBody): Observable<BaseHttpResult<*>>
+    @PUT("staging-api/system/user/profile")
+    fun updateUserInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
 }
