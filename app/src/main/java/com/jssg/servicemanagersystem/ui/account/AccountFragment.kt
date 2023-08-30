@@ -10,7 +10,8 @@ import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.profile.ProfileInfoActivity
-import com.jssg.servicemanagersystem.ui.account.systemmanager.SystemSettingActivity
+import com.jssg.servicemanagersystem.ui.account.network.ChooseHostActivity
+import com.jssg.servicemanagersystem.ui.account.usermanager.UserManagerActivity
 import com.jssg.servicemanagersystem.ui.account.updatepwd.UpdatePasswordActivity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
@@ -50,8 +51,16 @@ class AccountFragment : BaseFragment() {
             ProfileInfoActivity.goActivity(requireActivity())
         }
 
-        binding.tvSystemSetting.setOnClickListener {
-            SystemSettingActivity.goActivity(requireActivity())
+        binding.tvRoleManager.setOnClickListener {
+
+        }
+
+        binding.tvUserManager.setOnClickListener {
+            UserManagerActivity.goActivity(requireContext())
+        }
+
+        binding.tvNetworkManager.setOnClickListener {
+            ChooseHostActivity.goActivity(requireContext())
         }
 
         binding.mbtLogout.setOnClickListener {

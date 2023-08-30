@@ -62,7 +62,7 @@
         android:layout_marginEnd="16dp" />
 
     <TextView
-        android:id="@+id/tv_menu_setting"
+        android:id="@+id/tv_role_manager"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:drawablePadding="@dimen/dp_10"
@@ -70,11 +70,11 @@
         android:lines="1"
         android:paddingStart="16dp"
         android:paddingEnd="12dp"
-        android:text="菜单设置"
+        android:text="角色管理"
         android:textColor="@color/x_text_03"
         android:textSize="18sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
-        app:drawableStartCompat="@drawable/svg_menu_book"
+        app:drawableStartCompat="@drawable/svg_role"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -83,7 +83,7 @@
         android:layout_marginEnd="16dp" />
 
     <TextView
-        android:id="@+id/tv_option_logs"
+        android:id="@+id/tv_user_manager"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:drawablePadding="@dimen/dp_10"
@@ -91,8 +91,29 @@
         android:lines="1"
         android:paddingStart="16dp"
         android:paddingEnd="12dp"
-        android:text="操作日志"
-        android:textColor="@color/x_text_03"
+        android:text="用户管理"
+        android:textColor="@color/x_text_01"
+        android:textSize="18sp"
+        app:drawableEndCompat="@drawable/svg_arrow_right"
+        app:drawableStartCompat="@drawable/svg_user"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        style="@style/xToolbarDivider"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:id="@+id/tv_logs_manager"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:drawablePadding="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="12dp"
+        android:text="日志管理"
+        android:textColor="@color/x_text_01"
         android:textSize="18sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
         app:drawableStartCompat="@drawable/svg_record_voice"
@@ -104,7 +125,7 @@
         android:layout_marginEnd="16dp" />
 
     <TextView
-        android:id="@+id/tv_system_setting"
+        android:id="@+id/tv_network_manager"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:drawablePadding="@dimen/dp_10"
@@ -112,17 +133,13 @@
         android:lines="1"
         android:paddingStart="16dp"
         android:paddingEnd="12dp"
-        android:text="系统管理"
-        android:textColor="@color/x_text_03"
+        android:text="网络管理"
+        android:textColor="@color/x_text_01"
         android:textSize="18sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
-        app:drawableStartCompat="@drawable/svg_settings"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        style="@style/xToolbarDivider"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        app:drawableStartCompat="@drawable/svg_network"
+        app:layout_constraintTop_toTopOf="parent"
+        app:drawableTint="@color/x_text_01" />
 
 
     <View android:layout_width="match_parent"

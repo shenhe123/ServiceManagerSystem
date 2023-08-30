@@ -23,9 +23,9 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/logo"
-        android:scaleX="3"
-        android:scaleY="3"
+        android:src="@mipmap/ic_launcher"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"/>
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="80dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
