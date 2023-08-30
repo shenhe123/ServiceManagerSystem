@@ -11,6 +11,7 @@ import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.profile.ProfileInfoActivity
 import com.jssg.servicemanagersystem.ui.account.network.ChooseHostActivity
+import com.jssg.servicemanagersystem.ui.account.role.RoleManagerActivity
 import com.jssg.servicemanagersystem.ui.account.usermanager.UserManagerActivity
 import com.jssg.servicemanagersystem.ui.account.updatepwd.UpdatePasswordActivity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
@@ -52,7 +53,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvRoleManager.setOnClickListener {
-
+            RoleManagerActivity.goActivity(requireContext())
         }
 
         binding.tvUserManager.setOnClickListener {
