@@ -1,5 +1,6 @@
 package com.jssg.servicemanagersystem.ui.account.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
@@ -14,6 +15,11 @@ import com.jssg.servicemanagersystem.utils.HUtils
  * Created by he.shen on 2023/8/27.
  */
 class AccountViewModel : AutoDisposViewModel() {
+
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is account Fragment"
+    }
+    val text: LiveData<String> = _text
 
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()

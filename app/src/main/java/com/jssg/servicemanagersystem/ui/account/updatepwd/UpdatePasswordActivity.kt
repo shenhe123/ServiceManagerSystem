@@ -23,6 +23,9 @@ class UpdatePasswordActivity : BaseActivity() {
 
         binding = ActivityUpdatePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolBar)
+
+        binding.toolBar.setNavigationOnClickListener { finish() }
 
         accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
 

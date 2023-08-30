@@ -3,10 +3,12 @@ package com.jssg.servicemanagersystem.ui.account.systemmanager.usermanager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerBinding
+import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 
 class UserManagerActivity : BaseActivity() {
@@ -38,10 +40,10 @@ class UserManagerActivity : BaseActivity() {
 
         }
 
-//        val accountViewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
-//        accountViewModel.text.observe(this) {
-//            adapter.setNewInstance(mutableListOf("1", "1","1","1","1","1","1","1","1","1","1"))
-//        }
+        val accountViewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
+        accountViewModel.text.observe(this) {
+            adapter.setNewInstance(mutableListOf("1", "1","1","1","1","1","1","1","1","1","1"))
+        }
     }
 
     companion object {
