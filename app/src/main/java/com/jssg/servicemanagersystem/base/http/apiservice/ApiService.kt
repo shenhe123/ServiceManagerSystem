@@ -8,11 +8,13 @@ import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -49,5 +51,8 @@ interface ApiService {
 
     @PUT("staging-api/system/user")
     fun updateUserRoleIds(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
+    @DELETE("staging-api/system/user/{userId}")
+    fun deleteUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<Any>>
 
 }

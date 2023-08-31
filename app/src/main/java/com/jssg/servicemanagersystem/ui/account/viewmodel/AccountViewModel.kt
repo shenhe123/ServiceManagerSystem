@@ -18,6 +18,7 @@ import com.jssg.servicemanagersystem.utils.HUtils
  */
 class AccountViewModel : AutoDisposViewModel() {
 
+    val deleteUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
@@ -154,5 +155,13 @@ class AccountViewModel : AutoDisposViewModel() {
             .updateUserRoleIds(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(updateUserRoleIdsLiveData))
+    }
+
+    fun deleteUserInfo(userId: Long) {
+        deleteUserInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .deleteUserInfo(userId)
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(deleteUserInfoLiveData))
     }
 }

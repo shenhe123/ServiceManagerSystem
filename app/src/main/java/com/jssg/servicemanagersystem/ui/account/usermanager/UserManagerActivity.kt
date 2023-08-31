@@ -17,6 +17,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class UserManagerActivity : BaseActivity() {
+    private var clickItemPos: Int? = null
     private var page: Int = 1
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var adapter: UserManagerAdapter
@@ -35,6 +36,7 @@ class UserManagerActivity : BaseActivity() {
         binding.recyclerView.adapter = adapter
 
         adapter.setOnItemChildClickListener { _, v, position ->
+            clickItemPos = position
             val user = adapter.data[position]
             when(v.id) {
                 R.id.card_layout -> UserManagerDetailActivity.goActivity(this)
@@ -49,7 +51,14 @@ class UserManagerActivity : BaseActivity() {
                     })
                     .show(supportFragmentManager, "permission_dialog")
 
-                R.id.mbt_delete -> SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？").show(supportFragmentManager, "delete_user_dialog")
+                R.id.mbt_delete -> SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？")
+                    .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
+                        override fun onConfrimClick() {
+                            accountViewModel.deleteUserInfo(user.userId)
+                        }
+
+                    })
+                    .show(supportFragmentManager, "delete_user_dialog")
             }
 
 
@@ -81,6 +90,16 @@ class UserManagerActivity : BaseActivity() {
                 updateUserList(result)
             } else if (result.isError) {
                 ToastUtils.showToast(result.msg)
+            }
+        }
+
+        accountViewModel.deleteUserInfoLiveData.observe(this) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                ToastUtils.showToast("删除成功")
+                clickItemPos?.let {
+                    adapter.notifyItemRemoved(it)
+                }
             }
         }
 
