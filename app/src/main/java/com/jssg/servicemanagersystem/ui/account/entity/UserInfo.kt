@@ -10,7 +10,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UserInfo(
     val permissions: List<String>,
-    val roles: List<String>,
     val user: User,
 ) : Parcelable
 
@@ -21,20 +20,15 @@ data class User(
     val avatar: String,
     val createBy: String,
     val createTime: String,
-    val delFlag: String,
     val dept: String?,
     val deptId: String?,
     val email: String,
     val idNo: String?,
-    val loginDate: String,
-    val loginIp: String,
     val nickName: String,
     val phonenumber: String,
-    val postIds: String?,
     val remark: String,
     val roleId: Long?,
     val roleIds: List<Long>?,
-    val roles: List<Role>,
     val sex: String,
     val status: String,
     val updateBy: String?,
@@ -42,27 +36,4 @@ data class User(
     val userId: Int,
     val userName: String,
     val userType: String
-) : Parcelable
-
-@Parcelize
-data class Role(
-    val admin: Boolean,
-    val attachToApp: String?,
-    val createBy: String?,
-    val createTime: String?,
-    val dataScope: String,
-    val delFlag: String?,
-    val deptCheckStrictly: String?,
-    val deptIds: String?,
-    val flag: Boolean,
-    val menuCheckStrictly: String?,
-    val menuIds: String?,
-    val remark: String?,
-    val roleId: Long,
-    val roleKey: String,
-    val roleName: String,
-    val roleSort: Int,
-    val status: String,
-    val updateBy: String?,
-    val updateTime: String?
 ) : Parcelable

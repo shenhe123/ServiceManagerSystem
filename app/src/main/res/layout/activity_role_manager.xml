@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:showDividers="middle"
-    app:divider="@color/x_divider"
     tools:context=".ui.account.role.RoleManagerActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -15,129 +13,110 @@
         android:layout_height="wrap_content"
         android:background="@color/purple_700"
         app:navigationIcon="@drawable/svg_back"
-        app:title="新增角色权限"
+        app:title="新增角色"
         app:titleCentered="true"
         app:titleTextColor="@color/white" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="角色名称:"
-            android:textColor="@color/x_text_03"
-            android:textSize="16sp" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_role_name"
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/selector_input_stroke"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textColor="@color/x_text_01"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="56dp"
-        android:layout_marginTop="12dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:text="菜单权限:"
-            android:textColor="@color/x_text_03"
-            android:textSize="16sp" />
-
-        <com.nex3z.flowlayout.FlowLayout
-            android:id="@+id/et_menu_role"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            app:flRowSpacing="12dp"
-            app:flChildSpacing="12dp">
-
-<!--            <com.google.android.material.checkbox.MaterialCheckBox-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:checked="true"-->
-<!--                android:text="记住密码"/>-->
-<!--            -->
-<!--            <com.google.android.material.checkbox.MaterialCheckBox-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:checked="true"-->
-<!--                android:text="记住密码"/>-->
-
-<!--            <com.google.android.material.checkbox.MaterialCheckBox-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:checked="true"-->
-<!--                android:text="记住密码"/>-->
-<!--            -->
-<!--            <com.google.android.material.checkbox.MaterialCheckBox-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:checked="true"-->
-<!--                android:text="记住密码"/>-->
-
-        </com.nex3z.flowlayout.FlowLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="12dp"
-            android:text="备注:"
-            android:textColor="@color/x_text_03"
-            android:textSize="16sp" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_remark"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/selector_input_stroke"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:lines="10"
-            android:textColor="@color/x_text_01"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <View
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:showDividers="middle"
+            app:divider="@color/x_divider">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="角色名称:"
+                    android:textColor="@color/x_text_03"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_role_name"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_input_stroke"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/x_text_01"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:text="菜单权限:"
+                    android:textColor="@color/x_text_03"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:text="备注:"
+                    android:textColor="@color/x_text_03"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_remark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_input_stroke"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:lines="10"
+                    android:textColor="@color/x_text_01"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbt_confirm"
