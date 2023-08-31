@@ -35,4 +35,7 @@ interface ApiService {
     @PUT("staging-api/system/user/profile/updatePwd")
     fun updatePassword(@Field("oldPassword") oldPassword: String, @Field("newPassword") newPassword: String): Observable<BaseHttpResult<Any>>
 
+    @POST("staging-api/system/role")
+    fun postAddNewRole(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
 }

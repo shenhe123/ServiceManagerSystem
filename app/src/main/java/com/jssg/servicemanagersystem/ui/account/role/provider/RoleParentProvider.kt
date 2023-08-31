@@ -12,6 +12,7 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.ui.account.role.adapter.AddNewRoleAdapter
 import com.jssg.servicemanagersystem.ui.account.role.entity.RoleChildChildEntity
 import com.jssg.servicemanagersystem.ui.account.role.entity.RoleParentEntity
+import okhttp3.internal.notifyAll
 
 /**
  * Created by shenhe on 2020/7/6.
@@ -25,8 +26,18 @@ class RoleParentProvider : BaseNodeProvider() {
     override fun convert(helper: BaseViewHolder, baseNode: BaseNode) {
         val parentEntity = baseNode as RoleParentEntity
         helper.setText(R.id.tv_name, parentEntity.title)
-        val checkBox = helper.getView<MaterialCheckBox>(R.id.mcb_check)
+        val checkBox = helper.getView<MaterialCheckBox>(R.id.mcb_check_parent)
         checkBox.isChecked = parentEntity.checked
+
+        checkBox.setOnClickListener {
+            parentEntity.checked = !parentEntity.checked
+            //父节点check，子节点全部check
+            parentEntity.childNode?.forEach {
+                (it as RoleChildChildEntity).checked = parentEntity.checked
+            }
+
+            getAdapter()?.notifyDataSetChanged()
+        }
         setArrowSpin(helper, baseNode, false)
     }
 
@@ -60,20 +71,6 @@ class RoleParentProvider : BaseNodeProvider() {
             } else {
                 imageView.rotation = 0f
             }
-        }
-    }
-
-    override fun onChildClick(helper: BaseViewHolder, view: View, data: BaseNode, position: Int) {
-        super.onChildClick(helper, view, data, position)
-
-        if (view.id == R.id.mcb_check) {
-            val parentEntity =  data as RoleParentEntity
-            parentEntity.checked = !parentEntity.checked
-            //父节点check，子节点全部check
-            parentEntity.childNode?.forEach {
-                (it as RoleChildChildEntity).checked = parentEntity.checked
-            }
-            getAdapter()?.notifyItemChanged(helper.layoutPosition)
         }
     }
 

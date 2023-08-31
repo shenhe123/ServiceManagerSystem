@@ -24,6 +24,7 @@ class AccountViewModel : AutoDisposViewModel() {
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
+    val addNewRoleLiveData = MutableLiveData<LoadDataModel<Any>>()
 
     /**
      * 获取个人信息并缓存
@@ -96,5 +97,27 @@ class AccountViewModel : AutoDisposViewModel() {
             .updatePassword(oldPwd, newPwd)
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(updatePasswordLiveData))
+    }
+
+    /**
+     * 新增角色
+     * @param roleName String
+     * @param remark String
+     * @param menuIds MutableList<Long>
+     */
+    fun postAddNewRole(roleName: String, remark: String, menuIds: MutableList<Long>) {
+        addNewRoleLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any>()
+        params["roleName"] = roleName
+        params["roleKey"] = roleName
+        params["attachToApp"] = "Y"
+        params["roleSort"] = 0
+        params["status"] = "0"
+        params["remark"] = remark
+        params["menuIds"] = menuIds
+        RetrofitService.apiService
+            .postAddNewRole(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(addNewRoleLiveData))
     }
 }

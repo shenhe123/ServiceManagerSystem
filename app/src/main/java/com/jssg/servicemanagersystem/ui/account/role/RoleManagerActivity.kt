@@ -4,18 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.entity.node.BaseNode
 import com.jssg.servicemanagersystem.R
+import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityRoleManagerBinding
 import com.jssg.servicemanagersystem.ui.account.role.adapter.AddNewRoleAdapter
 import com.jssg.servicemanagersystem.ui.account.role.entity.RoleChildChildEntity
 import com.jssg.servicemanagersystem.ui.account.role.entity.RoleParentEntity
+import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.jssg.servicemanagersystem.widgets.decoration.ThemeLineItemDecoration
 
-class RoleManagerActivity : AppCompatActivity() {
+class RoleManagerActivity : BaseActivity() {
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var binding: ActivityRoleManagerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +67,20 @@ class RoleManagerActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            accountViewModel.postAddNewRole(roleName, remark, menuIds)
+        }
+
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
+
+        accountViewModel.addNewRoleLiveData.observe(this) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                ToastUtils.showToast("新增角色成功")
+            }
 
         }
     }

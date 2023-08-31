@@ -2,6 +2,7 @@ package com.jssg.servicemanagersystem.ui.account.role.adapter
 
 import com.chad.library.adapter.base.BaseNodeAdapter
 import com.chad.library.adapter.base.entity.node.BaseNode
+import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.ui.account.role.entity.RoleParentEntity
 import com.jssg.servicemanagersystem.ui.account.role.provider.RoleChildProvider
 import com.jssg.servicemanagersystem.ui.account.role.provider.RoleParentProvider
@@ -26,6 +27,8 @@ class AddNewRoleAdapter : BaseNodeAdapter() {
         addNodeProvider(RoleChildProvider())
         // 脚布局的 provider
 //        addFooterNodeProvider(new RootFooterNodeProvider());
+
+        addChildClickViewIds(R.id.mcb_check_parent, R.id.mcb_check_child)
     }
 
     companion object {
