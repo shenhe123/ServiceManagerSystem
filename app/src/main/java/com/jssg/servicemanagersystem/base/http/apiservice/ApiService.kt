@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.base.http.apiservice
 
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
+import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
@@ -42,5 +43,11 @@ interface ApiService {
 
     @GET("staging-api/system/user/list")
     fun getUserList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>>>
+
+    @GET("staging-api/system/role/list")
+    fun getRoleList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<Role>>>
+
+    @PUT("staging-api/system/user")
+    fun updateUserRoleIds(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
 }

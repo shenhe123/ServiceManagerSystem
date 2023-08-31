@@ -17,10 +17,10 @@ class UserManagerAdapter: BaseBindingAdapter<User, ItemUserManagerLayoutBinding>
     }
 
     override fun convert(holder: VBViewHolder<ItemUserManagerLayoutBinding>, item: User) {
-        holder.binding.tvId.text = "用户ID：1001"
-        holder.binding.tvName.text = "用户名：用户001"
-        holder.binding.tvPassword.text = "密码：123456"
-        holder.binding.tvPhone.text = "13256789040"
+        holder.binding.tvId.text = "用户ID：${item.userId}"
+        holder.binding.tvName.text = "用户名：${item.nickName}"
+        holder.binding.tvPhone.text = "联系方式：${item.phonenumber}"
+        holder.binding.tvAddress.text = "居住地址：${item.address}"
     }
 
 }

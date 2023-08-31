@@ -1,7 +1,9 @@
 package com.jssg.servicemanagersystem.core
 
 import android.text.TextUtils
+import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
+import com.jssg.servicemanagersystem.utils.JsonUtils
 import com.tencent.mmkv.MMKV
 
 /**
@@ -75,6 +77,21 @@ class AccountManager {
     fun saveAuthorization(authorization: String) {
         this.authorization = authorization
         MMKV.defaultMMKV().encode("authorization", authorization)
+    }
+
+    fun saveRoleList(roleList: List<Role>?) {
+        roleList?.let {
+            val toJson = JsonUtils.toJson(roleList)
+            MMKV.defaultMMKV().encode("role_list", toJson)
+        }
+    }
+
+    fun getRoleList(): List<Role>? {
+        val decodeString = MMKV.defaultMMKV().decodeString("role_list")
+        decodeString?.let {
+            return JsonUtils.getListFromJson(it, Role::class.java)
+        }
+        return null
     }
 
     companion object{

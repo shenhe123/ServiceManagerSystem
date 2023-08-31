@@ -28,7 +28,7 @@ data class User(
     val phonenumber: String,
     val remark: String,
     val roleId: Long?,
-    val roleIds: List<Long>?,
+    var roleIds: List<String>?,
     val sex: String,
     val status: String,
     val updateBy: String?,

@@ -47,7 +47,12 @@ class AccountFragment : BaseFragment() {
         }
 
         accountViewModel.getUserInfo()
+        accountViewModel.getRoleList()
 
+        addListener()
+    }
+
+    private fun addListener() {
         binding.tvProfileInfo.setOnClickListener {
             ProfileInfoActivity.goActivity(requireActivity())
         }

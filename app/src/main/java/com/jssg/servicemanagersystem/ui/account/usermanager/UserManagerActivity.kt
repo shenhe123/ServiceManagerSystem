@@ -35,10 +35,18 @@ class UserManagerActivity : BaseActivity() {
         binding.recyclerView.adapter = adapter
 
         adapter.setOnItemChildClickListener { _, v, position ->
+            val user = adapter.data[position]
             when(v.id) {
                 R.id.card_layout -> UserManagerDetailActivity.goActivity(this)
 
-                R.id.mbt_permission -> PermissionDialogFragment.newInstance()
+                R.id.mbt_permission -> PermissionDialogFragment.newInstance(user)
+                    .addOnFinishListener(object :PermissionDialogFragment.OnFinishListener{
+                        override fun onFinish(newUser: User) {
+                            adapter.data[position] = newUser
+                            adapter.notifyItemChanged(position)
+                        }
+
+                    })
                     .show(supportFragmentManager, "permission_dialog")
 
                 R.id.mbt_delete -> SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？").show(supportFragmentManager, "delete_user_dialog")

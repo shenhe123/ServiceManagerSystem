@@ -7,6 +7,7 @@ import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.core.AccountManager
+import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.utils.HUtils
@@ -22,6 +23,8 @@ class AccountViewModel : AutoDisposViewModel() {
     val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
     val addNewRoleLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userListLiveData = MutableLiveData<LoadListDataModel<List<User>?>>()
+    val roleListLiveData = MutableLiveData<LoadListDataModel<List<Role>?>>()
+    val updateUserRoleIdsLiveData = MutableLiveData<LoadDataModel<Any>>()
 
     /**
      * 获取个人信息并缓存
@@ -54,7 +57,7 @@ class AccountViewModel : AutoDisposViewModel() {
         cardId: String,
         address: String,
         userId: String,
-        roleIds: List<Long>?
+        roleIds: List<String>?
     ) {
         updateUserInfoLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
@@ -121,5 +124,35 @@ class AccountViewModel : AutoDisposViewModel() {
             .getUserList(mPage, 20)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(userListLiveData, isRefresh, page))
+    }
+
+    fun getRoleList() {
+        roleListLiveData.value = LoadListDataModel(true)
+        RetrofitService.apiService
+            .getRoleList(1, 999)
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .doOnNext {
+                AccountManager.instance.saveRoleList(it)
+            }
+            .subscribe(createListObserver(roleListLiveData, true, 1))
+    }
+
+    fun updateUserRoleIds(
+        checkedRoleIds: MutableList<String>,
+        user: User,
+    ) {
+        updateUserRoleIdsLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any?>()
+        params["userId"] = user.userId
+        params["userName"] = user.userName
+        params["nickName"] = user.nickName
+        params["idNo"] = user.idNo
+        params["address"] = user.address
+        params["phonenumber"] = user.phonenumber
+        params["roleIds"] = checkedRoleIds
+        RetrofitService.apiService
+            .updateUserRoleIds(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(updateUserRoleIdsLiveData))
     }
 }
