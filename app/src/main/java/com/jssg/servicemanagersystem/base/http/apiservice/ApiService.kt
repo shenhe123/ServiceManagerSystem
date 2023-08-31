@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.base.http.apiservice
 
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
+import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
 import io.reactivex.Observable
@@ -11,6 +12,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Query
 
 /**
  * Created by gongdongyang on 2018/9/25.
@@ -37,5 +39,8 @@ interface ApiService {
 
     @POST("staging-api/system/role")
     fun postAddNewRole(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
+    @GET("staging-api/system/user/list")
+    fun getUserList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>>>
 
 }

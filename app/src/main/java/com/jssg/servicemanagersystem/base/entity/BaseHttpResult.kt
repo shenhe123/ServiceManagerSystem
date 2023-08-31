@@ -9,6 +9,8 @@ class BaseHttpResult<T> : Serializable {
     @JvmField
     var data: T? = null
 
+    var rows: T? = null
+
     fun setData(data: T) {
         this.data = data
     }

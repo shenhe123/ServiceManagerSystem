@@ -57,6 +57,19 @@ public class RxSchedulersHelper {
                 });
     }
 
+    public static <T> ObservableTransformer<BaseHttpResult<T>, T> ObsResultWithMain2() {
+        return (upstream) -> upstream.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(result -> {
+                    if (result.isSuccess()) {
+                        return Observable.just(result.getRows());
+                    } else {
+                        LogUtil.e("ServerException", result.code + ":" + result.getMsg());
+                        return Observable.error(new ServerException(result.code, result.getMsg()));
+                    }
+                });
+    }
+
     public static <T> ObservableTransformer<BaseHttpResult<T>, T> ObsHandHttpResult() {
         return (upstream) -> upstream.flatMap(result -> {
             if (result.isSuccess()) {

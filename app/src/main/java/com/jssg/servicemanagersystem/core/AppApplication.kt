@@ -13,6 +13,7 @@ import com.tencent.mmkv.MMKV
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.LinkedList
 import com.jssg.servicemanagersystem.BuildConfig
+import com.jssg.servicemanagersystem.base.refresh.RefreshLayoutManager
 import java.lang.IllegalStateException
 
 /**
@@ -57,6 +58,8 @@ class AppApplication: BaseCoreApplication() {
         }
 
         CrashReport.initCrashReport(applicationContext, "6ade02869d", BuildConfig.DEBUG);
+
+        RefreshLayoutManager.init()
 
         lookHomeUI()
     }

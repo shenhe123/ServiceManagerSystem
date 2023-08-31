@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult;
 import com.jssg.servicemanagersystem.base.http.observer.WQBaseObserver;
+import com.jssg.servicemanagersystem.ui.account.entity.User;
+
+import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -56,6 +59,37 @@ public class AutoDisposViewModel extends ViewModel {
             public void onFailure(int code, String message) {
                 super.onFailure(code, message);
                 liveData.setValue(new LoadDataModel<>(code, message));
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+                super.onSubscribe(d);
+                addDispos(d);
+
+            }
+        };
+    }
+
+    protected <T> WQBaseObserver<T> createListObserver(@NonNull MutableLiveData<LoadListDataModel<T>> liveData, boolean isRefresh, int page) {
+        return new WQBaseObserver<T>() {
+            @Override
+            public void onSuccess(T t) {
+                if (t instanceof BaseHttpResult) {
+                    BaseHttpResult result = (BaseHttpResult) t;
+                    if (result.isSuccess()) {
+                        liveData.setValue(new LoadListDataModel<>(t, isRefresh));
+                    } else {
+                        liveData.setValue(new LoadListDataModel<>(result.code, result.getMsg(), isRefresh));
+                    }
+                } else {
+                    liveData.postValue(new LoadListDataModel<>(t, isRefresh));
+                }
+            }
+
+            @Override
+            public void onFailure(int code, String message) {
+                super.onFailure(code, message);
+                liveData.setValue(new LoadListDataModel<>(code, message, isRefresh));
             }
 
             @Override

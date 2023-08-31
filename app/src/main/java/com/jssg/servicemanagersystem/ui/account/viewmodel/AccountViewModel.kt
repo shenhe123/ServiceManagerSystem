@@ -1,12 +1,13 @@
 package com.jssg.servicemanagersystem.ui.account.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
+import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.core.AccountManager
+import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.utils.HUtils
 
@@ -16,15 +17,11 @@ import com.jssg.servicemanagersystem.utils.HUtils
  */
 class AccountViewModel : AutoDisposViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is account Fragment"
-    }
-    val text: LiveData<String> = _text
-
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
     val addNewRoleLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val userListLiveData = MutableLiveData<LoadListDataModel<List<User>?>>()
 
     /**
      * 获取个人信息并缓存
@@ -40,14 +37,6 @@ class AccountViewModel : AutoDisposViewModel() {
                 }
             }
             .subscribe(createObserver(userInfoLiveData))
-    }
-
-    fun getPermission() {
-//        logoutLiveData.value = LoadDataModel()
-//        RetrofitService.apiService
-//            .logout()
-//            .compose(RxSchedulersHelper.io_main())
-//            .subscribe(createObserver(logoutLiveData))
     }
 
     /**
@@ -119,5 +108,18 @@ class AccountViewModel : AutoDisposViewModel() {
             .postAddNewRole(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(addNewRoleLiveData))
+    }
+
+    fun getUserList(page: Int, isRefresh: Boolean) {
+        userListLiveData.value = LoadListDataModel(isRefresh)
+        val mPage = if (isRefresh) {
+            1
+        } else {
+            page + 1
+        }
+        RetrofitService.apiService
+            .getUserList(mPage, 20)
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .subscribe(createListObserver(userListLiveData, isRefresh, page))
     }
 }

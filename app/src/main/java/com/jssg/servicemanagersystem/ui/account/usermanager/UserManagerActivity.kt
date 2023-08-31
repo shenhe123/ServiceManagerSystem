@@ -7,11 +7,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
+import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerBinding
+import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class UserManagerActivity : BaseActivity() {
+    private var page: Int = 1
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var adapter: UserManagerAdapter
     private lateinit var binding: ActivityUserManagerBinding
 
@@ -40,10 +47,51 @@ class UserManagerActivity : BaseActivity() {
 
         }
 
-        val accountViewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
-        accountViewModel.text.observe(this) {
-            adapter.setNewInstance(mutableListOf("1", "1","1","1","1","1","1","1","1","1","1"))
+        binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object :OnRefreshLoadMoreListener{
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                loadData(true)
+            }
+
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                loadData(false)
+            }
+
+        })
+
+        accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
+        accountViewModel.userListLiveData.observe(this) { result ->
+            if (!result.isLoading) {
+                hideLoading()
+                if (result.isPullRefresh) {
+                    binding.smartRefreshLayout.finishRefresh()
+                } else {
+                    binding.smartRefreshLayout.finishLoadMore()
+                }
+            }
+
+            if (result.isSuccess) {
+                updateUserList(result)
+            } else if (result.isError) {
+                ToastUtils.showToast(result.msg)
+            }
         }
+
+        showProgressbarLoading()
+        loadData(true)
+    }
+
+    private fun updateUserList(result: LoadListDataModel<List<User>?>) {
+        result.rows?.let {
+            if (result.isPullRefresh) {
+                adapter.setList(it)
+            } else {
+                adapter.addData(it)
+            }
+        }
+    }
+
+    private fun loadData(isRefresh: Boolean) {
+        accountViewModel.getUserList(page, isRefresh)
     }
 
     companion object {

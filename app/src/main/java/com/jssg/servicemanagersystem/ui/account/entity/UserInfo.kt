@@ -20,7 +20,7 @@ data class User(
     val avatar: String,
     val createBy: String,
     val createTime: String,
-    val dept: String?,
+    val dept: Dept?,
     val deptId: String?,
     val email: String,
     val idNo: String?,
@@ -33,7 +33,13 @@ data class User(
     val status: String,
     val updateBy: String?,
     val updateTime: String?,
-    val userId: Int,
+    val userId: Long,
     val userName: String,
     val userType: String
+) : Parcelable
+
+@Parcelize
+data class Dept(
+    val deptId: Long,
+    val deptName: String,
 ) : Parcelable
