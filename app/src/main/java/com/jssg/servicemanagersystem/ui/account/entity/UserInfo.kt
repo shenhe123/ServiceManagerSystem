@@ -15,7 +15,7 @@ data class UserInfo(
 
 @Parcelize
 data class User(
-    val address: String?,
+    var address: String?,
     val admin: Boolean,
     val avatar: String,
     val createBy: String,
@@ -23,10 +23,10 @@ data class User(
     val dept: Dept?,
     val deptId: String?,
     val email: String,
-    val idNo: String?,
-    val nickName: String,
-    val phonenumber: String,
-    val remark: String,
+    var idNo: String?,
+    var nickName: String,
+    var phonenumber: String,
+    val remark: String?,
     val roleId: Long?,
     var roleIds: List<String>?,
     val sex: String,
@@ -35,8 +35,7 @@ data class User(
     val updateTime: String?,
     val userId: Long,
     val userName: String,
-    val userType: String,
-    val expireDate: String
+    var expireDate: String
 ) : Parcelable
 
 @Parcelize

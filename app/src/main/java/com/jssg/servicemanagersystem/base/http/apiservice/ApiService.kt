@@ -3,6 +3,7 @@ package com.jssg.servicemanagersystem.base.http.apiservice
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
+import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
 import io.reactivex.Observable
@@ -34,7 +35,7 @@ interface ApiService {
     fun getInfo(): Observable<BaseHttpResult<UserInfo?>>
 
     @PUT("staging-api/system/user/profile")
-    fun updateUserInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+    fun updateUserProfile(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
     @FormUrlEncoded
     @PUT("staging-api/system/user/profile/updatePwd")
@@ -50,7 +51,7 @@ interface ApiService {
     fun getRoleList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<Role>>>
 
     @PUT("staging-api/system/user")
-    fun updateUserRoleIds(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+    fun updateUserInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
     @DELETE("staging-api/system/user/{userId}")
     fun deleteUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<Any>>
@@ -60,5 +61,8 @@ interface ApiService {
 
     @GET("staging-api/system/user/list")
     fun searchUser(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>?>>
+
+    @GET("staging-api/system/user/app/{userId}")
+    fun getUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<UserData?>>
 
 }

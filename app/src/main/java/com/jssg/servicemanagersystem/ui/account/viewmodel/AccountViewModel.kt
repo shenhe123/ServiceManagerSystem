@@ -9,6 +9,7 @@ import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
+import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.utils.HUtils
 
@@ -20,19 +21,20 @@ class AccountViewModel : AutoDisposViewModel() {
 
     val deleteUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
-    val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val updateUserProfileLiveData = MutableLiveData<LoadDataModel<Any>>()
     val addNewUserLiveData = MutableLiveData<LoadDataModel<Any>>()
-    val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
+    val userProfileLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
+    val userInfoLiveData = MutableLiveData<LoadDataModel<UserData?>>()
     val addNewRoleLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userListLiveData = MutableLiveData<LoadListDataModel<List<User>?>>()
     val roleListLiveData = MutableLiveData<LoadListDataModel<List<Role>?>>()
-    val updateUserRoleIdsLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
 
     /**
      * 获取个人信息并缓存
      */
-    fun getUserInfo() {
-        userInfoLiveData.value = LoadDataModel()
+    fun getUserProfile() {
+        userProfileLiveData.value = LoadDataModel()
         RetrofitService.apiService
             .getInfo()
             .compose(RxSchedulersHelper.ObsResultWithMain())
@@ -41,7 +43,7 @@ class AccountViewModel : AutoDisposViewModel() {
                     AccountManager.instance.saveUser(it)
                 }
             }
-            .subscribe(createObserver(userInfoLiveData))
+            .subscribe(createObserver(userProfileLiveData))
     }
 
     /**
@@ -53,7 +55,7 @@ class AccountViewModel : AutoDisposViewModel() {
      * @param userId String 用户ID
      * @param roleIds List<Long>? 角色ids
      */
-    fun updateUserInfo(
+    fun updateUserProfile(
         nickname: String,
         phoneNumber: String,
         cardId: String,
@@ -61,7 +63,7 @@ class AccountViewModel : AutoDisposViewModel() {
         userId: String,
         roleIds: List<String>?
     ) {
-        updateUserInfoLiveData.value = LoadDataModel()
+        updateUserProfileLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
         params["nickName"] = nickname
         params["phonenumber"] = phoneNumber
@@ -72,9 +74,9 @@ class AccountViewModel : AutoDisposViewModel() {
             params["roleIds"] = roleIds
         }
         RetrofitService.apiService
-            .updateUserInfo(HUtils.createRequestBodyMap(params))
+            .updateUserProfile(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
-            .subscribe(createObserver(updateUserInfoLiveData))
+            .subscribe(createObserver(updateUserProfileLiveData))
     }
 
     /**
@@ -139,23 +141,29 @@ class AccountViewModel : AutoDisposViewModel() {
             .subscribe(createListObserver(roleListLiveData, true, 1))
     }
 
-    fun updateUserRoleIds(
-        checkedRoleIds: MutableList<String>,
+    fun updateUserInfo(
+        checkedRoleIds: List<String>?,
         user: User,
+        password: String = ""
     ) {
-        updateUserRoleIdsLiveData.value = LoadDataModel()
+        updateUserInfoLiveData.value = LoadDataModel()
         val params = HashMap<String, Any?>()
         params["userId"] = user.userId
         params["userName"] = user.userName
         params["nickName"] = user.nickName
         params["idNo"] = user.idNo
         params["address"] = user.address
+        if (password.isNotEmpty()) {
+            params["password"] = password
+        }
         params["phonenumber"] = user.phonenumber
-        params["roleIds"] = checkedRoleIds
+        checkedRoleIds?.let {
+            params["roleIds"] = checkedRoleIds
+        }
         RetrofitService.apiService
-            .updateUserRoleIds(HUtils.createRequestBodyMap(params))
+            .updateUserInfo(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
-            .subscribe(createObserver(updateUserRoleIdsLiveData))
+            .subscribe(createObserver(updateUserInfoLiveData))
     }
 
     fun deleteUserInfo(userId: Long) {
@@ -197,5 +205,13 @@ class AccountViewModel : AutoDisposViewModel() {
             .searchUser(input, 1, 9999)
             .compose(RxSchedulersHelper.ObsResultWithMain())
             .subscribe(createListObserver(userListLiveData, true, 1))
+    }
+
+    fun getUserInfo(userId: Long) {
+        userInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getUserInfo(userId)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(userInfoLiveData))
     }
 }

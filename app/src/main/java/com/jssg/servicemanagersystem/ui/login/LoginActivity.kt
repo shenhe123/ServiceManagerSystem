@@ -68,7 +68,7 @@ class LoginActivity: BaseActivity() {
                 result.data?.let {
                     //保存登录状态
                     AccountManager.instance.saveAuthorization(it.token)
-                    accountViewModel.getUserInfo()
+                    accountViewModel.getUserProfile()
                 }
 
                 MainActivity.goActivity(this)

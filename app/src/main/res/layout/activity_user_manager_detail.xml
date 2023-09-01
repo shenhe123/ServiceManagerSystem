@@ -71,7 +71,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -79,15 +79,22 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="用户名"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="名"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_nickname"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -101,9 +108,8 @@
                             android:background="@null"
                             android:enabled="false"
                             android:gravity="end|center_vertical"
-                            android:text="shenhe"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -111,22 +117,29 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="手机号"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="名"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_phone_num"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -135,38 +148,45 @@
                             android:id="@+id/et_phone_num"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="12dp"
                             android:layout_marginEnd="16dp"
                             android:layout_weight="1"
                             android:background="@null"
                             android:enabled="false"
                             android:gravity="end|center_vertical"
-                            android:text="13153458968"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_password_root"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="密码"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="密码"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_password"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -175,36 +195,34 @@
                             android:id="@+id/et_password"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="12dp"
                             android:layout_marginEnd="16dp"
                             android:background="@null"
                             android:enabled="false"
                             android:gravity="end|center_vertical"
-                            android:text="123456"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="身份证号"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_card_id"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -213,15 +231,13 @@
                             android:id="@+id/et_card_id"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="12dp"
                             android:layout_marginEnd="16dp"
                             android:layout_weight="1"
                             android:background="@null"
                             android:enabled="false"
                             android:gravity="end|center_vertical"
-                            android:text="1234564444444"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -229,22 +245,22 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:text="现居住地址"
+                        android:layout_marginStart="16dp"
+                        android:text="居住地址"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_address"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -253,15 +269,13 @@
                             android:id="@+id/et_address"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="12dp"
                             android:layout_marginEnd="16dp"
                             android:layout_weight="1"
                             android:background="@null"
                             android:enabled="false"
                             android:gravity="end|center_vertical"
-                            android:text="北京市昌平区回龙观大街114号"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -269,48 +283,54 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:text="有效期/是否有效"
+                        android:layout_marginStart="16dp"
+                        android:text="有效日期"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_expired_date"
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/layout_expired_date"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:enabled="false"
-                        android:gravity="end"
-                        android:paddingEnd="16dp"
-                        android:text="2023-09-02"
-                        android:textColor="@color/x_text_01"
-                        android:textSize="16sp" />
+                        android:layout_weight="1">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_expired_date"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="16dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:enabled="false"
+                            android:gravity="end|center_vertical"
+                            android:textColor="@color/x_text_01"
+                            android:textSize="14sp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="创建人"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_create_person"
@@ -323,25 +343,24 @@
                         android:enabled="false"
                         android:gravity="end"
                         android:paddingEnd="16dp"
-                        android:text="2023-09-02"
                         android:textColor="@color/x_text_01"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="创建时间"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_create_time"
@@ -354,25 +373,24 @@
                         android:enabled="false"
                         android:gravity="end"
                         android:paddingEnd="16dp"
-                        android:text="2023-09-02"
                         android:textColor="@color/x_text_01"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="更新人"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_update_person"
@@ -385,25 +403,24 @@
                         android:enabled="false"
                         android:gravity="end"
                         android:paddingEnd="16dp"
-                        android:text="2023-09-02"
                         android:textColor="@color/x_text_01"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:text="更新时间"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_update_time"
@@ -416,9 +433,8 @@
                         android:enabled="false"
                         android:gravity="end"
                         android:paddingEnd="16dp"
-                        android:text="2023-09-02"
                         android:textColor="@color/x_text_01"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 

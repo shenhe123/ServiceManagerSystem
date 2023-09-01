@@ -13,7 +13,6 @@ import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityProfileInfoBinding
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
-import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 class ProfileInfoActivity : BaseActivity() {
@@ -38,7 +37,7 @@ class ProfileInfoActivity : BaseActivity() {
     private fun initViewModel() {
         accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
 
-        accountViewModel.userInfoLiveData.observe(this) { result ->
+        accountViewModel.userProfileLiveData.observe(this) { result ->
             updateLoading(result, true)
             if (result.isSuccess) {
                 result.data?.let {
@@ -51,17 +50,17 @@ class ProfileInfoActivity : BaseActivity() {
             }
         }
 
-        accountViewModel.updateUserInfoLiveData.observe(this) { result ->
+        accountViewModel.updateUserProfileLiveData.observe(this) { result ->
             updateLoading(result, true)
             if (result.isSuccess) {
                 editable = !editable
                 initView()
                 ToastUtils.showToast("修改成功")
-                accountViewModel.getUserInfo()
+                accountViewModel.getUserProfile()
             }
         }
 
-        accountViewModel.getUserInfo()
+        accountViewModel.getUserProfile()
     }
 
     private fun addListener() {
@@ -93,7 +92,7 @@ class ProfileInfoActivity : BaseActivity() {
             }
 
             AccountManager.instance.getUser()?.let {
-                accountViewModel.updateUserInfo(nickname, phoneNumber, cardId, address, it.user.userId.toString(), it.user.roleIds)
+                accountViewModel.updateUserProfile(nickname, phoneNumber, cardId, address, it.user.userId.toString(), it.user.roleIds)
             }
         }
 

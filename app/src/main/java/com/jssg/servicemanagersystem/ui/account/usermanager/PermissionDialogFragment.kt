@@ -53,7 +53,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
             }
         }
 
-        accountViewModel.updateUserRoleIdsLiveData.observe(this) { result ->
+        accountViewModel.updateUserInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
                 ToastUtils.showToast(result.msg)
                 if (this::listener.isInitialized) {
@@ -88,7 +88,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
             }
 
             user?.let {
-                accountViewModel.updateUserRoleIds(checkedRoleIds, it)
+                accountViewModel.updateUserInfo(checkedRoleIds, it)
             }
         }
     }

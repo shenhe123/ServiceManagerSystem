@@ -46,7 +46,7 @@ class AccountFragment : BaseFragment() {
             }
         }
 
-        accountViewModel.getUserInfo()
+        accountViewModel.getUserProfile()
         accountViewModel.getRoleList()
 
         addListener()

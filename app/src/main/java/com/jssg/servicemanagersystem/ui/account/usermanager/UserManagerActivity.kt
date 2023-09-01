@@ -48,7 +48,7 @@ class UserManagerActivity : BaseActivity() {
             clickItemPos = position
             val user = adapter.data[position]
             when(v.id) {
-                R.id.card_layout -> UserManagerDetailActivity.goActivity(this)
+                R.id.card_layout -> UserManagerDetailActivity.goActivity(this, user)
 
                 R.id.mbt_permission -> PermissionDialogFragment.newInstance(user)
                     .addOnFinishListener(object :PermissionDialogFragment.OnFinishListener{
