@@ -65,13 +65,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="56dp"
+                android:paddingBottom="48dp"
                 app:divider="@color/x_divider"
                 app:showDividers="middle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -82,12 +82,12 @@
                         android:layout_marginStart="12dp"
                         android:text="用户名"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_nickname"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -110,7 +110,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -120,12 +120,12 @@
                         android:layout_marginStart="12dp"
                         android:text="手机号"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_phone_num"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -142,7 +142,7 @@
                             android:enabled="false"
                             android:gravity="end|center_vertical"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -150,7 +150,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:visibility="gone">
@@ -161,12 +161,12 @@
                         android:layout_marginStart="12dp"
                         android:text="密码"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_password"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -182,14 +182,14 @@
                             android:gravity="end|center_vertical"
                             android:text="123456"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -199,12 +199,12 @@
                         android:layout_marginStart="12dp"
                         android:text="身份证号"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_card_id"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -220,7 +220,7 @@
                             android:enabled="false"
                             android:gravity="end|center_vertical"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -228,7 +228,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -238,12 +238,12 @@
                         android:layout_marginStart="12dp"
                         android:text="现居住地址"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layout_address"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1">
@@ -259,7 +259,7 @@
                             android:enabled="false"
                             android:gravity="end|center_vertical"
                             android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -267,7 +267,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -277,148 +277,23 @@
                         android:layout_marginStart="12dp"
                         android:text="有效期/是否有效"
                         android:textColor="@color/x_text_03"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_expired_date"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1"
                         android:background="@null"
                         android:enabled="false"
-                        android:gravity="end"
+                        android:gravity="end|center_vertical"
                         android:paddingEnd="16dp"
-                        android:text="2023-09-02"
                         android:textColor="@color/x_text_01"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="创建人"-->
-<!--                        android:textColor="@color/x_text_03"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatEditText-->
-<!--                        android:id="@+id/et_create_person"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@null"-->
-<!--                        android:enabled="false"-->
-<!--                        android:gravity="end"-->
-<!--                        android:paddingEnd="16dp"-->
-<!--                        android:text="2023-09-02"-->
-<!--                        android:textColor="@color/x_text_01"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                </LinearLayout>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="创建时间"-->
-<!--                        android:textColor="@color/x_text_03"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatEditText-->
-<!--                        android:id="@+id/et_create_time"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@null"-->
-<!--                        android:enabled="false"-->
-<!--                        android:gravity="end"-->
-<!--                        android:paddingEnd="16dp"-->
-<!--                        android:text="2023-09-02"-->
-<!--                        android:textColor="@color/x_text_01"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                </LinearLayout>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="更新人"-->
-<!--                        android:textColor="@color/x_text_03"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatEditText-->
-<!--                        android:id="@+id/et_update_person"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@null"-->
-<!--                        android:enabled="false"-->
-<!--                        android:gravity="end"-->
-<!--                        android:paddingEnd="16dp"-->
-<!--                        android:text="2023-09-02"-->
-<!--                        android:textColor="@color/x_text_01"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                </LinearLayout>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="更新时间"-->
-<!--                        android:textColor="@color/x_text_03"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                    <androidx.appcompat.widget.AppCompatEditText-->
-<!--                        android:id="@+id/et_update_time"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@null"-->
-<!--                        android:enabled="false"-->
-<!--                        android:gravity="end"-->
-<!--                        android:paddingEnd="16dp"-->
-<!--                        android:text="2023-09-02"-->
-<!--                        android:textColor="@color/x_text_01"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                </LinearLayout>-->
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -433,7 +308,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="@dimen/dp_10"
-        android:minHeight="56dp"
+        android:minHeight="48dp"
         android:text="提交"
         android:textColor="@color/white"
         android:textSize="15sp"

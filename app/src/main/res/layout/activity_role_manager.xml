@@ -31,7 +31,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="48dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -39,14 +39,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="角色名称:"
+                    android:text="角色名称"
                     android:textColor="@color/x_text_03"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_role_name"
                     android:layout_width="0dp"
-                    android:layout_height="42dp"
+                    android:layout_height="36dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
@@ -71,9 +71,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
-                    android:text="菜单权限:"
+                    android:text="菜单权限"
                     android:textColor="@color/x_text_03"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
@@ -93,9 +93,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
-                    android:text="备注:"
+                    android:text="备注"
                     android:textColor="@color/x_text_03"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="备注"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_remark"
@@ -109,7 +116,7 @@
                     android:paddingEnd="10dp"
                     android:lines="10"
                     android:textColor="@color/x_text_01"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

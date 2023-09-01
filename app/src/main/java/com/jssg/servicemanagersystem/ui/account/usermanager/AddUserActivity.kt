@@ -50,6 +50,8 @@ class AddUserActivity : BaseActivity() {
     }
 
     private fun addListener() {
+        binding.toolBar.setNavigationOnClickListener { finish() }
+
         binding.mbtSubmit.setOnClickListener {
             val nickName = binding.etNickname.text.toString()
             if (nickName.isEmpty()) {
