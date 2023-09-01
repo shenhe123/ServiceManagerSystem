@@ -21,7 +21,7 @@ class AccountViewModel : AutoDisposViewModel() {
     val deleteUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
-    val addNewUserLiveData = MutableLiveData<LoadDataModel<User>>()
+    val addNewUserLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
     val addNewRoleLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userListLiveData = MutableLiveData<LoadListDataModel<List<User>?>>()
@@ -187,7 +187,15 @@ class AccountViewModel : AutoDisposViewModel() {
         params["roleIds"] = checkedRoleIds
         RetrofitService.apiService
             .addNewUser(HUtils.createRequestBodyMap(params))
-            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(addNewUserLiveData))
+    }
+
+    fun searchUser(input: String) {
+        userListLiveData.value = LoadListDataModel(true)
+        RetrofitService.apiService
+            .searchUser(input, 1, 9999)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createListObserver(userListLiveData, true, 1))
     }
 }

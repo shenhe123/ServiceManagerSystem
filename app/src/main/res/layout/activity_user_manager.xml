@@ -45,7 +45,7 @@
             android:layout_toStartOf="@id/mbt_search">
 
             <EditText
-                android:id="@+id/input_username"
+                android:id="@+id/input_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/app_search"
@@ -60,7 +60,7 @@
             android:layout_gravity="center_vertical"
             android:layout_alignStart="@id/layout_input"
             android:layout_marginStart="12dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="3dp"
             android:src="@mipmap/ic_search"
             app:tint="@color/x_text_03" />
 
@@ -89,6 +89,19 @@
             android:layout_height="match_parent"/>
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂无用户"
+        android:textColor="@color/x_text_03"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fbtn_add_new"

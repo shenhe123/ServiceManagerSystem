@@ -56,6 +56,9 @@ interface ApiService {
     fun deleteUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<Any>>
 
     @POST("staging-api/system/user")
-    fun addNewUser(@Body body: RequestBody): Observable<BaseHttpResult<User>>
+    fun addNewUser(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
+    @GET("staging-api/system/user/list")
+    fun searchUser(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>?>>
 
 }

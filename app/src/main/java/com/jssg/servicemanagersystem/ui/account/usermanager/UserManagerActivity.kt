@@ -3,6 +3,9 @@ package com.jssg.servicemanagersystem.ui.account.usermanager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.R
@@ -74,6 +77,15 @@ class UserManagerActivity : BaseActivity() {
             launcherAddUser.launch("")
         }
 
+        binding.mbtSearch.setOnClickListener {
+            val input = binding.inputSearch.text.toString()
+            if (input.isEmpty()) {
+
+                return@setOnClickListener
+            }
+            accountViewModel.searchUser(input)
+        }
+
         binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object :OnRefreshLoadMoreListener{
             override fun onRefresh(refreshLayout: RefreshLayout) {
                 loadData(true)
@@ -100,6 +112,7 @@ class UserManagerActivity : BaseActivity() {
                 updateUserList(result)
             } else if (result.isError) {
                 ToastUtils.showToast(result.msg)
+                showNoData(true)
             }
         }
 
@@ -117,14 +130,21 @@ class UserManagerActivity : BaseActivity() {
         loadData(true)
     }
 
+    private fun showNoData(isVisible: Boolean) {
+        binding.tvEmpty.isVisible = isVisible
+    }
+
     private fun updateUserList(result: LoadListDataModel<List<User>?>) {
         result.rows?.let {
+            val reversedList = it.reversed()
             if (result.isPullRefresh) {
-                adapter.setList(it)
+                adapter.setList(reversedList)
             } else {
-                adapter.addData(it)
+                adapter.addData(reversedList)
             }
         }
+
+        showNoData(adapter.data.isEmpty())
     }
 
     private fun loadData(isRefresh: Boolean) {
