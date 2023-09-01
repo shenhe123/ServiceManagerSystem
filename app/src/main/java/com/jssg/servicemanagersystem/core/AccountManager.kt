@@ -1,6 +1,8 @@
 package com.jssg.servicemanagersystem.core
 
 import android.text.TextUtils
+import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
+import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.utils.JsonUtils
@@ -90,6 +92,34 @@ class AccountManager {
         val decodeString = MMKV.defaultMMKV().decodeString("role_list")
         decodeString?.let {
             return JsonUtils.getListFromJson(it, Role::class.java)
+        }
+        return null
+    }
+
+    fun saveFactoryInfo(factoryInfos: List<FactoryInfo>?) {
+        factoryInfos?.let {
+            MMKV.defaultMMKV().encode("factory_infos", JsonUtils.toJson(it))
+        }
+    }
+
+    fun getFactoryInfo(): List<FactoryInfo>?{
+        val json = MMKV.defaultMMKV().decodeString("factory_infos", "")
+        json?.let {
+            return JsonUtils.getListFromJson(it, FactoryInfo::class.java)
+        }
+        return null
+    }
+
+    fun saveDeptInfo(deptInfos: List<DeptInfo>?) {
+        deptInfos?.let {
+            MMKV.defaultMMKV().encode("dept_infos", JsonUtils.toJson(it))
+        }
+    }
+
+    fun getDeptInfo(): List<DeptInfo>?{
+        val json = MMKV.defaultMMKV().decodeString("dept_infos", "")
+        json?.let {
+            return JsonUtils.getListFromJson(it, DeptInfo::class.java)
         }
         return null
     }

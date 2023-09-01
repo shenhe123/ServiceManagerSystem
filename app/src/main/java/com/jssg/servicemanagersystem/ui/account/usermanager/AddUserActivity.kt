@@ -5,7 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -17,6 +20,8 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityAddUserBinding
+import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
+import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.utils.DateUtil
@@ -26,6 +31,10 @@ import java.math.BigDecimal
 import java.util.Calendar
 
 class AddUserActivity : BaseActivity() {
+    private var deptId: String? = null
+    private var orgId: String? = null
+    private var deptInfos: List<DeptInfo>? = null
+    private var factoryInfos: List<FactoryInfo>? = null
     private lateinit var checkedRoleIds: MutableList<String>
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var binding: ActivityAddUserBinding
@@ -51,6 +60,47 @@ class AddUserActivity : BaseActivity() {
 
     private fun addListener() {
         binding.toolBar.setNavigationOnClickListener { finish() }
+
+        binding.asFactory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                factoryInfos?.let {
+                    binding.asFactory.prompt = it[position].orgName
+
+                    if (!it[position].orgName.equals("请选择工厂")) {
+                        orgId = it[position].orgId
+                    }
+
+                    accountViewModel.getDeptInfo(it[position].orgId)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+
+        binding.asDept.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                deptInfos?.let {
+                    binding.asDept.prompt = it[position].label
+
+                    if (!it[position].label.equals("请选择部门")) {
+                        deptId = it[position].id
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
         binding.mbtSubmit.setOnClickListener {
             val nickName = binding.etNickname.text.toString()
@@ -94,7 +144,7 @@ class AddUserActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            accountViewModel.addNewUser(nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds)
+            accountViewModel.addNewUser(nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)
         }
 
         binding.tvExpiredDate.setOnClickListener {
@@ -174,6 +224,42 @@ class AddUserActivity : BaseActivity() {
                 finish()
             }
         }
+
+        accountViewModel.factoryInfoLiveData.observe(this) { result ->
+            if (result.isSuccess) {
+                val list = if (result.data.isNullOrEmpty()) {
+                    listOf("请选择工厂")
+                } else {
+                    factoryInfos = result.data!!
+                    result.data!!.map { info -> info.orgName }
+                }
+
+                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                    this, android.R.layout.simple_spinner_item, list
+                )
+                adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+                binding.asFactory.adapter = adapter
+            }
+        }
+
+        accountViewModel.deptInfoLiveData.observe(this) { result ->
+            if (result.isSuccess) {
+                val list = if (result.data.isNullOrEmpty()) {
+                    listOf("请选择部门")
+                } else {
+                    deptInfos = result.data!!
+                    result.data!!.map { info -> info.label }
+                }
+
+                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                    this, android.R.layout.simple_spinner_item, list
+                )
+                adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+                binding.asDept.adapter = adapter
+            }
+        }
+
+        accountViewModel.getFactoryInfo()
     }
 
     private fun addCheckBoxWidget(role: Role): AppCompatCheckBox {

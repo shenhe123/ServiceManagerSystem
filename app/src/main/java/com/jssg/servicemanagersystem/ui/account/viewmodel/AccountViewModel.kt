@@ -7,6 +7,8 @@ import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.core.AccountManager
+import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
+import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
@@ -19,6 +21,8 @@ import com.jssg.servicemanagersystem.utils.HUtils
  */
 class AccountViewModel : AutoDisposViewModel() {
 
+    val deptInfoLiveData = MutableLiveData<LoadDataModel<List<DeptInfo>?>>()
+    val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<FactoryInfo>?>>()
     val deleteUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateUserProfileLiveData = MutableLiveData<LoadDataModel<Any>>()
@@ -181,7 +185,9 @@ class AccountViewModel : AutoDisposViewModel() {
         cardId: String,
         address: String,
         expiredDate: String,
-        checkedRoleIds: List<String>
+        checkedRoleIds: List<String>,
+        orgId: String?,
+        deptId: String?
     ) {
         addNewUserLiveData.value = LoadDataModel()
         val params = HashMap<String, Any?>()
@@ -193,6 +199,12 @@ class AccountViewModel : AutoDisposViewModel() {
         params["phonenumber"] = phoneNumber
         params["expireDate"] = expiredDate
         params["roleIds"] = checkedRoleIds
+        orgId?.let {
+            params["orgId"] = it
+        }
+        deptId?.let {
+            params["deptId"] = it
+        }
         RetrofitService.apiService
             .addNewUser(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
@@ -213,5 +225,24 @@ class AccountViewModel : AutoDisposViewModel() {
             .getUserInfo(userId)
             .compose(RxSchedulersHelper.ObsResultWithMain())
             .subscribe(createObserver(userInfoLiveData))
+    }
+
+    fun getFactoryInfo() {
+        factoryInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getFactoryInfo()
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .doOnNext { AccountManager.instance.saveFactoryInfo(it) }
+            .subscribe(createObserver(factoryInfoLiveData))
+    }
+
+    fun getDeptInfo(parentId: String) {
+        deptInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getDeptInfo(parentId)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .doOnNext { AccountManager.instance.saveDeptInfo(it) }
+            .subscribe(createObserver(deptInfoLiveData))
+
     }
 }

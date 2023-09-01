@@ -1,6 +1,8 @@
 package com.jssg.servicemanagersystem.base.http.apiservice
 
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
+import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
+import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
@@ -64,5 +66,11 @@ interface ApiService {
 
     @GET("staging-api/system/user/app/{userId}")
     fun getUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<UserData?>>
+
+    @GET("staging-api/system/user/organizations")
+    fun getFactoryInfo(): Observable<BaseHttpResult<List<FactoryInfo>?>>
+
+    @GET("staging-api/system/user/deptTree")
+    fun getDeptInfo(@Query("parentId") parentId: String): Observable<BaseHttpResult<List<DeptInfo>?>>
 
 }
