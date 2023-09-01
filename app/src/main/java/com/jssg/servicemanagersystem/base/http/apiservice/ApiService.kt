@@ -55,4 +55,7 @@ interface ApiService {
     @DELETE("staging-api/system/user/{userId}")
     fun deleteUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<Any>>
 
+    @POST("staging-api/system/user")
+    fun addNewUser(@Body body: RequestBody): Observable<BaseHttpResult<User>>
+
 }

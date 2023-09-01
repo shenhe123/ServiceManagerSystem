@@ -21,6 +21,7 @@ class AccountViewModel : AutoDisposViewModel() {
     val deleteUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val addNewUserLiveData = MutableLiveData<LoadDataModel<User>>()
     val userInfoLiveData = MutableLiveData<LoadDataModel<UserInfo?>>()
     val addNewRoleLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userListLiveData = MutableLiveData<LoadListDataModel<List<User>?>>()
@@ -163,5 +164,30 @@ class AccountViewModel : AutoDisposViewModel() {
             .deleteUserInfo(userId)
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(deleteUserInfoLiveData))
+    }
+
+    fun addNewUser(
+        nickName: String,
+        phoneNumber: String,
+        password: String,
+        cardId: String,
+        address: String,
+        expiredDate: String,
+        checkedRoleIds: List<String>
+    ) {
+        addNewUserLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any?>()
+        params["userName"] = nickName
+        params["nickName"] = nickName
+        params["idNo"] = cardId
+        params["address"] = address
+        params["password"] = password
+        params["phonenumber"] = phoneNumber
+        params["expireDate"] = expiredDate
+        params["roleIds"] = checkedRoleIds
+        RetrofitService.apiService
+            .addNewUser(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(addNewUserLiveData))
     }
 }

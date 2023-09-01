@@ -23,6 +23,12 @@ class UserManagerActivity : BaseActivity() {
     private lateinit var adapter: UserManagerAdapter
     private lateinit var binding: ActivityUserManagerBinding
 
+    private val launcherAddUser = registerForActivityResult(AddUserActivity.AddUserContracts()) { newUser ->
+        newUser?.let {
+            loadData(true)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,6 +68,10 @@ class UserManagerActivity : BaseActivity() {
             }
 
 
+        }
+
+        binding.fbtnAddNew.setOnClickListener {
+            launcherAddUser.launch("")
         }
 
         binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object :OnRefreshLoadMoreListener{

@@ -13,6 +13,7 @@ import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityProfileInfoBinding
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
+import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 class ProfileInfoActivity : BaseActivity() {
@@ -45,6 +46,7 @@ class ProfileInfoActivity : BaseActivity() {
                     binding.etPhoneNum.setText(it.user.phonenumber)
                     binding.etCardId.setText(it.user.idNo)
                     binding.etAddress.setText(it.user.address)
+                    binding.etExpiredDate.setText(it.user.expireDate)
                 }
             }
         }
@@ -75,17 +77,17 @@ class ProfileInfoActivity : BaseActivity() {
                 return@setOnClickListener
             }
             val phoneNumber = binding.etPhoneNum.text.toString()
-            if (nickname.isEmpty()) {
+            if (phoneNumber.isEmpty()) {
                 ToastUtils.showToast("手机号不能为空")
                 return@setOnClickListener
             }
             val cardId = binding.etCardId.text.toString()
-            if (nickname.isEmpty()) {
+            if (cardId.isEmpty()) {
                 ToastUtils.showToast("身份证号不能为空")
                 return@setOnClickListener
             }
             val address = binding.etAddress.text.toString()
-            if (nickname.isEmpty()) {
+            if (address.isEmpty()) {
                 ToastUtils.showToast("居住地址不能为空")
                 return@setOnClickListener
             }

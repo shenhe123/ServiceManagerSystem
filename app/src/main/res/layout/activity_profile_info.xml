@@ -108,12 +108,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/v_username_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -154,12 +148,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/v_phone_num_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -198,12 +186,6 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </LinearLayout>
-
-                <View
-                    android:id="@+id/v_password_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -244,12 +226,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/v_card_id_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -288,12 +264,6 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </LinearLayout>
-
-                <View
-                    android:id="@+id/v_address_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1sp"
-                    android:background="@drawable/selector_input_stroke" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
