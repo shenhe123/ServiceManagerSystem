@@ -109,7 +109,8 @@ class WorkOrderFragment : BaseFragment() {
     private fun addListener() {
 
         adapter.setOnItemClickListener { _, _, position ->
-            WorkOrderActivity.goActivity(requireActivity())
+            val workOrderInfo = adapter.data[position]
+            WorkOrderDetailActivity.goActivity(requireActivity(), workOrderInfo)
         }
 
         binding.fbtnAddNew.setOnClickListener {

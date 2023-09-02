@@ -13,7 +13,6 @@
         app:titleCentered="true"
         app:titleTextColor="@color/white"
         android:background="@color/purple_700"
-        app:navigationIcon="@drawable/svg_back"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <RelativeLayout
