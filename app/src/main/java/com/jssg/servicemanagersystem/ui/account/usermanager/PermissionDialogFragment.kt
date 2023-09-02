@@ -101,7 +101,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
         binding.layoutPermission.removeAllViews()
         //这个用户未设置任何角色
         if (roleIds.isNullOrEmpty()) {
-            roleList.sortedBy { BigDecimal(it.roleId).toLong() }
+            roleList.filter { !it.admin }
                 .forEach {
                 binding.layoutPermission.addView(addCheckBoxWidget(it, false))
             }
@@ -109,7 +109,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
         }
 
         //展示全部角色信息，并选中当前用户的角色信息
-        roleList.sortedBy { BigDecimal(it.roleId).toLong() }
+        roleList.filter { !it.admin }
             .forEach {
             binding.layoutPermission.addView(addCheckBoxWidget(it, roleIds.contains(it.roleId)))
         }
@@ -117,39 +117,18 @@ class PermissionDialogFragment: BaseDialogFragment() {
 
     private fun addCheckBoxWidget(role: Role, isChecked: Boolean): AppCompatCheckBox {
         val checkBox = AppCompatCheckBox(requireContext())
-        val width = if (role.admin) -1 else -2
-        checkBox.layoutParams = ViewGroup.LayoutParams(width, DpPxUtils.dip2px(requireContext(), 25f))
-        checkBox.text = if (role.admin) "${role.roleName}（操作所有功能）" else role.roleName
+        checkBox.layoutParams = ViewGroup.LayoutParams(-2, DpPxUtils.dip2px(requireContext(), 25f))
+        checkBox.text = role.roleName
         checkBox.isChecked = isChecked
         checkBox.tag = role.roleId
-        val textColor = if (role.admin)
-            AppCompatResources.getColorStateList(requireContext(), R.color.text_600)
-        else
-            AppCompatResources.getColorStateList(requireContext(), R.color.x_text_01)
-        checkBox.setTextColor(textColor)
+        checkBox.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.color.x_text_01))
 
         checkBox.setOnClickListener {
             if (checkBox.isChecked) {
-                //选中管理员
-                if (role.admin) {
-                    checkedRoleIds.clear()
-                    binding.layoutPermission.children.forEach {
-                        (it as AppCompatCheckBox).isChecked = true
-                        checkedRoleIds.add(role.roleId)
-                    }
-                } else {
-                    checkedRoleIds.add(role.roleId)
-                }
+                checkedRoleIds.add(role.roleId)
             } else {
-                if (role.admin) {
-                    checkedRoleIds.clear()
-                    binding.layoutPermission.children.forEach {
-                        (it as AppCompatCheckBox).isChecked = false
-                    }
-                } else {
-                    if (checkedRoleIds.contains(role.roleId)) {
-                        checkedRoleIds.remove(role.roleId)
-                    }
+                if (checkedRoleIds.contains(role.roleId)) {
+                    checkedRoleIds.remove(role.roleId)
                 }
             }
         }

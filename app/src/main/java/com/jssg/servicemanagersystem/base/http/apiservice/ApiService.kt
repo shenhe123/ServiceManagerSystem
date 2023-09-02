@@ -64,6 +64,9 @@ interface ApiService {
     @GET("staging-api/system/user/list")
     fun searchUser(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>?>>
 
+    @GET("staging-api/system/role/list")
+    fun searchRole(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<Role>?>>
+
     @GET("staging-api/system/user/app/{userId}")
     fun getUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<UserData?>>
 
@@ -72,5 +75,8 @@ interface ApiService {
 
     @GET("staging-api/system/user/deptTree")
     fun getDeptInfo(@Query("parentId") parentId: String): Observable<BaseHttpResult<List<DeptInfo>?>>
+
+    @PUT("staging-api/system/role")
+    fun updateRoleInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
 }

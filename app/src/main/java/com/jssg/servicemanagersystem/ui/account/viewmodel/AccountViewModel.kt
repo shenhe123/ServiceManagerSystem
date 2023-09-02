@@ -33,6 +33,7 @@ class AccountViewModel : AutoDisposViewModel() {
     val userListLiveData = MutableLiveData<LoadListDataModel<List<User>?>>()
     val roleListLiveData = MutableLiveData<LoadListDataModel<List<Role>?>>()
     val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val updateRoleInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
 
     /**
      * 获取个人信息并缓存
@@ -219,6 +220,14 @@ class AccountViewModel : AutoDisposViewModel() {
             .subscribe(createListObserver(userListLiveData, true, 1))
     }
 
+    fun searchRole(input: String) {
+        roleListLiveData.value = LoadListDataModel(true)
+        RetrofitService.apiService
+            .searchRole(input, 1, 9999)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createListObserver(roleListLiveData, true, 1))
+    }
+
     fun getUserInfo(userId: Long) {
         userInfoLiveData.value = LoadDataModel()
         RetrofitService.apiService
@@ -244,5 +253,21 @@ class AccountViewModel : AutoDisposViewModel() {
             .doOnNext { AccountManager.instance.saveDeptInfo(it) }
             .subscribe(createObserver(deptInfoLiveData))
 
+    }
+
+    fun updateRoleInfo(menuIds: MutableList<Long>, role: Role) {
+        updateRoleInfoLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any?>()
+        params["roleId"] = role.roleId
+        params["roleName"] = role.roleName
+        params["roleKey"] = role.roleKey
+        params["attachToApp"] = "Y"
+        params["roleSort"] = "0"
+        params["remark"] = role.remark
+        params["menuIds"] = menuIds
+        RetrofitService.apiService
+            .updateRoleInfo(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(updateRoleInfoLiveData))
     }
 }

@@ -12,8 +12,10 @@ data class Role(
     val admin: Boolean,
     val attachToApp: String,
     val deptIds: List<Long>,
+    var menuIds: List<Long>,
     val roleId: String,
     val roleKey: String,
     val roleName: String,
     val roleSort: Int,
+    val remark: String?
 ) : Parcelable

@@ -31,46 +31,34 @@
         android:layout_marginEnd="12dp"
         app:layout_constraintTop_toBottomOf="@id/tool_bar">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_input"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxCornerRadiusBottomEnd="30dp"
-            app:boxCornerRadiusBottomStart="30dp"
-            app:boxCornerRadiusTopEnd="30dp"
-            app:boxCornerRadiusTopStart="30dp"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/input_search"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            app:boxBackgroundColor="@color/trans"
+            android:layout_height="40dp"
+            android:hint="@string/app_search"
+            android:background="@drawable/selector_input_stroke"
+            android:inputType="text"
+            android:paddingStart="40dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/mbt_search">
-
-            <EditText
-                android:id="@+id/input_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/app_search"
-                android:inputType="text"
-                android:paddingStart="40dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_toStartOf="@id/mbt_search" />
 
         <ImageView
             android:layout_width="22dp"
-            android:layout_height="52dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:layout_alignStart="@id/layout_input"
+            android:layout_alignStart="@id/input_search"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="3dp"
             android:src="@mipmap/ic_search"
             app:tint="@color/x_text_03" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbt_search"
             android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:layout_gravity="end"
-            android:layout_marginTop="10dp"
+            app:cornerRadius="@dimen/dp_4"
             android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
             style="@style/NoInsetThemeButton"
             android:text="@string/app_search"/>
 
