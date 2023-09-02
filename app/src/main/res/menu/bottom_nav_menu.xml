@@ -4,11 +4,6 @@
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_onsite_options" />
-
-    <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/svg_work_order"
         android:title="@string/title_work_order" />
 
     <item

@@ -11,7 +11,6 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityMainBinding
 import com.jssg.servicemanagersystem.ui.account.AccountFragment
-import com.jssg.servicemanagersystem.ui.onsite.OnsiteOptionsFragment
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 
 class MainActivity : BaseActivity() {
@@ -41,10 +40,9 @@ class MainActivity : BaseActivity() {
         binding.navView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.navigation_dashboard -> binding.viewPager.setCurrentItem(0, false)
-                R.id.navigation_home -> binding.viewPager.setCurrentItem(1, false)
-                R.id.navigation_travel_report -> binding.viewPager.setCurrentItem(2, false)
-                R.id.navigation_report -> binding.viewPager.setCurrentItem(3, false)
-                R.id.navigation_mine -> binding.viewPager.setCurrentItem(4, false)
+                R.id.navigation_travel_report -> binding.viewPager.setCurrentItem(1, false)
+                R.id.navigation_report -> binding.viewPager.setCurrentItem(2, false)
+                R.id.navigation_mine -> binding.viewPager.setCurrentItem(3, false)
             }
 
             true
@@ -55,13 +53,12 @@ class MainActivity : BaseActivity() {
         FragmentStateAdapter(fragmentActivity) {
         override fun createFragment(position: Int): Fragment {
             when (position) {
-                0 -> return OnsiteOptionsFragment.newInstance()
+                0 -> return WorkOrderFragment.newInstance()
                 1 -> return WorkOrderFragment.newInstance()
                 2 -> return WorkOrderFragment.newInstance()
-                3 -> return WorkOrderFragment.newInstance()
-                4-> return AccountFragment.newInstance()
+                3-> return AccountFragment.newInstance()
             }
-            return OnsiteOptionsFragment.newInstance()
+            return WorkOrderFragment.newInstance()
         }
 
 

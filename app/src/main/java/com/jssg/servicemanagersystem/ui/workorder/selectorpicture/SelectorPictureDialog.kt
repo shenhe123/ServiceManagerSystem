@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.onsite.selectorpicture
+package com.jssg.servicemanagersystem.ui.workorder.selectorpicture
 
 import android.Manifest
 import android.annotation.SuppressLint

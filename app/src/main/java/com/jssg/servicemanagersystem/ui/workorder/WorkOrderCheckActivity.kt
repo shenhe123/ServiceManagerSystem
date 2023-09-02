@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.onsite
+package com.jssg.servicemanagersystem.ui.workorder
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -16,9 +16,9 @@ import com.bumptech.glide.Glide
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityOrderCheckBinding
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
-import com.jssg.servicemanagersystem.ui.onsite.selectorpicture.PicturesPreviewActivity
-import com.jssg.servicemanagersystem.ui.onsite.selectorpicture.SelectorPictureDialog
-import com.jssg.servicemanagersystem.ui.onsite.selectorpicture.SelectorPictureViewModel
+import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.PicturesPreviewActivity
+import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureDialog
+import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureViewModel
 import com.jssg.servicemanagersystem.utils.DpPxUtils
 import com.jssg.servicemanagersystem.utils.MyLocationClient
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
@@ -26,7 +26,7 @@ import com.luck.picture.lib.entity.LocalMedia
 import net.arvin.permissionhelper.PermissionHelper
 import java.io.File
 
-class OrderCheckActivity : BaseActivity() {
+class WorkOrderCheckActivity : BaseActivity() {
     private lateinit var selectorPictureViewModel: SelectorPictureViewModel
     private lateinit var binding: ActivityOrderCheckBinding
 
@@ -201,7 +201,7 @@ class OrderCheckActivity : BaseActivity() {
 
     companion object {
         fun goActivity(context: Context) {
-            context.startActivity(Intent(context, OrderCheckActivity::class.java))
+            context.startActivity(Intent(context, WorkOrderCheckActivity::class.java))
         }
     }
 

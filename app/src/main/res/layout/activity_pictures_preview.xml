@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="?attr/fullscreenBackgroundColor"
     android:theme="@style/ThemeOverlay.ServiceManagerSystem.FullscreenContainer"
-    tools:context=".ui.onsite.selectorpicture.PicturesPreviewActivity">
+    tools:context=".ui.workorder.selectorpicture.PicturesPreviewActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,

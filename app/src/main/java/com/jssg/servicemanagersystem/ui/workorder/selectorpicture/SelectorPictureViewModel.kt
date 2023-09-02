@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.onsite.selectorpicture
+package com.jssg.servicemanagersystem.ui.workorder.selectorpicture
 
 import androidx.lifecycle.MutableLiveData
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel

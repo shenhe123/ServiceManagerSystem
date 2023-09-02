@@ -80,7 +80,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.onsite.selectorpicture.PicturesPreviewActivity"
+            android:name=".ui.workorder.selectorpicture.PicturesPreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_pictures_preview"
@@ -91,7 +91,7 @@
             android:exported="false"
             android:label="@string/title_activity_main" />
         <activity
-            android:name=".ui.onsite.OrderCheckActivity"
+            android:name=".ui.workorder.WorkOrderCheckActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -107,7 +107,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.onsite.OrderHandleActivity"
+            android:name=".ui.workorder.WorkOrderDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" /> <!-- 百度地图定位 开始 -->
         <meta-data

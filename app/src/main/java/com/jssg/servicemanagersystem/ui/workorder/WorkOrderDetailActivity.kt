@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.onsite
+package com.jssg.servicemanagersystem.ui.workorder
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityOrderHandleBinding
 
-class OrderHandleActivity : BaseActivity() {
+class WorkOrderDetailActivity : BaseActivity() {
     private lateinit var binding: ActivityOrderHandleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,13 +18,13 @@ class OrderHandleActivity : BaseActivity() {
         showBack()
 
         binding.mbtCheckOrder.setOnClickListener {
-            OrderCheckActivity.goActivity(this)
+            WorkOrderCheckActivity.goActivity(this)
         }
     }
 
     companion object {
         fun goActivity(context: Context) {
-            context.startActivity(Intent(context, OrderHandleActivity::class.java))
+            context.startActivity(Intent(context, WorkOrderDetailActivity::class.java))
         }
     }
 }
