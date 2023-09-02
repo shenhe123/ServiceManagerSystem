@@ -8,8 +8,10 @@ import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
+import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -85,5 +87,11 @@ interface ApiService {
 
     @GET("staging-api/qm/workOrder/list")
     fun searchWorkOrderList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
+
+    @POST("staging-api/system/oss/upload")
+    fun fileOssUpload(@Body body: MultipartBody): Observable<BaseHttpResult<UploadEntity?>>
+
+    @POST("staging-api/qm/workOrderDetail")
+    fun addWorkOrderDetail(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
 }

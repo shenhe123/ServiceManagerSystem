@@ -225,14 +225,14 @@
                     android:text="服务单价：1234" />
 
                 <TextView
-                    android:id="@+id/tv_service_period"
+                    android:id="@+id/tv_product_num"
                     style="@style/SubTitleStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="预估服务周期：10" />
+                    android:text="不良数量：10" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -242,7 +242,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"
                 app:layout_constraintStart_toStartOf="@id/layout_service_price"
                 app:layout_constraintTop_toBottomOf="@id/layout_service_price">
@@ -255,14 +255,27 @@
                     android:text="预估总费用：12344" />
 
                 <TextView
-                    android:id="@+id/tv_address"
+                    android:id="@+id/tv_service_period"
                     style="@style/SubTitleStyle"
-                    android:layout_marginTop="12dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="服务地点：北京市四季青" />
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="预估服务周期：10" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <TextView
+                android:id="@+id/tv_address"
+                style="@style/SubTitleStyle"
+                android:layout_marginTop="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:text="服务地点：北京市四季青"
+                app:layout_constraintStart_toStartOf="@id/layout_service_total"
+                app:layout_constraintTop_toBottomOf="@id/layout_service_total"/>
 
             <RelativeLayout
                 android:id="@+id/layout_service_desc"
@@ -272,8 +285,8 @@
                 android:elevation="2dp"
                 android:paddingBottom="12dp"
                 app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"
-                app:layout_constraintStart_toStartOf="@id/layout_service_total"
-                app:layout_constraintTop_toBottomOf="@id/layout_service_total">
+                app:layout_constraintStart_toStartOf="@id/tv_address"
+                app:layout_constraintTop_toBottomOf="@id/tv_address">
 
                 <TextView
                     android:id="@+id/tv_service_desc"

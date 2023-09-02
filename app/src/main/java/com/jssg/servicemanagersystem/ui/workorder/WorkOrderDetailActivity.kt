@@ -34,11 +34,14 @@ class WorkOrderDetailActivity : BaseActivity() {
             binding.tvServicePeriod.text = "预估服务周期：${it.servicePeriod}"
             binding.tvTotalPrice.text = "预估总费用：${it.totalPrice}"
             binding.tvAddress.text = "服务地点：${it.serviceAdd}"
+            binding.tvProductNum.text = "不良数量：${it.productNum}"
             binding.etRemark.setText(it.remark)
         }
 
         binding.mbtCheckOrder.setOnClickListener {
-            WorkOrderCheckActivity.goActivity(this)
+            inputData?.let {
+                WorkOrderCheckActivity.goActivity(this, it)
+            }
         }
     }
 

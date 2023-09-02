@@ -72,7 +72,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -266,9 +267,10 @@
                     style="@style/SubTitleStyle"/>
 
                 <TextView
+                    android:id="@+id/tv_check_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2023-08-25 10:10:10"
+                    tools:text="2023-08-25 10:10:10"
                     android:textSize="15sp"
                     style="@style/SubTitleStyleBold"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -277,12 +279,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_light"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -307,23 +303,107 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="* "
-                    android:textColor="@android:color/holo_red_light"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="不良数量总(至今)："
                     style="@style/SubTitleStyle"/>
 
                 <TextView
-                    android:id="@+id/et_bad_num_total"
+                    android:id="@+id/tv_bad_num_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textSize="15sp"
                     style="@style/SubTitleStyleBold"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* "
+                    android:textColor="@android:color/holo_red_light"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="排查数量"
+                    style="@style/SubTitleStyle"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_check_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textSize="15sp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/selector_input_stroke"
+                    style="@style/SubTitleStyleBold"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* "
+                    android:textColor="@android:color/holo_red_light"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="不良数量"
+                    style="@style/SubTitleStyle"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_bad_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textSize="15sp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/selector_input_stroke"
+                    style="@style/SubTitleStyleBold"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <RelativeLayout
+                android:id="@+id/layout_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:elevation="2dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:id="@+id/tv_remark"
+                    style="@style/SubTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="备注：" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:padding="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_below="@id/tv_remark"
+                    android:background="@drawable/selector_input_stroke"
+                    android:lines="8"
+                    android:textColor="@color/x_text_03"
+                    android:maxLines="10" />
+
+            </RelativeLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -338,12 +418,14 @@
         android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbt_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:text="保存"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbt_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
