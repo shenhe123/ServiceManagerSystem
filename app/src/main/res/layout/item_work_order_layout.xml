@@ -2,81 +2,109 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="10dp">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="12dp">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_order_id_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp">
+            android:textSize="13sp"
+            android:text="工单编号"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <TextView
-                android:id="@+id/tv_order_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/SubTitleStyle"/>
-
-            <TextView
-                android:id="@+id/tv_apply_name"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                style="@style/SubTitleStyle"
-                android:gravity="end"
-                android:layout_height="wrap_content"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_order_id"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="10dp">
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id_title"
+            app:layout_constraintStart_toStartOf="@id/tv_order_id_title"/>
 
-            <TextView
-                android:id="@+id/tv_apply_factory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/SubTitleStyle"/>
-
-            <TextView
-                android:id="@+id/tv_apply_dept"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:layout_height="wrap_content"
-                style="@style/SubTitleStyle"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_order_date_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="10dp">
+            android:textSize="13sp"
+            android:text="申请日期"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <TextView
-                android:id="@+id/tv_apply_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/SubTitleStyle"/>
+        <TextView
+            android:id="@+id/tv_apply_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_date_title"
+            app:layout_constraintEnd_toEndOf="@id/tv_order_date_title"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:layout_height="wrap_content"
-                style="@style/SubTitleStyle"/>
+        <TextView
+            android:id="@+id/tv_apply_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="申请人"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id"
+            app:layout_constraintStart_toStartOf="@id/tv_order_id"/>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:id="@+id/tv_apply_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name_title"
+            app:layout_constraintStart_toStartOf="@id/tv_apply_name_title"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:id="@+id/tv_apply_factory_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="申请工厂"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_apply_factory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_apply_dept_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="申请部门"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_apply_dept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name_title"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

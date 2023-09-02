@@ -8,6 +8,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -78,5 +79,11 @@ interface ApiService {
 
     @PUT("staging-api/system/role")
     fun updateRoleInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
+    @GET("staging-api/qm/workOrder/list")
+    fun getWorkOrderList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
+
+    @GET("staging-api/qm/workOrder/list")
+    fun searchWorkOrderList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
 }

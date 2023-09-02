@@ -43,6 +43,11 @@
         <item name="android:textColor">@color/x_text_03</item>
     </style>
 
+    <style name="SecTitleStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/x_text_01</item>
+    </style>
+
     <style name="SubTitleStyleBold">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">14sp</item>

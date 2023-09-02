@@ -8,4 +8,13 @@
         <attr name="fullscreenBackgroundColor" format="color" />
         <attr name="fullscreenTextColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="XTextView">
+        <attr name="x_textview_title" format="string" />
+        <attr name="x_textview_content" format="string" />
+        <attr name="x_textview_gravity">
+            <enum name="start" value="1" />
+            <enum name="center" value="2" />
+            <enum name="end" value="3" />
+        </attr>
+    </declare-styleable>
 </resources>

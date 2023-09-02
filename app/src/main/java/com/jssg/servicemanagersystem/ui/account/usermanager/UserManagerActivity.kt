@@ -140,7 +140,11 @@ class UserManagerActivity : BaseActivity() {
             if (result.isPullRefresh) {
                 adapter.setList(reversedList)
             } else {
-                adapter.addData(reversedList)
+                if (reversedList.isEmpty()) { //无更多数据
+                    binding.smartRefreshLayout.setNoMoreData(true)
+                } else {
+                    adapter.addData(reversedList)
+                }
             }
         }
 
