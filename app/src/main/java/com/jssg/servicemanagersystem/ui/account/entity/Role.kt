@@ -11,11 +11,11 @@ import kotlinx.android.parcel.Parcelize
 data class Role(
     val admin: Boolean,
     val attachToApp: String,
-    val deptIds: List<Long>,
-    var menuIds: List<Long>,
+    val deptIds: List<Long>?,
+    var menuIds: List<Long>?,
     val roleId: String,
     val roleKey: String,
-    val roleName: String,
+    var roleName: String,
     val roleSort: Int,
-    val remark: String?
+    var remark: String?
 ) : Parcelable

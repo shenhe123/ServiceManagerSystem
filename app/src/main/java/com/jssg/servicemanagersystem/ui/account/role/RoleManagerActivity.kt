@@ -42,6 +42,13 @@ class RoleManagerActivity : BaseActivity() {
         }
     }
 
+    private val updateRoleLauncher = registerForActivityResult(UpdateRoleActivity.UpdateRoleContracts()) { output ->
+        output?.let {
+            adapter.data[it.position] = it.role
+            adapter.notifyItemChanged(it.position)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,15 +65,17 @@ class RoleManagerActivity : BaseActivity() {
             clickItemPos = position
             val role = adapter.data[position]
             when(v.id) {
-                R.id.mbt_menu -> RoleMenuDialogFragment.newInstance(role)
-                    .addOnFinishListener(object : RoleMenuDialogFragment.OnFinishListener{
-                        override fun onFinish(newRole: Role) {
-                            adapter.data[position] = newRole
-                            adapter.notifyItemChanged(position)
-                        }
+                R.id.card_layout -> updateRoleLauncher.launch(UpdateRoleActivity.InputData(position, role))
 
-                    })
-                    .show(supportFragmentManager, "role_menu_dialog")
+//                R.id.mbt_menu -> RoleMenuDialogFragment.newInstance(role)
+//                    .addOnFinishListener(object : RoleMenuDialogFragment.OnFinishListener{
+//                        override fun onFinish(newRole: Role) {
+//                            adapter.data[position] = newRole
+//                            adapter.notifyItemChanged(position)
+//                        }
+//
+//                    })
+//                    .show(supportFragmentManager, "role_menu_dialog")
 
 //                R.id.mbt_delete -> SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？")
 //                    .addConfrimClickLisntener(object : SingleBtnDialogFragment.OnConfirmClickLisenter{

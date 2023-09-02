@@ -50,12 +50,14 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <View style="@style/xDividerMarge12DP"/>
+        <View style="@style/xDividerMarge12DP"
+            android:visibility="gone"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp">
+            android:layout_margin="12dp"
+            android:visibility="gone">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbt_menu"
