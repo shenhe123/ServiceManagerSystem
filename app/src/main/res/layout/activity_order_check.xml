@@ -50,7 +50,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
+                    android:text="* "
                     android:textColor="@android:color/holo_red_light"/>
 
                 <TextView
@@ -61,9 +61,36 @@
 
                 <TextView
                     android:id="@+id/tv_location_address"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    tools:text="北京市昌平区回龙观西大街119号"
+                    style="@style/SubTitleStyleBold"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="北京市昌平区回龙观西大街119号"
+                    android:text="* "
+                    android:textColor="@android:color/holo_red_light"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="不良数量："
+                    style="@style/SubTitleStyle"/>
+
+                <TextView
+                    android:id="@+id/tv_bad_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
                     style="@style/SubTitleStyleBold"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -76,14 +103,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
+                    android:text="* "
                     android:textColor="@android:color/holo_red_light"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="不良图片："
+                    android:text="上传不良图片："
                     style="@style/SubTitleStyle"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="5dp">
 
                 <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_bad_picture"
@@ -114,8 +149,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="外箱标签图片："
+                    android:text="上传外箱标签图片："
                     style="@style/SubTitleStyle"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="5dp">
 
                 <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_box_picture"
@@ -140,7 +183,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
+                    android:text="* "
                     android:textColor="@android:color/holo_red_light"/>
 
                 <TextView
@@ -148,6 +191,14 @@
                     android:layout_height="wrap_content"
                     android:text="批次信息图片："
                     style="@style/SubTitleStyle"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="5dp">
 
                 <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_batch_info_picture"
@@ -166,74 +217,13 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="排查日期："
-                    style="@style/SubTitleStyle"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2023-08-25 10:10:10"
-                    style="@style/SubTitleStyleBold"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="排查数量："
-                    style="@style/SubTitleStyle"/>
-
-                <TextView
-                    android:id="@+id/tv_check_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    style="@style/SubTitleStyleBold"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_light"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="不良数量："
-                    style="@style/SubTitleStyle"/>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_bad_num"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/SubTitleStyleBold"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_marginTop="12dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
+                    android:text="* "
                     android:textColor="@android:color/holo_red_light"/>
 
                 <TextView
@@ -241,6 +231,14 @@
                     android:layout_height="wrap_content"
                     android:text="返工数量图片："
                     style="@style/SubTitleStyle"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="5dp">
 
                 <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/xfl_rework_picture"
@@ -264,19 +262,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_light"/>
+                    android:text="排查日期："
+                    style="@style/SubTitleStyle"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="排查数量总(至今)："
-                    style="@style/SubTitleStyle"/>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_check_num_total"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:text="2023-08-25 10:10:10"
+                    android:textSize="15sp"
                     style="@style/SubTitleStyleBold"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -294,13 +287,41 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="排查数量总(至今)："
+                    style="@style/SubTitleStyle"/>
+
+                <TextView
+                    android:id="@+id/tv_check_num_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="15sp"
+                    style="@style/SubTitleStyleBold"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* "
+                    android:textColor="@android:color/holo_red_light"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="不良数量总(至今)："
                     style="@style/SubTitleStyle"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <TextView
                     android:id="@+id/et_bad_num_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="15sp"
                     style="@style/SubTitleStyleBold"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
