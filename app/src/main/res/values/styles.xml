@@ -96,4 +96,21 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="tabTextStyleNormal">
+        <item name="android:textSize">14sp</item>
+        <item name="fontWeight">700</item>
+    </style>
+
+    <!--    通用的tab样式-->
+    <style name="tabStyleNormal" parent="Widget.Design.TabLayout">
+        <item name="tabTextColor">@color/x_text_03</item>
+        <item name="tabSelectedTextColor">@color/purple_700</item>
+        <item name="tabTextAppearance">@style/tabTextStyleNormal</item>
+        <item name="elevation">0dp</item>
+        <item name="tabIndicatorGravity">bottom</item>
+        <item name="tabIndicatorColor">@color/purple_700</item>
+        <item name="tabIndicatorFullWidth">true</item>
+        <item name="tabMode">auto</item>
+    </style>
 </resources>
