@@ -4,7 +4,9 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -15,6 +17,7 @@ import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.bumptech.glide.Glide
 import com.jssg.servicemanagersystem.base.BaseActivity
+import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderCheckDetailBinding
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
@@ -26,13 +29,18 @@ import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictur
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.DpPxUtils
+import com.jssg.servicemanagersystem.utils.FileUtils
 import com.jssg.servicemanagersystem.utils.MyLocationClient
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
 import net.arvin.permissionhelper.PermissionHelper
+import top.zibin.luban.Luban
+import top.zibin.luban.OnCompressListener
 import java.io.File
+import java.util.Locale
 
 class WorkOrderCheckDetailActivity : BaseActivity() {
+    private var uploadSize: Int = 0
     private var checkDate: String? = null
     private var state: Int = 0
     private val selectPictures = arrayListOf<UploadEntity>()
@@ -161,6 +169,8 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                 pictures
             }
 
+            uploadSize = availablePic.size
+            showProgressbarLoading()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
                     initImageWidget("bad", it.availablePath, binding.xflBadPicture, binding.ivAddBadPhoto)
@@ -183,6 +193,8 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                 pictures
             }
 
+            uploadSize = availablePic.size
+            showProgressbarLoading()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
                     initImageWidget("box", it.availablePath, binding.xflBoxPicture, binding.ivAddBoxPhoto)
@@ -205,6 +217,8 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                 pictures
             }
 
+            uploadSize = availablePic.size
+            showProgressbarLoading()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
                     initImageWidget("batch", it.availablePath, binding.xflBatchInfoPicture, binding.ivAddBatchInfoPhoto)
@@ -227,6 +241,8 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                 pictures
             }
 
+            uploadSize = availablePic.size
+            showProgressbarLoading()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
                     initImageWidget("rework", it.availablePath, binding.xflReworkPicture, binding.ivAddReworkPhoto)
@@ -239,6 +255,10 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         selectPicturesViewModel.fileOssUploadLiveData.observe(this) { result ->
             if (result.isSuccess) {
                 result.data?.let {
+                    uploadSize--
+                    if (uploadSize <= 0) {
+                        hideLoading()
+                    }
                     selectPictures.add(it)
                 }
             }
@@ -415,9 +435,52 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         }
 
         if (!url.startsWith("http")) {
-            selectPicturesViewModel.fileOssUpload(url, tag)
+            val file = getOriginPathFile(url)
+//            val compressFile = compressFile(file)
+            selectPicturesViewModel.fileOssUpload(file, "$tag.$url")
         }
         parent.addView(img)
+    }
+
+
+    private fun getOriginPathFile(path: String): File {
+        val fileOriginPath = if (path.startsWith("content")) {
+            FileUtils.getFileOriginPath(AppApplication.get(), Uri.parse(path))
+        } else path
+
+        return File(fileOriginPath)
+    }
+
+    private fun compressFile(file: File): File {
+        var compressFile: File = file
+        Luban.with(this)
+            .load(file)
+            .ignoreBy(100)
+            .setTargetDir(cacheDir.absolutePath)
+            .filter { path ->
+                !(TextUtils.isEmpty(path) || path.lowercase(Locale.getDefault())
+                    .endsWith(".gif"))
+            }
+            .setCompressListener(object : OnCompressListener {
+                override fun onStart() {
+                    //压缩开始前调用，可以在方法内启动 loading UI
+                    showProgressbarLoading()
+                }
+
+                override fun onSuccess(file: File?) {
+                    // 压缩成功后调用，返回压缩后的图片文件
+                    file?.let {
+                        compressFile = file
+                    }
+                }
+
+                override fun onError(e: Throwable?) {
+                    // 当压缩过程出现问题时调用
+                    compressFile = file
+                }
+            }).launch()
+
+        return compressFile
     }
 
     class WorkOrderCheckContracts: ActivityResultContract<WorkOrderCheckInfo, Boolean?>(){

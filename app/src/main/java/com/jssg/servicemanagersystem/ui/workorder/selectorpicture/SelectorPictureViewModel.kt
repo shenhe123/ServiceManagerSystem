@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.ui.workorder.selectorpicture
 
 import android.net.Uri
+import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
@@ -15,7 +16,11 @@ import io.reactivex.disposables.Disposable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import top.zibin.luban.CompressionPredicate
+import top.zibin.luban.Luban
+import top.zibin.luban.OnCompressListener
 import java.io.File
+import java.util.Locale
 
 /**
  * ServiceManagerSystem
@@ -44,13 +49,8 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
     val reworkOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
 
     //content:/media/external_primary/images/media/1000027063
-    fun fileOssUpload(path: String, tag: String) {
+    fun fileOssUpload(file: File, tag: String) {
         fileOssUploadLiveData.value = LoadDataModel()
-        val fileOriginPath = if (path.startsWith("content")) {
-            FileUtils.getFileOriginPath(AppApplication.get(), Uri.parse(path))
-        } else path
-
-        val file = File(fileOriginPath)
 
         val body = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
@@ -65,7 +65,7 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
             .subscribe(object :WQBaseObserver<UploadEntity?>(){
                 override fun onSuccess(result: UploadEntity?) {
                     result?.let {
-                        it.tag = tag + path
+                        it.tag = tag
                         fileOssUploadLiveData.value = LoadDataModel(it)
                     }
                 }

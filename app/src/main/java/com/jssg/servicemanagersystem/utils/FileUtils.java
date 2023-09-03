@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
+
+import java.io.File;
 
 /**
  * <pre>
@@ -71,6 +74,5 @@ public class FileUtils {
 //        }
 //        Log.d("","Chosen path = "+ filePath);
     }
-
 
 }
