@@ -21,12 +21,13 @@ class WorkOrderAdapter: BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderLayoutBin
         holder.binding.tvApplyFactory.text = item.orgService
         holder.binding.tvApplyDate.text = item.applyDate
 
-        val stateStr = if (item.state == 0) {
-            "未处理"
-        } else {
-            "排查中"
+        when(item.state) {
+            0 -> holder.binding.tvOrderState.text = "已保存"
+            1 -> holder.binding.tvOrderState.text = "已提交"
+            2 -> holder.binding.tvOrderState.text = "已审核"
+            3 -> holder.binding.tvOrderState.text = "退回"
+            4 -> holder.binding.tvOrderState.text = "不同意"
         }
-        holder.binding.tvOrderState.text = stateStr
     }
 
 }

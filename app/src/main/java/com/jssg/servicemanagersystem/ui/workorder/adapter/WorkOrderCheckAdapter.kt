@@ -21,12 +21,11 @@ class WorkOrderCheckAdapter: BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderLayo
         holder.binding.tvApplyFactory.text = item.orgService
         holder.binding.tvApplyDate.text = item.applyDate
 
-        val checkStateStr = if (item.checkState == 0) {
-            "待审核"
-        } else {
-            "已审核"
+        when(item.state) {
+            0 -> holder.binding.tvOrderState.text = "未开始"
+            1 -> holder.binding.tvOrderState.text = "排查中"
+            2 -> holder.binding.tvOrderState.text = "已完成"
         }
-        holder.binding.tvOrderState.text = checkStateStr
     }
 
 }
