@@ -1,18 +1,23 @@
 package com.jssg.servicemanagersystem.ui.workorder.selectorpicture
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.http.observer.WQBaseObserver
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
+import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
+import com.jssg.servicemanagersystem.utils.FileUtils
 import com.luck.picture.lib.entity.LocalMedia
 import io.reactivex.disposables.Disposable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.net.URI
+import kotlin.coroutines.coroutineContext
 
 /**
  * ServiceManagerSystem
@@ -40,9 +45,14 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
     val batchOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
     val reworkOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
 
+    //content:/media/external_primary/images/media/1000027063
     fun fileOssUpload(path: String, tag: String) {
         fileOssUploadLiveData.value = LoadDataModel()
-        val file = File(path)
+        val fileOriginPath = if (path.startsWith("content")) {
+            FileUtils.getFileOriginPath(AppApplication.get(), Uri.parse(path))
+        } else path
+        val file = File(fileOriginPath)
+
         val body = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
         val builder = MultipartBody.Builder()
