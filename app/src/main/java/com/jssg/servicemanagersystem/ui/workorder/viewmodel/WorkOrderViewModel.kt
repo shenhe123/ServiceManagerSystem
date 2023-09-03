@@ -9,10 +9,12 @@ import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.HUtils
+import java.util.ArrayList
 
 class WorkOrderViewModel : AutoDisposViewModel() {
 
 
+    val closeCaseWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
     val reviewWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val addWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val workOrderListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
@@ -121,6 +123,17 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .reviewWorkOrderCheck(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(reviewWorkOrderDetailLiveData))
+    }
+
+    fun closeCaseWorkOrder(checkedBillNos: ArrayList<String>, state: Int) {
+        closeCaseWorkOrderLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any>()
+        params["billNos"] = checkedBillNos
+        params["state"] = state
+        RetrofitService.apiService
+            .closeCaseWorkOrderCheck(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(closeCaseWorkOrderLiveData))
     }
 
 }

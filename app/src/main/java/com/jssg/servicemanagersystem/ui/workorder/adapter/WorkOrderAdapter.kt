@@ -1,5 +1,7 @@
 package com.jssg.servicemanagersystem.ui.workorder.adapter
 
+import androidx.core.view.isVisible
+import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
 import com.jssg.servicemanagersystem.databinding.ItemOnsiteOptionsLayoutBinding
@@ -11,7 +13,14 @@ import com.jssg.servicemanagersystem.utils.DateUtil
  * ServiceManagerSystem
  * Created by he.shen on 2023/8/24.
  */
-class WorkOrderAdapter: BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderLayoutBinding>(ItemWorkOrderLayoutBinding::inflate) {
+class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderLayoutBinding>(ItemWorkOrderLayoutBinding::inflate) {
+
+    var isCloseCase: Boolean
+
+    init {
+        this.isCloseCase = isCloseCase
+        addChildClickViewIds(R.id.mcb_check)
+    }
 
     override fun convert(holder: VBViewHolder<ItemWorkOrderLayoutBinding>, item: WorkOrderInfo) {
         holder.binding.tvOrderId.text = item.billNo
@@ -28,6 +37,9 @@ class WorkOrderAdapter: BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderLayoutBin
             3 -> holder.binding.tvOrderState.text = "退回"
             4 -> holder.binding.tvOrderState.text = "不同意"
         }
+
+        holder.binding.mcbCheck.isVisible = isCloseCase
     }
+
 
 }

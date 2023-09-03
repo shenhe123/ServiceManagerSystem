@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.listener.OnItemChildClickListener
+import com.google.android.material.checkbox.MaterialCheckBox
+import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderBinding
@@ -21,6 +24,8 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class WorkOrderFragment : BaseFragment() {
 
+    private var sourceList = mutableListOf<WorkOrderInfo>()
+    private val checkedBillNos = arrayListOf<String>()
     private val page: Int = 1
     private lateinit var adapter: WorkOrderAdapter
     private lateinit var workOrderViewModel: WorkOrderViewModel
@@ -41,7 +46,7 @@ class WorkOrderFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = WorkOrderAdapter()
+        adapter = WorkOrderAdapter(false)
         binding.recyclerView.adapter = adapter
 
         binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object :OnRefreshLoadMoreListener{
@@ -77,6 +82,15 @@ class WorkOrderFragment : BaseFragment() {
             }
         }
 
+        workOrderViewModel.closeCaseWorkOrderLiveData.observe(viewLifecycleOwner) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                ToastUtils.showToast("结案成功")
+                adapter.isCloseCase = false
+                loadData(true)
+            }
+        }
+
         showProgressbarLoading()
         loadData(true)
     }
@@ -99,6 +113,8 @@ class WorkOrderFragment : BaseFragment() {
             }
         }
 
+        sourceList = adapter.data
+
         showNoData(adapter.data.isEmpty())
     }
 
@@ -107,6 +123,19 @@ class WorkOrderFragment : BaseFragment() {
     }
 
     private fun addListener() {
+
+        adapter.setOnItemChildClickListener { _, view, position ->
+            val workOrderInfo = adapter.data[position]
+            if (view.id == R.id.mcb_check) {
+                if ((view as MaterialCheckBox).isChecked) {
+                    checkedBillNos.add(workOrderInfo.billNo)
+                } else {
+                    if (checkedBillNos.contains(workOrderInfo.billNo)) {
+                        checkedBillNos.remove(workOrderInfo.billNo)
+                    }
+                }
+            }
+        }
 
         adapter.setOnItemClickListener { _, _, position ->
             val workOrderInfo = adapter.data[position]
@@ -124,6 +153,28 @@ class WorkOrderFragment : BaseFragment() {
                 return@setOnClickListener
             }
             workOrderViewModel.searchWorkOrder(input)
+        }
+
+        binding.tvCloseCase.setOnClickListener {
+
+            if (!adapter.isCloseCase) {
+                binding.tvCloseCase.text = "提交"
+                adapter.isCloseCase = true
+//                val checkedOrders = sourceList.filter { it.checkState == 2 }
+//                adapter.setList(checkedOrders)
+                adapter.notifyDataSetChanged()
+            } else {
+                binding.tvCloseCase.text = "结案"
+                if (checkedBillNos.isNotEmpty()) {
+                    workOrderViewModel.closeCaseWorkOrder(checkedBillNos, 2)
+                } else {
+                    adapter.isCloseCase = false
+//                    adapter.setList(sourceList)
+                    adapter.notifyDataSetChanged()
+                }
+
+            }
+
         }
     }
 

@@ -13,7 +13,20 @@
         app:titleCentered="true"
         app:titleTextColor="@color/white"
         android:background="@color/purple_700"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_close_case"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="结案"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_gravity="end"
+            android:textStyle="bold"
+            android:padding="12dp" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <RelativeLayout
         android:id="@+id/layout_search"
