@@ -102,20 +102,9 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         workOrderViewModel = ViewModelProvider(this)[WorkOrderViewModel::class.java]
         selectPicturesViewModel = ViewModelProvider(this)[SelectorPictureViewModel::class.java]
 
+        //网络图片加载
         selectPicturesViewModel.badOssListLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                if (binding.xflBadPicture.childCount >= 3) {
-                    ToastUtils.showToast("不良图片最多只能选择3张！")
-                    return@observe
-                }
-
-//                result.data.size
-//
-//                val availablePic: List<LocalMedia?> = if (pictures.size >= 3) {
-//                    pictures.take(3)
-//                } else {
-//                    pictures
-//                }
                 result.data.forEach {
                     it.tag = "bad" + it.url
                     selectPictures.add(it)
@@ -154,6 +143,115 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                     selectPictures.add(it)
                     initImageWidget("rework", it.url, binding.xflReworkPicture, binding.ivAddBadPhoto)
                     binding.ivAddReworkPhoto.isVisible = binding.xflReworkPicture.childCount < 3
+                }
+            }
+        }
+
+        //本地图片选择
+        selectPicturesViewModel.badPicturesLiveData.observe(this) { pictures ->
+            if (binding.xflBadPicture.childCount >= 3) {
+                ToastUtils.showToast("不良图片最多只能选择3张！")
+                return@observe
+            }
+
+            val available = 3 - binding.xflBadPicture.childCount
+            val availablePic: List<LocalMedia?> = if (pictures.size >= available) {
+                pictures.take(available)
+            } else {
+                pictures
+            }
+
+            availablePic.forEach { localMedia ->
+                localMedia?.let {
+                    initImageWidget("bad", it.availablePath, binding.xflBadPicture, binding.ivAddBadPhoto)
+                }
+            }
+
+            binding.ivAddBadPhoto.isVisible = binding.xflBadPicture.childCount < 3
+        }
+
+        selectPicturesViewModel.boxPicturesLiveData.observe(this) { pictures ->
+            if (binding.xflBoxPicture.childCount >= 3) {
+                ToastUtils.showToast("外箱标签图片最多只能选择3张！")
+                return@observe
+            }
+
+            val available = 3 - binding.xflBoxPicture.childCount
+            val availablePic: List<LocalMedia?> = if (pictures.size >= available) {
+                pictures.take(available)
+            } else {
+                pictures
+            }
+
+            availablePic.forEach { localMedia ->
+                localMedia?.let {
+                    initImageWidget("box", it.availablePath, binding.xflBoxPicture, binding.ivAddBoxPhoto)
+                }
+            }
+
+            binding.ivAddBoxPhoto.isVisible = binding.xflBoxPicture.childCount < 3
+        }
+
+        selectPicturesViewModel.batchInfoPicturesLiveData.observe(this) { pictures ->
+            if (binding.xflBatchInfoPicture.childCount >= 3) {
+                ToastUtils.showToast("外箱标签图片最多只能选择3张！")
+                return@observe
+            }
+
+            val available = 3 - binding.xflBatchInfoPicture.childCount
+            val availablePic: List<LocalMedia?> = if (pictures.size >= available) {
+                pictures.take(available)
+            } else {
+                pictures
+            }
+
+            availablePic.forEach { localMedia ->
+                localMedia?.let {
+                    initImageWidget("batch", it.availablePath, binding.xflBatchInfoPicture, binding.ivAddBatchInfoPhoto)
+                }
+            }
+
+            binding.ivAddBatchInfoPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3
+        }
+
+        selectPicturesViewModel.reworkPicturesLiveData.observe(this) { pictures ->
+            if (binding.xflReworkPicture.childCount >= 5) {
+                ToastUtils.showToast("返回数量图片最多只能选择5张！")
+                return@observe
+            }
+
+            val available = 5 - binding.xflBadPicture.childCount
+            val availablePic: List<LocalMedia?> = if (pictures.size >= available) {
+                pictures.take(available)
+            } else {
+                pictures
+            }
+
+            availablePic.forEach { localMedia ->
+                localMedia?.let {
+                    initImageWidget("rework", it.availablePath, binding.xflReworkPicture, binding.ivAddReworkPhoto)
+                }
+            }
+
+            binding.ivAddReworkPhoto.isVisible = binding.xflReworkPicture.childCount < 5
+        }
+
+        selectPicturesViewModel.fileOssUploadLiveData.observe(this) { result ->
+            if (result.isSuccess) {
+                result.data?.let {
+                    selectPictures.add(it)
+                }
+            }
+        }
+
+        workOrderViewModel.updateWorkOrderDetailLiveData.observe(this) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                if (state == 0) {
+                    ToastUtils.showToast("保存成功")
+                } else {
+                    ToastUtils.showToast("提交成功")
+                    finish()
                 }
             }
         }
@@ -214,6 +312,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         inputData?.let {
             workOrderViewModel.updateWorkOrderDetail(
                 it.billNo,
+                it.billDetailNo,
                 locationStr,
                 badOssIds.joinToString(","),
                 boxOssIds.joinToString(","),

@@ -16,6 +16,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     val closeCaseWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
     val reviewWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val updateWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val addWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val workOrderListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
     val workOrderCheckListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderCheckInfo>?>>()
@@ -75,6 +76,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     fun updateWorkOrderDetail(
         billNo: String,
+        billDetailNo: String,
         place: String,
         badPicNames: String,
         boxPicNames: String,
@@ -86,9 +88,10 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         state: Int,
         remark: String
     ) {
-        addWorkOrderDetailLiveData.value = LoadDataModel()
+        updateWorkOrderDetailLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
         params["billNo"] = billNo
+        params["billDetailNo"] = billDetailNo
         params["place"] = place
         params["badPicNames"] = badPicNames
         params["boxPicNames"] = boxPicNames
@@ -102,7 +105,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         RetrofitService.apiService
             .updateWorkOrderDetail(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
-            .subscribe(createObserver(addWorkOrderDetailLiveData))
+            .subscribe(createObserver(updateWorkOrderDetailLiveData))
     }
 
     fun getWorkOrderCheckList() {
