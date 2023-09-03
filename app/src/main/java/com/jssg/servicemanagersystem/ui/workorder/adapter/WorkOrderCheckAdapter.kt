@@ -24,9 +24,11 @@ class WorkOrderCheckAdapter: BaseBindingAdapter<WorkOrderCheckInfo, ItemWorkOrde
         holder.binding.tvCheckNum.text = item.checkNum.toString()
 
         when(item.state) {
-            0 -> holder.binding.tvOrderState.text = "未开始"
-            1 -> holder.binding.tvOrderState.text = "排查中"
-            2 -> holder.binding.tvOrderState.text = "已完成"
+            0 -> holder.binding.tvOrderState.text = "已保存"
+            1 -> holder.binding.tvOrderState.text = "已提交"
+            2 -> holder.binding.tvOrderState.text = "已审核"
+            3 -> holder.binding.tvOrderState.text = "退回"
+            4 -> holder.binding.tvOrderState.text = "不同意"
         }
     }
 

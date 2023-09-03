@@ -28,6 +28,7 @@ import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.DpPxUtils
 import com.jssg.servicemanagersystem.utils.MyLocationClient
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
+import com.luck.picture.lib.entity.LocalMedia
 import net.arvin.permissionhelper.PermissionHelper
 import java.io.File
 
@@ -103,6 +104,18 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
 
         selectPicturesViewModel.badOssListLiveData.observe(this) { result ->
             if (result.isSuccess) {
+                if (binding.xflBadPicture.childCount >= 3) {
+                    ToastUtils.showToast("不良图片最多只能选择3张！")
+                    return@observe
+                }
+
+//                result.data.size
+//
+//                val availablePic: List<LocalMedia?> = if (pictures.size >= 3) {
+//                    pictures.take(3)
+//                } else {
+//                    pictures
+//                }
                 result.data.forEach {
                     it.tag = "bad" + it.url
                     selectPictures.add(it)

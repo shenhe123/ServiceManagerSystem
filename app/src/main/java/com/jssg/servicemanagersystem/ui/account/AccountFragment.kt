@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.ui.login.LoginActivity
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AccountManager
@@ -37,6 +38,8 @@ class AccountFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.tvVersion.text = "v${BuildConfig.VERSION_NAME}"
 
         loginViewModel.logoutLiveData.observe(viewLifecycleOwner) { result ->
             updateLoading(result, true)

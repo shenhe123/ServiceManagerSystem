@@ -38,6 +38,12 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
             4 -> holder.binding.tvOrderState.text = "不同意"
         }
 
+        when(item.checkState) {
+            0 -> holder.binding.tvCheckState.text = "未开始"
+            1 -> holder.binding.tvCheckState.text = "排查中"
+            2 -> holder.binding.tvCheckState.text = "已完成"
+        }
+
         holder.binding.mcbCheck.isVisible = isCloseCase
     }
 

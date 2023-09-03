@@ -174,7 +174,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("bad", it.fileName, binding.xflBadPicture, binding.ivAddBadPhoto)
+                    initImageWidget("bad", it.availablePath, binding.xflBadPicture, binding.ivAddBadPhoto)
                 }
             }
 
@@ -195,7 +195,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("box", it.fileName, binding.xflBoxPicture, binding.ivAddBoxPhoto)
+                    initImageWidget("box", it.availablePath, binding.xflBoxPicture, binding.ivAddBoxPhoto)
                 }
             }
 
@@ -216,7 +216,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("batch", it.fileName, binding.xflBatchInfoPicture, binding.ivAddBatchInfoPhoto)
+                    initImageWidget("batch", it.availablePath, binding.xflBatchInfoPicture, binding.ivAddBatchInfoPhoto)
                 }
             }
 
@@ -237,7 +237,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("rework", it.fileName, binding.xflReworkPicture, binding.ivAddReworkPhoto)
+                    initImageWidget("rework", it.availablePath, binding.xflReworkPicture, binding.ivAddReworkPhoto)
                 }
             }
 
@@ -291,6 +291,7 @@ class WorkOrderCheckActivity : BaseActivity() {
         val width = DpPxUtils.dip2px(this, 66f)
         img.layoutParams = LinearLayout.LayoutParams(width, width)
         img.scaleType = ImageView.ScaleType.FIT_XY
+        ToastUtils.showToast("图片路径--$path")
         Glide.with(this).load(File(path)).into(img)
         img.tag = tag + path
 
