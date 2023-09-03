@@ -291,8 +291,12 @@ class WorkOrderCheckActivity : BaseActivity() {
         val width = DpPxUtils.dip2px(this, 66f)
         img.layoutParams = LinearLayout.LayoutParams(width, width)
         img.scaleType = ImageView.ScaleType.FIT_XY
-        ToastUtils.showToast("图片路径--$path")
-        Glide.with(this).load(File(path)).into(img)
+        if (path.startsWith("content")) {
+            Glide.with(this).load(path).into(img)
+        } else {
+            Glide.with(this).load(File(path)).into(img)
+        }
+
         img.tag = tag + path
 
         if (checkDate.isNullOrEmpty() && tag.equals("rework", false)) {

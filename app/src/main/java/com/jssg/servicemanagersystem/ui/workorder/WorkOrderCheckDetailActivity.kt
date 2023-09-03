@@ -381,7 +381,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         val width = DpPxUtils.dip2px(this, 66f)
         img.layoutParams = LinearLayout.LayoutParams(width, width)
         img.scaleType = ImageView.ScaleType.FIT_XY
-        if (url.startsWith("http")) {
+        if (url.startsWith("http") || url.startsWith("content")) {
             Glide.with(this).load(url).into(img)
         } else {
             Glide.with(this).load(File(url)).into(img)
