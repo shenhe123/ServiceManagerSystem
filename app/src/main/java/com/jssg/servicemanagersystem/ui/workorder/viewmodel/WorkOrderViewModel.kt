@@ -1,8 +1,6 @@
 package com.jssg.servicemanagersystem.ui.workorder.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
@@ -15,6 +13,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     val addWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val workOrderListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
+    val workOrderCheckListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
     fun getWorkOrderList(isRefresh: Boolean, page: Int) {
         workOrderListLiveData.value = LoadListDataModel(isRefresh)
         val mPage = if (isRefresh) {
@@ -69,8 +68,11 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .subscribe(createObserver(addWorkOrderDetailLiveData))
     }
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    fun getWorkOrderCheckList() {
+        workOrderCheckListLiveData.value = LoadListDataModel(true)
+        RetrofitService.apiService
+            .getWorkOrderCheckList(1, 999)
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
     }
-    val text: LiveData<String> = _text
 }

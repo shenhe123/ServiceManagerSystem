@@ -1,17 +1,17 @@
-package com.jssg.servicemanagersystem.ui.workorder
+package com.jssg.servicemanagersystem.ui.workorder.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderBinding
-import com.jssg.servicemanagersystem.ui.account.entity.User
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderAddNewActivity
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel

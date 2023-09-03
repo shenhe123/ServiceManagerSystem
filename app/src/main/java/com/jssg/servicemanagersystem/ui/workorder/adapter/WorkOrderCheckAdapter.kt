@@ -11,7 +11,7 @@ import com.jssg.servicemanagersystem.utils.DateUtil
  * ServiceManagerSystem
  * Created by he.shen on 2023/8/24.
  */
-class WorkOrderAdapter: BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderLayoutBinding>(ItemWorkOrderLayoutBinding::inflate) {
+class WorkOrderCheckAdapter: BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderLayoutBinding>(ItemWorkOrderLayoutBinding::inflate) {
 
     override fun convert(holder: VBViewHolder<ItemWorkOrderLayoutBinding>, item: WorkOrderInfo) {
         holder.binding.tvOrderId.text = item.billNo
@@ -21,12 +21,12 @@ class WorkOrderAdapter: BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderLayoutBin
         holder.binding.tvApplyFactory.text = item.orgService
         holder.binding.tvApplyDate.text = item.applyDate
 
-        val stateStr = if (item.state == 0) {
-            "未处理"
+        val checkStateStr = if (item.checkState == 0) {
+            "待审核"
         } else {
-            "排查中"
+            "已审核"
         }
-        holder.binding.tvOrderState.text = stateStr
+        holder.binding.tvOrderState.text = checkStateStr
     }
 
 }

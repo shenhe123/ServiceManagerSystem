@@ -11,7 +11,7 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityMainBinding
 import com.jssg.servicemanagersystem.ui.account.AccountFragment
-import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
 
 class MainActivity : BaseActivity() {
 
