@@ -184,7 +184,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         }
 
         inputData?.let {
-            workOrderViewModel.addWorkOrderDetail(
+            workOrderViewModel.updateWorkOrderDetail(
                 it.billNo,
                 locationStr,
                 badOssIds.joinToString(","),
