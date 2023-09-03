@@ -104,4 +104,7 @@ interface ApiService {
     @GET("staging-api/system/oss/listByIds/{ossIds}")
     fun getOssListByIds(@Path("ossIds") ids: String): Observable<BaseHttpResult<List<UploadEntity>>>
 
+    @POST("staging-api/qm/workOrderDetail")
+    fun reviewWorkOrderCheck(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
 }

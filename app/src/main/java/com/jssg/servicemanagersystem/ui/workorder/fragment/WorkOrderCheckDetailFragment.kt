@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter.base.listener.OnItemClickListener
-import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderCheckDetailBinding
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckDetailActivity
-import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderCheckAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
@@ -23,10 +20,17 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class WorkOrderCheckDetailFragment : Fragment() {
+
     private lateinit var adapter: WorkOrderCheckAdapter
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private lateinit var binding: FragmentWorkOrderCheckDetailBinding
     private var inputData: WorkOrderInfo? = null
+
+    private val workOrderCheckLauncher = registerForActivityResult(WorkOrderCheckDetailActivity.WorkOrderCheckContracts()) {
+        it?.let {
+            loadData()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +75,7 @@ class WorkOrderCheckDetailFragment : Fragment() {
 
         adapter.setOnItemClickListener { _, view, position ->
             val workOrderInfo = adapter.data[position]
-            WorkOrderCheckDetailActivity.goActivity(requireContext(), workOrderInfo)
+            workOrderCheckLauncher.launch(workOrderInfo)
         }
     }
 

@@ -1,12 +1,14 @@
 package com.jssg.servicemanagersystem.ui.workorder
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.baidu.location.BDAbstractLocationListener
@@ -17,6 +19,7 @@ import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderCheckDetailBin
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.PicturesPreviewActivity
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureDialog
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureViewModel
@@ -78,7 +81,19 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         binding.toolBar.setNavigationOnClickListener { finish() }
 
         binding.tvCheck.setOnClickListener {
+            inputData?.let {
+                WorkOrderCheckDialogFragment.newInstance(it)
+                    .addOnFinishListener(object :WorkOrderCheckDialogFragment.OnFinishListener{
+                        override fun onFinish() {
+                            setResult(Activity.RESULT_OK, Intent().apply {
+                                putExtra("output", true)
+                            })
+                            finish()
+                        }
 
+                    })
+                    .show(supportFragmentManager, "check_order_dialog")
+            }
         }
     }
 
@@ -288,11 +303,17 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         parent.addView(img)
     }
 
-    companion object {
-        fun goActivity(context: Context, input: WorkOrderCheckInfo) {
-            context.startActivity(Intent(context, WorkOrderCheckDetailActivity::class.java).apply {
+    class WorkOrderCheckContracts: ActivityResultContract<WorkOrderCheckInfo, Boolean?>(){
+        override fun createIntent(context: Context, input: WorkOrderCheckInfo): Intent {
+            return Intent(context, WorkOrderCheckDetailActivity::class.java).apply {
                 putExtra("input", input)
-            })
+            }
         }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean? {
+            return if (resultCode == Activity.RESULT_OK) intent?.getBooleanExtra("output", false)
+            else null
+        }
+
     }
 }

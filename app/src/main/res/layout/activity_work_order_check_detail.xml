@@ -22,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="审核"
+            android:textSize="16sp"
             android:textColor="@color/text_600"
             android:layout_gravity="end"
             android:textStyle="bold"

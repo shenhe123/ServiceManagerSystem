@@ -13,6 +13,7 @@ import com.jssg.servicemanagersystem.utils.HUtils
 class WorkOrderViewModel : AutoDisposViewModel() {
 
 
+    val reviewWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val addWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val workOrderListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
     val workOrderCheckListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderCheckInfo>?>>()
@@ -108,6 +109,18 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .getWorkOrderCheckList(1, 999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
+    }
+
+    fun reviewWorkOrderCheck(billDetailNo: String, remark: String, state: String) {
+        reviewWorkOrderDetailLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any>()
+        params["billDetailNo"] = billDetailNo
+        params["remark"] = remark
+        params["state"] = state
+        RetrofitService.apiService
+            .reviewWorkOrderCheck(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(reviewWorkOrderDetailLiveData))
     }
 
 }
