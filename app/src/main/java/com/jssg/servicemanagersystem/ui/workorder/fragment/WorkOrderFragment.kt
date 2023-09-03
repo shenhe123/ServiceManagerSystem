@@ -31,6 +31,12 @@ class WorkOrderFragment : BaseFragment() {
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private lateinit var binding: FragmentWorkOrderBinding
 
+    private val addNewLauncher = registerForActivityResult(WorkOrderAddNewActivity.AddNewWorkOrderContracts()){
+        it?.let {
+            loadData(true)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -145,7 +151,7 @@ class WorkOrderFragment : BaseFragment() {
         }
 
         binding.fbtnAddNew.setOnClickListener {
-            WorkOrderAddNewActivity.goActivity(requireActivity())
+            addNewLauncher.launch("")
         }
 
 

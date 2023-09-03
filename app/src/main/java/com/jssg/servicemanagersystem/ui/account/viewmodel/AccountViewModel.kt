@@ -245,10 +245,10 @@ class AccountViewModel : AutoDisposViewModel() {
             .subscribe(createObserver(factoryInfoLiveData))
     }
 
-    fun getDeptInfo(parentId: String) {
+    fun getDeptInfo() {
         deptInfoLiveData.value = LoadDataModel()
         RetrofitService.apiService
-            .getDeptInfo(parentId)
+            .getDeptInfo()
             .compose(RxSchedulersHelper.ObsResultWithMain())
             .doOnNext { AccountManager.instance.saveDeptInfo(it) }
             .subscribe(createObserver(deptInfoLiveData))

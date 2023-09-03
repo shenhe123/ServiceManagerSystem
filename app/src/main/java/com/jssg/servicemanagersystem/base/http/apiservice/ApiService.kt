@@ -9,6 +9,8 @@ import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import io.reactivex.Observable
@@ -78,7 +80,13 @@ interface ApiService {
     fun getFactoryInfo(): Observable<BaseHttpResult<List<FactoryInfo>?>>
 
     @GET("staging-api/system/user/deptTree")
-    fun getDeptInfo(@Query("parentId") parentId: String): Observable<BaseHttpResult<List<DeptInfo>?>>
+    fun getDeptInfo(): Observable<BaseHttpResult<List<DeptInfo>?>>
+
+    @GET("staging-api/qm/workOrder/orgList")
+    fun getWorkFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>
+
+    @GET("staging-api/qm/workOrder/deptList")
+    fun getWorkDeptInfo(): Observable<BaseHttpResult<List<WorkDeptInfo>?>>
 
     @PUT("staging-api/system/role")
     fun updateRoleInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>

@@ -6,14 +6,22 @@ import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
+import com.jssg.servicemanagersystem.core.AccountManager
+import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
+import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.HUtils
 import java.util.ArrayList
 
 class WorkOrderViewModel : AutoDisposViewModel() {
 
-
+    val deptInfoLiveData = MutableLiveData<LoadDataModel<List<WorkDeptInfo>?>>()
+    val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<WorkFactoryInfo>?>>()
+    val addNewWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
     val closeCaseWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
     val reviewWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
@@ -134,6 +142,61 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .closeCaseWorkOrderCheck(checkedBillNos.joinToString(","))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(closeCaseWorkOrderLiveData))
+    }
+
+    fun addNewWorkOrder(
+        nickName: String,
+        phoneNumber: String,
+        clientName: String,
+        serviceName: String,
+        checkNum: String,
+        servicePrice: String,
+        servicePeriod: String,
+        serviceTotal: String,
+        serviceAddress: String,
+        remark: String,
+        applyDept: String?,
+        orgService: String?, //服务工厂
+    ) {
+        addNewWorkOrderLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any>()
+        params["applyName"] = nickName
+        params["applyDate"] = DateUtil.getFullData(System.currentTimeMillis())
+        applyDept?.let {
+            params["applyDept"] = applyDept
+        }
+        orgService?.let {
+            params["orgService"] = orgService
+        }
+        params["tel"] = phoneNumber
+        params["servicePeriod"] = servicePeriod
+        params["unitPrice"] = servicePrice
+        params["checkNum"] = checkNum
+        params["totalPrice"] = serviceTotal
+        params["salesManager"] = serviceName
+        params["serviceAdd"] = serviceAddress
+        params["remark"] = remark
+        RetrofitService.apiService
+            .updateWorkOrderDetail(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(addNewWorkOrderLiveData))
+    }
+
+    fun getFactoryInfo() {
+        factoryInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getWorkFactoryInfo()
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(factoryInfoLiveData))
+    }
+
+    fun getDeptInfo() {
+        deptInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getWorkDeptInfo()
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(deptInfoLiveData))
+
     }
 
 }

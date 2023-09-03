@@ -75,7 +75,6 @@ class AddUserActivity : BaseActivity() {
                         orgId = it[position].orgId
                     }
 
-                    accountViewModel.getDeptInfo(it[position].orgId)
                 }
             }
 
@@ -260,6 +259,7 @@ class AddUserActivity : BaseActivity() {
         }
 
         accountViewModel.getFactoryInfo()
+        accountViewModel.getDeptInfo()
     }
 
     private fun addCheckBoxWidget(role: Role): AppCompatCheckBox {

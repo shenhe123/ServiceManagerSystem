@@ -291,6 +291,7 @@ class WorkOrderCheckActivity : BaseActivity() {
         val width = DpPxUtils.dip2px(this, 66f)
         img.layoutParams = LinearLayout.LayoutParams(width, width)
         img.scaleType = ImageView.ScaleType.FIT_XY
+        ToastUtils.showToast("图片路径---$path")
         if (path.startsWith("content")) {
             Glide.with(this).load(path).into(img)
         } else {
