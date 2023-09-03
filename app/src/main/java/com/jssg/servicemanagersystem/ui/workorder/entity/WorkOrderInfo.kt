@@ -66,4 +66,5 @@ data class WorkOrderInfo(
        val checkState: Int,   // 排查状态
        val checkNumTotal: Int,   // 排查数量
        val badNumTotal: Int,   // 不良数量
+       val sysOrganizationVo: WorkFactoryInfo?
 ) : Parcelable

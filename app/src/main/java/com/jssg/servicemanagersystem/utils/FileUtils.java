@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 /**
  * <pre>
@@ -56,6 +57,19 @@ public class FileUtils {
             cursor.close();
         }
         return path;
+
+//        String filePath = null;
+//        Uri _uri = data.getData();
+//        Log.d("","URI = "+ _uri);
+//        if (_uri != null && "content".equals(_uri.getScheme())) {
+//            Cursor cursor = this.getContentResolver().query(_uri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA }, null, null, null);
+//            cursor.moveToFirst();
+//            filePath = cursor.getString(0);
+//            cursor.close();
+//        } else {
+//            filePath = _uri.getPath();
+//        }
+//        Log.d("","Chosen path = "+ filePath);
     }
 
 

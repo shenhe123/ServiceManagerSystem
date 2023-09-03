@@ -16,8 +16,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.net.URI
-import kotlin.coroutines.coroutineContext
 
 /**
  * ServiceManagerSystem
@@ -51,6 +49,7 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
         val fileOriginPath = if (path.startsWith("content")) {
             FileUtils.getFileOriginPath(AppApplication.get(), Uri.parse(path))
         } else path
+
         val file = File(fileOriginPath)
 
         val body = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -59,7 +58,6 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
         builder.addFormDataPart("file", file.name, body)
         builder.setType(MultipartBody.FORM)
         val multipartBody = builder.build()//设置上传的类型 文件(图片)
-
         RetrofitService.apiService
             .fileOssUpload(multipartBody)
             .compose(RxSchedulersHelper.io_main())
@@ -67,7 +65,7 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
             .subscribe(object :WQBaseObserver<UploadEntity?>(){
                 override fun onSuccess(result: UploadEntity?) {
                     result?.let {
-                        it.tag = tag
+                        it.tag = tag + path
                         fileOssUploadLiveData.value = LoadDataModel(it)
                     }
                 }
