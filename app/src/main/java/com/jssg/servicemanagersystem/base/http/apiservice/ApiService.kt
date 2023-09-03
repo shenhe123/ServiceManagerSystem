@@ -107,7 +107,7 @@ interface ApiService {
     @POST("staging-api/qm/workOrderDetail/approve")
     fun reviewWorkOrderCheck(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @POST("staging-api/qm/workOrder/approve")
-    fun closeCaseWorkOrderCheck(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+    @POST("staging-api/qm/workOrder/finish")
+    fun closeCaseWorkOrderCheck(@Query("billNos") billNos: String): Observable<BaseHttpResult<Any>>
 
 }

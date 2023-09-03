@@ -86,7 +86,9 @@ class WorkOrderFragment : BaseFragment() {
             updateLoading(result, true)
             if (result.isSuccess) {
                 ToastUtils.showToast("结案成功")
+                binding.tvCloseCase.text = "结案"
                 adapter.isCloseCase = false
+//                    adapter.setList(sourceList)
                 loadData(true)
             }
         }
@@ -164,10 +166,10 @@ class WorkOrderFragment : BaseFragment() {
 //                adapter.setList(checkedOrders)
                 adapter.notifyDataSetChanged()
             } else {
-                binding.tvCloseCase.text = "结案"
                 if (checkedBillNos.isNotEmpty()) {
-                    workOrderViewModel.closeCaseWorkOrder(checkedBillNos, 2)
+                    workOrderViewModel.closeCaseWorkOrder(checkedBillNos)
                 } else {
+                    binding.tvCloseCase.text = "结案"
                     adapter.isCloseCase = false
 //                    adapter.setList(sourceList)
                     adapter.notifyDataSetChanged()

@@ -125,13 +125,10 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .subscribe(createObserver(reviewWorkOrderDetailLiveData))
     }
 
-    fun closeCaseWorkOrder(checkedBillNos: ArrayList<String>, state: Int) {
+    fun closeCaseWorkOrder(checkedBillNos: ArrayList<String>) {
         closeCaseWorkOrderLiveData.value = LoadDataModel()
-        val params = HashMap<String, Any>()
-        params["billNos"] = checkedBillNos
-        params["state"] = state
         RetrofitService.apiService
-            .closeCaseWorkOrderCheck(HUtils.createRequestBodyMap(params))
+            .closeCaseWorkOrderCheck(checkedBillNos.joinToString(","))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(closeCaseWorkOrderLiveData))
     }
