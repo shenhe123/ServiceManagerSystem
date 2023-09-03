@@ -1,15 +1,15 @@
-package com.jssg.servicemanagersystem.ui.notifications
+package com.jssg.servicemanagersystem.ui.travelreport
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.databinding.FragmentNotificationsBinding
 
-class NotificationsFragment : Fragment() {
+class TravelReportFragment : BaseFragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
 
@@ -22,14 +22,14 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        val travelReportViewModel =
+            ViewModelProvider(this).get(TravelReportViewModel::class.java)
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        travelReportViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
@@ -38,5 +38,14 @@ class NotificationsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        fun newInstance() =
+            TravelReportFragment().apply {
+                arguments = Bundle().apply {
+//                    putParcelable("inputData", inputData)
+                }
+            }
     }
 }

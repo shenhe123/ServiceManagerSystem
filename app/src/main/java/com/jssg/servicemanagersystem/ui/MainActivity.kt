@@ -11,6 +11,8 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityMainBinding
 import com.jssg.servicemanagersystem.ui.account.AccountFragment
+import com.jssg.servicemanagersystem.ui.report.ReportFragment
+import com.jssg.servicemanagersystem.ui.travelreport.TravelReportFragment
 import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
 
 class MainActivity : BaseActivity() {
@@ -54,8 +56,8 @@ class MainActivity : BaseActivity() {
         override fun createFragment(position: Int): Fragment {
             when (position) {
                 0 -> return WorkOrderFragment.newInstance()
-                1 -> return WorkOrderFragment.newInstance()
-                2 -> return WorkOrderFragment.newInstance()
+                1 -> return TravelReportFragment.newInstance()
+                2 -> return ReportFragment.newInstance()
                 3-> return AccountFragment.newInstance()
             }
             return WorkOrderFragment.newInstance()
