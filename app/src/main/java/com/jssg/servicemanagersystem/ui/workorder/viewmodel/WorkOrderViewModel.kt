@@ -6,9 +6,6 @@ import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
-import com.jssg.servicemanagersystem.core.AccountManager
-import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
-import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
@@ -156,7 +153,10 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         serviceAddress: String,
         remark: String,
         applyDept: String?,
-        orgService: String?, //服务工厂
+        orgService: String?,//服务工厂
+        productCode: String,
+        productDesc: String,
+        badNum: String,
     ) {
         addNewWorkOrderLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
@@ -175,9 +175,21 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["totalPrice"] = serviceTotal
         params["salesManager"] = serviceName
         params["serviceAdd"] = serviceAddress
+        params["productCode"] = productCode
+        params["productDes"] = productDesc
+        params["productNum"] = badNum
         params["remark"] = remark
         RetrofitService.apiService
-            .updateWorkOrderDetail(HUtils.createRequestBodyMap(params))
+            .addWorkOrder(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(addNewWorkOrderLiveData))
+    }
+
+    fun addNewWorkOrder() {
+        addNewWorkOrderLiveData.value = LoadDataModel()
+        val json = "{\"unitPrice\":\"123\",\"productNum\":\"4\",\"checkNum\":\"23\",\"totalPrice\":\"4235\",\"remark\":\"你要走里呀就语文预习\",\"productDes\":\"你中午五\",\"servicePeriod\":\"3个月\",\"applyDept\":\"1000\",\"productCode\":\"13369494\",\"orgService\":\"1\",\"salesManager\":\"你有\",\"tel\":\"135969994499\",\"applyName\":\"你名字\",\"applyDate\":\"2023-09-03 20:09:04\",\"serviceAdd\":\"明知\"}"
+        RetrofitService.apiService
+            .addWorkOrder(HUtils.createJson(json))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(addNewWorkOrderLiveData))
     }

@@ -3,30 +3,18 @@ package com.jssg.servicemanagersystem.ui.workorder
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModelProvider
-import com.bigkoo.pickerview.builder.TimePickerBuilder
-import com.bigkoo.pickerview.view.TimeDialogFragment
-import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
-import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderAddNewBinding
-import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
-import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
-import com.jssg.servicemanagersystem.ui.account.entity.Role
-import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
-import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
-import java.util.Calendar
 
 class WorkOrderAddNewActivity : BaseActivity() {
     private lateinit var workOrderViewModel: WorkOrderViewModel
@@ -168,6 +156,24 @@ class WorkOrderAddNewActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            val productCode = binding.etProductCode.text.toString()
+            if (productCode.isEmpty()) {
+                ToastUtils.showToast("产品编号不能为空")
+                return@setOnClickListener
+            }
+
+            val productDesc = binding.etProductDesc.text.toString()
+            if (productDesc.isEmpty()) {
+                ToastUtils.showToast("产品问题描述不能为空")
+                return@setOnClickListener
+            }
+
+            val badNum = binding.etBadNum.text.toString()
+            if (badNum.isEmpty()) {
+                ToastUtils.showToast("不良数量数量不能为空")
+                return@setOnClickListener
+            }
+
             val checkNum = binding.etCheckNum.text.toString()
             if (checkNum.isEmpty()) {
                 ToastUtils.showToast("排查数量不能为空")
@@ -201,12 +207,30 @@ class WorkOrderAddNewActivity : BaseActivity() {
             val remark = binding.etRemark.text.toString()
 
 
-            workOrderViewModel.addNewWorkOrder(nickName, phoneNumber, clientName, serviceName, checkNum, servicePrice, servicePeriod, serviceTotal, serviceAddress, remark, orgId, deptId)
+            workOrderViewModel.addNewWorkOrder(
+                nickName,
+                phoneNumber,
+                clientName,
+                serviceName,
+                checkNum,
+                servicePrice,
+                servicePeriod,
+                serviceTotal,
+                serviceAddress,
+                remark,
+                orgId,
+                deptId,
+                productCode,
+                productDesc,
+                badNum
+            )
+
+//            workOrderViewModel.addNewWorkOrder()
         }
 
     }
 
-    class AddNewWorkOrderContracts: ActivityResultContract<Any, Boolean?>(){
+    class AddNewWorkOrderContracts : ActivityResultContract<Any, Boolean?>() {
         override fun createIntent(context: Context, input: Any): Intent {
             return Intent(context, WorkOrderAddNewActivity::class.java)
         }

@@ -106,6 +106,9 @@ interface ApiService {
     @POST("staging-api/qm/workOrderDetail")
     fun addWorkOrderDetail(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
+    @POST("staging-api/qm/workOrder")
+    fun addWorkOrder(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
     @PUT("staging-api/qm/workOrderDetail")
     fun updateWorkOrderDetail(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 

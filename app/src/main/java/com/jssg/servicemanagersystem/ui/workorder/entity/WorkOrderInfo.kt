@@ -55,13 +55,13 @@ data class WorkOrderInfo(
        val productDes: String,    // 产品描述
        val productNum: String,   // 0, // 问题产品数量
        val remark: String,    // 备注
-       val needBorrow: String,    // 是否借款
-       val borrowMoney: String,   // 0, // 借款金额
-       val payer: String,    // 付款单位
-       val payee: String,    // 收款人
-       val openingBank: String,    // 开户行
-       val account: String,    // 开户账号
-       val sourceBill: String,    // 原清单
+       val needBorrow: String?,    // 是否借款
+       val borrowMoney: String?,   // 0, // 借款金额
+       val payer: String?,    // 付款单位
+       val payee: String?,    // 收款人
+       val openingBank: String?,    // 开户行
+       val account: String?,    // 开户账号
+       val sourceBill: String?,    // 原清单
        val state: Int,   // 状态,0保存 1提交
        val checkState: Int,   // 排查状态
        val checkNumTotal: Int,   // 排查数量
