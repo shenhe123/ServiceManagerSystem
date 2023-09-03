@@ -339,6 +339,11 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
             binding.etBadNum.setText(it.badNum.toString())
             binding.etRemark.setText(it.remark)
 
+            if (it.state == 1) { //已提交，是不能修改为已保存的
+                //所以需隐藏保存按钮
+                binding.mbtSave.isVisible = false
+            }
+
             if (it.place.isNullOrEmpty()) {
                 getLocationInfo()
             }

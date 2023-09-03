@@ -427,21 +427,23 @@
         android:id="@+id/layout_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:gravity="center">
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="12dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbt_save"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:text="保存"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbt_submit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:text="提交"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
