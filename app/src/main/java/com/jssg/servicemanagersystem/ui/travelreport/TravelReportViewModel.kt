@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class TravelReportViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "开发计划中"
     }
     val text: LiveData<String> = _text
 }

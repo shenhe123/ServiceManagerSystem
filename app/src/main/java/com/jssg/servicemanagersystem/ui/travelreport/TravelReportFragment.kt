@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.base.BaseFragment
-import com.jssg.servicemanagersystem.databinding.FragmentNotificationsBinding
+import com.jssg.servicemanagersystem.databinding.FragmentTravelReportBinding
 
 class TravelReportFragment : BaseFragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentTravelReportBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,7 +25,7 @@ class TravelReportFragment : BaseFragment() {
         val travelReportViewModel =
             ViewModelProvider(this).get(TravelReportViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentTravelReportBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textNotifications
