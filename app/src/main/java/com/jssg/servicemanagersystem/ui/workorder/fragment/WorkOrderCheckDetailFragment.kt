@@ -12,8 +12,10 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderCheckDetailBinding
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderCheckAdapter
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
@@ -69,7 +71,7 @@ class WorkOrderCheckDetailFragment : Fragment() {
 
         adapter.setOnItemClickListener { _, view, position ->
             val workOrderInfo = adapter.data[position]
-
+            WorkOrderCheckDetailActivity.goActivity(requireContext(), workOrderInfo)
         }
     }
 
@@ -97,7 +99,7 @@ class WorkOrderCheckDetailFragment : Fragment() {
         binding.tvEmpty.isVisible = isVisible
     }
 
-    private fun updateWorkOrderList(result: LoadListDataModel<List<WorkOrderInfo>?>) {
+    private fun updateWorkOrderList(result: LoadListDataModel<List<WorkOrderCheckInfo>?>) {
         result.rows?.let {
             val reversedList = it
             if (result.isPullRefresh) {

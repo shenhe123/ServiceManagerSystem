@@ -174,7 +174,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("bad", it.availablePath, binding.xflBadPicture, binding.ivAddBadPhoto)
+                    initImageWidget("bad", it.fileName, binding.xflBadPicture, binding.ivAddBadPhoto)
                 }
             }
 
@@ -195,7 +195,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("box", it.availablePath, binding.xflBoxPicture, binding.ivAddBoxPhoto)
+                    initImageWidget("box", it.fileName, binding.xflBoxPicture, binding.ivAddBoxPhoto)
                 }
             }
 
@@ -216,7 +216,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("batch", it.availablePath, binding.xflBatchInfoPicture, binding.ivAddBatchInfoPhoto)
+                    initImageWidget("batch", it.fileName, binding.xflBatchInfoPicture, binding.ivAddBatchInfoPhoto)
                 }
             }
 
@@ -237,7 +237,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("rework", it.availablePath, binding.xflReworkPicture, binding.ivAddReworkPhoto)
+                    initImageWidget("rework", it.fileName, binding.xflReworkPicture, binding.ivAddReworkPhoto)
                 }
             }
 

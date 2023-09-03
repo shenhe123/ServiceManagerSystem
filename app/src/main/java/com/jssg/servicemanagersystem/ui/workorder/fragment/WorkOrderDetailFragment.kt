@@ -58,9 +58,9 @@ class WorkOrderDetailFragment : Fragment() {
         }
 
         binding.mbtCheckOrderDetail.setOnClickListener {
-            inputData?.let {
-                WorkOrderCheckDetailActivity.goActivity(requireContext(), it)
-            }
+//            inputData?.let {
+//                WorkOrderCheckDetailActivity.goActivity(requireContext(), it)
+//            }
         }
 
     }

@@ -9,6 +9,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -85,8 +86,8 @@ interface ApiService {
     @GET("staging-api/qm/workOrder/list")
     fun getWorkOrderList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
-    @GET("staging-api/qm/workOrderDetail/queryWorkOrderList")
-    fun getWorkOrderCheckList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
+    @GET("staging-api/qm/workOrderDetail/list")
+    fun getWorkOrderCheckList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
 
     @GET("staging-api/qm/workOrder/list")
     fun searchWorkOrderList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
@@ -96,5 +97,8 @@ interface ApiService {
 
     @POST("staging-api/qm/workOrderDetail")
     fun addWorkOrderDetail(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
+    @GET("staging-api/system/oss/listByIds/{ossIds}")
+    fun getOssListByIds(@Path("ossIds") ids: String): Observable<BaseHttpResult<List<UploadEntity>>>
 
 }

@@ -6,14 +6,16 @@ import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.HUtils
 
 class WorkOrderViewModel : AutoDisposViewModel() {
 
+
     val addWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val workOrderListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
-    val workOrderCheckListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
+    val workOrderCheckListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderCheckInfo>?>>()
     fun getWorkOrderList(isRefresh: Boolean, page: Int) {
         workOrderListLiveData.value = LoadListDataModel(isRefresh)
         val mPage = if (isRefresh) {
@@ -75,4 +77,5 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
     }
+
 }

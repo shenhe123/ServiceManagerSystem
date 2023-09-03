@@ -7,12 +7,10 @@ import com.jssg.servicemanagersystem.base.http.observer.WQBaseObserver
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
-import com.jssg.servicemanagersystem.utils.HUtils
 import com.luck.picture.lib.entity.LocalMedia
 import io.reactivex.disposables.Disposable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
@@ -36,6 +34,11 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
 
     //上传结果
     val fileOssUploadLiveData = MutableLiveData<LoadDataModel<UploadEntity?>>()
+
+    val badOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
+    val boxOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
+    val batchOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
+    val reworkOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
 
     fun fileOssUpload(path: String, tag: String) {
         fileOssUploadLiveData.value = LoadDataModel()
@@ -68,5 +71,38 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
                     addDispos(d)
                 }
             })
+    }
+
+
+    fun getBadPictures(ossIds: String) {
+        badOssListLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getOssListByIds(ossIds)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(badOssListLiveData))
+    }
+
+    fun getBoxPictures(ossIds: String) {
+        boxOssListLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getOssListByIds(ossIds)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(boxOssListLiveData))
+    }
+
+    fun getBatchPictures(ossIds: String) {
+        batchOssListLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getOssListByIds(ossIds)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(batchOssListLiveData))
+    }
+
+    fun getReworkPictures(ossIds: String) {
+        reworkOssListLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getOssListByIds(ossIds)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(reworkOssListLiveData))
     }
 }
