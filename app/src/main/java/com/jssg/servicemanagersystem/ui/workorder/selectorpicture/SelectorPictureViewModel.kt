@@ -82,7 +82,8 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
     }
 
 
-    fun getBadPictures(ossIds: String) {
+    fun getBadPictures(ossIds: String?) {
+        if (ossIds.isNullOrEmpty()) return
         badOssListLiveData.value = LoadDataModel()
         RetrofitService.apiService
             .getOssListByIds(ossIds)
@@ -90,7 +91,8 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
             .subscribe(createObserver(badOssListLiveData))
     }
 
-    fun getBoxPictures(ossIds: String) {
+    fun getBoxPictures(ossIds: String?) {
+        if (ossIds.isNullOrEmpty()) return
         boxOssListLiveData.value = LoadDataModel()
         RetrofitService.apiService
             .getOssListByIds(ossIds)
@@ -98,7 +100,8 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
             .subscribe(createObserver(boxOssListLiveData))
     }
 
-    fun getBatchPictures(ossIds: String) {
+    fun getBatchPictures(ossIds: String?) {
+        if (ossIds.isNullOrEmpty()) return
         batchOssListLiveData.value = LoadDataModel()
         RetrofitService.apiService
             .getOssListByIds(ossIds)
@@ -106,7 +109,8 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
             .subscribe(createObserver(batchOssListLiveData))
     }
 
-    fun getReworkPictures(ossIds: String) {
+    fun getReworkPictures(ossIds: String?) {
+        if (ossIds.isNullOrEmpty()) return
         reworkOssListLiveData.value = LoadDataModel()
         RetrofitService.apiService
             .getOssListByIds(ossIds)
