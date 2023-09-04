@@ -81,7 +81,7 @@ interface ApiService {
     fun getFactoryInfo(): Observable<BaseHttpResult<List<FactoryInfo>?>>
 
     @GET("staging-api/system/user/deptTree")
-    fun getDeptInfo(): Observable<BaseHttpResult<List<DeptInfo>?>>
+    fun getDeptInfo(@Query("parentId") parentId: Int = 1): Observable<BaseHttpResult<List<DeptInfo>?>>
 
     @GET("staging-api/qm/workOrder/orgList")
     fun getWorkFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>

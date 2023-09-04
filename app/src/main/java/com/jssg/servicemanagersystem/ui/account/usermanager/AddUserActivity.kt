@@ -48,13 +48,6 @@ class AddUserActivity : BaseActivity() {
 
         initViewModel()
 
-        val roleList = AccountManager.instance.getRoleList()
-        if (roleList == null) {
-            accountViewModel.getRoleList()
-        } else {
-            initRoleData(roleList)
-        }
-
         addListener()
     }
 
@@ -197,7 +190,7 @@ class AddUserActivity : BaseActivity() {
         checkedRoleIds = mutableListOf()
         binding.layoutRoles.removeAllViews()
         //展示除管理员的全部角色信息，并选中当前用户的角色信息
-        roleList.filter { !it.admin }
+        roleList.filter { !it.admin && it.attachToApp.equals("Y") }
             .forEach {
                 binding.layoutRoles.addView(addCheckBoxWidget(it))
             }
@@ -258,6 +251,7 @@ class AddUserActivity : BaseActivity() {
             }
         }
 
+        accountViewModel.getRoleList()
         accountViewModel.getFactoryInfo()
         accountViewModel.getDeptInfo()
     }

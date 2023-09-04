@@ -62,19 +62,15 @@ public abstract class WQBaseObserver<T> implements Observer<T> {
         //网络异常 其他 错误信息
         switch (code) {
             case ExceptionEngin.UNAUTHORIZED:
-            case 20051://无法验证用户身份（Token过期）
-            case 20053://您已在另一个设备登出，请重新登录
-            case 20054://当前登录信息已失效，请重新登录
-            case 2005101://当前登录信息已失效，请重新登录
-            case 20055://当前登录信息已失效，请重新登录
-            case 20056://您的密码已修改，请重新登录
-            case 20057://您的谷歌2FA设置有变更，请重新登录
-            case 2010://用户不存在
-            case -1://退出 就完事了。原因看msg
-            case 209999://使用旧的cookie 访问时返回这个错误码 弹出登陆框不可取消 点击确定到登陆
                 AccountManager.Companion.getInstance().logout();
                 LoginActivity.Companion.goActivity(AppApplication.Companion.get().getLastActivity());
                 break;
+                case ExceptionEngin.FORBIDDEN:
+                case ExceptionEngin.BAD_GATEWAY:
+                case ExceptionEngin.INTERNAL_SERVER_ERROR:
+                case ExceptionEngin.SERVER_ERROR:
+                    onFailure(code, message);
+                    break;
             default:
                 if (code != ExceptionEngin.HTTP_ERROR_TIME_OUT) {
                     onFailure(code, message);

@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() {
 
         //禁止左右滑动
         binding.viewPager.isUserInputEnabled = false
-        binding.viewPager.offscreenPageLimit = 3
+        binding.viewPager.offscreenPageLimit = 1
         binding.viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

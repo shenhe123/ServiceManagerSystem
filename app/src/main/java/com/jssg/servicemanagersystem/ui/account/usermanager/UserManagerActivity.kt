@@ -12,9 +12,11 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -50,34 +52,45 @@ class UserManagerActivity : BaseActivity() {
             when(v.id) {
                 R.id.card_layout -> UserManagerDetailActivity.goActivity(this, user)
 
-                R.id.mbt_permission -> PermissionDialogFragment.newInstance(user)
-                    .addOnFinishListener(object :PermissionDialogFragment.OnFinishListener{
-                        override fun onFinish(newUser: User) {
-                            adapter.data[position] = newUser
-                            adapter.notifyItemChanged(position)
-                        }
+                R.id.mbt_permission -> {
+                    if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_EDIT.name)) return@setOnItemChildClickListener
 
-                    })
-                    .show(supportFragmentManager, "permission_dialog")
+                    PermissionDialogFragment.newInstance(user)
+                        .addOnFinishListener(object :PermissionDialogFragment.OnFinishListener{
+                            override fun onFinish(newUser: User) {
+                                adapter.data[position] = newUser
+                                adapter.notifyItemChanged(position)
+                            }
 
-                R.id.mbt_delete -> SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？")
-                    .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
-                        override fun onConfrimClick() {
-                            accountViewModel.deleteUserInfo(user.userId)
-                        }
+                        })
+                        .show(supportFragmentManager, "permission_dialog")
+                }
 
-                    })
-                    .show(supportFragmentManager, "delete_user_dialog")
+                R.id.mbt_delete -> {
+                    if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_REMOVE.name)) return@setOnItemChildClickListener
+
+                    SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？")
+                        .addConfrimClickLisntener(object :
+                            SingleBtnDialogFragment.OnConfirmClickLisenter {
+                            override fun onConfrimClick() {
+                                accountViewModel.deleteUserInfo(user.userId)
+                            }
+
+                        })
+                        .show(supportFragmentManager, "delete_user_dialog")
+                }
             }
 
 
         }
 
         binding.fbtnAddNew.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_ADD.name)) return@setOnClickListener
             launcherAddUser.launch("")
         }
 
         binding.mbtSearch.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.name)) return@setOnClickListener
             val input = binding.inputSearch.text.toString()
             if (input.isEmpty()) {
 

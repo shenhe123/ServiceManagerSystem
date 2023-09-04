@@ -140,9 +140,6 @@ class AccountViewModel : AutoDisposViewModel() {
         RetrofitService.apiService
             .getRoleList(1, 999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
-            .doOnNext {
-                AccountManager.instance.saveRoleList(it)
-            }
             .subscribe(createListObserver(roleListLiveData, true, 1))
     }
 

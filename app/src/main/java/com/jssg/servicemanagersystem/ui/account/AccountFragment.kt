@@ -10,6 +10,7 @@ import com.jssg.servicemanagersystem.ui.login.LoginActivity
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.profile.ProfileInfoActivity
 import com.jssg.servicemanagersystem.ui.account.network.ChooseHostActivity
 import com.jssg.servicemanagersystem.ui.account.role.RoleManagerActivity
@@ -18,6 +19,8 @@ import com.jssg.servicemanagersystem.ui.account.updatepwd.UpdatePasswordActivity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.login.LoginViewModel
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 class AccountFragment : BaseFragment() {
 
@@ -50,7 +53,6 @@ class AccountFragment : BaseFragment() {
         }
 
         accountViewModel.getUserProfile()
-        accountViewModel.getRoleList()
 
         addListener()
     }
@@ -61,10 +63,17 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvRoleManager.setOnClickListener {
-            RoleManagerActivity.goActivity(requireContext())
+            val user = AccountManager.instance.getUser()
+            if (user?.user?.admin == true) {
+                RoleManagerActivity.goActivity(requireContext())
+            } else {
+                ToastUtils.showToast("没有权限操作")
+            }
         }
 
         binding.tvUserManager.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.name)) return@setOnClickListener
+
             UserManagerActivity.goActivity(requireContext())
         }
 
@@ -84,6 +93,8 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvUpdatePassword.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_RESETPWD.name)) return@setOnClickListener
+
             UpdatePasswordActivity.goActivity(requireContext())
         }
     }
