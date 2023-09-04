@@ -7,6 +7,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
+import com.jssg.servicemanagersystem.ui.account.entity.UserRoles
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
 import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
@@ -67,6 +68,9 @@ interface ApiService {
 
     @POST("staging-api/system/user")
     fun addNewUser(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
+    @GET("staging-api/system/user/")
+    fun getUserRoles(): Observable<BaseHttpResult<UserRoles>>
 
     @GET("staging-api/system/user/list")
     fun searchUser(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>?>>

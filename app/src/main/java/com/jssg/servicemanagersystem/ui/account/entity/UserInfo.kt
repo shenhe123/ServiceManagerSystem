@@ -35,6 +35,7 @@ data class User(
     val updateTime: String?,
     val userId: Long,
     val userName: String,
+    val userType: String?,
     var expireDate: String
 ) : Parcelable
 

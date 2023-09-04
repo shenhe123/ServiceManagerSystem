@@ -45,6 +45,7 @@ class AccountManager {
     }
 
     fun logout() {
+        user = null
         MMKV.defaultMMKV().remove("user_account_info")
         saveAuthorization("")
         saveCookie("")

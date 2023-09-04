@@ -13,6 +13,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
+import com.jssg.servicemanagersystem.ui.account.entity.UserRoles
 import com.jssg.servicemanagersystem.utils.HUtils
 
 /**
@@ -32,6 +33,7 @@ class AccountViewModel : AutoDisposViewModel() {
     val addNewRoleLiveData = MutableLiveData<LoadDataModel<Any>>()
     val userListLiveData = MutableLiveData<LoadListDataModel<List<User>?>>()
     val roleListLiveData = MutableLiveData<LoadListDataModel<List<Role>?>>()
+    val userRoleListLiveData = MutableLiveData<LoadDataModel<UserRoles>>()
     val updateUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateRoleInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
 
@@ -143,6 +145,15 @@ class AccountViewModel : AutoDisposViewModel() {
             .subscribe(createListObserver(roleListLiveData, true, 1))
     }
 
+    fun getUserRoleList() {
+        userRoleListLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getUserRoles()
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .doOnNext { AccountManager.instance.saveRoleList(it.roles) }
+            .subscribe(createObserver(userRoleListLiveData))
+    }
+
     fun updateUserInfo(
         checkedRoleIds: List<String>?,
         user: User,
@@ -183,7 +194,7 @@ class AccountViewModel : AutoDisposViewModel() {
         cardId: String,
         address: String,
         expiredDate: String,
-        checkedRoleIds: List<String>,
+        checkedRoleIds: List<String>?,
         orgId: String?,
         deptId: String?
     ) {

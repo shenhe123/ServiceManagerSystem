@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class TravelReportInfo(
     val billNo: String,   //1692528600129953793",
-    val orgId: String,   //工厂name",
+    val orgId: String?,   //工厂name",
     val dept: String,   //部门",
     val applyName: String,   //申请人",
     val partner: String,   //同行人员",

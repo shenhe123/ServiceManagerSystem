@@ -45,10 +45,10 @@ class PermissionDialogFragment: BaseDialogFragment() {
 
         val user = arguments?.getParcelable<User>("data")
 
-        accountViewModel.roleListLiveData.observe(this) { result ->
+        accountViewModel.userRoleListLiveData.observe(this) { result ->
             if (!result.isLoading) {
                 user?.let {
-                    initRoleData(it.roleIds, result.rows)
+                    initRoleData(it.roleIds, result.data.roles)
                 }
             }
         }
@@ -70,7 +70,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
 
         val roleList = AccountManager.instance.getRoleList()
         if (roleList == null) {
-            accountViewModel.getRoleList()
+            accountViewModel.getUserRoleList()
         } else {
             user?.let {
                 initRoleData(it.roleIds, roleList)
@@ -101,7 +101,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
         binding.layoutPermission.removeAllViews()
         //这个用户未设置任何角色
         if (roleIds.isNullOrEmpty()) {
-            roleList.filter { !it.admin }
+            roleList.filter { !it.admin && it.attachToApp.equals("Y") }
                 .forEach {
                 binding.layoutPermission.addView(addCheckBoxWidget(it, false))
             }
@@ -109,7 +109,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
         }
 
         //展示全部角色信息，并选中当前用户的角色信息
-        roleList.filter { !it.admin }
+        roleList.filter { !it.admin && it.attachToApp.equals("Y") }
             .forEach {
             binding.layoutPermission.addView(addCheckBoxWidget(it, roleIds.contains(it.roleId)))
         }

@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimeDialogFragment
@@ -31,6 +32,7 @@ import java.math.BigDecimal
 import java.util.Calendar
 
 class AddUserActivity : BaseActivity() {
+    private var isFactoryUser: Boolean = false
     private var deptId: String? = null
     private var orgId: String? = null
     private var deptInfos: List<DeptInfo>? = null
@@ -45,6 +47,9 @@ class AddUserActivity : BaseActivity() {
         binding = ActivityAddUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+
+        val user = AccountManager.instance.getUser()
+        isFactoryUser = user?.user?.userType?.equals("factory_user", true) == true
 
         initViewModel()
 
@@ -131,9 +136,12 @@ class AddUserActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            if (checkedRoleIds.isEmpty()) {
-                ToastUtils.showToast("请选择角色信息")
-                return@setOnClickListener
+            //工厂用户 不用判断角色信息、工厂、部门
+            if (!isFactoryUser) {
+                if (checkedRoleIds.isEmpty()) {
+                    ToastUtils.showToast("请选择角色信息")
+                    return@setOnClickListener
+                }
             }
 
             accountViewModel.addNewUser(nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)
@@ -199,10 +207,10 @@ class AddUserActivity : BaseActivity() {
     private fun initViewModel() {
         accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
 
-        accountViewModel.roleListLiveData.observe(this) { result ->
+        accountViewModel.userRoleListLiveData.observe(this) { result ->
             if (!result.isLoading) {
-                result.rows?.let {
-                    initRoleData(it)
+                result.data?.let {
+                    initRoleData(it.roles)
                 }
             }
         }
@@ -251,9 +259,15 @@ class AddUserActivity : BaseActivity() {
             }
         }
 
-        accountViewModel.getRoleList()
-        accountViewModel.getFactoryInfo()
-        accountViewModel.getDeptInfo()
+        if (isFactoryUser) {
+            binding.layoutRolesRoot.isVisible = false
+            binding.layoutFactory.isVisible = false
+            binding.layoutDept.isVisible = false
+        } else {
+            accountViewModel.getUserRoleList()
+            accountViewModel.getFactoryInfo()
+            accountViewModel.getDeptInfo()
+        }
     }
 
     private fun addCheckBoxWidget(role: Role): AppCompatCheckBox {

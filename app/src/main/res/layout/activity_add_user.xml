@@ -214,6 +214,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_roles_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
@@ -246,6 +247,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_factory"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
@@ -276,6 +278,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_dept"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"

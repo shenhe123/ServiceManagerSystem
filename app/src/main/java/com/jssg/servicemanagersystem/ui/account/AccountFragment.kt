@@ -52,9 +52,12 @@ class AccountFragment : BaseFragment() {
             }
         }
 
-        accountViewModel.getUserProfile()
-
         addListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        accountViewModel.getUserProfile()
     }
 
     private fun addListener() {
