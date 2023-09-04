@@ -65,6 +65,7 @@ class TravelReportViewModel : AutoDisposViewModel() {
         params["partner"] = travelReportInfo.partner
         params["customer"] = travelReportInfo.customer
         params["productCode"] = travelReportInfo.productCode
+        params["projectCode"] = travelReportInfo.projectCode
         params["placeFrom"] = travelReportInfo.placeFrom
         params["placeTo"] = travelReportInfo.placeTo
         params["address"] = travelReportInfo.address
@@ -75,7 +76,7 @@ class TravelReportViewModel : AutoDisposViewModel() {
         params["expectedResult"] = travelReportInfo.expectedResult
         params["schedule"] = travelReportInfo.schedule
         RetrofitService.apiService
-            .addWorkOrderDetail(HUtils.createRequestBodyMap(params))
+            .addNewTravelReport(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(addNewTravelReportLiveData))
     }

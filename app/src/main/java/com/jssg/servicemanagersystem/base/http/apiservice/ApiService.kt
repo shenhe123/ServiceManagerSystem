@@ -140,4 +140,7 @@ interface ApiService {
 
     @GET("staging-api/qm/tripReport/deptList")
     fun getTravelReportDeptInfo(): Observable<BaseHttpResult<List<WorkDeptInfo>?>>
+
+    @POST("staging-api/qm/tripReport")
+    fun addNewTravelReport(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 }
