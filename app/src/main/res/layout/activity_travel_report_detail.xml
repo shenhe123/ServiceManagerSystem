@@ -64,7 +64,7 @@
 
                     <TextView
                         android:id="@+id/tv_dept"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -83,7 +83,7 @@
 
                     <TextView
                         android:id="@+id/tv_apply_name"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -102,7 +102,7 @@
 
                     <TextView
                         android:id="@+id/tv_partner"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -139,7 +139,7 @@
 
                     <TextView
                         android:id="@+id/tv_customer"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -158,7 +158,7 @@
 
                     <TextView
                         android:id="@+id/tv_product_code"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -177,7 +177,7 @@
 
                     <TextView
                         android:id="@+id/tv_project_code"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -225,7 +225,7 @@
 
                     <TextView
                         android:id="@+id/tv_place_from"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -245,7 +245,7 @@
 
                     <TextView
                         android:id="@+id/tv_place_to"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -263,7 +263,7 @@
 
                     <TextView
                         android:id="@+id/tv_address"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -299,7 +299,7 @@
 
                     <TextView
                         android:id="@+id/tv_start_date"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -318,7 +318,7 @@
 
                     <TextView
                         android:id="@+id/tv_end_date"
-                        style="@style/SubTitleStyle"
+                        style="@style/SecTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -349,6 +349,7 @@
                         android:layout_marginTop="8dp"
                         android:padding="10dp"
                         android:enabled="false"
+                        style="@style/SecTitleStyle"
                         android:background="@drawable/selector_input_stroke"
                         app:layout_constraintTop_toBottomOf="@id/tv_purpose_title"
                         app:layout_constraintStart_toStartOf="@id/tv_purpose_title"
@@ -371,6 +372,7 @@
                         android:layout_marginTop="8dp"
                         android:padding="10dp"
                         android:enabled="false"
+                        style="@style/SecTitleStyle"
                         android:background="@drawable/selector_input_stroke"
                         app:layout_constraintTop_toBottomOf="@id/tv_main_task_title"
                         app:layout_constraintStart_toStartOf="@id/tv_main_task_title"
@@ -394,6 +396,7 @@
                         android:background="@drawable/selector_input_stroke"
                         android:padding="10dp"
                         android:enabled="false"
+                        style="@style/SecTitleStyle"
                         app:layout_constraintTop_toBottomOf="@id/tv_expected_result_title"
                         app:layout_constraintStart_toStartOf="@id/tv_expected_result_title"
                         app:layout_constraintEnd_toEndOf="parent"/>
@@ -416,6 +419,7 @@
                         android:background="@drawable/selector_input_stroke"
                         android:padding="10dp"
                         android:enabled="false"
+                        style="@style/SecTitleStyle"
                         app:layout_constraintTop_toBottomOf="@id/tv_schedule_title"
                         app:layout_constraintStart_toStartOf="@id/tv_schedule_title"
                         app:layout_constraintEnd_toEndOf="parent"/>

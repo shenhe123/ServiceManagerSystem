@@ -27,7 +27,7 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
 
         holder.binding.tvApplyName.text = item.applyName
         holder.binding.tvApplyDept.text = item.applyDept
-        holder.binding.tvApplyFactory.text = item.orgService
+        holder.binding.tvApplyFactory.text = item.sysOrganizationVo?.orgShortName ?: item.orgService
         holder.binding.tvApplyDate.text = item.applyDate
 
         when(item.state) {
