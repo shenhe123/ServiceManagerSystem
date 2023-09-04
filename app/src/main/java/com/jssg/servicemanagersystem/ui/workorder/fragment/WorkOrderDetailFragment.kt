@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderDetailBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 
 class WorkOrderDetailFragment : Fragment() {
     private lateinit var binding: FragmentWorkOrderDetailBinding
@@ -52,6 +54,8 @@ class WorkOrderDetailFragment : Fragment() {
         }
 
         binding.mbtCheckOrder.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_edit.name)) return@setOnClickListener
+
             inputData?.let {
                 WorkOrderCheckActivity.goActivity(requireContext(), it)
             }

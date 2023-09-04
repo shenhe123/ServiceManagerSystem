@@ -11,9 +11,11 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderAddNewBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 class WorkOrderAddNewActivity : BaseActivity() {
@@ -132,6 +134,9 @@ class WorkOrderAddNewActivity : BaseActivity() {
         }
 
         binding.mbtSubmit.setOnClickListener {
+
+            if (!RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_add.name)) return@setOnClickListener
+
             val nickName = binding.etApplyName.text.toString()
             if (nickName.isEmpty()) {
                 ToastUtils.showToast("用户名不能为空")

@@ -13,11 +13,13 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderAddNewActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -146,12 +148,16 @@ class WorkOrderFragment : BaseFragment() {
         }
 
         adapter.setOnItemClickListener { _, _, position ->
-            val workOrderInfo = adapter.data[position]
-            WorkOrderDetailActivity.goActivity(requireActivity(), workOrderInfo)
+            if (RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_query.name)) {
+                val workOrderInfo = adapter.data[position]
+                WorkOrderDetailActivity.goActivity(requireActivity(), workOrderInfo)
+            }
         }
 
         binding.fbtnAddNew.setOnClickListener {
-            addNewLauncher.launch("")
+            if (RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_add.name)) {
+                addNewLauncher.launch("")
+            }
         }
 
 
@@ -160,10 +166,14 @@ class WorkOrderFragment : BaseFragment() {
             if (input.isEmpty()) {
                 return@setOnClickListener
             }
-            workOrderViewModel.searchWorkOrder(input)
+            if (RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_query.name)) {
+                workOrderViewModel.searchWorkOrder(input)
+            }
         }
 
         binding.tvCloseCase.setOnClickListener {
+
+            if (!RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_approve.name)) return@setOnClickListener
 
             if (!adapter.isCloseCase) {
                 binding.tvCloseCase.text = "提交"
