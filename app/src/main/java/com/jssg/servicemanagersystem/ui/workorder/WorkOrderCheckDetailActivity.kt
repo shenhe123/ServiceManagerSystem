@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderCheckDetailBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
@@ -31,6 +32,7 @@ import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.DpPxUtils
 import com.jssg.servicemanagersystem.utils.FileUtils
 import com.jssg.servicemanagersystem.utils.MyLocationClient
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
 import net.arvin.permissionhelper.PermissionHelper
@@ -90,6 +92,8 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         binding.toolBar.setNavigationOnClickListener { finish() }
 
         binding.tvCheck.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKDERDETAIL_APPROVE.name)) return@setOnClickListener
+
             inputData?.let {
                 WorkOrderCheckDialogFragment.newInstance(it)
                     .addOnFinishListener(object :WorkOrderCheckDialogFragment.OnFinishListener{
@@ -278,6 +282,8 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
     }
 
     private fun onSubmit(state: Int) {
+        if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_EDIT.name)) return
+
         this.state = state
         val locationStr = binding.tvLocationAddress.text.toString()
         if (locationStr.isEmpty()) {

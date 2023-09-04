@@ -148,32 +148,30 @@ class WorkOrderFragment : BaseFragment() {
         }
 
         adapter.setOnItemClickListener { _, _, position ->
-            if (RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_query.name)) {
-                val workOrderInfo = adapter.data[position]
-                WorkOrderDetailActivity.goActivity(requireActivity(), workOrderInfo)
-            }
+            val workOrderInfo = adapter.data[position]
+            WorkOrderDetailActivity.goActivity(requireActivity(), workOrderInfo)
         }
 
         binding.fbtnAddNew.setOnClickListener {
-            if (RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_add.name)) {
-                addNewLauncher.launch("")
-            }
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.name)) return@setOnClickListener
+            addNewLauncher.launch("")
         }
 
 
         binding.mbtSearch.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.name)) return@setOnClickListener
+
             val input = binding.inputSearch.text.toString()
             if (input.isEmpty()) {
                 return@setOnClickListener
             }
-            if (RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_query.name)) {
-                workOrderViewModel.searchWorkOrder(input)
-            }
+
+            workOrderViewModel.searchWorkOrder(input)
         }
 
         binding.tvCloseCase.setOnClickListener {
 
-            if (!RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_approve.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_FINISH.name)) return@setOnClickListener
 
             if (!adapter.isCloseCase) {
                 binding.tvCloseCase.text = "提交"

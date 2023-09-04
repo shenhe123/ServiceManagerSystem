@@ -1,13 +1,29 @@
 package com.jssg.servicemanagersystem.ui.travelreport
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.jssg.servicemanagersystem.base.http.RetrofitService
+import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
+import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
+import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 
-class TravelReportViewModel : ViewModel() {
+class TravelReportViewModel : AutoDisposViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "开发计划中"
+
+    val travelReportListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
+
+    fun getTravelReportList(isRefresh: Boolean, page: Int) {
+        travelReportListLiveData.value = LoadListDataModel(isRefresh)
+        val mPage = if (isRefresh) {
+            1
+        } else {
+            page + 1
+        }
+        RetrofitService.apiService
+            .getWorkOrderList(mPage, 20)
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .subscribe(createListObserver(travelReportListLiveData, isRefresh, page))
     }
-    val text: LiveData<String> = _text
+
+
 }

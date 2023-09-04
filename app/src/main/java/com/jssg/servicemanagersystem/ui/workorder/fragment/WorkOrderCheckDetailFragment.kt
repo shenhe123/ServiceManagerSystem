@@ -10,11 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderCheckDetailBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderCheckAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -76,6 +78,18 @@ class WorkOrderCheckDetailFragment : Fragment() {
         adapter.setOnItemClickListener { _, view, position ->
             val workOrderInfo = adapter.data[position]
             workOrderCheckLauncher.launch(workOrderInfo)
+        }
+
+
+        binding.mbtSearch.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_QUERY.name)) return@setOnClickListener
+
+            val input = binding.inputSearch.text.toString()
+            if (input.isEmpty()) {
+                return@setOnClickListener
+            }
+
+            workOrderViewModel.searchWorkOrderDetail(input)
         }
     }
 
