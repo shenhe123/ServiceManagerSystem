@@ -21,7 +21,7 @@ class RoleManagerAdapter: BaseBindingAdapter<Role, ItemRoleManagerLayoutBinding>
     override fun convert(holder: VBViewHolder<ItemRoleManagerLayoutBinding>, item: Role) {
         holder.binding.tvId.text = "角色ID：${item.roleId}"
         holder.binding.tvName.text = "角色名称：${item.roleName}"
-        holder.binding.tvRemark.text = "备注：${item.remark}"
+        holder.binding.tvRemark.text = "备注：${item.remark.toString()}"
     }
 
 }

@@ -131,4 +131,9 @@ interface ApiService {
     @GET("staging-api/qm/tripReport/list")
     fun searchTravelReportList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 
+    @GET("staging-api/qm/tripReport/orgList")
+    fun getTravelReportFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>
+
+    @GET("staging-api/qm/tripReport/deptList")
+    fun getTravelReportDeptInfo(): Observable<BaseHttpResult<List<WorkDeptInfo>?>>
 }

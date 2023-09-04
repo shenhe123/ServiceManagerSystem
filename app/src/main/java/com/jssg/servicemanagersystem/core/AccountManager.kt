@@ -5,6 +5,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
 import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
+import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.utils.JsonUtils
 import com.tencent.mmkv.MMKV
 
@@ -122,6 +123,14 @@ class AccountManager {
             return JsonUtils.getListFromJson(it, DeptInfo::class.java)
         }
         return null
+    }
+
+    fun saveNewTravelReport(travelReportInfo: TravelReportInfo) {
+        MMKV.defaultMMKV().encode("travel_report_info", travelReportInfo)
+    }
+
+    fun getNewTravelReport(): TravelReportInfo? {
+        return MMKV.defaultMMKV().decodeParcelable("travel_report_info", TravelReportInfo::class.java)
     }
 
     companion object{

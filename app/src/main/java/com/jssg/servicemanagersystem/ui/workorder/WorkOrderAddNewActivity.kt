@@ -104,7 +104,7 @@ class WorkOrderAddNewActivity : BaseActivity() {
                     binding.asFactory.prompt = it[position].orgShortName
 
                     if (!it[position].orgName.equals("请选择工厂")) {
-                        orgId = it[position].orgId
+                        orgId = it[position].orgShortName
                     }
 
                 }
@@ -125,7 +125,7 @@ class WorkOrderAddNewActivity : BaseActivity() {
                     binding.asDept.prompt = it[position].deptName
 
                     if (!it[position].deptName.equals("请选择部门")) {
-                        deptId = it[position].deptId.toString()
+                        deptId = it[position].deptName
                     }
                 }
             }
@@ -223,8 +223,8 @@ class WorkOrderAddNewActivity : BaseActivity() {
                 serviceTotal,
                 serviceAddress,
                 remark,
-                orgId,
                 deptId,
+                orgId,
                 productCode,
                 productDesc,
                 badNum

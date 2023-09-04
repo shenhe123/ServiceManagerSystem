@@ -3,7 +3,9 @@ package com.jssg.servicemanagersystem.base.http.observer;
 
 import com.jssg.servicemanagersystem.base.http.observer.error.ApiException;
 import com.jssg.servicemanagersystem.base.http.observer.error.ExceptionEngin;
+import com.jssg.servicemanagersystem.core.AccountManager;
 import com.jssg.servicemanagersystem.core.AppApplication;
+import com.jssg.servicemanagersystem.ui.login.LoginActivity;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -68,17 +70,10 @@ public abstract class WQBaseObserver<T> implements Observer<T> {
             case 20056://您的密码已修改，请重新登录
             case 20057://您的谷歌2FA设置有变更，请重新登录
             case 2010://用户不存在
-//            case 200001://账户冻结、cookie 解析失败 这样产品要求已经和nirui 确定 。pc之前有地方也是验证2fa返回200001的code，但是实际上后端没有登出
             case -1://退出 就完事了。原因看msg
-//                AccountManger
-//                        .getInstance().userAuthExpire();
-//                //发送登录信息过期事件
-//                EventBus.getDefault().post(new LoginExpiresEvent(message));
-                break;
             case 209999://使用旧的cookie 访问时返回这个错误码 弹出登陆框不可取消 点击确定到登陆
-//                AccountManger
-//                        .getInstance().userAuthExpire();
-//                BMApplication.get().showLogoutDialog(message);
+                AccountManager.Companion.getInstance().logout();
+                LoginActivity.Companion.goActivity(AppApplication.Companion.get().getLastActivity());
                 break;
             default:
                 if (code != ExceptionEngin.HTTP_ERROR_TIME_OUT) {

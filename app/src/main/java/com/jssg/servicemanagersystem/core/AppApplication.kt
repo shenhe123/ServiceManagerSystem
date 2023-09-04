@@ -115,6 +115,10 @@ class AppApplication: BaseCoreApplication() {
         isRunInBackground = true
     }
 
+    fun getLastActivity(): Activity {
+        return activityList.last
+    }
+
     companion object {
         fun get(): AppApplication {
             return _instance as AppApplication
