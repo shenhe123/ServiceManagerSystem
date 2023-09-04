@@ -14,6 +14,7 @@ import com.jssg.servicemanagersystem.utils.HUtils
 
 class TravelReportViewModel : AutoDisposViewModel() {
 
+    val addNewTravelReportLiveData = MutableLiveData<LoadDataModel<Any>>()
     val deptInfoLiveData = MutableLiveData<LoadDataModel<List<WorkDeptInfo>?>>()
     val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<WorkFactoryInfo>?>>()
     val travelReportListLiveData = MutableLiveData<LoadListDataModel<List<TravelReportInfo>?>>()
@@ -57,22 +58,25 @@ class TravelReportViewModel : AutoDisposViewModel() {
     }
 
     fun addNewTravelReport(travelReportInfo: TravelReportInfo) {
-//        addWorkOrderDetailLiveData.value = LoadDataModel()
-//        val params = HashMap<String, Any>()
-//        params["billNo"] = billNo
-//        params["place"] = place
-//        params["badPicNames"] = badPicNames
-//        params["boxPicNames"] = boxPicNames
-//        params["batchPicNames"] = batchPicNames
-//        params["reworkPicNames"] = reworkPicNames
-//        params["checkNum"] = checkNum
-//        params["badNum"] = badNum
-//        params["checkDate"] = checkDate
-//        params["state"] = state
-//        params["remark"] = remark
-//        RetrofitService.apiService
-//            .addWorkOrderDetail(HUtils.createRequestBodyMap(params))
-//            .compose(RxSchedulersHelper.io_main())
-//            .subscribe(createObserver(addWorkOrderDetailLiveData))
+        addNewTravelReportLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any>()
+        params["dept"] = travelReportInfo.dept
+        params["orgId"] = travelReportInfo.orgId ?: ""
+        params["partner"] = travelReportInfo.partner
+        params["customer"] = travelReportInfo.customer
+        params["productCode"] = travelReportInfo.productCode
+        params["placeFrom"] = travelReportInfo.placeFrom
+        params["placeTo"] = travelReportInfo.placeTo
+        params["address"] = travelReportInfo.address
+        params["startDate"] = travelReportInfo.startDate
+        params["endDate"] = travelReportInfo.endDate
+        params["purpose"] = travelReportInfo.purpose
+        params["mainTask"] = travelReportInfo.mainTask
+        params["expectedResult"] = travelReportInfo.expectedResult
+        params["schedule"] = travelReportInfo.schedule
+        RetrofitService.apiService
+            .addWorkOrderDetail(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(addNewTravelReportLiveData))
     }
 }

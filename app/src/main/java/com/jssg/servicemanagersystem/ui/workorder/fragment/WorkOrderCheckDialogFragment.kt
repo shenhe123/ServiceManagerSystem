@@ -42,15 +42,23 @@ class WorkOrderCheckDialogFragment : BaseDialogFragment() {
                 return@setOnClickListener
             }
 
-            var state = "0"
+            //同意 2 不同意4  退回 3
+            var state = "2"
             if (binding.rbAgree.isChecked) {
-                state = "0"
+                state = "2"
             }
             if (binding.rbAgreeNot.isChecked) {
-                state = "1"
+                state = "4"
             }
             if (binding.rbResignation.isChecked) {
-                state = "2"
+                state = "3"
+            }
+
+            if (binding.rbAgreeNot.isChecked || binding.rbResignation.isChecked) {
+                if (binding.etRemark.text.isNullOrEmpty()) {
+                    ToastUtils.showToast("审核备注不能为空")
+                    return@setOnClickListener
+                }
             }
 
             inputData?.let {

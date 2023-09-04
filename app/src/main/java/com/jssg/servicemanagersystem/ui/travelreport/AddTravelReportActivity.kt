@@ -86,6 +86,17 @@ class AddTravelReportActivity : BaseActivity() {
             }
         }
 
+        travelReportViewModel.addNewTravelReportLiveData.observe(this) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                ToastUtils.showToast("添加成功")
+                setResult(Activity.RESULT_OK, Intent().apply {
+                    putExtra("output", true)
+                })
+                finish()
+            }
+        }
+
         travelReportViewModel.getFactoryInfo()
         travelReportViewModel.getDeptInfo()
 
