@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderDetailBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
@@ -51,6 +52,9 @@ class WorkOrderDetailFragment : Fragment() {
             binding.tvAddress.text = "服务地点：${it.serviceAdd}"
             binding.tvProductNum.text = "不良数量：${it.productNum}"
             binding.etRemark.setText(it.remark)
+
+            //已排查的隐藏去排查按钮
+            binding.mbtCheckOrder.isVisible = it.checkState != 2
         }
 
         binding.mbtCheckOrder.setOnClickListener {

@@ -7,16 +7,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.checkbox.MaterialCheckBox
-import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentTravelReportBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.travelreport.adapter.TravelReportAdapter
+import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
-import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
-import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -25,10 +22,16 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 class TravelReportFragment : BaseFragment() {
 
     private val page: Int = 1
-    private lateinit var sourceList: MutableList<WorkOrderInfo>
+    private lateinit var sourceList: MutableList<TravelReportInfo>
     private lateinit var adapter: TravelReportAdapter
     private lateinit var travelReportViewModel: TravelReportViewModel
     private lateinit var binding: FragmentTravelReportBinding
+
+    private val addNewLauncher = registerForActivityResult(AddTravelReportActivity.AddTravelReportContracts()){
+        it?.let {
+            loadData(true)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +47,7 @@ class TravelReportFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TravelReportAdapter(false)
+        adapter = TravelReportAdapter()
         binding.recyclerView.adapter = adapter
 
         binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
@@ -86,7 +89,7 @@ class TravelReportFragment : BaseFragment() {
         binding.tvEmpty.isVisible = isVisible
     }
 
-    private fun updateWorkOrderList(result: LoadListDataModel<List<WorkOrderInfo>?>) {
+    private fun updateWorkOrderList(result: LoadListDataModel<List<TravelReportInfo>?>) {
         result.rows?.let {
             val reversedList = it
             if (result.isPullRefresh) {
@@ -112,15 +115,15 @@ class TravelReportFragment : BaseFragment() {
     private fun addListener() {
 
         adapter.setOnItemClickListener { _, _, position ->
-            val workOrderInfo = adapter.data[position]
-            WorkOrderDetailActivity.goActivity(requireActivity(), workOrderInfo)
+            val travelReportInfo = adapter.data[position]
+            TravelReportDetailActivity.goActivity(requireContext(), travelReportInfo)
         }
 
-//        binding.fbtnAddNew.setOnClickListener {
-//            if (RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_add.name)) {
-//                addNewLauncher.launch("")
-//            }
-//        }
+        binding.fbtnAddNew.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.name)) return@setOnClickListener
+
+            addNewLauncher.launch("")
+        }
 //
 //
 //        binding.mbtSearch.setOnClickListener {

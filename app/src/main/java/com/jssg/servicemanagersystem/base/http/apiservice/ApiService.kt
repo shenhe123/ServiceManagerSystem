@@ -8,6 +8,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
+import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
@@ -123,5 +124,11 @@ interface ApiService {
 
     @POST("staging-api/qm/workOrder/finish")
     fun closeCaseWorkOrderCheck(@Query("billNos") billNos: String): Observable<BaseHttpResult<Any>>
+
+    @GET("staging-api/qm/tripReport/list")
+    fun getTravelReportList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
+
+    @GET("staging-api/qm/tripReport/list")
+    fun searchTravelReportList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 
 }
