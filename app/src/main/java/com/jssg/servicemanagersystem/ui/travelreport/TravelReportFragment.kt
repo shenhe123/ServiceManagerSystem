@@ -124,17 +124,18 @@ class TravelReportFragment : BaseFragment() {
 
             addNewLauncher.launch("")
         }
-//
-//
-//        binding.mbtSearch.setOnClickListener {
-//            val input = binding.inputSearch.text.toString()
-//            if (input.isEmpty()) {
-//                return@setOnClickListener
-//            }
-//            if (RolePermissionUtils.hasPermission(MenuEnum.WorkOrder_query.name)) {
-//                workOrderViewModel.searchWorkOrder(input)
-//            }
-//        }
+
+
+        binding.mbtSearch.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_QUERY.name)) return@setOnClickListener
+
+            val input = binding.inputSearch.text.toString()
+            if (input.isEmpty()) {
+                return@setOnClickListener
+            }
+
+            travelReportViewModel.searchTravelReport(input)
+        }
     }
 
     companion object {

@@ -26,5 +26,13 @@ class TravelReportViewModel : AutoDisposViewModel() {
             .subscribe(createListObserver(travelReportListLiveData, isRefresh, page))
     }
 
+    fun searchTravelReport(input: String) {
+        travelReportListLiveData.value = LoadListDataModel(true)
+        RetrofitService.apiService
+            .searchTravelReportList(input,1, 999)
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .subscribe(createListObserver(travelReportListLiveData, true, 1))
+    }
+
 
 }
