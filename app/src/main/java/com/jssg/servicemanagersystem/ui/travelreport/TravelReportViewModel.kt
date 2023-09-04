@@ -10,6 +10,7 @@ import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.utils.HUtils
 
 class TravelReportViewModel : AutoDisposViewModel() {
 
@@ -53,5 +54,25 @@ class TravelReportViewModel : AutoDisposViewModel() {
             .compose(RxSchedulersHelper.ObsResultWithMain())
             .subscribe(createObserver(deptInfoLiveData))
 
+    }
+
+    fun addNewTravelReport(travelReportInfo: TravelReportInfo) {
+//        addWorkOrderDetailLiveData.value = LoadDataModel()
+//        val params = HashMap<String, Any>()
+//        params["billNo"] = billNo
+//        params["place"] = place
+//        params["badPicNames"] = badPicNames
+//        params["boxPicNames"] = boxPicNames
+//        params["batchPicNames"] = batchPicNames
+//        params["reworkPicNames"] = reworkPicNames
+//        params["checkNum"] = checkNum
+//        params["badNum"] = badNum
+//        params["checkDate"] = checkDate
+//        params["state"] = state
+//        params["remark"] = remark
+//        RetrofitService.apiService
+//            .addWorkOrderDetail(HUtils.createRequestBodyMap(params))
+//            .compose(RxSchedulersHelper.io_main())
+//            .subscribe(createObserver(addWorkOrderDetailLiveData))
     }
 }

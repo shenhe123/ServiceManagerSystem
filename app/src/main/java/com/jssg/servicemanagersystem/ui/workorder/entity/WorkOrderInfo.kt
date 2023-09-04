@@ -64,7 +64,7 @@ data class WorkOrderInfo(
        val sourceBill: String?,    // 原清单
        val state: Int,   // 状态,0保存 1提交
        val checkState: Int,   // 排查状态
-       val checkNumTotal: Int,   // 排查数量
-       val badNumTotal: Int,   // 不良数量
+       val checkNumTotal: Int?,   // 排查数量
+       val badNumTotal: Int?,   // 不良数量
        val sysOrganizationVo: WorkFactoryInfo?
 ) : Parcelable

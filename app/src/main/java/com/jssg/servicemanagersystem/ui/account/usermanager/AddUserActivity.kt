@@ -37,7 +37,7 @@ class AddUserActivity : BaseActivity() {
     private var orgId: String? = null
     private var deptInfos: List<DeptInfo>? = null
     private var factoryInfos: List<FactoryInfo>? = null
-    private lateinit var checkedRoleIds: MutableList<String>
+    private var checkedRoleIds: MutableList<String>? = null
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var binding: ActivityAddUserBinding
 
@@ -138,7 +138,7 @@ class AddUserActivity : BaseActivity() {
 
             //工厂用户 不用判断角色信息、工厂、部门
             if (!isFactoryUser) {
-                if (checkedRoleIds.isEmpty()) {
+                if (checkedRoleIds.isNullOrEmpty()) {
                     ToastUtils.showToast("请选择角色信息")
                     return@setOnClickListener
                 }
@@ -279,10 +279,10 @@ class AddUserActivity : BaseActivity() {
 
         checkBox.setOnClickListener {
             if (checkBox.isChecked) {
-                checkedRoleIds.add(role.roleId)
+                checkedRoleIds?.add(role.roleId)
             } else {
-                if (checkedRoleIds.contains(role.roleId)) {
-                    checkedRoleIds.remove(role.roleId)
+                if (checkedRoleIds?.contains(role.roleId) == true) {
+                    checkedRoleIds?.remove(role.roleId)
                 }
             }
         }

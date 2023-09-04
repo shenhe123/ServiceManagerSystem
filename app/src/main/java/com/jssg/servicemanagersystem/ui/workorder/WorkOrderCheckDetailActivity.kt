@@ -359,8 +359,10 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
             binding.tvLocationAddress.text = it.place
             binding.tvCheckDate.text = it.checkDate
             checkDate = it.checkDate
-            binding.tvCheckNumTotal.text = it.workOrderVo?.checkNumTotal.toString()
-            binding.tvBadNumTotal.text = it.workOrderVo?.badNumTotal.toString()
+            val checkNumTotal = it.workOrderVo?.checkNumTotal ?: 0
+            binding.tvCheckNumTotal.text = checkNumTotal.toString()
+            val badNumTotal = it.workOrderVo?.badNumTotal ?: 0
+            binding.tvBadNumTotal.text = badNumTotal.toString()
             binding.etCheckNum.setText(it.checkNum.toString())
             binding.etBadNum.setText(it.badNum.toString())
             binding.etRemark.setText(it.remark)

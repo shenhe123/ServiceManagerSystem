@@ -59,8 +59,8 @@ class WorkOrderCheckActivity : BaseActivity() {
         inputData = intent?.getParcelableExtra<WorkOrderInfo>("input")
         inputData?.let {
             binding.tvBadNum.text = it.productNum
-            binding.tvCheckNumTotal.text = it.checkNumTotal.toString()
-            binding.tvBadNumTotal.text = it.badNumTotal.toString()
+            binding.tvCheckNumTotal.text = (it.checkNumTotal ?: 0).toString()
+            binding.tvBadNumTotal.text = (it.badNumTotal ?: 0).toString()
         }
 
         initViewModel()

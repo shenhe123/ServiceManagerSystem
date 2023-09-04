@@ -21,7 +21,7 @@ enum class MenuEnum(val printableName: String) {
     QM_WORKORDER_REMOVE("qm:WorkOrder:remove"), //工单删除
     QM_WORKORDER_APPROVE("qm:WorkOrder:approve"), //工单审核
     QM_WORKORDER_FINISH("qm:WorkOrder:finish"), //工单结案
-    QM_WORKDERDETAIL_APPROVE("qm:WorkderDetail:approve"), //派工单明细审核
+    QM_WORKDERDETAIL_APPROVE("qm:WorkOrderDetail:approve"), //派工单明细审核
     QM_WORKORDERDETAIL_QUERY("qm:WorkOrderDetail:query"), //派工单明细查询
     QM_WORKORDERDETAIL_ADD("qm:WorkOrderDetail:add"), //派工单明细新增
     QM_WORKORDERDETAIL_EDIT("qm:WorkOrderDetail:edit"), //派工单明细修改

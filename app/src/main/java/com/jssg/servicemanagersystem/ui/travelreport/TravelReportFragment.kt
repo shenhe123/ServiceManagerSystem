@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
@@ -18,6 +20,7 @@ import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import kotlinx.coroutines.launch
 
 class TravelReportFragment : BaseFragment() {
 
@@ -82,7 +85,10 @@ class TravelReportFragment : BaseFragment() {
                 ToastUtils.showToast(result.msg)
             }
         }
-        loadData(true)
+
+        lifecycleScope.launchWhenResumed {
+            loadData(true)
+        }
     }
 
     private fun showNoData(isVisible: Boolean) {

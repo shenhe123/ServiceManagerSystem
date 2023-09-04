@@ -133,29 +133,19 @@
                     android:text="申请部门"
                     android:textColor="@color/x_text_03" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/layout_apply_dept"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/as_dept"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
+                    android:layout_weight="1"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_input_stroke">
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/as_dept"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:paddingEnd="12dp"
-                        android:paddingStart="12dp"
-                        android:background="@null"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/x_text_01"
-                        android:textSize="16sp" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:paddingEnd="12dp"
+                    android:paddingStart="12dp"
+                    android:background="@drawable/selector_input_stroke"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/x_text_01"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -188,32 +178,9 @@
                         android:paddingEnd="12dp"
                         android:paddingStart="12dp"
                         android:background="@null"
-                        android:enabled="false"
                         android:gravity="center_vertical"
                         android:textColor="@color/x_text_01"
                         android:textSize="16sp" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/selector_input_stroke">
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_address"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@null"
-                            android:gravity="center_vertical"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp"
-                            android:textColor="@color/x_text_01"
-                            android:textSize="16sp" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </LinearLayout>
@@ -324,7 +291,6 @@
                         android:paddingStart="12dp"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:inputType="phone"
                         android:gravity="center_vertical"
                         android:textColor="@color/x_text_01"
                         android:textSize="16sp" />
@@ -402,6 +368,20 @@
                     android:text="单位地址"
                     android:textColor="@color/x_text_03" />
 
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_address"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingStart="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_input_stroke"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/x_text_01"
+                    android:textSize="16sp" />
+
             </LinearLayout>
 
 
@@ -418,29 +398,19 @@
                     android:text="起始时间"
                     android:textColor="@color/x_text_03" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/layout_start_date"
+                <TextView
+                    android:id="@+id/et_start_date"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingStart="12dp"
                     android:layout_weight="1"
-                    android:background="@drawable/selector_input_stroke">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_start_date"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:paddingEnd="12dp"
-                        android:paddingStart="12dp"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:enabled="false"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/x_text_01"
-                        android:textSize="16sp" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:background="@drawable/selector_input_stroke"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/x_text_01"
+                    android:textSize="16sp" />
 
             </LinearLayout>
             <LinearLayout
@@ -457,6 +427,7 @@
                     android:textColor="@color/x_text_03" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layout_end_date"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="12dp"
@@ -464,14 +435,13 @@
                     android:layout_weight="1"
                     android:background="@drawable/selector_input_stroke">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <TextView
                         android:id="@+id/et_end_date"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:paddingEnd="12dp"
                         android:paddingStart="12dp"
                         android:layout_weight="1"
-                        android:enabled="false"
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:textColor="@color/x_text_01"
@@ -502,7 +472,7 @@
                     android:padding="12dp"
                     android:lines="3"
                     android:background="@drawable/selector_input_stroke"
-                    android:gravity="center_vertical"
+                    android:gravity="top|start"
                     android:textColor="@color/x_text_01"
                     android:textSize="16sp" />
 
@@ -528,8 +498,8 @@
                     android:layout_margin="12dp"
                     android:padding="12dp"
                     android:lines="3"
+                    android:gravity="top|start"
                     android:background="@drawable/selector_input_stroke"
-                    android:gravity="center_vertical"
                     android:textColor="@color/x_text_01"
                     android:textSize="16sp" />
 
@@ -555,8 +525,8 @@
                     android:layout_margin="12dp"
                     android:padding="12dp"
                     android:lines="3"
+                    android:gravity="top|start"
                     android:background="@drawable/selector_input_stroke"
-                    android:gravity="center_vertical"
                     android:textColor="@color/x_text_01"
                     android:textSize="16sp" />
 
@@ -582,8 +552,8 @@
                     android:layout_margin="12dp"
                     android:padding="12dp"
                     android:lines="3"
+                    android:gravity="top|start"
                     android:background="@drawable/selector_input_stroke"
-                    android:gravity="center_vertical"
                     android:textColor="@color/x_text_01"
                     android:textSize="16sp" />
 
