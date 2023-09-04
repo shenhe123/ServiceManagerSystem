@@ -58,7 +58,7 @@ class WorkOrderDetailFragment : Fragment() {
         }
 
         binding.mbtCheckOrder.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)) return@setOnClickListener
 
             inputData?.let {
                 WorkOrderCheckActivity.goActivity(requireContext(), it)

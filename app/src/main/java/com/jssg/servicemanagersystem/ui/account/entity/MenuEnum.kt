@@ -4,7 +4,7 @@ package com.jssg.servicemanagersystem.ui.account.entity
  * ServiceManagerSystem
  * Created by he.shen on 2023/8/31.
  */
-enum class MenuEnum(name: String) {
+enum class MenuEnum(val printableName: String) {
     SYSTEM_USER_QUERY("system:user:query"), //用户查询
     SYSTEM_USER_ADD("system:user:add"), //    用户新增
     SYSTEM_USER_EDIT("system:user:edit"), //用户修改

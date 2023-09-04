@@ -82,7 +82,7 @@ class WorkOrderCheckDetailFragment : Fragment() {
 
 
         binding.mbtSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_QUERY.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_QUERY.printableName)) return@setOnClickListener
 
             val input = binding.inputSearch.text.toString()
             if (input.isEmpty()) {

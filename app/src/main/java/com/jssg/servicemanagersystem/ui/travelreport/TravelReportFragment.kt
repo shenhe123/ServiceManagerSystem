@@ -120,14 +120,14 @@ class TravelReportFragment : BaseFragment() {
         }
 
         binding.fbtnAddNew.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.printableName)) return@setOnClickListener
 
             addNewLauncher.launch("")
         }
 
 
         binding.mbtSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_QUERY.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_QUERY.printableName)) return@setOnClickListener
 
             val input = binding.inputSearch.text.toString()
             if (input.isEmpty()) {

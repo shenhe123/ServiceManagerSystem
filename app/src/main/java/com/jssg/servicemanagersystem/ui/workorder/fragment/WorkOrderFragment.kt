@@ -153,13 +153,13 @@ class WorkOrderFragment : BaseFragment() {
         }
 
         binding.fbtnAddNew.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.printableName)) return@setOnClickListener
             addNewLauncher.launch("")
         }
 
 
         binding.mbtSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.printableName)) return@setOnClickListener
 
             val input = binding.inputSearch.text.toString()
             if (input.isEmpty()) {
@@ -171,7 +171,7 @@ class WorkOrderFragment : BaseFragment() {
 
         binding.tvCloseCase.setOnClickListener {
 
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_FINISH.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_FINISH.printableName)) return@setOnClickListener
 
             if (!adapter.isCloseCase) {
                 binding.tvCloseCase.text = "提交"

@@ -92,7 +92,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         binding.toolBar.setNavigationOnClickListener { finish() }
 
         binding.tvCheck.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKDERDETAIL_APPROVE.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKDERDETAIL_APPROVE.printableName)) return@setOnClickListener
 
             inputData?.let {
                 WorkOrderCheckDialogFragment.newInstance(it)
@@ -282,7 +282,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
     }
 
     private fun onSubmit(state: Int) {
-        if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_EDIT.name)) return
+        if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_EDIT.printableName)) return
 
         this.state = state
         val locationStr = binding.tvLocationAddress.text.toString()

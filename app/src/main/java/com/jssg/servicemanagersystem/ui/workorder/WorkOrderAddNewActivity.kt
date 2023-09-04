@@ -135,7 +135,7 @@ class WorkOrderAddNewActivity : BaseActivity() {
 
         binding.mbtSubmit.setOnClickListener {
 
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.printableName)) return@setOnClickListener
 
             val nickName = binding.etApplyName.text.toString()
             if (nickName.isEmpty()) {

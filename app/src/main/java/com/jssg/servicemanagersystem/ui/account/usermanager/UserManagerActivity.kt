@@ -53,7 +53,7 @@ class UserManagerActivity : BaseActivity() {
                 R.id.card_layout -> UserManagerDetailActivity.goActivity(this, user)
 
                 R.id.mbt_permission -> {
-                    if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_EDIT.name)) return@setOnItemChildClickListener
+                    if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_EDIT.printableName)) return@setOnItemChildClickListener
 
                     PermissionDialogFragment.newInstance(user)
                         .addOnFinishListener(object :PermissionDialogFragment.OnFinishListener{
@@ -67,7 +67,7 @@ class UserManagerActivity : BaseActivity() {
                 }
 
                 R.id.mbt_delete -> {
-                    if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_REMOVE.name)) return@setOnItemChildClickListener
+                    if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_REMOVE.printableName)) return@setOnItemChildClickListener
 
                     SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？")
                         .addConfrimClickLisntener(object :
@@ -85,12 +85,12 @@ class UserManagerActivity : BaseActivity() {
         }
 
         binding.fbtnAddNew.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_ADD.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_ADD.printableName)) return@setOnClickListener
             launcherAddUser.launch("")
         }
 
         binding.mbtSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.printableName)) return@setOnClickListener
             val input = binding.inputSearch.text.toString()
             if (input.isEmpty()) {
 

@@ -72,7 +72,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvUserManager.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.printableName)) return@setOnClickListener
 
             UserManagerActivity.goActivity(requireContext())
         }
@@ -93,7 +93,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvUpdatePassword.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_RESETPWD.name)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_RESETPWD.printableName)) return@setOnClickListener
 
             UpdatePasswordActivity.goActivity(requireContext())
         }
