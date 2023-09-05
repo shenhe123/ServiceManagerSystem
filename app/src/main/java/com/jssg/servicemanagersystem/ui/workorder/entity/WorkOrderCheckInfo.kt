@@ -31,6 +31,8 @@ data class WorkOrderCheckInfo(
 @Parcelize
 data class ApplyInfoVos(
     val applyID: String,
+    val applyName: String,
+    val createTime: String,
     val billDetailNo: String,
     val remark: String
 ) : Parcelable

@@ -4,7 +4,6 @@ import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
 import com.jssg.servicemanagersystem.databinding.ItemApplyInfoLayoutBinding
 import com.jssg.servicemanagersystem.ui.workorder.entity.ApplyInfoVos
-import com.jssg.servicemanagersystem.utils.DateUtil
 
 /**
  * ServiceManagerSystem
@@ -13,8 +12,7 @@ import com.jssg.servicemanagersystem.utils.DateUtil
 class ApplyInfoAdapter: BaseBindingAdapter<ApplyInfoVos, ItemApplyInfoLayoutBinding>(ItemApplyInfoLayoutBinding::inflate) {
 
     override fun convert(holder: VBViewHolder<ItemApplyInfoLayoutBinding>, item: ApplyInfoVos) {
-//        holder.binding.tvApplyName.text = "${item.applyID} ${item.applyID}"
-        holder.binding.tvApplyName.text = "审核人 ${DateUtil.getFullData(System.currentTimeMillis())}"
+        holder.binding.tvApplyName.text = "${item.applyName}   ${item.createTime}"
         holder.binding.tvApplyInfo.text = item.remark
     }
 
