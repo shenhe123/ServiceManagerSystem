@@ -19,13 +19,13 @@
             android:layout_margin="12dp">
 
             <TextView
-                android:id="@+id/tv_id"
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/SubTitleStyle"/>
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_phone"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 style="@style/SubTitleStyle"
@@ -43,13 +43,13 @@
             android:layout_marginBottom="10dp">
 
             <TextView
-                android:id="@+id/tv_phone"
+                android:id="@+id/tv_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/SubTitleStyle"/>
 
             <TextView
-                android:id="@+id/tv_address"
+                android:id="@+id/tv_expired_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"

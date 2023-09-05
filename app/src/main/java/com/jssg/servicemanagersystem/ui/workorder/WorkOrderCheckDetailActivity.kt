@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,9 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.bumptech.glide.Glide
+import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderCheckDetailBinding
+import com.jssg.servicemanagersystem.databinding.ItemImageViewBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.adapter.ApplyInfoAdapter
@@ -438,14 +441,13 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
     }
 
     private fun initImageWidget(tag: String, url: String, parent: ViewGroup, addView: ImageView) {
-        val img = ImageView(this)
-        val width = DpPxUtils.dip2px(this, 66f)
-        img.layoutParams = LinearLayout.LayoutParams(width, width)
-        img.scaleType = ImageView.ScaleType.FIT_XY
+        val img = layoutInflater.inflate(R.layout.item_image_view, null)
+        val bind = ItemImageViewBinding.bind(img)
+
         if (url.startsWith("http") || url.startsWith("content")) {
-            Glide.with(this).load(url).into(img)
+            Glide.with(this).load(url).into(bind.ivImage)
         } else {
-            Glide.with(this).load(File(url)).into(img)
+            Glide.with(this).load(File(url)).into(bind.ivImage)
         }
         img.tag = tag + url
 
@@ -457,7 +459,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
         img.setOnLongClickListener {
 
             if (!isEditable) return@setOnLongClickListener true
-
+            
             SingleBtnDialogFragment.newInstance("删除图片", "确定要删除图片吗？")
                 .addConfrimClickLisntener(object : SingleBtnDialogFragment.OnConfirmClickLisenter{
                     override fun onConfrimClick() {

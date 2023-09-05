@@ -15,9 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.bumptech.glide.Glide
+import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityOrderCheckBinding
+import com.jssg.servicemanagersystem.databinding.ItemImageViewBinding
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
@@ -308,15 +310,13 @@ class WorkOrderCheckActivity : BaseActivity() {
     }
 
     private fun initImageWidget(tag: String, path: String, parent: ViewGroup, addView: ImageView) {
-        val img = ImageView(this)
-        val width = DpPxUtils.dip2px(this, 66f)
-        img.layoutParams = LinearLayout.LayoutParams(width, width)
-        img.scaleType = ImageView.ScaleType.FIT_XY
+        val img = layoutInflater.inflate(R.layout.item_image_view, null)
+        val bind = ItemImageViewBinding.bind(img)
 //        ToastUtils.showToast("图片路径---$path")
         if (path.startsWith("content")) {
-            Glide.with(this).load(path).into(img)
+            Glide.with(this).load(path).into(bind.ivImage)
         } else {
-            Glide.with(this).load(File(path)).into(img)
+            Glide.with(this).load(File(path)).into(bind.ivImage)
         }
 
         img.tag = tag + path

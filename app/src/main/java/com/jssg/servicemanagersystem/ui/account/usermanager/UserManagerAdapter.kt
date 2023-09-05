@@ -17,10 +17,10 @@ class UserManagerAdapter: BaseBindingAdapter<User, ItemUserManagerLayoutBinding>
     }
 
     override fun convert(holder: VBViewHolder<ItemUserManagerLayoutBinding>, item: User) {
-        holder.binding.tvId.text = "用户ID：${item.userId}"
         holder.binding.tvName.text = "用户名：${item.nickName}"
         holder.binding.tvPhone.text = "联系方式：${item.phonenumber}"
         holder.binding.tvAddress.text = "居住地址：${item.address}"
+        holder.binding.tvExpiredDate.text = "有效期至：${item.expireDate}"
     }
 
 }
