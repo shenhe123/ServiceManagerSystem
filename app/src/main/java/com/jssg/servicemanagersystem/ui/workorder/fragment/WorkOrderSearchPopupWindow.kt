@@ -18,7 +18,7 @@ import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
 
-class SearchFilterPopupWindow(context: Context?, layoutParent: ViewGroup?) :
+class WorkOrderSearchPopupWindow(context: Context?, layoutParent: ViewGroup?) :
     BasePWControl(context, layoutParent) {
 
     private lateinit var listener: OnSearchBtnClick
@@ -103,11 +103,15 @@ class SearchFilterPopupWindow(context: Context?, layoutParent: ViewGroup?) :
             if (this::listener.isInitialized) {
                 var startDate = binding.tvStartDate.text.toString()
                 var endDate = binding.tvEndDate.text.toString()
-                if (startDate.equals("请选择日期")) {
-                    startDate = ""
+                startDate = if (startDate.equals("请选择日期")) {
+                    ""
+                } else {
+                    "$startDate 00:00:00"
                 }
-                if (endDate.equals("请选择日期")) {
-                    endDate = ""
+                endDate = if (endDate.equals("请选择日期")) {
+                    ""
+                } else {
+                    "$endDate 23:59:59"
                 }
                 listener.onClick(
                     binding.etProductDesc.text.toString(),
@@ -130,14 +134,14 @@ class SearchFilterPopupWindow(context: Context?, layoutParent: ViewGroup?) :
             TimePickerBuilder(
                 mContext
             ) { date -> //选中事件回调
-                textView.text = DateUtil.getFullData(date.time)
+                textView.text = DateUtil.getDateyyMMdd(date.time)
                 if (index == 0) {
                     binding.ivStartDateClose.isVisible = true
                 } else {
                     binding.ivEndDateClose.isVisible = true
                 }
             }
-                .setType(booleanArrayOf(true, true, true, true, true, true)) //默认全部显示
+                .setType(booleanArrayOf(true, true, true, false, false, false)) //默认全部显示
                 .setGravity(
                     intArrayOf(
                         Gravity.CENTER,

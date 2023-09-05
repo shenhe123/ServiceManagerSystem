@@ -202,8 +202,8 @@ class WorkOrderFragment : BaseFragment() {
     }
 
     private fun showTipPopupWindow(target: View) {
-        val popupWindow = SearchFilterPopupWindow(requireContext(), binding.root)
-        popupWindow.setOnClickListener(object :SearchFilterPopupWindow.OnSearchBtnClick{
+        val popupWindow = WorkOrderSearchPopupWindow(requireContext(), binding.root)
+        popupWindow.setOnClickListener(object :WorkOrderSearchPopupWindow.OnSearchBtnClick{
             override fun onClick(
                 productDesc: String?,
                 productCode: String?,

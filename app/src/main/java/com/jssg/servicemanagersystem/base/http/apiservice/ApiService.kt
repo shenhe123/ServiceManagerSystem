@@ -107,14 +107,19 @@ interface ApiService {
     ): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
 
     @GET("staging-api/qm/workOrderDetail/list")
-    fun searchWorkOrderCheckList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
+    fun searchWorkOrderCheckList(
+        @Query("state") state: String?,
+        @Query("params[\"beginCheckDate\"]") beginApplyDate: String?,
+        @Query("params[\"endCheckDate\"]") endApplyDate: String?,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
 
     @GET("staging-api/qm/workOrder/list")
     fun searchWorkOrderList(
         @Query("productCode") productCode: String?,
         @Query("productDes") productDes: String?,
-        @Query("beginApplyDate") beginApplyDate: String?,
-        @Query("endApplyDate") endApplyDate: String?,
+        @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
+        @Query("params[\"endApplyDate\"]") endApplyDate: String?,
         @Query("oaBillNo") oaBillNo: String?,
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>

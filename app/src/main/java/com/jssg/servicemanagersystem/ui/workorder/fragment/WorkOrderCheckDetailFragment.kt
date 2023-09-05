@@ -81,22 +81,34 @@ class WorkOrderCheckDetailFragment : BaseFragment() {
         }
 
 
-        binding.mbtSearch.setOnClickListener {
+        binding.inputSearch.setOnClickListener {
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_QUERY.printableName)) return@setOnClickListener
 
-            val input = binding.inputSearch.text.toString()
-            if (input.isEmpty()) {
-                return@setOnClickListener
+            showTipPopupWindow(binding.layoutSearch)
+        }
+    }
+
+    private fun showTipPopupWindow(target: View) {
+        val popupWindow = WorkOrderDetailSearchPopupWindow(requireContext(), binding.root)
+        popupWindow.setOnClickListener(object :WorkOrderDetailSearchPopupWindow.OnSearchBtnClick{
+            override fun onClick(
+                state: String?,
+                startDate: String?,
+                endDate: String?,
+            ) {
+                showProgressbarLoading()
+                workOrderViewModel.searchWorkOrderDetail(state, startDate, endDate)
             }
 
-            workOrderViewModel.searchWorkOrderDetail(input)
-        }
+        })
+        popupWindow.showAsDropDown(target, 0, 0)
     }
 
     private fun initViewModel() {
         workOrderViewModel = ViewModelProvider(this)[WorkOrderViewModel::class.java]
         workOrderViewModel.workOrderCheckListLiveData.observe(viewLifecycleOwner) { result ->
             if (!result.isLoading) {
+                hideLoading()
                 if (result.isPullRefresh) {
                     binding.smartRefreshLayout.finishRefresh()
                 } else {

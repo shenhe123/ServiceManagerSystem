@@ -14,16 +14,17 @@
         android:padding="@dimen/dp_10"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <TextView
             android:id="@+id/input_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="@string/app_search"
+            android:text="@string/app_search"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
             android:background="@drawable/selector_input_stroke"
             android:inputType="text"
             android:paddingStart="40dp"
-            android:layout_marginEnd="12dp"
-            android:layout_toStartOf="@id/mbt_search"/>
+            android:layout_marginEnd="12dp"/>
 
         <ImageView
             android:layout_width="22dp"
@@ -33,17 +34,6 @@
             android:layout_gravity="center_vertical"
             android:src="@mipmap/ic_search"
             app:tint="@color/x_text_03" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/mbt_search"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            app:cornerRadius="@dimen/dp_4"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            style="@style/NoInsetThemeButton"
-            android:text="@string/app_search"/>
 
     </RelativeLayout>
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
