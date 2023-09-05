@@ -57,7 +57,7 @@ class UserManagerDetailActivity : BaseActivity() {
 
         accountViewModel.updateUserInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                ToastUtils.showToast(result.msg)
+                ToastUtils.showToast("更新成功")
 
                 user?.let {
                     accountViewModel.getUserInfo(it.userId)

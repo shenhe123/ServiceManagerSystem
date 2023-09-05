@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="10dp">
@@ -18,40 +18,72 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp">
 
-            <TextView
-                android:id="@+id/tv_id"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/SubTitleStyle"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_name"
+                <TextView
+                    android:id="@+id/tv_id_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="角色ID" />
+
+                <TextView
+                    android:id="@+id/tv_id"
+                    style="@style/SecTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                style="@style/SubTitleStyle"
                 android:gravity="end"
-                android:layout_height="wrap_content"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="角色名称" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/SecTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_remark_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="备注" />
 
             <TextView
                 android:id="@+id/tv_remark"
+                style="@style/SecTitleStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/SubTitleStyle"/>
+                android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <View style="@style/xDividerMarge12DP"
-            android:visibility="gone"/>
+        <View
+            style="@style/xDividerMarge12DP"
+            android:visibility="gone" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -62,30 +94,30 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbt_menu"
                 style="@style/NoInsetThemeButton"
-                app:cornerRadius="2dp"
-                android:textSize="11sp"
-                android:text="菜单权限设置"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"/>
+                android:text="菜单权限设置"
+                android:textSize="11sp"
+                app:cornerRadius="2dp" />
 
             <View
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbt_delete"
                 style="@style/NoInsetThemeButton"
-                app:cornerRadius="2dp"
-                android:textSize="11sp"
-                android:text="删除"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
                 android:layout_width="50dp"
                 android:layout_height="26dp"
-                android:visibility="gone"/>
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="删除"
+                android:textSize="11sp"
+                android:visibility="gone"
+                app:cornerRadius="2dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

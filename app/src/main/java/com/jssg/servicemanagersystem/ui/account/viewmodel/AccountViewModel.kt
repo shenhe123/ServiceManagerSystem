@@ -173,6 +173,7 @@ class AccountViewModel : AutoDisposViewModel() {
         checkedRoleIds?.let {
             params["roleIds"] = checkedRoleIds
         }
+        params["expireDate"] = user.expireDate
         RetrofitService.apiService
             .updateUserInfo(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())

@@ -55,7 +55,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
 
         accountViewModel.updateUserInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                ToastUtils.showToast(result.msg)
+                ToastUtils.showToast("操作成功")
                 if (this::listener.isInitialized) {
                     user?.let {
                         it.roleIds = checkedRoleIds

@@ -149,14 +149,13 @@ class UserManagerActivity : BaseActivity() {
 
     private fun updateUserList(result: LoadListDataModel<List<User>?>) {
         result.rows?.let {
-            val reversedList = it.reversed()
             if (result.isPullRefresh) {
-                adapter.setList(reversedList)
+                adapter.setList(it)
             } else {
-                if (reversedList.isEmpty()) { //无更多数据
+                if (it.isEmpty()) { //无更多数据
                     binding.smartRefreshLayout.setNoMoreData(true)
                 } else {
-                    adapter.addData(reversedList)
+                    adapter.addData(it)
                 }
             }
         }

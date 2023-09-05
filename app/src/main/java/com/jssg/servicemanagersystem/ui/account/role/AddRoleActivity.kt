@@ -80,7 +80,11 @@ class AddRoleActivity : BaseActivity() {
         accountViewModel.addNewRoleLiveData.observe(this) { result ->
             updateLoading(result, true)
             if (result.isSuccess) {
-                ToastUtils.showToast("新增角色成功")
+                ToastUtils.showToast("操作成功")
+                setResult(Activity.RESULT_OK, Intent().apply {
+                    putExtra("output", true)
+                })
+                finish()
             }
 
         }
