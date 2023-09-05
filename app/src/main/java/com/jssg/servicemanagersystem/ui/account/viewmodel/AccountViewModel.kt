@@ -250,7 +250,7 @@ class AccountViewModel : AutoDisposViewModel() {
         RetrofitService.apiService
             .getFactoryInfo()
             .compose(RxSchedulersHelper.ObsResultWithMain())
-            .doOnNext { AccountManager.instance.saveFactoryInfo(it) }
+//            .doOnNext { AccountManager.instance.saveFactoryInfo(it) }
             .subscribe(createObserver(factoryInfoLiveData))
     }
 
@@ -259,7 +259,7 @@ class AccountViewModel : AutoDisposViewModel() {
         RetrofitService.apiService
             .getDeptInfo()
             .compose(RxSchedulersHelper.ObsResultWithMain())
-            .doOnNext { AccountManager.instance.saveDeptInfo(it) }
+//            .doOnNext { AccountManager.instance.saveDeptInfo(it) }
             .subscribe(createObserver(deptInfoLiveData))
 
     }

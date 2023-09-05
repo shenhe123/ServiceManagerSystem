@@ -49,6 +49,9 @@ class AccountManager {
         MMKV.defaultMMKV().remove("user_account_info")
         saveAuthorization("")
         saveCookie("")
+        MMKV.defaultMMKV().remove("role_list")
+        MMKV.defaultMMKV().remove("travel_report_info")
+
     }
 
     fun saveChooseHost(lastChooseHost: String) {
