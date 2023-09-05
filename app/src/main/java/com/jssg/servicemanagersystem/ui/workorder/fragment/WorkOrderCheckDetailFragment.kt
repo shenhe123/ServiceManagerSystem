@@ -120,7 +120,7 @@ class WorkOrderCheckDetailFragment : BaseFragment() {
 
     private fun updateWorkOrderList(result: LoadListDataModel<List<WorkOrderCheckInfo>?>) {
         result.rows?.let {
-            val reversedList = it
+            val reversedList = it.reversed()
             if (result.isPullRefresh) {
                 adapter.setList(reversedList)
             } else {

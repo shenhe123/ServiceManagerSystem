@@ -49,6 +49,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     fun addWorkOrderDetail(
         billNo: String,
+        billDetailNo: String?,
         place: String,
         badPicNames: String,
         boxPicNames: String,
@@ -63,6 +64,9 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         addWorkOrderDetailLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
         params["billNo"] = billNo
+        billDetailNo?.let {
+            params["billDetailNo"] = it
+        }
         params["place"] = place
         params["badPicNames"] = badPicNames
         params["boxPicNames"] = boxPicNames

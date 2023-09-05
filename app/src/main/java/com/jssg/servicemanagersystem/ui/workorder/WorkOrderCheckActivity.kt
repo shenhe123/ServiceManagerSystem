@@ -2,14 +2,17 @@ package com.jssg.servicemanagersystem.ui.workorder
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.TextUtils
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.baidu.location.BDAbstractLocationListener
@@ -34,6 +37,7 @@ import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.MyLocationClient
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
+import kotlinx.android.parcel.Parcelize
 import net.arvin.permissionhelper.PermissionHelper
 import top.zibin.luban.Luban
 import top.zibin.luban.OnCompressListener
@@ -41,6 +45,7 @@ import java.io.File
 import java.util.Locale
 
 class WorkOrderCheckActivity : BaseActivity() {
+    private var billDetailNo: String? = null
     private var uploadSize: Int = 0
     private var state: Int = 0
     private var checkDate: String? = null
@@ -153,6 +158,7 @@ class WorkOrderCheckActivity : BaseActivity() {
         inputData?.let {
             workOrderViewModel.addWorkOrderDetail(
                 it.billNo,
+                billDetailNo,
                 locationStr,
                 badOssIds.joinToString(","),
                 boxOssIds.joinToString(","),
@@ -175,6 +181,10 @@ class WorkOrderCheckActivity : BaseActivity() {
             if (binding.xflBadPicture.childCount >= 3) {
                 ToastUtils.showToast("不良图片最多只能选择3张！")
                 return@observe
+            }
+
+            if (pictures.size > 3) {
+                ToastUtils.showToast("不良图片最多只能选择3张！")
             }
 
             val availablePic: List<LocalMedia?> = if (pictures.size >= 3) {
@@ -200,6 +210,10 @@ class WorkOrderCheckActivity : BaseActivity() {
                 return@observe
             }
 
+            if (pictures.size > 3) {
+                ToastUtils.showToast("外箱标签图片最多只能选择3张！")
+            }
+
             val availablePic: List<LocalMedia?> = if (pictures.size >= 3) {
                 pictures.take(3)
             } else {
@@ -219,8 +233,12 @@ class WorkOrderCheckActivity : BaseActivity() {
 
         selectorPictureViewModel.batchInfoPicturesLiveData.observe(this) { pictures ->
             if (binding.xflBatchInfoPicture.childCount >= 3) {
-                ToastUtils.showToast("外箱标签图片最多只能选择3张！")
+                ToastUtils.showToast("批次信息图片最多只能选择3张！")
                 return@observe
+            }
+
+            if (pictures.size > 3) {
+                ToastUtils.showToast("批次信息图片最多只能选择3张！")
             }
 
             val availablePic: List<LocalMedia?> = if (pictures.size >= 3) {
@@ -244,6 +262,10 @@ class WorkOrderCheckActivity : BaseActivity() {
             if (binding.xflReworkPicture.childCount >= 5) {
                 ToastUtils.showToast("返回数量图片最多只能选择5张！")
                 return@observe
+            }
+
+            if (pictures.size > 5) {
+                ToastUtils.showToast("返回数量图片最多只能选择5张！")
             }
 
             val availablePic: List<LocalMedia?> = if (pictures.size >= 5) {
@@ -280,8 +302,19 @@ class WorkOrderCheckActivity : BaseActivity() {
             if (result.isSuccess) {
                 if (state == 0) {
                     ToastUtils.showToast("保存成功")
+
+                    billDetailNo = result.data.toString()
+                    setResult(Activity.RESULT_OK, Intent().apply {
+                        putExtra("output", true)
+                    })
+
+                    finish()
                 } else {
                     ToastUtils.showToast("提交成功")
+                    billDetailNo = result.data.toString()
+                    setResult(Activity.RESULT_OK, Intent().apply {
+                        putExtra("output", true)
+                    })
                     finish()
                 }
             }
@@ -396,12 +429,18 @@ class WorkOrderCheckActivity : BaseActivity() {
         return compressFile
     }
 
-    companion object {
-        fun goActivity(context: Context, input: WorkOrderInfo) {
-            context.startActivity(Intent(context, WorkOrderCheckActivity::class.java).apply {
+    class AddWordOrderDetailContracts: ActivityResultContract<WorkOrderInfo, Boolean?>(){
+        override fun createIntent(context: Context, input: WorkOrderInfo): Intent {
+            return Intent(context, WorkOrderCheckActivity::class.java).apply {
                 putExtra("input", input)
-            })
+            }
         }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean? {
+            return if (resultCode == Activity.RESULT_OK) intent?.getBooleanExtra("output", false)
+            else null
+        }
+
     }
 
 }

@@ -40,6 +40,13 @@ class WorkOrderFragment : BaseFragment() {
         }
     }
 
+    private val workOrderLauncher = registerForActivityResult(WorkOrderDetailActivity.WorkOrderContracts()){
+        it?.let {
+            loadData(true)
+        }
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -150,7 +157,7 @@ class WorkOrderFragment : BaseFragment() {
 
         adapter.setOnItemClickListener { _, _, position ->
             val workOrderInfo = adapter.data[position]
-            WorkOrderDetailActivity.goActivity(requireActivity(), workOrderInfo)
+            workOrderLauncher.launch(workOrderInfo)
         }
 
         binding.fbtnAddNew.setOnClickListener {

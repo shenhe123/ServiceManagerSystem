@@ -173,6 +173,10 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                 return@observe
             }
 
+            if (pictures.size > 3) {
+                ToastUtils.showToast("不良图片最多只能选择3张！")
+            }
+
             val available = 3 - binding.xflBadPicture.childCount
             val availablePic: List<LocalMedia?> = if (pictures.size >= available) {
                 pictures.take(available)
@@ -197,6 +201,10 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                 return@observe
             }
 
+            if (pictures.size > 3) {
+                ToastUtils.showToast("外箱标签图片最多只能选择3张！")
+            }
+
             val available = 3 - binding.xflBoxPicture.childCount
             val availablePic: List<LocalMedia?> = if (pictures.size >= available) {
                 pictures.take(available)
@@ -217,8 +225,12 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
 
         selectPicturesViewModel.batchInfoPicturesLiveData.observe(this) { pictures ->
             if (binding.xflBatchInfoPicture.childCount >= 3) {
-                ToastUtils.showToast("外箱标签图片最多只能选择3张！")
+                ToastUtils.showToast("批次信息图片最多只能选择3张！")
                 return@observe
+            }
+
+            if (pictures.size > 3) {
+                ToastUtils.showToast("批次信息图片最多只能选择3张！")
             }
 
             val available = 3 - binding.xflBatchInfoPicture.childCount
@@ -243,6 +255,10 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
             if (binding.xflReworkPicture.childCount >= 5) {
                 ToastUtils.showToast("返回数量图片最多只能选择5张！")
                 return@observe
+            }
+
+            if (pictures.size > 5) {
+                ToastUtils.showToast("返回数量图片最多只能选择5张！")
             }
 
             val available = 5 - binding.xflBadPicture.childCount
@@ -413,9 +429,9 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
             }
 
             selectPicturesViewModel.getBadPictures(it.badPicNames)
-            selectPicturesViewModel.getBoxPictures(it.badPicNames)
-            selectPicturesViewModel.getBatchPictures(it.badPicNames)
-            selectPicturesViewModel.getReworkPictures(it.badPicNames)
+            selectPicturesViewModel.getBoxPictures(it.boxPicNames)
+            selectPicturesViewModel.getBatchPictures(it.batchPicNames)
+            selectPicturesViewModel.getReworkPictures(it.reworkPicNames)
         }
     }
 

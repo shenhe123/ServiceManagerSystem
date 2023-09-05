@@ -1,8 +1,10 @@
 package com.jssg.servicemanagersystem.ui.workorder
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -42,6 +44,13 @@ class WorkOrderDetailActivity : BaseActivity() {
 
     }
 
+    fun goBackForResult() {
+        setResult(Activity.RESULT_OK, Intent().apply {
+            putExtra("output", true)
+        })
+        finish()
+    }
+
     inner class Vp2(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
         override fun getItemCount(): Int {
             return 2
@@ -58,11 +67,18 @@ class WorkOrderDetailActivity : BaseActivity() {
         }
     }
 
-    companion object {
-        fun goActivity(context: Context, input: WorkOrderInfo) {
-            context.startActivity(Intent(context, WorkOrderDetailActivity::class.java).apply {
+    class WorkOrderContracts: ActivityResultContract<WorkOrderInfo, Boolean?>(){
+        override fun createIntent(context: Context, input: WorkOrderInfo): Intent {
+            return Intent(context, WorkOrderDetailActivity::class.java).apply {
                 putExtra("input", input)
-            })
+            }
         }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean? {
+            return if (resultCode == Activity.RESULT_OK) intent?.getBooleanExtra("output", false)
+            else null
+        }
+
     }
+
 }

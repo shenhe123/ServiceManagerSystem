@@ -11,12 +11,21 @@ import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderDetailBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckDetailActivity
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 
 class WorkOrderDetailFragment : Fragment() {
     private lateinit var binding: FragmentWorkOrderDetailBinding
     private var inputData: WorkOrderInfo? = null
+
+    private val addNewLauncer = registerForActivityResult(WorkOrderCheckActivity.AddWordOrderDetailContracts()) { newOrder ->
+        newOrder?.let {
+            if (it) {
+                (requireActivity() as WorkOrderDetailActivity).goBackForResult()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +78,7 @@ class WorkOrderDetailFragment : Fragment() {
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)) return@setOnClickListener
 
             inputData?.let {
-                WorkOrderCheckActivity.goActivity(requireContext(), it)
+                addNewLauncer.launch(it)
             }
         }
 
