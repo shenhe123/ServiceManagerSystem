@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderCheckDetailBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
@@ -21,7 +22,7 @@ import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
-class WorkOrderCheckDetailFragment : Fragment() {
+class WorkOrderCheckDetailFragment : BaseFragment() {
 
     private lateinit var adapter: WorkOrderCheckAdapter
     private lateinit var workOrderViewModel: WorkOrderViewModel

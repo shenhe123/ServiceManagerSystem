@@ -42,6 +42,7 @@ import java.io.File
 import java.util.Locale
 
 class WorkOrderCheckDetailActivity : BaseActivity() {
+    private var isEditable: Boolean = true
     private var uploadSize: Int = 0
     private var checkDate: String? = null
     private var state: Int = 0
@@ -121,7 +122,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                     it.tag = "bad" + it.url
                     selectPictures.add(it)
                     initImageWidget("bad", it.url, binding.xflBadPicture, binding.ivAddBadPhoto)
-                    binding.ivAddBadPhoto.isVisible = binding.xflBadPicture.childCount < 3
+                    binding.ivAddBadPhoto.isVisible = binding.xflBadPicture.childCount < 3 && isEditable
                 }
             }
         }
@@ -132,7 +133,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                     it.tag = "box" + it.url
                     selectPictures.add(it)
                     initImageWidget("box", it.url, binding.xflBoxPicture, binding.ivAddBadPhoto)
-                    binding.ivAddBoxPhoto.isVisible = binding.xflBoxPicture.childCount < 3
+                    binding.ivAddBoxPhoto.isVisible = binding.xflBoxPicture.childCount < 3 && isEditable
                 }
             }
         }
@@ -143,7 +144,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                     it.tag = "batch" + it.url
                     selectPictures.add(it)
                     initImageWidget("batch", it.url, binding.xflBatchInfoPicture, binding.ivAddBadPhoto)
-                    binding.ivAddBatchInfoPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3
+                    binding.ivAddBatchInfoPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3 && isEditable
                 }
             }
         }
@@ -154,7 +155,7 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                     it.tag = "rework" + it.url
                     selectPictures.add(it)
                     initImageWidget("rework", it.url, binding.xflReworkPicture, binding.ivAddBadPhoto)
-                    binding.ivAddReworkPhoto.isVisible = binding.xflReworkPicture.childCount < 3
+                    binding.ivAddReworkPhoto.isVisible = binding.xflReworkPicture.childCount < 3 && isEditable
                 }
             }
         }
@@ -371,6 +372,19 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                 //所以需隐藏保存按钮
                 binding.mbtSave.isVisible = false
             }
+
+            if (it.state == 2 || it.state == 4) {
+                //该单子已审核或已退回，不能再修改，或者审核了
+                binding.mbtSave.isVisible = false
+                binding.mbtSubmit.isVisible = false
+                binding.tvCheck.isVisible = false
+
+                isEditable = false
+            }
+
+            binding.etBadNum.isEnabled = isEditable
+            binding.etCheckNum.isEnabled = isEditable
+            binding.etRemark.isEnabled = isEditable
 
             if (it.place.isNullOrEmpty()) {
                 getLocationInfo()

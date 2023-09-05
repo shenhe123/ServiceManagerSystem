@@ -54,6 +54,10 @@ class WorkOrderDetailFragment : Fragment() {
             binding.etRemark.setText(it.remark)
 
             //已排查的隐藏去排查按钮
+            // 0 -> = "未开始"
+            // 1 -> = "排查中"
+            // 2 -> = "已完成"
+
             binding.mbtCheckOrder.isVisible = it.checkState != 2
         }
 
