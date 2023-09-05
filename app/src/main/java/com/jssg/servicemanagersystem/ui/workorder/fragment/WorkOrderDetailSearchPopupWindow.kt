@@ -15,6 +15,7 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderBinding
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderDetailBinding
 import com.jssg.servicemanagersystem.ui.MainActivity
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
@@ -165,7 +166,7 @@ class WorkOrderDetailSearchPopupWindow(context: Context?, layoutParent: ViewGrou
                 )
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .build()
-        pvTime.show((mContext as MainActivity).supportFragmentManager, "timepicker")
+        pvTime.show((mContext as WorkOrderDetailActivity).supportFragmentManager, "timepicker")
     }
 
     override fun injectLayout(): Int {
