@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderCheckDetailBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
+import com.jssg.servicemanagersystem.ui.workorder.adapter.ApplyInfoAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckDialogFragment
@@ -34,6 +36,7 @@ import com.jssg.servicemanagersystem.utils.FileUtils
 import com.jssg.servicemanagersystem.utils.MyLocationClient
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
+import com.jssg.servicemanagersystem.widgets.decoration.ThemeLineItemDecoration
 import com.luck.picture.lib.entity.LocalMedia
 import net.arvin.permissionhelper.PermissionHelper
 import top.zibin.luban.Luban
@@ -380,6 +383,22 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
                 binding.tvCheck.isVisible = false
 
                 isEditable = false
+            }
+
+            if (it.state > 1) {
+                //已经有审核意见
+                binding.layoutReviewRemark.isVisible = true
+
+                binding.recyclerView.layoutManager = object :LinearLayoutManager(this){
+                    override fun canScrollVertically(): Boolean {
+                        return false
+                    }
+                }
+                binding.recyclerView.addItemDecoration(ThemeLineItemDecoration())
+                val applyInfoAdapter = ApplyInfoAdapter()
+                binding.recyclerView.adapter = applyInfoAdapter
+
+                applyInfoAdapter.setList(it.applyInfoVos)
             }
 
             binding.etBadNum.isEnabled = isEditable

@@ -24,5 +24,13 @@ data class WorkOrderCheckInfo(
     val reworkPicNames: String?,
     val state: Int,
     val workOrderVo: WorkOrderInfo?,
+    val applyInfoVos: List<ApplyInfoVos>?,
     val remark: String?,
+) : Parcelable
+
+@Parcelize
+data class ApplyInfoVos(
+    val applyID: String,
+    val billDetailNo: String,
+    val remark: String
 ) : Parcelable

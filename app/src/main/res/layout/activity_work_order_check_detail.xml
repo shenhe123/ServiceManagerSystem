@@ -418,12 +418,14 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/layout_review_remark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="2dp"
-                android:paddingBottom="12dp">
+                android:paddingBottom="12dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_review_remark"
@@ -432,22 +434,22 @@
                     android:layout_height="wrap_content"
                     android:text="审核意见：" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/et_review_remark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start|top"
-                    android:padding="10dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="12dp"
-                    android:textSize="@dimen/sp_14"
-                    android:layout_below="@id/tv_review_remark"
-                    android:background="@drawable/selector_input_stroke"
-                    android:lines="6"
-                    android:textColor="@color/x_text_03"
-                    android:maxLines="10" />
+                    android:padding="10dp"
+                    android:background="@drawable/selector_input_stroke" >
 
-            </RelativeLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
