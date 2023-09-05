@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.entity.node.BaseNode
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityUpdateRoleBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.role.adapter.AddNewRoleAdapter
 import com.jssg.servicemanagersystem.ui.account.role.entity.RoleChildChildEntity
 import com.jssg.servicemanagersystem.ui.account.role.entity.RoleParentEntity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.jssg.servicemanagersystem.widgets.decoration.ThemeLineItemDecoration
 import kotlinx.android.parcel.Parcelize
@@ -66,6 +68,8 @@ class UpdateRoleActivity : BaseActivity() {
         binding.toolBar.setNavigationOnClickListener { finish() }
 
         binding.mbtConfirm.setOnClickListener {
+
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_ROLE_EDIT.printableName)) return@setOnClickListener
 
             val roleName = binding.etRoleName.text.toString()
             val remark = binding.etRemark.text.toString()

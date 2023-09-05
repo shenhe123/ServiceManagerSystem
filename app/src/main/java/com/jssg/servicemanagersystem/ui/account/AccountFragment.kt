@@ -66,10 +66,8 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvRoleManager.setOnClickListener {
-            if (!AccountManager.instance.isAdmin()) {
-                ToastUtils.showToast("需要管理员权限")
-                return@setOnClickListener
-            }
+            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_ROLE_QUERY.printableName)) return@setOnClickListener
+
             RoleManagerActivity.goActivity(requireContext())
         }
 

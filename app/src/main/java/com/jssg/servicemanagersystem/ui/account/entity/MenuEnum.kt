@@ -31,4 +31,8 @@ enum class MenuEnum(val printableName: String) {
     QM_WORKORDERLOG_ADD("qm:WorkOrderLog:add"), //派工单变更日志新增
     QM_WORKORDERLOG_EDIT("qm:WorkOrderLog:edit"), //派工单变更日志修改
     QM_WORKORDERLOG_REMOVE("qm:WorkOrderLog:remove"), //派工单变更日志删除
+    SYSTEM_ROLE_QUERY("system:role:query"), //角色管理 查询
+    SYSTEM_ROLE_ADD("system:role:add"), //角色管理 新增
+    SYSTEM_ROLE_EDIT("system:role:edit"), //角色管理 编辑
+    SYSTEM_ROLE_REMOVE("system:role:remove"), //角色管理 删除
 }
