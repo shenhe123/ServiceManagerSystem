@@ -50,6 +50,8 @@ class UserManagerDetailActivity : BaseActivity() {
         binding.etCreateTime.setText(it.createTime)
         binding.etUpdatePerson.setText(it.updateBy)
         binding.etUpdateTime.setText(it.updateTime)
+
+        binding.tvEdit.isVisible = it.userId >= 100
     }
 
     private fun initViewModel() {

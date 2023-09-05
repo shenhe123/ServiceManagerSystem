@@ -57,41 +57,48 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <View style="@style/xDividerMarge12DP"/>
-
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+            android:id="@+id/layout_option_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp">
+            android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbt_permission"
-                style="@style/NoInsetThemeButton"
-                app:cornerRadius="2dp"
-                android:textSize="11sp"
-                android:text="操作权限设置"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"/>
+            <View style="@style/xDividerMarge12DP" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="0dp"/>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbt_delete"
-                style="@style/NoInsetThemeButton"
-                app:cornerRadius="2dp"
-                android:textSize="11sp"
-                android:text="删除"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:layout_width="50dp"
-                android:layout_height="26dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbt_permission"
+                    style="@style/NoInsetThemeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="操作权限设置"
+                    android:textSize="11sp"
+                    app:cornerRadius="2dp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbt_delete"
+                    style="@style/NoInsetThemeButton"
+                    android:layout_width="50dp"
+                    android:layout_height="26dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="删除"
+                    android:textSize="11sp"
+                    app:cornerRadius="2dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
-
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </com.google.android.material.card.MaterialCardView>
