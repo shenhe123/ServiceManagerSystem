@@ -22,7 +22,7 @@
     <style name="xDividerMarge12DP">
         <item name="android:layout_marginEnd">12dp</item>
         <item name="android:layout_marginStart">12dp</item>
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">0.5dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/x_divider</item>
     </style>

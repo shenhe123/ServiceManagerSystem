@@ -29,6 +29,7 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
         holder.binding.tvApplyDept.text = item.applyDept
         holder.binding.tvApplyFactory.text = item.sysOrganizationVo?.orgShortName ?: item.orgService
         holder.binding.tvApplyDate.text = item.applyDate
+        holder.binding.tvProductDesc.text = item.productDes
 
         when(item.state) {
             0 -> holder.binding.tvOrderState.text = "已保存"

@@ -42,10 +42,14 @@ class WorkOrderDetailFragment : Fragment() {
             binding.tvApplyFactory.text = "申请工厂：${it.orgService}"
             binding.tvApplyDate.text = "申请日期：${it.applyDate}"
 
+            binding.tvProductDesc.text = "问题描述：${it.productDes}"
+            binding.tvProductCode.text = "产品编号：${it.productCode}"
+            binding.tvProductNum2.text = "问题数量：${it.productNum}"
+
             binding.tvClientName.text = "服务客户名称：${it.salesManager}"
             binding.tvServiceName.text = "服务人员名称：${it.salesManager}"
             binding.tvTel.text = "联系方式：${it.tel}"
-            binding.tvCheckNum.text = "排查数量：${it.checkNumTotal}"
+            binding.tvCheckNum.text = "排查数量：${it.checkNumTotal ?: 0}"
             binding.tvUnitPrice.text = "服务单价：${it.unitPrice}"
             binding.tvServicePeriod.text = "预估服务周期：${it.servicePeriod}"
             binding.tvTotalPrice.text = "预估总费用：${it.totalPrice}"

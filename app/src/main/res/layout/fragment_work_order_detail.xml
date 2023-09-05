@@ -99,6 +99,74 @@
                 app:layout_constraintStart_toStartOf="@id/tv_apply_factory"
                 app:layout_constraintTop_toBottomOf="@id/tv_apply_factory" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mcd_product_bg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_num2"
+                app:layout_constraintTop_toBottomOf="@id/mcd_apply_info_bg" />
+
+            <TextView
+                android:id="@+id/tv_product_title"
+                style="@style/TitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:elevation="2dp"
+                android:text="工单信息:"
+                app:layout_constraintStart_toStartOf="@id/mcd_product_bg"
+                app:layout_constraintTop_toTopOf="@id/mcd_product_bg" />
+
+            <View
+                android:id="@+id/v_product_line"
+                style="@style/xDividerMarge12DP"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:elevation="2dp"
+                app:layout_constraintEnd_toEndOf="@id/mcd_product_bg"
+                app:layout_constraintStart_toStartOf="@id/mcd_product_bg"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_title" />
+
+            <TextView
+                android:id="@+id/tv_product_desc"
+                style="@style/SubTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:elevation="2dp"
+                tools:text="问题描述：shenhe"
+                app:layout_constraintStart_toStartOf="@id/v_product_line"
+                app:layout_constraintTop_toBottomOf="@id/v_product_line" />
+
+            <TextView
+                android:id="@+id/tv_product_code"
+                style="@style/SubTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:elevation="2dp"
+                tools:text="产品编号：工厂A"
+                app:layout_constraintStart_toStartOf="@id/tv_product_desc"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_desc" />
+
+            <TextView
+                android:id="@+id/tv_product_num2"
+                style="@style/SubTitleStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1"
+                android:elevation="2dp"
+                android:gravity="end"
+                android:paddingBottom="12dp"
+                tools:text="产品数量：2023-08-25"
+                app:layout_constraintStart_toStartOf="@id/tv_product_code"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_code" />
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_service_info_bg"
@@ -109,7 +177,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/layout_service_desc"
-                app:layout_constraintTop_toBottomOf="@id/mcd_apply_info_bg" />
+                app:layout_constraintTop_toBottomOf="@id/mcd_product_bg" />
 
             <TextView
                 android:id="@+id/tv_service_title"

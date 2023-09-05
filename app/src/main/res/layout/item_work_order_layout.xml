@@ -110,6 +110,26 @@
 
 
         <TextView
+            android:id="@+id/tv_product_desc_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="问题描述"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name"/>
+
+        <TextView
+            android:id="@+id/tv_product_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_desc_title"
+            app:layout_constraintStart_toStartOf="@id/tv_product_desc_title"/>
+
+
+        <TextView
             android:id="@+id/tv_order_state_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,7 +137,7 @@
             android:text="工单状态"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_apply_name"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_product_desc"/>
 
         <TextView
             android:id="@+id/tv_order_state"
@@ -139,7 +159,7 @@
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_apply_name"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_product_desc"/>
 
         <TextView
             android:id="@+id/tv_check_state"
