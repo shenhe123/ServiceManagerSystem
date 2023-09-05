@@ -350,6 +350,7 @@
                         android:padding="10dp"
                         android:enabled="false"
                         style="@style/SecTitleStyle"
+                        android:minLines="2"
                         android:background="@drawable/selector_input_stroke"
                         app:layout_constraintTop_toBottomOf="@id/tv_purpose_title"
                         app:layout_constraintStart_toStartOf="@id/tv_purpose_title"
@@ -373,6 +374,7 @@
                         android:padding="10dp"
                         android:enabled="false"
                         style="@style/SecTitleStyle"
+                        android:minLines="2"
                         android:background="@drawable/selector_input_stroke"
                         app:layout_constraintTop_toBottomOf="@id/tv_main_task_title"
                         app:layout_constraintStart_toStartOf="@id/tv_main_task_title"
@@ -397,6 +399,7 @@
                         android:padding="10dp"
                         android:enabled="false"
                         style="@style/SecTitleStyle"
+                        android:minLines="2"
                         app:layout_constraintTop_toBottomOf="@id/tv_expected_result_title"
                         app:layout_constraintStart_toStartOf="@id/tv_expected_result_title"
                         app:layout_constraintEnd_toEndOf="parent"/>
@@ -420,6 +423,7 @@
                         android:padding="10dp"
                         android:enabled="false"
                         style="@style/SecTitleStyle"
+                        android:minLines="2"
                         app:layout_constraintTop_toBottomOf="@id/tv_schedule_title"
                         app:layout_constraintStart_toStartOf="@id/tv_schedule_title"
                         app:layout_constraintEnd_toEndOf="parent"/>

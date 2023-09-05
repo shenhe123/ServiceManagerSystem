@@ -58,36 +58,19 @@ class RoleManagerActivity : BaseActivity() {
         binding.toolBar.setNavigationOnClickListener { finish() }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.addItemDecoration(ThemeLineItemDecoration())
         adapter = RoleManagerAdapter()
         binding.recyclerView.adapter = adapter
 
-        adapter.setOnItemChildClickListener { _, v, position ->
+        adapter.setOnItemClickListener { _, v, position ->
             clickItemPos = position
             val role = adapter.data[position]
-            when(v.id) {
-                R.id.card_layout -> updateRoleLauncher.launch(UpdateRoleActivity.InputData(position, role))
-
-//                R.id.mbt_menu -> RoleMenuDialogFragment.newInstance(role)
-//                    .addOnFinishListener(object : RoleMenuDialogFragment.OnFinishListener{
-//                        override fun onFinish(newRole: Role) {
-//                            adapter.data[position] = newRole
-//                            adapter.notifyItemChanged(position)
-//                        }
-//
-//                    })
-//                    .show(supportFragmentManager, "role_menu_dialog")
-
-//                R.id.mbt_delete -> SingleBtnDialogFragment.newInstance("删除", "确定要删除此用户吗？")
-//                    .addConfrimClickLisntener(object : SingleBtnDialogFragment.OnConfirmClickLisenter{
-//                        override fun onConfrimClick() {
-//                            accountViewModel.deleteRoleInfo(user.userId)
-//                        }
-//
-//                    })
-//                    .show(supportFragmentManager, "delete_user_dialog")
-            }
-
-
+            updateRoleLauncher.launch(
+                UpdateRoleActivity.InputData(
+                    position,
+                    role
+                )
+            )
         }
 
         binding.fbtnAddNew.setOnClickListener {
