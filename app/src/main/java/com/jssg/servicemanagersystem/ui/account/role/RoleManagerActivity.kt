@@ -142,7 +142,7 @@ class RoleManagerActivity : BaseActivity() {
 
     private fun updateRoleList(result: LoadListDataModel<List<Role>?>) {
         result.rows?.let {
-            val reversedList = it.reversed()
+            val reversedList = it.reversed().filter { item -> item.attachToApp.equals("Y", true) }
             if (result.isPullRefresh) {
                 adapter.setList(reversedList)
             } else {

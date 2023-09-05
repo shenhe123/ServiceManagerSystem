@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
@@ -104,7 +103,6 @@ class WorkOrderFragment : BaseFragment() {
                 ToastUtils.showToast("结案成功")
                 binding.tvCloseCase.text = "结案"
                 adapter.isCloseCase = false
-//                    adapter.setList(sourceList)
                 loadData(true)
             }
         }
@@ -166,15 +164,10 @@ class WorkOrderFragment : BaseFragment() {
         }
 
 
-        binding.mbtSearch.setOnClickListener {
+        binding.layoutSearch.setOnClickListener {
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.printableName)) return@setOnClickListener
 
-            val input = binding.inputSearch.text.toString()
-            if (input.isEmpty()) {
-                return@setOnClickListener
-            }
-
-            workOrderViewModel.searchWorkOrder(input)
+            showTipPopupWindow(binding.layoutSearch)
         }
 
         binding.tvCloseCase.setOnClickListener {
@@ -206,6 +199,24 @@ class WorkOrderFragment : BaseFragment() {
             }
 
         }
+    }
+
+    private fun showTipPopupWindow(target: View) {
+        val popupWindow = SearchFilterPopupWindow(requireContext(), binding.root)
+        popupWindow.setOnClickListener(object :SearchFilterPopupWindow.OnSearchBtnClick{
+            override fun onClick(
+                productDesc: String?,
+                productCode: String?,
+                startDate: String?,
+                endDate: String?,
+                oaBillNo: String?
+            ) {
+                showProgressbarLoading()
+                workOrderViewModel.searchWorkOrder(productDesc, productCode, startDate, endDate, oaBillNo)
+            }
+
+        })
+        popupWindow.showAsDropDown(target, 0, 0)
     }
 
     companion object {

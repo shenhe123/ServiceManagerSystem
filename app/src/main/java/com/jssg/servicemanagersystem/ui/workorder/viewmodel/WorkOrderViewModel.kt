@@ -39,10 +39,22 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     }
 
-    fun searchWorkOrder(input: String) {
+    fun searchWorkOrder(
+        productDesc: String?,
+        productCode: String?,
+        startDate: String?,
+        endDate: String?,
+        oaBillNo: String?
+    ) {
         workOrderListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .searchWorkOrderList(input, 1, 9999)
+            .searchWorkOrderList(productCode,
+                productDesc,
+                startDate,
+                endDate,
+                oaBillNo,
+                1,
+                9999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderListLiveData, true, 1))
     }
@@ -117,10 +129,10 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .subscribe(createObserver(updateWorkOrderDetailLiveData))
     }
 
-    fun getWorkOrderCheckList() {
+    fun getWorkOrderCheckList(billNo: String) {
         workOrderCheckListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .getWorkOrderCheckList(1, 999)
+            .getWorkOrderCheckList(billNo,1, 999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
     }

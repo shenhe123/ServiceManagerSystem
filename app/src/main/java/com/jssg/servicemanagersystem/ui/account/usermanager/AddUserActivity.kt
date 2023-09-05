@@ -143,8 +143,6 @@ class AddUserActivity : BaseActivity() {
             }
 
             accountViewModel.addNewUser(nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)
-
-            ToastUtils.showToast(orgId.toString())
         }
 
         binding.tvExpiredDate.setOnClickListener {

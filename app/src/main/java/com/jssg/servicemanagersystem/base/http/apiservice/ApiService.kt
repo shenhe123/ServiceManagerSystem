@@ -100,13 +100,24 @@ interface ApiService {
     fun getWorkOrderList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
     @GET("staging-api/qm/workOrderDetail/list")
-    fun getWorkOrderCheckList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
+    fun getWorkOrderCheckList(
+        @Query("billNo") billNo: String,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
 
     @GET("staging-api/qm/workOrderDetail/list")
     fun searchWorkOrderCheckList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
 
     @GET("staging-api/qm/workOrder/list")
-    fun searchWorkOrderList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
+    fun searchWorkOrderList(
+        @Query("productCode") productCode: String?,
+        @Query("productDes") productDes: String?,
+        @Query("beginApplyDate") beginApplyDate: String?,
+        @Query("endApplyDate") endApplyDate: String?,
+        @Query("oaBillNo") oaBillNo: String?,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
     @POST("staging-api/system/oss/upload")
     fun fileOssUpload(@Body body: MultipartBody): Observable<BaseHttpResult<UploadEntity?>>

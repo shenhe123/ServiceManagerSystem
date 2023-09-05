@@ -1,7 +1,6 @@
 package com.jssg.servicemanagersystem.ui.workorder.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -136,7 +135,9 @@ class WorkOrderCheckDetailFragment : BaseFragment() {
     }
 
     private fun loadData() {
-        workOrderViewModel.getWorkOrderCheckList()
+        inputData?.let {
+            workOrderViewModel.getWorkOrderCheckList(it.billNo)
+        }
     }
 
     companion object {
