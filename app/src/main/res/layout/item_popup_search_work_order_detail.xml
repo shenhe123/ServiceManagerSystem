@@ -29,10 +29,17 @@
                 android:id="@+id/rg_check_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
                 android:layout_toEndOf="@id/tv_check_state_title"
                 android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_submit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="已提交"/>
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/rb_agree"

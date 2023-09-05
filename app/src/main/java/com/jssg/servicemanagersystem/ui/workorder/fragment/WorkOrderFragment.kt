@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.ui.workorder.fragment
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,9 +24,11 @@ import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import kotlinx.android.parcel.Parcelize
 
 class WorkOrderFragment : BaseFragment() {
 
+    private var searchParams: SearchParams? = null
     private var sourceList = mutableListOf<WorkOrderInfo>()
     private val checkedBillNos = arrayListOf<String>()
     private val page: Int = 1
@@ -202,17 +205,12 @@ class WorkOrderFragment : BaseFragment() {
     }
 
     private fun showTipPopupWindow(target: View) {
-        val popupWindow = WorkOrderSearchPopupWindow(requireContext(), binding.root)
+        val popupWindow = WorkOrderSearchPopupWindow(requireContext(), binding.root, searchParams)
         popupWindow.setOnClickListener(object :WorkOrderSearchPopupWindow.OnSearchBtnClick{
-            override fun onClick(
-                productDesc: String?,
-                productCode: String?,
-                startDate: String?,
-                endDate: String?,
-                oaBillNo: String?
-            ) {
+            override fun onClick(searchParams: SearchParams) {
                 showProgressbarLoading()
-                workOrderViewModel.searchWorkOrder(productDesc, productCode, startDate, endDate, oaBillNo)
+                this@WorkOrderFragment.searchParams = searchParams
+                workOrderViewModel.searchWorkOrder(searchParams)
             }
 
         })
@@ -228,4 +226,13 @@ class WorkOrderFragment : BaseFragment() {
             return fragment
         }
     }
+
+    @Parcelize
+    data class SearchParams(
+        val productDesc: String?,
+        val productCode: String?,
+        val startDate: String?,
+        val endDate: String?,
+        val oaBillNo: String?
+    ) : Parcelable
 }

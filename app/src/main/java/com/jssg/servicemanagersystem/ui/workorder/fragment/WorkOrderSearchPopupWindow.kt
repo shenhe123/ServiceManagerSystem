@@ -18,14 +18,25 @@ import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
 
-class WorkOrderSearchPopupWindow(context: Context?, layoutParent: ViewGroup?) :
+class WorkOrderSearchPopupWindow(
+    context: Context?,
+    layoutParent: ViewGroup?,
+    searchParams: WorkOrderFragment.SearchParams?
+) :
     BasePWControl(context, layoutParent) {
 
+    private var searchParams: WorkOrderFragment.SearchParams?
     private lateinit var listener: OnSearchBtnClick
     private lateinit var binding: ItemPopupSearchWorkOrderBinding
 
+    init {
+        this.searchParams = searchParams
+        initData()
+    }
+
     override fun initView() {
         binding = ItemPopupSearchWorkOrderBinding.bind(mView)
+
         binding.layoutRoot.setOnClickListener { v: View? -> dismiss() }
         binding.etProductDesc.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -114,11 +125,13 @@ class WorkOrderSearchPopupWindow(context: Context?, layoutParent: ViewGroup?) :
                     "$endDate 23:59:59"
                 }
                 listener.onClick(
-                    binding.etProductDesc.text.toString(),
-                    binding.etProductCode.text.toString(),
-                    startDate,
-                    endDate,
-                    binding.etOrderId.text.toString(),
+                    WorkOrderFragment.SearchParams(
+                        binding.etProductDesc.text.toString(),
+                        binding.etProductCode.text.toString(),
+                        startDate,
+                        endDate,
+                        binding.etOrderId.text.toString()
+                    )
                 )
             }
 
@@ -126,7 +139,21 @@ class WorkOrderSearchPopupWindow(context: Context?, layoutParent: ViewGroup?) :
         }
     }
 
-    private fun showSelectDateDialog(textView: TextView, index: Int, binding: ItemPopupSearchWorkOrderBinding) {
+    private fun initData() {
+        searchParams?.let {
+            binding.etProductDesc.setText(it.productDesc)
+            binding.etProductCode.setText(it.productCode)
+            binding.etOrderId.setText(it.oaBillNo)
+            binding.tvStartDate.text = it.startDate?.split(" ")?.get(0)
+            binding.tvEndDate.text = it.endDate?.split(" ")?.get(0)
+        }
+    }
+
+    private fun showSelectDateDialog(
+        textView: TextView,
+        index: Int,
+        binding: ItemPopupSearchWorkOrderBinding
+    ) {
         val calendar = Calendar.getInstance() //获取日期格式器对象
 
         //chose b
@@ -199,6 +226,6 @@ class WorkOrderSearchPopupWindow(context: Context?, layoutParent: ViewGroup?) :
     }
 
     interface OnSearchBtnClick {
-        fun onClick(productDesc: String?, productCode: String?, startDate: String?, endDate: String?, oaBillNo: String?)
+        fun onClick(searchParams: WorkOrderFragment.SearchParams)
     }
 }

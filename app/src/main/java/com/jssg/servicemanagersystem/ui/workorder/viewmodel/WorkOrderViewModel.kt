@@ -10,6 +10,8 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckDetailFragment
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.HUtils
 import java.util.ArrayList
@@ -39,20 +41,15 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     }
 
-    fun searchWorkOrder(
-        productDesc: String?,
-        productCode: String?,
-        startDate: String?,
-        endDate: String?,
-        oaBillNo: String?
-    ) {
+    fun searchWorkOrder(searchParams: WorkOrderFragment.SearchParams) {
         workOrderListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .searchWorkOrderList(productCode,
-                productDesc,
-                startDate,
-                endDate,
-                oaBillNo,
+            .searchWorkOrderList(
+                searchParams.productCode,
+                searchParams.productDesc,
+                searchParams.startDate,
+                searchParams.endDate,
+                searchParams.oaBillNo,
                 1,
                 9999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
@@ -228,10 +225,10 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     }
 
-    fun searchWorkOrderDetail(state: String?, startDate: String?, endDate: String?) {
+    fun searchWorkOrderDetail(searchParams: WorkOrderCheckDetailFragment.SearchParams) {
         workOrderCheckListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .searchWorkOrderCheckList(state, startDate, endDate,1, 999)
+            .searchWorkOrderCheckList(searchParams.state, searchParams.startDate, searchParams.endDate,1, 999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
     }

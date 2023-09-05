@@ -20,11 +20,21 @@ import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
 
-class WorkOrderDetailSearchPopupWindow(context: Context?, layoutParent: ViewGroup?) :
+class WorkOrderDetailSearchPopupWindow(
+    context: Context?,
+    layoutParent: ViewGroup?,
+    searchParams: WorkOrderCheckDetailFragment.SearchParams?
+) :
     BasePWControl(context, layoutParent) {
 
+    private var searchParams: WorkOrderCheckDetailFragment.SearchParams?
     private lateinit var listener: OnSearchBtnClick
     private lateinit var binding: ItemPopupSearchWorkOrderDetailBinding
+
+    init {
+        this.searchParams = searchParams
+        initData()
+    }
 
     override fun initView() {
         binding = ItemPopupSearchWorkOrderDetailBinding.bind(mView)
@@ -99,7 +109,9 @@ class WorkOrderDetailSearchPopupWindow(context: Context?, layoutParent: ViewGrou
                     "$endDate 23:59:59"
                 }
 
-                val state = when(binding.rgCheckState.checkedRadioButtonId) {
+                val state = when (binding.rgCheckState.checkedRadioButtonId) {
+//                    binding.rbSave.id -> "0"
+                    binding.rbSubmit.id -> "1"
                     binding.rbAgree.id -> "2"
                     binding.rbResignation.id -> "3"
                     binding.rbAgreeNot.id -> "4"
@@ -107,9 +119,11 @@ class WorkOrderDetailSearchPopupWindow(context: Context?, layoutParent: ViewGrou
                 }
 
                 listener.onClick(
-                    state,
-                    startDate,
-                    endDate,
+                    WorkOrderCheckDetailFragment.SearchParams(
+                        state,
+                        startDate,
+                        endDate,
+                    )
                 )
             }
 
@@ -117,7 +131,28 @@ class WorkOrderDetailSearchPopupWindow(context: Context?, layoutParent: ViewGrou
         }
     }
 
-    private fun showSelectDateDialog(textView: TextView, index: Int, binding: ItemPopupSearchWorkOrderDetailBinding) {
+    private fun initData() {
+        searchParams?.let {
+            it.state?.let { state ->
+                when (state) {
+//                    "0" -> holder.binding.tvOrderState.text = "已保存"
+                    "1" -> binding.rbSubmit.isChecked = true
+                    "2" -> binding.rbAgree.isChecked = true
+                    "3" -> binding.rbResignation.isChecked = true
+                    "4" -> binding.rbAgreeNot.isChecked = true
+                }
+            }
+
+            binding.tvStartDate.text = it.startDate?.split(" ")?.get(0)
+            binding.tvEndDate.text = it.endDate?.split(" ")?.get(0)
+        }
+    }
+
+    private fun showSelectDateDialog(
+        textView: TextView,
+        index: Int,
+        binding: ItemPopupSearchWorkOrderDetailBinding
+    ) {
         val calendar = Calendar.getInstance() //获取日期格式器对象
 
         //chose b
@@ -190,6 +225,6 @@ class WorkOrderDetailSearchPopupWindow(context: Context?, layoutParent: ViewGrou
     }
 
     interface OnSearchBtnClick {
-        fun onClick(state: String?, startDate: String?, endDate: String?)
+        fun onClick(searchParams: WorkOrderCheckDetailFragment.SearchParams)
     }
 }

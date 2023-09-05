@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.ui.workorder.fragment
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +21,11 @@ import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import kotlinx.android.parcel.Parcelize
 
 class WorkOrderCheckDetailFragment : BaseFragment() {
 
+    private var searchParams: SearchParams? = null
     private lateinit var adapter: WorkOrderCheckAdapter
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private lateinit var binding: FragmentWorkOrderCheckDetailBinding
@@ -89,15 +92,12 @@ class WorkOrderCheckDetailFragment : BaseFragment() {
     }
 
     private fun showTipPopupWindow(target: View) {
-        val popupWindow = WorkOrderDetailSearchPopupWindow(requireContext(), binding.root)
+        val popupWindow = WorkOrderDetailSearchPopupWindow(requireContext(), binding.root, searchParams)
         popupWindow.setOnClickListener(object :WorkOrderDetailSearchPopupWindow.OnSearchBtnClick{
-            override fun onClick(
-                state: String?,
-                startDate: String?,
-                endDate: String?,
-            ) {
+            override fun onClick(searchParams: SearchParams) {
                 showProgressbarLoading()
-                workOrderViewModel.searchWorkOrderDetail(state, startDate, endDate)
+                this@WorkOrderCheckDetailFragment.searchParams = searchParams
+                workOrderViewModel.searchWorkOrderDetail(searchParams)
             }
 
         })
@@ -161,4 +161,11 @@ class WorkOrderCheckDetailFragment : BaseFragment() {
                 }
             }
     }
+
+    @Parcelize
+    data class SearchParams(
+        val state: String?,
+        val startDate: String?,
+        val endDate: String?,
+    ) : Parcelable
 }
