@@ -182,6 +182,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["productCode"] = productCode
         params["productDes"] = productDesc
         params["productNum"] = badNum
+        params["state"] = 1
         params["remark"] = remark
         RetrofitService.apiService
             .addWorkOrder(HUtils.createRequestBodyMap(params))
