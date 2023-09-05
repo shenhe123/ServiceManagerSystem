@@ -36,7 +36,7 @@ class AddUserActivity : BaseActivity() {
     private var deptId: String? = null
     private var orgId: String? = null
     private var deptInfos: List<DeptInfo>? = null
-    private var factoryInfos: List<FactoryInfo>? = null
+    private var factoryInfos: MutableList<FactoryInfo> = mutableListOf()
     private var checkedRoleIds: MutableList<String>? = null
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var binding: ActivityAddUserBinding
@@ -66,13 +66,11 @@ class AddUserActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                factoryInfos?.let {
-                    binding.asFactory.prompt = it[position].orgName
-
-                    if (!it[position].orgName.equals("请选择工厂")) {
-                        orgId = it[position].orgId
-                    }
-
+                binding.asFactory.prompt = factoryInfos[position].orgName
+                orgId = if (factoryInfos[position].orgName.equals("请选择工厂")) {
+                    null
+                } else {
+                    factoryInfos[position].orgId
                 }
             }
 
@@ -145,6 +143,8 @@ class AddUserActivity : BaseActivity() {
             }
 
             accountViewModel.addNewUser(nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)
+
+            ToastUtils.showToast(orgId.toString())
         }
 
         binding.tvExpiredDate.setOnClickListener {
@@ -227,18 +227,19 @@ class AddUserActivity : BaseActivity() {
 
         accountViewModel.factoryInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                val list = if (result.data.isNullOrEmpty()) {
-                    listOf("请选择工厂")
-                } else {
-                    factoryInfos = result.data!!
-                    result.data!!.map { info -> info.orgName }
-                }
+                result.data?.let {
+                    factoryInfos.add(FactoryInfo("", "请选择工厂"))
+                    factoryInfos.addAll(it)
 
-                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                    this, android.R.layout.simple_spinner_item, list
-                )
-                adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-                binding.asFactory.adapter = adapter
+                    val list = mutableListOf<String>()
+                    list.add("请选择工厂")
+                    list.addAll(result.data!!.map { info -> info.orgName })
+                    val adapter = ArrayAdapter<String>(
+                        this, android.R.layout.simple_spinner_item, list
+                    )
+                    adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+                    binding.asFactory.adapter = adapter
+                }
             }
         }
 
