@@ -66,16 +66,18 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvRoleManager.setOnClickListener {
-            val user = AccountManager.instance.getUser()
-            if (user?.user?.admin == true) {
-                RoleManagerActivity.goActivity(requireContext())
-            } else {
-                ToastUtils.showToast("没有权限操作")
+            if (!AccountManager.instance.isAdmin()) {
+                ToastUtils.showToast("需要管理员权限")
+                return@setOnClickListener
             }
+            RoleManagerActivity.goActivity(requireContext())
         }
 
         binding.tvUserManager.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.printableName)) return@setOnClickListener
+            if (!AccountManager.instance.isAdmin()) {
+                ToastUtils.showToast("需要管理员权限")
+                return@setOnClickListener
+            }
 
             UserManagerActivity.goActivity(requireContext())
         }

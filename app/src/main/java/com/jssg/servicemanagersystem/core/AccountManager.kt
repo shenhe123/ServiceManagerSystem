@@ -38,6 +38,11 @@ class AccountManager {
     fun saveUser(userInfo: UserInfo) {
         MMKV.defaultMMKV().encode("user_account_info", userInfo)
     }
+
+    fun isAdmin(): Boolean {
+        return getUser()?.user?.admin == true
+    }
+
     fun isLogin(): Boolean {
         if (getUser() == null) return false
 

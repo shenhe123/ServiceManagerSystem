@@ -71,7 +71,12 @@ class PicturesPreviewActivity : AppCompatActivity() {
             finish()
         }
 
-        Glide.with(this).load(File(intent?.getStringExtra("path") ?: "")).into(fullscreenContent)
+        val path = intent?.getStringExtra("path") ?: ""
+        if (path.startsWith("http") || path.startsWith("content")) {
+            Glide.with(this).load(path).into(fullscreenContent)
+        } else {
+            Glide.with(this).load(File(path)).into(fullscreenContent)
+        }
 
     }
 

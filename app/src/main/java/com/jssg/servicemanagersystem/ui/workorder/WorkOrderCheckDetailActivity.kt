@@ -456,6 +456,8 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
 
         img.setOnLongClickListener {
 
+            if (!isEditable) return@setOnLongClickListener true
+
             SingleBtnDialogFragment.newInstance("删除图片", "确定要删除图片吗？")
                 .addConfrimClickLisntener(object : SingleBtnDialogFragment.OnConfirmClickLisenter{
                     override fun onConfrimClick() {
