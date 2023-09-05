@@ -14,6 +14,7 @@ import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
+import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderAddNewActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
@@ -181,7 +182,13 @@ class WorkOrderFragment : BaseFragment() {
                 adapter.notifyDataSetChanged()
             } else {
                 if (checkedBillNos.isNotEmpty()) {
-                    workOrderViewModel.closeCaseWorkOrder(checkedBillNos)
+                    SingleBtnDialogFragment.newInstance("确定结案", "确定将所选工单全部结案吗？")
+                        .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
+                            override fun onConfrimClick() {
+                                workOrderViewModel.closeCaseWorkOrder(checkedBillNos)
+                            }
+
+                        }).show(childFragmentManager, "close_case_dialog")
                 } else {
                     binding.tvCloseCase.text = "结案"
                     adapter.isCloseCase = false
