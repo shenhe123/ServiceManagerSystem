@@ -45,7 +45,7 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
             2 -> holder.binding.tvCheckState.text = "已完成"
         }
 
-        holder.binding.mcbCheck.isVisible = isCloseCase
+        holder.binding.mcbCheck.isVisible = isCloseCase && item.checkState != 2
     }
 
 
