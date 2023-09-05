@@ -98,12 +98,12 @@ class WorkOrderDetailSearchPopupWindow(
             if (this::listener.isInitialized) {
                 var startDate = binding.tvStartDate.text.toString()
                 var endDate = binding.tvEndDate.text.toString()
-                startDate = if (startDate.equals("请选择日期")) {
+                startDate = if (startDate.equals("请选择日期") || startDate.split(" ")[0].isEmpty()) {
                     ""
                 } else {
                     "$startDate 00:00:00"
                 }
-                endDate = if (endDate.equals("请选择日期")) {
+                endDate = if (endDate.equals("请选择日期") || endDate.split(" ")[0].isEmpty()) {
                     ""
                 } else {
                     "$endDate 23:59:59"
@@ -143,8 +143,13 @@ class WorkOrderDetailSearchPopupWindow(
                 }
             }
 
-            binding.tvStartDate.text = it.startDate?.split(" ")?.get(0)
-            binding.tvEndDate.text = it.endDate?.split(" ")?.get(0)
+            val startDate = it.startDate?.split(" ")?.get(0)
+            binding.tvStartDate.text = startDate
+            val endDate = it.endDate?.split(" ")?.get(0)
+            binding.tvEndDate.text = endDate
+
+            binding.ivStartDateClose.isVisible = !startDate.isNullOrEmpty()
+            binding.ivEndDateClose.isVisible = !endDate.isNullOrEmpty()
         }
     }
 
