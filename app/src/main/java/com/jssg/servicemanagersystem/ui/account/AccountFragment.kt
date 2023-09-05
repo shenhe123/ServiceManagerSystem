@@ -93,7 +93,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.tvUpdatePassword.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_RESETPWD.printableName)) return@setOnClickListener
+//            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_RESETPWD.printableName)) return@setOnClickListener
 
             UpdatePasswordActivity.goActivity(requireContext())
         }
