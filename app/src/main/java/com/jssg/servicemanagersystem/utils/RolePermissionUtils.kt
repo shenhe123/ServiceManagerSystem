@@ -9,7 +9,7 @@ import com.jssg.servicemanagersystem.utils.toast.ToastUtils
  */
 object RolePermissionUtils {
 
-    fun hasPermission(menuPermission: String): Boolean {
+    fun hasPermission(menuPermission: String, isShow: Boolean = false): Boolean {
         val user = AccountManager.instance.getUser()
         user?.let {
             if (it.user.admin) {
@@ -17,13 +17,17 @@ object RolePermissionUtils {
             } else {
                 val hasPerm = it.permissions.any { item -> item.equals(menuPermission, true) }
                 if (!hasPerm) {
-                    ToastUtils.showToast("请联系管理员申请权限")
+                    if (isShow) {
+                        ToastUtils.showToast("请联系管理员申请权限")
+                    }
                 }
                 return hasPerm
             }
         }
 
-        ToastUtils.showToast("请联系管理员申请权限")
+        if (isShow) {
+            ToastUtils.showToast("请联系管理员申请权限")
+        }
         return false
     }
 

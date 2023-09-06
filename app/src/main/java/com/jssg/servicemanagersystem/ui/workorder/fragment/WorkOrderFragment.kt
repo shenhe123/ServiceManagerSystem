@@ -37,17 +37,19 @@ class WorkOrderFragment : BaseFragment() {
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private lateinit var binding: FragmentWorkOrderBinding
 
-    private val addNewLauncher = registerForActivityResult(AddWorkOrderActivity.AddNewWorkOrderContracts()){
-        it?.let {
-            loadData(true)
+    private val addNewLauncher =
+        registerForActivityResult(AddWorkOrderActivity.AddNewWorkOrderContracts()) {
+            it?.let {
+                loadData(true)
+            }
         }
-    }
 
-    private val workOrderLauncher = registerForActivityResult(WorkOrderDetailActivity.WorkOrderContracts()){
-        it?.let {
-            loadData(true)
+    private val workOrderLauncher =
+        registerForActivityResult(WorkOrderDetailActivity.WorkOrderContracts()) {
+            it?.let {
+                loadData(true)
+            }
         }
-    }
 
 
     override fun onCreateView(
@@ -68,7 +70,7 @@ class WorkOrderFragment : BaseFragment() {
         adapter = WorkOrderAdapter(false)
         binding.recyclerView.adapter = adapter
 
-        binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object :OnRefreshLoadMoreListener{
+        binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onRefresh(refreshLayout: RefreshLayout) {
                 loadData(true)
             }
@@ -114,6 +116,14 @@ class WorkOrderFragment : BaseFragment() {
 
         showProgressbarLoading()
         loadData(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.tvCloseCase.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_FINISH.printableName)
+        binding.fbtnAddNew.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.printableName)
     }
 
     private fun showNoData(isVisible: Boolean) {
@@ -164,20 +174,20 @@ class WorkOrderFragment : BaseFragment() {
         }
 
         binding.fbtnAddNew.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.printableName)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.printableName, true)) return@setOnClickListener
             addNewLauncher.launch("")
         }
 
 
         binding.layoutSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.printableName)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.printableName, true)) return@setOnClickListener
 
             showTipPopupWindow(binding.layoutSearch)
         }
 
         binding.tvCloseCase.setOnClickListener {
 
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_FINISH.printableName)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_FINISH.printableName, true)) return@setOnClickListener
 
             if (!adapter.isCloseCase) {
                 binding.tvCloseCase.text = "提交"
@@ -186,7 +196,8 @@ class WorkOrderFragment : BaseFragment() {
             } else {
                 if (checkedBillNos.isNotEmpty()) {
                     SingleBtnDialogFragment.newInstance("确定结案", "确定将所选工单全部结案吗？")
-                        .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
+                        .addConfrimClickLisntener(object :
+                            SingleBtnDialogFragment.OnConfirmClickLisenter {
                             override fun onConfrimClick() {
                                 workOrderViewModel.closeCaseWorkOrder(checkedBillNos)
                             }
@@ -198,7 +209,8 @@ class WorkOrderFragment : BaseFragment() {
                         "还没有选择工单哦，继续结案吗",
                         "关闭结案",
                         "继续结案"
-                    ).addCancelClickLisntener(object :DoubleBtnDialogFragment.OnCancelClickLisenter{
+                    ).addCancelClickLisntener(object :
+                        DoubleBtnDialogFragment.OnCancelClickLisenter {
                         override fun onCancelClick() {
                             binding.tvCloseCase.text = "结案"
                             adapter.isCloseCase = false
@@ -214,7 +226,7 @@ class WorkOrderFragment : BaseFragment() {
 
     private fun showTipPopupWindow(target: View) {
         val popupWindow = WorkOrderSearchPopupWindow(requireContext(), binding.root, searchParams)
-        popupWindow.setOnClickListener(object :WorkOrderSearchPopupWindow.OnSearchBtnClick{
+        popupWindow.setOnClickListener(object : WorkOrderSearchPopupWindow.OnSearchBtnClick {
             override fun onClick(searchParams: SearchParams) {
                 showProgressbarLoading()
                 this@WorkOrderFragment.searchParams = searchParams

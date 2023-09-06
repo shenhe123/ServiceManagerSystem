@@ -29,7 +29,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:paddingTop="4dp"
-            android:paddingBottom="4dp"/>
+            android:paddingBottom="4dp"
+            android:visibility="gone"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -100,5 +101,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

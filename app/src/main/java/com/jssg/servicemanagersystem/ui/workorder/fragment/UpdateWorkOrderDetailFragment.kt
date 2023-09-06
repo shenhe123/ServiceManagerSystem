@@ -2,13 +2,15 @@ package com.jssg.servicemanagersystem.ui.workorder.fragment
 
 import android.os.Bundle
 import androidx.core.view.isVisible
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 
 /**
  * ServiceManagerSystem
  * Created by he.shen on 2023/9/6.
  */
-class UpdateWorkOrderDetailFragment: BaseWorkOrderCheckFragment() {
+class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
 
 
     companion object {
@@ -22,7 +24,9 @@ class UpdateWorkOrderDetailFragment: BaseWorkOrderCheckFragment() {
     }
 
     override fun initViewVisible() {
-        binding.layoutNormal.isVisible = true
+        binding.layoutNormal.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_EDIT.printableName)
+
         isPictureLongClickable = true
         isAddPictureEnable = true
 

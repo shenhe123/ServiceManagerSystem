@@ -299,8 +299,10 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                     ToastUtils.showToast("保存成功")
                 } else {
                     ToastUtils.showToast("提交成功")
-                    requireActivity().finish()
                 }
+
+                requireActivity()
+                requireActivity().finish()
             }
         }
     }

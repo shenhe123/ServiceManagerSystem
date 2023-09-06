@@ -17,13 +17,14 @@ class WorkOrderDetailFragment : Fragment() {
     private lateinit var binding: FragmentWorkOrderDetailBinding
     private var inputData: WorkOrderInfo? = null
 
-    private val addNewLauncer = registerForActivityResult(AddWorkOrderCheckActivity.AddWordOrderDetailContracts()) { newOrder ->
-        newOrder?.let {
-            if (it) {
-                (requireActivity() as WorkOrderDetailActivity).goBackForResult()
+    private val addNewLauncer =
+        registerForActivityResult(AddWorkOrderCheckActivity.AddWordOrderDetailContracts()) { newOrder ->
+            newOrder?.let {
+                if (it) {
+                    (requireActivity() as WorkOrderDetailActivity).goBackForResult()
+                }
             }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +70,8 @@ class WorkOrderDetailFragment : Fragment() {
             // 1 -> = "排查中"
             // 2 -> = "已完成"
 
-            binding.mbtCheckOrder.isVisible = it.checkState != 2
+            binding.mbtCheckOrder.isVisible =
+                it.checkState != 2 && RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)
         }
 
         binding.mbtCheckOrder.setOnClickListener {
