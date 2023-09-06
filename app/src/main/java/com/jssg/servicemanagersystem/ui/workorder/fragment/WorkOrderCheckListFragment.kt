@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderCheckListBinding
@@ -80,9 +81,15 @@ class WorkOrderCheckListFragment : BaseFragment() {
 
         adapter.setOnItemClickListener { _, view, position ->
             val workOrderInfo = adapter.data[position]
-            workOrderCheckLauncher.launch(workOrderInfo)
+            workOrderCheckLauncher.launch(WorkOrderCheckDetailActivity.InputData(workOrderInfo))
         }
 
+        adapter.setOnItemChildClickListener { _, view, position ->
+            if (view.id == R.id.mbt_review) { //审核
+                val workOrderInfo = adapter.data[position]
+                workOrderCheckLauncher.launch(WorkOrderCheckDetailActivity.InputData(workOrderInfo, true))
+            }
+        }
 
         binding.inputSearch.setOnClickListener {
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_QUERY.printableName)) return@setOnClickListener

@@ -42,7 +42,7 @@ class WorkOrderCheckDialogFragment : BaseDialogFragment() {
                 return@setOnClickListener
             }
 
-            //同意 2 不同意4  退回 3
+            //同意 2 不同意4  退文 3
             var state = "2"
             if (binding.rbAgree.isChecked) {
                 state = "2"

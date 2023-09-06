@@ -2,6 +2,7 @@ package com.jssg.servicemanagersystem.ui.workorder.selectorpicture
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -125,7 +126,7 @@ class PicturesPreviewActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun goActivity(activity: AppCompatActivity, path: String) {
+        fun goActivity(activity: Activity, path: String) {
             activity.startActivity(Intent(activity, PicturesPreviewActivity::class.java).apply {
                 putExtra("path", path)
             })
