@@ -199,8 +199,8 @@
             android:layout_height="30dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/tv_apply_dept"
-            app:layout_constraintTop_toTopOf="@id/tv_order_state_title"
-            app:layout_constraintBottom_toBottomOf="@id/tv_order_state"/>
+            app:layout_constraintTop_toTopOf="@id/tv_review_num_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_review_num"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

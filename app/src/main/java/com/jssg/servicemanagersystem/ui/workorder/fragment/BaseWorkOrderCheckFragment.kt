@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,19 +77,23 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
     private fun addListener() {
         binding.ivAddBadPhoto.setOnClickListener {
-            SelectorPictureDialog.newInstance(0).show(childFragmentManager, "selector_picture_dialog")
+            SelectorPictureDialog.newInstance(0)
+                .show(childFragmentManager, "selector_picture_dialog")
         }
 
         binding.ivAddBoxPhoto.setOnClickListener {
-            SelectorPictureDialog.newInstance(1).show(childFragmentManager, "selector_picture_dialog")
+            SelectorPictureDialog.newInstance(1)
+                .show(childFragmentManager, "selector_picture_dialog")
         }
 
         binding.ivAddBatchInfoPhoto.setOnClickListener {
-            SelectorPictureDialog.newInstance(2).show(childFragmentManager, "selector_picture_dialog")
+            SelectorPictureDialog.newInstance(2)
+                .show(childFragmentManager, "selector_picture_dialog")
         }
 
         binding.ivAddReworkPhoto.setOnClickListener {
-            SelectorPictureDialog.newInstance(3).show(childFragmentManager, "selector_picture_dialog")
+            SelectorPictureDialog.newInstance(3)
+                .show(childFragmentManager, "selector_picture_dialog")
         }
 
         binding.mbtSave.setOnClickListener {
@@ -104,7 +109,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
             inputData?.let {
                 WorkOrderCheckDialogFragment.newInstance(it)
-                    .addOnFinishListener(object :WorkOrderCheckDialogFragment.OnFinishListener{
+                    .addOnFinishListener(object : WorkOrderCheckDialogFragment.OnFinishListener {
                         override fun onFinish() {
                             requireActivity().setResult(Activity.RESULT_OK, Intent().apply {
                                 putExtra("output", true)
@@ -120,7 +125,8 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
     private fun initViewModel() {
         workOrderViewModel = ViewModelProvider(requireActivity())[WorkOrderViewModel::class.java]
-        selectPicturesViewModel = ViewModelProvider(requireActivity())[SelectorPictureViewModel::class.java]
+        selectPicturesViewModel =
+            ViewModelProvider(requireActivity())[SelectorPictureViewModel::class.java]
 
         //网络图片加载
         selectPicturesViewModel.badOssListLiveData.observe(viewLifecycleOwner) { result ->
@@ -130,7 +136,8 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                     selectPictures.add(it)
                     initImageWidget("bad", it.url, binding.xflBadPicture, binding.ivAddBadPhoto)
                 }
-                binding.ivAddBadPhoto.isVisible = binding.xflBadPicture.childCount < 3 && isAddPictureEnable
+                binding.ivAddBadPhoto.isVisible =
+                    binding.xflBadPicture.childCount < 3 && isAddPictureEnable
             }
         }
 
@@ -141,7 +148,8 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                     selectPictures.add(it)
                     initImageWidget("box", it.url, binding.xflBoxPicture, binding.ivAddBadPhoto)
                 }
-                binding.ivAddBoxPhoto.isVisible = binding.xflBoxPicture.childCount < 3 && isAddPictureEnable
+                binding.ivAddBoxPhoto.isVisible =
+                    binding.xflBoxPicture.childCount < 3 && isAddPictureEnable
             }
         }
 
@@ -150,9 +158,15 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                 result.data.forEach {
                     it.tag = "batch" + it.url
                     selectPictures.add(it)
-                    initImageWidget("batch", it.url, binding.xflBatchInfoPicture, binding.ivAddBadPhoto)
+                    initImageWidget(
+                        "batch",
+                        it.url,
+                        binding.xflBatchInfoPicture,
+                        binding.ivAddBadPhoto
+                    )
                 }
-                binding.ivAddBatchInfoPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3 && isAddPictureEnable
+                binding.ivAddBatchInfoPhoto.isVisible =
+                    binding.xflBatchInfoPicture.childCount < 3 && isAddPictureEnable
             }
         }
 
@@ -161,9 +175,15 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                 result.data.forEach {
                     it.tag = "rework" + it.url
                     selectPictures.add(it)
-                    initImageWidget("rework", it.url, binding.xflReworkPicture, binding.ivAddBadPhoto)
+                    initImageWidget(
+                        "rework",
+                        it.url,
+                        binding.xflReworkPicture,
+                        binding.ivAddBadPhoto
+                    )
                 }
-                binding.ivAddReworkPhoto.isVisible = binding.xflReworkPicture.childCount < 5 && isAddPictureEnable
+                binding.ivAddReworkPhoto.isVisible =
+                    binding.xflReworkPicture.childCount < 5 && isAddPictureEnable
             }
         }
 
@@ -189,11 +209,17 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             showProgressbarLoading()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("bad", it.availablePath, binding.xflBadPicture, binding.ivAddBadPhoto)
+                    initImageWidget(
+                        "bad",
+                        it.availablePath,
+                        binding.xflBadPicture,
+                        binding.ivAddBadPhoto
+                    )
                 }
             }
 
-            binding.ivAddBadPhoto.isVisible = binding.xflBadPicture.childCount < 3 && isAddPictureEnable
+            binding.ivAddBadPhoto.isVisible =
+                binding.xflBadPicture.childCount < 3 && isAddPictureEnable
         }
 
         selectPicturesViewModel.boxPicturesLiveData.observe(viewLifecycleOwner) { pictures ->
@@ -217,11 +243,17 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             showProgressbarLoading()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("box", it.availablePath, binding.xflBoxPicture, binding.ivAddBoxPhoto)
+                    initImageWidget(
+                        "box",
+                        it.availablePath,
+                        binding.xflBoxPicture,
+                        binding.ivAddBoxPhoto
+                    )
                 }
             }
 
-            binding.ivAddBoxPhoto.isVisible = binding.xflBoxPicture.childCount < 3 && isAddPictureEnable
+            binding.ivAddBoxPhoto.isVisible =
+                binding.xflBoxPicture.childCount < 3 && isAddPictureEnable
         }
 
         selectPicturesViewModel.batchInfoPicturesLiveData.observe(viewLifecycleOwner) { pictures ->
@@ -245,11 +277,17 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             showProgressbarLoading()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("batch", it.availablePath, binding.xflBatchInfoPicture, binding.ivAddBatchInfoPhoto)
+                    initImageWidget(
+                        "batch",
+                        it.availablePath,
+                        binding.xflBatchInfoPicture,
+                        binding.ivAddBatchInfoPhoto
+                    )
                 }
             }
 
-            binding.ivAddBatchInfoPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3 && isAddPictureEnable
+            binding.ivAddBatchInfoPhoto.isVisible =
+                binding.xflBatchInfoPicture.childCount < 3 && isAddPictureEnable
         }
 
         selectPicturesViewModel.reworkPicturesLiveData.observe(viewLifecycleOwner) { pictures ->
@@ -273,11 +311,17 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             showProgressbarLoading()
             availablePic.forEach { localMedia ->
                 localMedia?.let {
-                    initImageWidget("rework", it.availablePath, binding.xflReworkPicture, binding.ivAddReworkPhoto)
+                    initImageWidget(
+                        "rework",
+                        it.availablePath,
+                        binding.xflReworkPicture,
+                        binding.ivAddReworkPhoto
+                    )
                 }
             }
 
-            binding.ivAddReworkPhoto.isVisible = binding.xflReworkPicture.childCount < 5 && isAddPictureEnable
+            binding.ivAddReworkPhoto.isVisible =
+                binding.xflReworkPicture.childCount < 5 && isAddPictureEnable
         }
 
         selectPicturesViewModel.fileOssUploadLiveData.observe(viewLifecycleOwner) { result ->
@@ -398,12 +442,21 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                 if (!it.applyInfoVos.isNullOrEmpty()) {
                     binding.layoutReviewRemark.isVisible = true
 
-                    binding.recyclerView.layoutManager = object : LinearLayoutManager(requireContext()) {
-                        override fun canScrollVertically(): Boolean {
-                            return false
+                    binding.recyclerView.layoutManager =
+                        object : LinearLayoutManager(requireContext()) {
+                            override fun canScrollVertically(): Boolean {
+                                return false
+                            }
                         }
-                    }
-                    binding.recyclerView.addItemDecoration(ThemeLineItemDecoration())
+                    binding.recyclerView.addItemDecoration(
+                        ThemeLineItemDecoration(
+                            ResourcesCompat.getColor(
+                                resources,
+                                R.color.x_divider,
+                                null
+                            ), 1, 0
+                        )
+                    )
                     val applyInfoAdapter = ApplyInfoAdapter()
                     binding.recyclerView.adapter = applyInfoAdapter
 
@@ -443,7 +496,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             if (!isPictureLongClickable) return@setOnLongClickListener true
 
             SingleBtnDialogFragment.newInstance("删除图片", "确定要删除图片吗？")
-                .addConfrimClickLisntener(object : SingleBtnDialogFragment.OnConfirmClickLisenter{
+                .addConfrimClickLisntener(object : SingleBtnDialogFragment.OnConfirmClickLisenter {
                     override fun onConfrimClick() {
                         parent.removeView(it)
                         addView.isVisible = true
