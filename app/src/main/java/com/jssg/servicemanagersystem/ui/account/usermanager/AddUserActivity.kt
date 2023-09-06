@@ -140,6 +140,16 @@ class AddUserActivity : BaseActivity() {
                     ToastUtils.showToast("请选择角色信息")
                     return@setOnClickListener
                 }
+
+                if (orgId.isNullOrEmpty()) {
+                    ToastUtils.showToast("请选择工厂")
+                    return@setOnClickListener
+                }
+
+                if (deptId.isNullOrEmpty()) {
+                    ToastUtils.showToast("请选择部门")
+                    return@setOnClickListener
+                }
             }
 
             accountViewModel.addNewUser(nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)

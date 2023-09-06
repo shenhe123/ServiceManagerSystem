@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.ui.account.entity
 
 import android.os.Parcelable
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -21,6 +22,7 @@ data class User(
     val createBy: String,
     val createTime: String,
     val dept: Dept?,
+    val orgId: String?,
     val deptId: String?,
     val email: String,
     var idNo: String?,
@@ -36,7 +38,8 @@ data class User(
     val userId: Long,
     val userName: String,
     val userType: String?,
-    var expireDate: String
+    var expireDate: String,
+    val sysOrganizationVo: WorkFactoryInfo?
 ) : Parcelable
 
 @Parcelize

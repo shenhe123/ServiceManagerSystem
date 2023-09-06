@@ -157,6 +157,8 @@ class AccountViewModel : AutoDisposViewModel() {
     fun updateUserInfo(
         checkedRoleIds: List<String>?,
         user: User,
+        orgId: String?,
+        deptId: String?,
         password: String = ""
     ) {
         updateUserInfoLiveData.value = LoadDataModel()
@@ -174,6 +176,12 @@ class AccountViewModel : AutoDisposViewModel() {
             params["roleIds"] = checkedRoleIds
         }
         params["expireDate"] = user.expireDate
+        orgId?.let {
+            params["orgId"] = it
+        }
+        deptId?.let {
+            params["deptId"] = it
+        }
         RetrofitService.apiService
             .updateUserInfo(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())

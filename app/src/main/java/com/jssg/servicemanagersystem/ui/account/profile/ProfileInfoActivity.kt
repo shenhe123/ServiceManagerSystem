@@ -46,6 +46,8 @@ class ProfileInfoActivity : BaseActivity() {
                     binding.etCardId.setText(it.user.idNo)
                     binding.etAddress.setText(it.user.address)
                     binding.etExpiredDate.setText(it.user.expireDate)
+                    binding.etFactory.setText(it.user.sysOrganizationVo?.orgName ?: "")
+                    binding.etDept.setText(it.user.dept?.deptName ?: "")
                 }
             }
         }

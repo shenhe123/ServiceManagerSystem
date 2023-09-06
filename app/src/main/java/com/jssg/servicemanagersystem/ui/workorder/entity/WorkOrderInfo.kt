@@ -49,11 +49,13 @@ data class WorkOrderInfo(
        val servicePeriod: String,   // 服务周期",
        val unitPrice: String,   // 0, // 服务单价
        val totalPrice: String,   // 0, // 服务总价
+       val customer: String?,    // 客户名称
        val salesManager: String,    // 销售经理
        val serviceAdd: String,   	// 服务地址
        val productCode: String,    // 产品编号
        val productDes: String,    // 产品描述
-       val productNum: String,   // 0, // 问题产品数量
+       val checkNum: String?,   // 0, // 需排查数量
+       val productNum: String?,   // 0, // 问题产品数量
        val remark: String,    // 备注
        val needBorrow: String?,    // 是否借款
        val borrowMoney: String?,   // 0, // 借款金额
@@ -64,6 +66,7 @@ data class WorkOrderInfo(
        val sourceBill: String?,    // 原清单
        val state: Int,   // 状态,0保存 1提交
        val checkState: Int,   // 排查状态
+
        val checkNumTotal: Int?,   // 排查数量
        val badNumTotal: Int?,   // 不良数量
        val sysOrganizationVo: WorkFactoryInfo?,

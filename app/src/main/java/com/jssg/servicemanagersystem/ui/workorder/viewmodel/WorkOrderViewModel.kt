@@ -181,6 +181,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         orgService?.let {
             params["orgService"] = orgService
         }
+        params["customer"] = clientName
         params["tel"] = phoneNumber
         params["servicePeriod"] = servicePeriod
         params["unitPrice"] = servicePrice

@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -13,11 +16,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerDetailBinding
+import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
+import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 class UserManagerDetailActivity : BaseActivity() {
+    private var deptId: String? = null
+    private var orgId: String? = null
+    private var deptInfos: List<DeptInfo>? = null
+    private var factoryInfos: List<FactoryInfo>? = null
     private var user: User? = null
     private lateinit var accountViewModel: AccountViewModel
     private var editable: Boolean = false
@@ -39,7 +48,6 @@ class UserManagerDetailActivity : BaseActivity() {
 
         initViewModel()
     }
-
     private fun updateUserInfo(it: User) {
         binding.etNickname.setText(it.nickName)
         binding.etCardId.setText(it.idNo)
@@ -64,6 +72,9 @@ class UserManagerDetailActivity : BaseActivity() {
                 user?.let {
                     accountViewModel.getUserInfo(it.userId)
                 }
+
+                binding.tvFactory.text = binding.asFactory.prompt
+                binding.tvDept.text = binding.asDept.prompt
             } else if (result.isError) {
                 ToastUtils.showToast(result.msg)
             }
@@ -74,9 +85,81 @@ class UserManagerDetailActivity : BaseActivity() {
             if (result.isSuccess) {
                 result.data?.let {
                     updateUserInfo(it.user)
+
+                    it.user.sysOrganizationVo?.let { newFactory ->
+                        binding.tvFactory.text = newFactory.orgName
+
+                    }
+
+                    it.user.dept?.let { newDept ->
+                        binding.tvDept.text = newDept.deptName
+
+                    }
                 }
             }
         }
+
+
+        accountViewModel.factoryInfoLiveData.observe(this) { result ->
+            if (result.isSuccess) {
+                result.data?.let {
+
+                    val list = if (result.data.isNullOrEmpty()) {
+                        listOf("请选择工厂")
+                    } else {
+                        factoryInfos = result.data!!
+                        result.data!!.map { info -> info.orgName }
+                    }
+
+                    val adapter = ArrayAdapter<String>(
+                        this, R.layout.simple_spinner_right_item, list
+                    )
+                    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_right_item)
+                    binding.asFactory.adapter = adapter
+
+                    user?.sysOrganizationVo?.orgName?.let {
+                        val pos = list.indexOf(it)
+                        if (pos != -1) {
+                            binding.asFactory.setSelection(pos, false)
+                        }
+                    }
+
+                    binding.asFactory.prompt = user?.sysOrganizationVo?.orgName ?: "请选择工厂"
+
+                    binding.tvFactory.text = binding.asFactory.prompt
+                }
+            }
+        }
+
+        accountViewModel.deptInfoLiveData.observe(this) { result ->
+            if (result.isSuccess) {
+                val list = if (result.data.isNullOrEmpty()) {
+                    listOf("请选择部门")
+                } else {
+                    deptInfos = result.data!!
+                    result.data!!.map { info -> info.label }
+                }
+
+                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                    this, R.layout.simple_spinner_right_item, list
+                )
+                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_right_item)
+                binding.asDept.adapter = adapter
+
+                user?.dept?.deptName?.let {
+                    val pos = list.indexOf(it)
+                    if (pos != -1) {
+                        binding.asDept.setSelection(pos, false)
+                    }
+                }
+
+                binding.asDept.prompt = user?.dept?.deptName ?: "请选择部门"
+                binding.tvDept.text = binding.asDept.prompt
+            }
+        }
+
+        accountViewModel.getFactoryInfo()
+        accountViewModel.getDeptInfo()
 
         user?.let {
             accountViewModel.getUserInfo(it.userId)
@@ -149,6 +232,48 @@ class UserManagerDetailActivity : BaseActivity() {
             }
         }
 
+        binding.asFactory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                factoryInfos?.let {
+                    binding.asFactory.prompt = it[position].orgName
+                    orgId = if (it[position].orgName.equals("请选择工厂")) {
+                        null
+                    } else {
+                        it[position].orgId
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+
+        binding.asDept.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                deptInfos?.let {
+                    binding.asDept.prompt = it[position].label
+
+                    deptId = if (!it[position].label.equals("请选择部门")) {
+                        it[position].id
+                    } else {
+                        null
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
         binding.btnUpdate.setOnClickListener {
             val nickname = binding.etNickname.text.toString()
             if (nickname.isEmpty()) {
@@ -182,13 +307,23 @@ class UserManagerDetailActivity : BaseActivity() {
 
             val password = binding.etPassword.text.toString()
 
+            if (orgId.isNullOrEmpty()) {
+                ToastUtils.showToast("请选择工厂")
+                return@setOnClickListener
+            }
+
+            if (deptId.isNullOrEmpty()) {
+                ToastUtils.showToast("请选择部门")
+                return@setOnClickListener
+            }
+
             user?.let {
                 it.nickName = nickname
                 it.phonenumber = phoneNumber
                 it.idNo = cardId
                 it.address = address
                 it.expireDate = expiredDate
-                accountViewModel.updateUserInfo(it.roleIds, it, password)
+                accountViewModel.updateUserInfo(it.roleIds, it, orgId, deptId, password)
             }
         }
     }
@@ -200,12 +335,19 @@ class UserManagerDetailActivity : BaseActivity() {
         binding.etAddress.isEnabled = editable
         binding.etPassword.isEnabled = editable
 
+        binding.tvFactory.isVisible = !editable
+        binding.layoutFactory.isVisible = editable
+        binding.tvDept.isVisible = !editable
+        binding.layoutDept.isVisible = editable
+
         updateLayoutBackground(binding.layoutNickname)
         updateLayoutBackground(binding.layoutPhoneNum)
         updateLayoutBackground(binding.layoutPassword)
         updateLayoutBackground(binding.layoutCardId)
         updateLayoutBackground(binding.layoutAddress)
         updateLayoutBackground(binding.layoutExpiredDate)
+        updateLayoutBackground(binding.layoutFactory)
+        updateLayoutBackground(binding.layoutDept)
 
         binding.btnUpdate.isVisible = editable
     }

@@ -53,17 +53,17 @@ class WorkOrderDetailFragment : Fragment() {
 
             binding.tvProductDesc.text = "问题描述：${it.productDes}"
             binding.tvProductCode.text = "产品编号：${it.productCode}"
-            binding.tvProductNum2.text = "问题数量：${it.productNum}"
+            binding.tvProductNum2.text = "问题数量：${it.productNum ?: "0"}"
 
-            binding.tvClientName.text = "服务客户名称：${it.salesManager}"
+            binding.tvClientName.text = "服务客户名称：${it.customer ?: ""}"
             binding.tvServiceName.text = "服务人员名称：${it.salesManager}"
             binding.tvTel.text = "联系方式：${it.tel}"
-            binding.tvCheckNum.text = "排查数量：${it.checkNumTotal ?: 0}"
+            binding.tvCheckNum.text = "排查数量：${it.checkNum ?: 0}"
             binding.tvUnitPrice.text = "服务单价：${it.unitPrice}"
             binding.tvServicePeriod.text = "预估服务周期：${it.servicePeriod}"
             binding.tvTotalPrice.text = "预估总费用：${it.totalPrice}"
             binding.tvAddress.text = "服务地点：${it.serviceAdd}"
-            binding.tvProductNum.text = "不良数量：${it.productNum}"
+            binding.tvProductNum.text = "不良数量：${it.productNum ?: "0"}"
             binding.etRemark.setText(it.remark)
 
             //已排查的隐藏去排查按钮
