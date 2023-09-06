@@ -118,6 +118,12 @@ class TravelReportFragment : BaseFragment() {
         travelReportViewModel.getTravelReportList(isRefresh, page)
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.fbtnAddNew.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.printableName)
+    }
+
     private fun addListener() {
 
         adapter.setOnItemClickListener { _, _, position ->
@@ -126,14 +132,14 @@ class TravelReportFragment : BaseFragment() {
         }
 
         binding.fbtnAddNew.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.printableName)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.printableName, true)) return@setOnClickListener
 
             addNewLauncher.launch("")
         }
 
 
         binding.mbtSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_QUERY.printableName)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_QUERY.printableName, true)) return@setOnClickListener
 
             val input = binding.inputSearch.text.toString()
             if (input.isEmpty()) {

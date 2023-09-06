@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.jssg.servicemanagersystem.R
@@ -150,7 +151,9 @@ class WorkOrderFragment : BaseFragment() {
     }
 
     private fun loadData(isRefresh: Boolean) {
-        workOrderViewModel.getWorkOrderList(isRefresh, page)
+        lifecycleScope.launchWhenStarted {
+            workOrderViewModel.getWorkOrderList(isRefresh, page)
+        }
     }
 
     private fun addListener() {

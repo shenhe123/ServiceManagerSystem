@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.ui.login.LoginActivity
@@ -52,12 +53,26 @@ class AccountFragment : BaseFragment() {
             }
         }
 
+        accountViewModel.userProfileLiveData.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
+                judgeRolePermission()
+            }
+        }
+
         addListener()
     }
 
     override fun onResume() {
         super.onResume()
+        judgeRolePermission()
         accountViewModel.getUserProfile()
+    }
+
+    private fun judgeRolePermission() {
+        binding.tvRoleManager.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_ROLE_QUERY.printableName)
+        binding.tvUserManager.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.printableName)
     }
 
     private fun addListener() {
@@ -83,7 +98,7 @@ class AccountFragment : BaseFragment() {
 
         binding.mbtLogout.setOnClickListener {
             SingleBtnDialogFragment.newInstance("退出登录", "确定要退出登录吗？")
-                .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter {
+                .addConfrimClickLisntener(object : SingleBtnDialogFragment.OnConfirmClickLisenter {
                     override fun onConfrimClick() {
                         loginViewModel.logout()
                     }
