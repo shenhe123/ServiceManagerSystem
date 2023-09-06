@@ -129,25 +129,46 @@
             app:layout_constraintStart_toStartOf="@id/tv_product_desc_title"/>
 
 
+<!--        <TextView-->
+<!--            android:id="@+id/tv_order_state_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="13sp"-->
+<!--            android:text="工单状态"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_product_desc"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_order_state"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/SecTitleStyle"-->
+<!--            tools:text="text"-->
+<!--            android:textColor="@color/text_600"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_order_state_title"-->
+<!--            app:layout_constraintStart_toStartOf="@id/tv_order_state_title"/>-->
+
+
         <TextView
-            android:id="@+id/tv_order_state_title"
+            android:id="@+id/tv_review_num_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:text="工单状态"
+            android:text="待审核数量"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_product_desc"/>
 
         <TextView
-            android:id="@+id/tv_order_state"
+            android:id="@+id/tv_review_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SecTitleStyle"
             tools:text="text"
             android:textColor="@color/text_600"
-            app:layout_constraintTop_toBottomOf="@id/tv_order_state_title"
-            app:layout_constraintStart_toStartOf="@id/tv_order_state_title"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_review_num_title"
+            app:layout_constraintStart_toStartOf="@id/tv_review_num_title"/>
 
 
         <TextView

@@ -31,13 +31,14 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
         holder.binding.tvApplyDate.text = item.applyDate
         holder.binding.tvProductDesc.text = item.productDes
 
-        when(item.state) {
-            0 -> holder.binding.tvOrderState.text = "已保存"
-            1 -> holder.binding.tvOrderState.text = "已提交"
-            2 -> holder.binding.tvOrderState.text = "已审核"
-            3 -> holder.binding.tvOrderState.text = "退回"
-            4 -> holder.binding.tvOrderState.text = "不同意"
-        }
+//        when(item.state) {
+//            0 -> holder.binding.tvOrderState.text = "已保存"
+//            1 -> holder.binding.tvOrderState.text = "已提交"
+//            2 -> holder.binding.tvOrderState.text = "已审核"
+//            3 -> holder.binding.tvOrderState.text = "退回"
+//            4 -> holder.binding.tvOrderState.text = "不同意"
+//        }
+        holder.binding.tvReviewNum.text = (item.waitCheckCount ?: 0).toString()
 
         when(item.checkState) {
             0 -> holder.binding.tvCheckState.text = "未开始"
