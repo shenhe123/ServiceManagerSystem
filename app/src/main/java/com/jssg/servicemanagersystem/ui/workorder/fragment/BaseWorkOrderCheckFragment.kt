@@ -301,7 +301,9 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                     ToastUtils.showToast("提交成功")
                 }
 
-                requireActivity()
+                requireActivity().setResult(Activity.RESULT_OK, Intent().apply {
+                    putExtra("output", true)
+                })
                 requireActivity().finish()
             }
         }

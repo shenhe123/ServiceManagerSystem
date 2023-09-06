@@ -28,6 +28,7 @@ import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.PicturesPrevie
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureDialog
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureViewModel
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
+import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.FileUtils
 import com.jssg.servicemanagersystem.utils.LogUtil
@@ -152,6 +153,18 @@ class AddWorkOrderCheckActivity : BaseActivity() {
         }
 
         inputData?.let {
+
+            val availableCheckNum = it.checkNum.bigDecimal().subtract(it.checkNumTotal.bigDecimal())
+            if (checkNum.bigDecimal() > availableCheckNum) {
+                ToastUtils.showToast("不能超过最大可排查数量${availableCheckNum.toInt()}")
+                return
+            }
+
+            if (badNum.bigDecimal() > checkNum.bigDecimal()) {
+                ToastUtils.showToast("不良数量不能超过排查数量")
+                return
+            }
+
             workOrderViewModel.addWorkOrderDetail(
                 it.billNo,
                 billDetailNo,
