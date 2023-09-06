@@ -11,26 +11,21 @@
         android:textSize="13sp"
         android:textColor="@color/x_text_03" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <TextView
+        android:id="@+id/tv_apply_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:textSize="13sp"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/x_text_03"
+        android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/tv_apply_info_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:text="意见："/>
-
-        <TextView
-            android:id="@+id/tv_apply_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:layout_marginStart="4dp"
-            android:textColor="@color/x_text_03"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    <TextView
+        android:id="@+id/tv_apply_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/x_text_03"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

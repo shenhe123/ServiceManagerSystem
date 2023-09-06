@@ -412,7 +412,7 @@
                     android:textSize="@dimen/sp_14"
                     android:layout_below="@id/tv_remark"
                     android:background="@drawable/selector_input_stroke"
-                    android:lines="6"
+                    android:minLines="4"
                     android:textColor="@color/x_text_03"
                     android:maxLines="10" />
 

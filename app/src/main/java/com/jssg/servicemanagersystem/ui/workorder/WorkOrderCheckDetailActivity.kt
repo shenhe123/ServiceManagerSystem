@@ -402,19 +402,21 @@ class WorkOrderCheckDetailActivity : BaseActivity() {
             }
 
             if (it.state > 1) {
-                //已经有审核意见
-                binding.layoutReviewRemark.isVisible = true
+                //已经有审核意见且审核数据不为空
+                if (!it.applyInfoVos.isNullOrEmpty()) {
+                    binding.layoutReviewRemark.isVisible = true
 
-                binding.recyclerView.layoutManager = object :LinearLayoutManager(this){
-                    override fun canScrollVertically(): Boolean {
-                        return false
+                    binding.recyclerView.layoutManager = object : LinearLayoutManager(this) {
+                        override fun canScrollVertically(): Boolean {
+                            return false
+                        }
                     }
-                }
-                binding.recyclerView.addItemDecoration(ThemeLineItemDecoration())
-                val applyInfoAdapter = ApplyInfoAdapter()
-                binding.recyclerView.adapter = applyInfoAdapter
+                    binding.recyclerView.addItemDecoration(ThemeLineItemDecoration())
+                    val applyInfoAdapter = ApplyInfoAdapter()
+                    binding.recyclerView.adapter = applyInfoAdapter
 
-                applyInfoAdapter.setList(it.applyInfoVos)
+                    applyInfoAdapter.setList(it.applyInfoVos)
+                }
             }
 
             binding.etBadNum.isEnabled = isEditable
