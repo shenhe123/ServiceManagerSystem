@@ -12,7 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderDetailBinding
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
-import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckDetailFragment
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckListFragment
 import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderDetailFragment
 
 class WorkOrderDetailActivity : BaseActivity() {
@@ -62,7 +62,7 @@ class WorkOrderDetailActivity : BaseActivity() {
                     WorkOrderDetailFragment.newInstance(inputData)
                 }
 
-                else -> WorkOrderCheckDetailFragment.newInstance(inputData)
+                else -> WorkOrderCheckListFragment.newInstance(inputData)
             }
         }
     }

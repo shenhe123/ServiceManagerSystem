@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.base.BaseActivity
-import com.jssg.servicemanagersystem.databinding.ActivityWorkOrderAddNewBinding
+import com.jssg.servicemanagersystem.databinding.ActivityAddWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
@@ -18,17 +18,17 @@ import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
-class WorkOrderAddNewActivity : BaseActivity() {
+class AddWorkOrderActivity : BaseActivity() {
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private var deptId: String? = null
     private var orgId: String? = null
     private var deptInfos: List<WorkDeptInfo>? = null
     private var factoryInfos: List<WorkFactoryInfo>? = null
-    private lateinit var binding: ActivityWorkOrderAddNewBinding
+    private lateinit var binding: ActivityAddWorkOrderBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityWorkOrderAddNewBinding.inflate(layoutInflater)
+        binding = ActivityAddWorkOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
         binding.toolBar.setNavigationOnClickListener { finish() }
@@ -237,7 +237,7 @@ class WorkOrderAddNewActivity : BaseActivity() {
 
     class AddNewWorkOrderContracts : ActivityResultContract<Any, Boolean?>() {
         override fun createIntent(context: Context, input: Any): Intent {
-            return Intent(context, WorkOrderAddNewActivity::class.java)
+            return Intent(context, AddWorkOrderActivity::class.java)
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Boolean? {

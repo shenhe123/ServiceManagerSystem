@@ -7,11 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
 import android.text.TextUtils
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +19,7 @@ import com.bumptech.glide.Glide
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AppApplication
-import com.jssg.servicemanagersystem.databinding.ActivityOrderCheckBinding
+import com.jssg.servicemanagersystem.databinding.ActivityAddWorkOrderCheckBinding
 import com.jssg.servicemanagersystem.databinding.ItemImageViewBinding
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
@@ -31,20 +29,18 @@ import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictur
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureViewModel
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.DateUtil
-import com.jssg.servicemanagersystem.utils.DpPxUtils
 import com.jssg.servicemanagersystem.utils.FileUtils
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.MyLocationClient
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
-import kotlinx.android.parcel.Parcelize
 import net.arvin.permissionhelper.PermissionHelper
 import top.zibin.luban.Luban
 import top.zibin.luban.OnCompressListener
 import java.io.File
 import java.util.Locale
 
-class WorkOrderCheckActivity : BaseActivity() {
+class AddWorkOrderCheckActivity : BaseActivity() {
     private var billDetailNo: String? = null
     private var uploadSize: Int = 0
     private var state: Int = 0
@@ -53,13 +49,13 @@ class WorkOrderCheckActivity : BaseActivity() {
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private var inputData: WorkOrderInfo? = null
     private lateinit var selectorPictureViewModel: SelectorPictureViewModel
-    private lateinit var binding: ActivityOrderCheckBinding
+    private lateinit var binding: ActivityAddWorkOrderCheckBinding
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityOrderCheckBinding.inflate(layoutInflater)
+        binding = ActivityAddWorkOrderCheckBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
@@ -431,7 +427,7 @@ class WorkOrderCheckActivity : BaseActivity() {
 
     class AddWordOrderDetailContracts: ActivityResultContract<WorkOrderInfo, Boolean?>(){
         override fun createIntent(context: Context, input: WorkOrderInfo): Intent {
-            return Intent(context, WorkOrderCheckActivity::class.java).apply {
+            return Intent(context, AddWorkOrderCheckActivity::class.java).apply {
                 putExtra("input", input)
             }
         }

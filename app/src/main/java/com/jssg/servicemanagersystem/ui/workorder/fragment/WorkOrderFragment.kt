@@ -15,7 +15,7 @@ import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
-import com.jssg.servicemanagersystem.ui.workorder.WorkOrderAddNewActivity
+import com.jssg.servicemanagersystem.ui.workorder.AddWorkOrderActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
@@ -36,7 +36,7 @@ class WorkOrderFragment : BaseFragment() {
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private lateinit var binding: FragmentWorkOrderBinding
 
-    private val addNewLauncher = registerForActivityResult(WorkOrderAddNewActivity.AddNewWorkOrderContracts()){
+    private val addNewLauncher = registerForActivityResult(AddWorkOrderActivity.AddNewWorkOrderContracts()){
         it?.let {
             loadData(true)
         }

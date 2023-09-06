@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
-import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderCheckDetailBinding
+import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderCheckListBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderCheckAdapter
@@ -23,12 +23,12 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.parcel.Parcelize
 
-class WorkOrderCheckDetailFragment : BaseFragment() {
+class WorkOrderCheckListFragment : BaseFragment() {
 
     private var searchParams: SearchParams? = null
     private lateinit var adapter: WorkOrderCheckAdapter
     private lateinit var workOrderViewModel: WorkOrderViewModel
-    private lateinit var binding: FragmentWorkOrderCheckDetailBinding
+    private lateinit var binding: FragmentWorkOrderCheckListBinding
     private var inputData: WorkOrderInfo? = null
 
     private val workOrderCheckLauncher = registerForActivityResult(WorkOrderCheckDetailActivity.WorkOrderCheckContracts()) {
@@ -48,7 +48,7 @@ class WorkOrderCheckDetailFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentWorkOrderCheckDetailBinding.inflate(inflater, container, false)
+        binding = FragmentWorkOrderCheckListBinding.inflate(inflater, container, false)
         initView()
         // Inflate the layout for this fragment
         return binding.root
@@ -96,7 +96,7 @@ class WorkOrderCheckDetailFragment : BaseFragment() {
         popupWindow.setOnClickListener(object :WorkOrderDetailSearchPopupWindow.OnSearchBtnClick{
             override fun onClick(searchParams: SearchParams) {
                 showProgressbarLoading()
-                this@WorkOrderCheckDetailFragment.searchParams = searchParams
+                this@WorkOrderCheckListFragment.searchParams = searchParams
                 workOrderViewModel.searchWorkOrderDetail(searchParams)
             }
 
@@ -155,7 +155,7 @@ class WorkOrderCheckDetailFragment : BaseFragment() {
     companion object {
         @JvmStatic
         fun newInstance(inputData: WorkOrderInfo?) =
-            WorkOrderCheckDetailFragment().apply {
+            WorkOrderCheckListFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable("inputData", inputData)
                 }

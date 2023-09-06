@@ -78,7 +78,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.workorder.WorkOrderAddNewActivity"
+            android:name=".ui.workorder.AddWorkOrderActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -97,7 +97,7 @@
             android:exported="false"
             android:label="@string/title_activity_main" />
         <activity
-            android:name=".ui.workorder.WorkOrderCheckActivity"
+            android:name=".ui.workorder.AddWorkOrderCheckActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

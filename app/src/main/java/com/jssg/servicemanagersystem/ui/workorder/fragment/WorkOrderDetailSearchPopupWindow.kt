@@ -12,9 +12,7 @@ import androidx.core.view.isVisible
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
-import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderBinding
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderDetailBinding
-import com.jssg.servicemanagersystem.ui.MainActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
@@ -23,11 +21,11 @@ import java.util.Calendar
 class WorkOrderDetailSearchPopupWindow(
     context: Context?,
     layoutParent: ViewGroup?,
-    searchParams: WorkOrderCheckDetailFragment.SearchParams?
+    searchParams: WorkOrderCheckListFragment.SearchParams?
 ) :
     BasePWControl(context, layoutParent) {
 
-    private var searchParams: WorkOrderCheckDetailFragment.SearchParams?
+    private var searchParams: WorkOrderCheckListFragment.SearchParams?
     private lateinit var listener: OnSearchBtnClick
     private lateinit var binding: ItemPopupSearchWorkOrderDetailBinding
 
@@ -119,7 +117,7 @@ class WorkOrderDetailSearchPopupWindow(
                 }
 
                 listener.onClick(
-                    WorkOrderCheckDetailFragment.SearchParams(
+                    WorkOrderCheckListFragment.SearchParams(
                         state,
                         startDate,
                         endDate,
@@ -230,6 +228,6 @@ class WorkOrderDetailSearchPopupWindow(
     }
 
     interface OnSearchBtnClick {
-        fun onClick(searchParams: WorkOrderCheckDetailFragment.SearchParams)
+        fun onClick(searchParams: WorkOrderCheckListFragment.SearchParams)
     }
 }

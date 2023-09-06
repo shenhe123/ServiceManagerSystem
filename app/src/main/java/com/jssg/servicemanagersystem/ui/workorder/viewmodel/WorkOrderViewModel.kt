@@ -10,7 +10,7 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
-import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckDetailFragment
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckListFragment
 import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.HUtils
@@ -226,7 +226,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     }
 
-    fun searchWorkOrderDetail(searchParams: WorkOrderCheckDetailFragment.SearchParams) {
+    fun searchWorkOrderDetail(searchParams: WorkOrderCheckListFragment.SearchParams) {
         workOrderCheckListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
             .searchWorkOrderCheckList(searchParams.state, searchParams.startDate, searchParams.endDate,1, 999)
