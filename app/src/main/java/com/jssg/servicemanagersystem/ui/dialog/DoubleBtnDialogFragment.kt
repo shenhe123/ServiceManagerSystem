@@ -5,22 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jssg.servicemanagersystem.base.BaseDialogFragment
-import com.jssg.servicemanagersystem.databinding.DialogSingleButtonLayoutBinding
+import com.jssg.servicemanagersystem.databinding.DialogDoubleButtonLayoutBinding
 
 /**
  * ServiceManagerSystem
  * Created by he.shen on 2023/8/26.
  */
-class SingleBtnDialogFragment: BaseDialogFragment() {
+class DoubleBtnDialogFragment : BaseDialogFragment() {
 
-    private lateinit var binding: DialogSingleButtonLayoutBinding
+    private lateinit var binding: DialogDoubleButtonLayoutBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DialogSingleButtonLayoutBinding.inflate(inflater, container, false)
+        binding = DialogDoubleButtonLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,6 +29,11 @@ class SingleBtnDialogFragment: BaseDialogFragment() {
 
         binding.ivClose.setOnClickListener { dismiss() }
 
+        binding.mbtCancel.setOnClickListener {
+            cancelClickLisenter?.onCancelClick()
+            dismiss()
+        }
+
         binding.mbtConfirm.setOnClickListener {
             confirmClickLisenter?.onConfrimClick()
             dismiss()
@@ -36,6 +41,8 @@ class SingleBtnDialogFragment: BaseDialogFragment() {
 
         val title = arguments?.getString("title")
         val content = arguments?.getString("content")
+        val cancelTxt = arguments?.getString("cancelTxt")
+        val confirmTxt = arguments?.getString("confirmTxt")
 
         title?.let {
             binding.tvTitle.text = it
@@ -45,12 +52,27 @@ class SingleBtnDialogFragment: BaseDialogFragment() {
             binding.tvContent.text = it
         }
 
+        cancelTxt?.let {
+            binding.mbtCancel.text = it
+        }
+
+        confirmTxt?.let {
+            binding.mbtConfirm.text = it
+        }
+
     }
 
     private var confirmClickLisenter: OnConfirmClickLisenter? = null
 
-    fun addConfrimClickLisntener(listener: OnConfirmClickLisenter): SingleBtnDialogFragment {
+    fun addConfirmClickLisntener(listener: OnConfirmClickLisenter): DoubleBtnDialogFragment {
         this.confirmClickLisenter = listener
+        return this
+    }
+
+    private var cancelClickLisenter: OnCancelClickLisenter? = null
+
+    fun addCancelClickLisntener(listener: OnCancelClickLisenter): DoubleBtnDialogFragment {
+        this.cancelClickLisenter = listener
         return this
     }
 
@@ -58,12 +80,23 @@ class SingleBtnDialogFragment: BaseDialogFragment() {
         fun onConfrimClick()
     }
 
+    interface OnCancelClickLisenter {
+        fun onCancelClick()
+    }
+
     companion object {
-        fun newInstance(title: String, content: String): SingleBtnDialogFragment {
+        fun newInstance(
+            title: String,
+            content: String,
+            cancelTxt: String = "取消",
+            confirmTxt: String = "确定"
+        ): DoubleBtnDialogFragment {
             val args = Bundle()
             args.putString("title", title)
             args.putString("content", content)
-            val fragment = SingleBtnDialogFragment()
+            args.putString("cancelTxt", cancelTxt)
+            args.putString("confirmTxt", confirmTxt)
+            val fragment = DoubleBtnDialogFragment()
             fragment.arguments = args
             return fragment
         }

@@ -19,12 +19,17 @@
             android:id="@+id/tv_close_case"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/selector_input_stroke"
             android:text="结案"
             android:textSize="16sp"
             android:textColor="@color/white"
             android:layout_gravity="end"
             android:textStyle="bold"
-            android:padding="12dp" />
+            android:layout_marginEnd="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 

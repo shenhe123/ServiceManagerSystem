@@ -14,6 +14,7 @@ import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
+import com.jssg.servicemanagersystem.ui.dialog.DoubleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.AddWorkOrderActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
@@ -105,6 +106,7 @@ class WorkOrderFragment : BaseFragment() {
             if (result.isSuccess) {
                 ToastUtils.showToast("结案成功")
                 binding.tvCloseCase.text = "结案"
+                checkedBillNos.clear()
                 adapter.isCloseCase = false
                 loadData(true)
             }
@@ -180,8 +182,6 @@ class WorkOrderFragment : BaseFragment() {
             if (!adapter.isCloseCase) {
                 binding.tvCloseCase.text = "提交"
                 adapter.isCloseCase = true
-//                val checkedOrders = sourceList.filter { it.checkState == 2 }
-//                adapter.setList(checkedOrders)
                 adapter.notifyDataSetChanged()
             } else {
                 if (checkedBillNos.isNotEmpty()) {
@@ -193,10 +193,18 @@ class WorkOrderFragment : BaseFragment() {
 
                         }).show(childFragmentManager, "close_case_dialog")
                 } else {
-                    binding.tvCloseCase.text = "结案"
-                    adapter.isCloseCase = false
-//                    adapter.setList(sourceList)
-                    adapter.notifyDataSetChanged()
+                    DoubleBtnDialogFragment.newInstance(
+                        "提示",
+                        "还没有选择工单哦，继续结案吗",
+                        "关闭结案",
+                        "继续结案"
+                    ).addCancelClickLisntener(object :DoubleBtnDialogFragment.OnCancelClickLisenter{
+                        override fun onCancelClick() {
+                            binding.tvCloseCase.text = "结案"
+                            adapter.isCloseCase = false
+                            adapter.notifyDataSetChanged()
+                        }
+                    }).show(childFragmentManager, "close_case_dialog")
                 }
 
             }
