@@ -12,8 +12,8 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.ApplyInfoVos
 class ApplyInfoAdapter: BaseBindingAdapter<ApplyInfoVos, ItemApplyInfoLayoutBinding>(ItemApplyInfoLayoutBinding::inflate) {
 
     override fun convert(holder: VBViewHolder<ItemApplyInfoLayoutBinding>, item: ApplyInfoVos) {
-        holder.binding.tvApplyName.text = "审核人：${item.applyName}  时间：${item.createTime}"
-        holder.binding.tvApplyInfo.text = "审核留言：${item.remark}"
+//        holder.binding.tvApplyName.text = "${item.applyName}  ${item.createTime}"
+        holder.binding.tvApplyInfo.text = "${item.remark}  ${item.applyName}  ${item.createTime}"
 //        holder.binding.tvApplyResult.text = "审核结果：${item.remark}"
     }
 

@@ -24,11 +24,13 @@ import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
+import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.parcel.Parcelize
+import java.math.BigDecimal
 
 class WorkOrderFragment : BaseFragment() {
 
@@ -181,7 +183,23 @@ class WorkOrderFragment : BaseFragment() {
             val workOrderInfo = adapter.data[position]
             if (view.id == R.id.mcb_check) {
                 if ((view as MaterialCheckBox).isChecked) {
-                    checkedBillNos.add(workOrderInfo.billNo)
+//                    if (workOrderInfo.waitCheckCount.bigDecimal() <= BigDecimal.ZERO) {
+//                        DoubleBtnDialogFragment.newInstance("确定勾选", "此工单还未经排查，确定要勾选吗？")
+//                            .addConfirmClickLisntener(object :
+//                                DoubleBtnDialogFragment.OnConfirmClickLisenter {
+//                                override fun onConfrimClick() {
+//                                    checkedBillNos.add(workOrderInfo.billNo)
+//                                }
+//
+//                            }).addCancelClickLisntener(object :
+//                                DoubleBtnDialogFragment.OnCancelClickLisenter {
+//                                override fun onCancelClick() {
+//                                    view.toggle()
+//                                }
+//                            }).show(childFragmentManager, "close_case_dialog")
+//                    } else {
+                        checkedBillNos.add(workOrderInfo.billNo)
+//                    }
                 } else {
                     if (checkedBillNos.contains(workOrderInfo.billNo)) {
                         checkedBillNos.remove(workOrderInfo.billNo)

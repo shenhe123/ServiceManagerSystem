@@ -45,7 +45,8 @@ class WorkOrderCheckAdapter :
             4 -> holder.binding.tvOrderState.text = "不同意"
         }
 
-        val canReview: Boolean = !(item.state == 0 || item.state == 2 || item.state == 4)
+        //只有提交状态，才可以审核
+        val canReview: Boolean = item.state == 1
         holder.binding.groupReview.isVisible =
             RolePermissionUtils.hasPermission(MenuEnum.QM_WORKDERDETAIL_APPROVE.printableName)
                     && canReview
