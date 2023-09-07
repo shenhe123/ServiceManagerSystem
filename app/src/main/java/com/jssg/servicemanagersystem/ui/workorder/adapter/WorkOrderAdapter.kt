@@ -7,6 +7,7 @@ import com.jssg.servicemanagersystem.base.VBViewHolder
 import com.jssg.servicemanagersystem.databinding.ItemOnsiteOptionsLayoutBinding
 import com.jssg.servicemanagersystem.databinding.ItemWorkOrderLayoutBinding
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.DateUtil
 
 /**
@@ -39,6 +40,8 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
 //            4 -> holder.binding.tvOrderState.text = "不同意"
 //        }
         holder.binding.tvReviewNum.text = (item.waitCheckCount ?: 0).toString()
+
+        holder.binding.tvWaitCheckNum.text = item.checkNum.bigDecimal().subtract(item.submitCheckCount.bigDecimal()).stripTrailingZeros().toPlainString()
 
         when(item.checkState) {
             0 -> holder.binding.tvCheckState.text = "未开始"

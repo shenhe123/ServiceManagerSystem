@@ -78,7 +78,7 @@ class WorkOrderDetailFragment : Fragment() {
 
             if (isVisible) {
                 //已排查的总数 小于 总共需要排查的数量
-                val canCheck = it.checkNumTotal.bigDecimal() < it.checkNum.bigDecimal()
+                val canCheck = it.submitCheckCount.bigDecimal() < it.checkNum.bigDecimal()
                 binding.mbtCheckOrder.isEnabled = canCheck
                 if (!canCheck) {
                     binding.mbtCheckOrder.text = "已排查完"
