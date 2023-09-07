@@ -437,7 +437,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             binding.etBadNum.setText(it.badNum.toString())
             binding.etRemark.setText(it.remark)
 
-            if (it.state > 1) {
+            if (it.state > 0) {
                 //已经有审核意见且审核数据不为空
                 if (!it.applyInfoVos.isNullOrEmpty()) {
                     binding.layoutReviewRemark.isVisible = true

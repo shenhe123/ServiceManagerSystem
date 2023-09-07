@@ -38,17 +38,21 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
         if (inputData?.state == 0) {
             binding.mbtSave.isVisible = true
             binding.mbtSubmit.isVisible = true
+            isAddPictureEnable = true
         } else if (inputData?.state == 1) { //已提交，是不能修改为已保存的,也不能再次更新
             //所以需隐藏保存按钮
             binding.mbtSave.isVisible = false
             binding.mbtSubmit.isVisible = false
+            isAddPictureEnable = false
         } else if (inputData?.state == 2 || inputData?.state == 4) {
             binding.layoutNormal.isVisible = false
             isPictureLongClickable = false
+            isAddPictureEnable = false
         } else if (inputData?.state == 3) { //退文
             //所以需隐藏保存按钮
             binding.mbtSave.isVisible = false
             binding.mbtSubmit.isVisible = true
+            isAddPictureEnable = true
         }
 
         binding.ivAddBadPhoto.isVisible = isAddPictureEnable
