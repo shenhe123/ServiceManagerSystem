@@ -30,15 +30,25 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
         isPictureLongClickable = true
         isAddPictureEnable = true
 
-        if (inputData?.state == 1) { //已提交，是不能修改为已保存的
+//        0  "已保存"
+//        1  "已提交"
+//        2  "已审核"
+//        3  "退文"
+//        4  "不同意"
+        if (inputData?.state == 0) {
+            binding.mbtSave.isVisible = true
+            binding.mbtSubmit.isVisible = true
+        } else if (inputData?.state == 1) { //已提交，是不能修改为已保存的,也不能再次更新
             //所以需隐藏保存按钮
             binding.mbtSave.isVisible = false
+            binding.mbtSubmit.isVisible = false
         } else if (inputData?.state == 2 || inputData?.state == 4) {
             binding.layoutNormal.isVisible = false
             isPictureLongClickable = false
         } else if (inputData?.state == 3) { //退文
             //所以需隐藏保存按钮
             binding.mbtSave.isVisible = false
+            binding.mbtSubmit.isVisible = true
         }
 
         binding.ivAddBadPhoto.isVisible = isAddPictureEnable
