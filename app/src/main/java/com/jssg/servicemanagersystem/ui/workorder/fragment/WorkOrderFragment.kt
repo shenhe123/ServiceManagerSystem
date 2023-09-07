@@ -13,8 +13,10 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
+import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.DoubleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.AddWorkOrderActivity
@@ -35,6 +37,7 @@ class WorkOrderFragment : BaseFragment() {
     private val checkedBillNos = arrayListOf<String>()
     private val page: Int = 1
     private lateinit var adapter: WorkOrderAdapter
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private lateinit var binding: FragmentWorkOrderBinding
 
@@ -59,6 +62,7 @@ class WorkOrderFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         workOrderViewModel = ViewModelProvider(this)[WorkOrderViewModel::class.java]
+        accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
 
         binding = FragmentWorkOrderBinding.inflate(inflater, container, false)
         return binding.root
@@ -115,12 +119,27 @@ class WorkOrderFragment : BaseFragment() {
             }
         }
 
+        accountViewModel.userProfileLiveData.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
+                judgeRolePermission()
+            }
+        }
+
         showProgressbarLoading()
         loadData(true)
     }
 
     override fun onResume() {
         super.onResume()
+
+        if (AccountManager.instance.getUser() == null) {
+            accountViewModel.getUserProfile()
+        } else {
+            judgeRolePermission()
+        }
+    }
+
+    private fun judgeRolePermission() {
         binding.tvCloseCase.isVisible =
             RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_FINISH.printableName)
         binding.fbtnAddNew.isVisible =
