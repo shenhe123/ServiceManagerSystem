@@ -24,11 +24,9 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
     }
 
     override fun initViewVisible() {
-        binding.layoutNormal.isVisible =
+        val hasPermission =
             RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_EDIT.printableName)
-
-        isPictureLongClickable = true
-        isAddPictureEnable = true
+        binding.layoutNormal.isVisible = hasPermission
 
 //        0  "已保存"
 //        1  "已提交"
@@ -38,27 +36,35 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
         if (inputData?.state == 0) {
             binding.mbtSave.isVisible = true
             binding.mbtSubmit.isVisible = true
-            isAddPictureEnable = true
+
+            isAddPictureEnable = true && hasPermission
+
         } else if (inputData?.state == 1) { //已提交，是不能修改为已保存的,也不能再次更新
+
             //所以需隐藏保存按钮
             binding.mbtSave.isVisible = false
             binding.mbtSubmit.isVisible = false
+
             isAddPictureEnable = false
+
         } else if (inputData?.state == 2 || inputData?.state == 4) {
+
             binding.layoutNormal.isVisible = false
             isPictureLongClickable = false
             isAddPictureEnable = false
+
         } else if (inputData?.state == 3) { //退文
+
             //所以需隐藏保存按钮
             binding.mbtSave.isVisible = false
             binding.mbtSubmit.isVisible = true
-            isAddPictureEnable = true
+
+            isAddPictureEnable = true && hasPermission
         }
 
         binding.ivAddBadPhoto.isVisible = isAddPictureEnable
         binding.ivAddBoxPhoto.isVisible = isAddPictureEnable
         binding.ivAddBatchInfoPhoto.isVisible = isAddPictureEnable
-        binding.ivAddReworkPhoto.isVisible = isAddPictureEnable
 
     }
 }

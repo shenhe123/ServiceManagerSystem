@@ -179,11 +179,12 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                         "rework",
                         it.url,
                         binding.xflReworkPicture,
-                        binding.ivAddBadPhoto
+                        binding.ivAddBadPhoto,
+                        true
                     )
                 }
-                binding.ivAddReworkPhoto.isVisible =
-                    binding.xflReworkPicture.childCount < 5 && isAddPictureEnable
+                //返工图片不允许修改
+                binding.ivAddReworkPhoto.isVisible = false
             }
         }
 
@@ -315,13 +316,14 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                         "rework",
                         it.availablePath,
                         binding.xflReworkPicture,
-                        binding.ivAddReworkPhoto
+                        binding.ivAddReworkPhoto,
+                        true
                     )
                 }
             }
 
-            binding.ivAddReworkPhoto.isVisible =
-                binding.xflReworkPicture.childCount < 5 && isAddPictureEnable
+            //返工图片不允许修改
+            binding.ivAddReworkPhoto.isVisible = false
         }
 
         selectPicturesViewModel.fileOssUploadLiveData.observe(viewLifecycleOwner) { result ->
@@ -475,7 +477,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         }
     }
 
-    private fun initImageWidget(tag: String, url: String, parent: ViewGroup, addView: ImageView) {
+    private fun initImageWidget(tag: String, url: String, parent: ViewGroup, addView: ImageView, isRework: Boolean = false) {
         val img = layoutInflater.inflate(R.layout.item_image_view, null)
         val bind = ItemImageViewBinding.bind(img)
 
@@ -492,6 +494,9 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         }
 
         img.setOnLongClickListener {
+
+            //返工图片 不允许修改
+            if (isRework) return@setOnLongClickListener true
 
             if (!isPictureLongClickable) return@setOnLongClickListener true
 
