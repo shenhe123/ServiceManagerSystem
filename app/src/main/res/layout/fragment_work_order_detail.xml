@@ -106,7 +106,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_product_num2"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_num"
                 app:layout_constraintTop_toBottomOf="@id/mcd_apply_info_bg" />
 
             <TextView
@@ -154,7 +154,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_product_desc" />
 
             <TextView
-                android:id="@+id/tv_product_num2"
+                android:id="@+id/tv_product_num"
                 style="@style/SubTitleStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -255,7 +255,7 @@
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="排查数量：10" />
+                    android:text="总排查数量：10" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -277,14 +277,14 @@
                     android:text="服务单价：1234" />
 
                 <TextView
-                    android:id="@+id/tv_product_num"
+                    android:id="@+id/tv_check_num_total"
                     style="@style/SubTitleStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="不良数量：10" />
+                    android:text="已排查数量：10" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
