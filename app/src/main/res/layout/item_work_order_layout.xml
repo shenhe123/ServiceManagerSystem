@@ -117,16 +117,18 @@
             android:text="问题描述"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_apply_name"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_review_num"/>
 
         <TextView
             android:id="@+id/tv_product_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/SecTitleStyle"
             tools:text="text"
             app:layout_constraintTop_toBottomOf="@id/tv_product_desc_title"
-            app:layout_constraintStart_toStartOf="@id/tv_product_desc_title"/>
+            app:layout_constraintStart_toStartOf="@id/tv_product_desc_title"
+            app:layout_constraintEnd_toStartOf="@id/mcb_check"
+            />
 
         <TextView
             android:id="@+id/tv_wait_check_num_title"
@@ -179,7 +181,7 @@
             android:text="待审核数量"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_desc"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name"/>
 
         <TextView
             android:id="@+id/tv_review_num"
@@ -216,8 +218,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_check_state"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_product_desc_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_desc"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

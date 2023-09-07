@@ -99,7 +99,7 @@
         android:layout_gravity="end|bottom"
         android:src="@drawable/svg_add"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"/>
