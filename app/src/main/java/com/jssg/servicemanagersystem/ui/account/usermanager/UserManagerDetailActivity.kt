@@ -49,6 +49,7 @@ class UserManagerDetailActivity : BaseActivity() {
         initViewModel()
     }
     private fun updateUserInfo(it: User) {
+        binding.etUsername.setText(it.userName)
         binding.etNickname.setText(it.nickName)
         binding.etCardId.setText(it.idNo)
         binding.etPhoneNum.setText(it.phonenumber)
@@ -178,6 +179,15 @@ class UserManagerDetailActivity : BaseActivity() {
 
         binding.toolBar.setNavigationOnClickListener { finish() }
 
+        binding.etUsername.setOnFocusChangeListener { v, hasFocus ->
+            binding.layoutUsername.isSelected = hasFocus
+            val drawable = if (editable) ResourcesCompat.getDrawable(resources, R.drawable.selector_input_stroke, null) else null
+            binding.layoutUsername.background = drawable
+            if (hasFocus) {
+                setLast(binding.etUsername)
+            }
+        }
+
         binding.etNickname.setOnFocusChangeListener { v, hasFocus ->
             binding.layoutNickname.isSelected = hasFocus
             val drawable = if (editable) ResourcesCompat.getDrawable(resources, R.drawable.selector_input_stroke, null) else null
@@ -275,9 +285,14 @@ class UserManagerDetailActivity : BaseActivity() {
         }
 
         binding.btnUpdate.setOnClickListener {
+            val userName = binding.etUsername.text.toString()
+            if (userName.isEmpty()) {
+                ToastUtils.showToast("用户名不能为空")
+                return@setOnClickListener
+            }
             val nickname = binding.etNickname.text.toString()
             if (nickname.isEmpty()) {
-                ToastUtils.showToast("用户名不能为空")
+                ToastUtils.showToast("姓名不能为空")
                 return@setOnClickListener
             }
 
@@ -318,6 +333,7 @@ class UserManagerDetailActivity : BaseActivity() {
             }
 
             user?.let {
+                it.userName = userName
                 it.nickName = nickname
                 it.phonenumber = phoneNumber
                 it.idNo = cardId

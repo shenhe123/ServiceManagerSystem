@@ -36,7 +36,7 @@ data class User(
     val updateBy: String?,
     val updateTime: String?,
     val userId: Long,
-    val userName: String,
+    var userName: String,
     val userType: String?,
     var expireDate: String,
     val sysOrganizationVo: WorkFactoryInfo?

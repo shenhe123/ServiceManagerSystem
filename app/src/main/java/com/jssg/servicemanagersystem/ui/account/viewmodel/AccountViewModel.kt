@@ -197,6 +197,7 @@ class AccountViewModel : AutoDisposViewModel() {
     }
 
     fun addNewUser(
+        userName: String,
         nickName: String,
         phoneNumber: String,
         password: String,
@@ -209,7 +210,7 @@ class AccountViewModel : AutoDisposViewModel() {
     ) {
         addNewUserLiveData.value = LoadDataModel()
         val params = HashMap<String, Any?>()
-        params["userName"] = nickName
+        params["userName"] = userName
         params["nickName"] = nickName
         params["idNo"] = cardId
         params["address"] = address

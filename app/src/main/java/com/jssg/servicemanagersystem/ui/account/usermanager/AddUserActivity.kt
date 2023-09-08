@@ -98,9 +98,14 @@ class AddUserActivity : BaseActivity() {
         }
 
         binding.mbtSubmit.setOnClickListener {
+            val userName = binding.etUsername.text.toString()
+            if (userName.isEmpty()) {
+                ToastUtils.showToast("用户名不能为空")
+                return@setOnClickListener
+            }
             val nickName = binding.etNickname.text.toString()
             if (nickName.isEmpty()) {
-                ToastUtils.showToast("用户名不能为空")
+                ToastUtils.showToast("姓名不能为空")
                 return@setOnClickListener
             }
 
@@ -152,7 +157,7 @@ class AddUserActivity : BaseActivity() {
                 }
             }
 
-            accountViewModel.addNewUser(nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)
+            accountViewModel.addNewUser(userName, nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)
         }
 
         binding.tvExpiredDate.setOnClickListener {
