@@ -132,14 +132,16 @@ class UpdateRoleActivity : BaseActivity() {
             "派工单明细修改",
             "派工单明细查询",
             "派工单明细删除",
-            "派工单明细审核"
+            "派工单明细审核",
+            "派工单明细报表",
         )
         val workOrderDetailIds = arrayOf(
             1692454085873725443,
             1692454085873725444,
             1692454085873725442,
             1692454085873725445,
-            1695608263517618177
+            1695608263517618177,
+            1697873125890883585
         )
 
         if (workOrderDetailIds.all { role?.menuIds?.contains(it) == true }) {
@@ -160,14 +162,16 @@ class UpdateRoleActivity : BaseActivity() {
             "工单审核",
             "工单修改",
             "工单查询",
-            "工单删除"
+            "工单删除",
+            "工单结案",
         )
         val workOrderIds = arrayOf(
             1692454085341048835,
             1695608092855582721,
             1692454085341048836,
             1692454085341048834,
-            1692454085341048837
+            1692454085341048837,
+            1698607993415385089
         )
         if (workOrderIds.all { role?.menuIds?.contains(it) == true }) {
             workOrderP.checked = true
