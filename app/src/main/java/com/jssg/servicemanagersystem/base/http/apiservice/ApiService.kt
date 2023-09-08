@@ -164,4 +164,7 @@ interface ApiService {
 
     @DELETE("staging-api/system/role/{roleId}")
     fun deleteRoleInfo(@Path("roleId") roleId: String): Observable<BaseHttpResult<Any>>
+
+    @DELETE("staging-api/qm/workOrder/{billNo}")
+    fun deleteWorkOrderInfo(@Path("billNo") billNo: String): Observable<BaseHttpResult<Any>>
 }

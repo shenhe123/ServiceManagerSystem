@@ -32,6 +32,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class RoleManagerActivity : BaseActivity() {
+    private var deletePos: Int? = null
     private lateinit var adapter: RoleManagerAdapter
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var binding: ActivityRoleManagerBinding
@@ -78,6 +79,7 @@ class RoleManagerActivity : BaseActivity() {
             if (v.id == R.id.mbt_delete) {
                 if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_ROLE_REMOVE.printableName, true)) return@setOnItemChildClickListener
 
+                deletePos = position
                 SingleBtnDialogFragment.newInstance("删除", "确定要删除此角色吗？")
                     .addConfrimClickLisntener(object :
                         SingleBtnDialogFragment.OnConfirmClickLisenter {
@@ -86,7 +88,7 @@ class RoleManagerActivity : BaseActivity() {
                         }
 
                     })
-                    .show(supportFragmentManager, "delete_user_dialog")
+                    .show(supportFragmentManager, "delete_role_dialog")
             }
         }
 
@@ -141,7 +143,9 @@ class RoleManagerActivity : BaseActivity() {
             updateLoading(result, true)
             if (result.isSuccess) {
                 ToastUtils.showToast("删除成功")
-                loadData(true)
+                deletePos?.let {
+                    adapter.removeAt(it)
+                }
             }
         }
 

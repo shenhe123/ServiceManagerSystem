@@ -6,9 +6,11 @@ import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
 import com.jssg.servicemanagersystem.databinding.ItemOnsiteOptionsLayoutBinding
 import com.jssg.servicemanagersystem.databinding.ItemWorkOrderLayoutBinding
+import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.DateUtil
+import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 
 /**
  * ServiceManagerSystem
@@ -20,7 +22,7 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
 
     init {
         this.isCloseCase = isCloseCase
-        addChildClickViewIds(R.id.mcb_check)
+        addChildClickViewIds(R.id.mcb_check, R.id.mbt_delete)
     }
 
     override fun convert(holder: VBViewHolder<ItemWorkOrderLayoutBinding>, item: WorkOrderInfo) {
@@ -50,6 +52,10 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
         }
 
         holder.binding.mcbCheck.isVisible = isCloseCase && item.checkState != 2
+
+        val hasPermission =
+            RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_REMOVE.printableName)
+        holder.binding.groupDelete.isVisible = hasPermission
     }
 
 

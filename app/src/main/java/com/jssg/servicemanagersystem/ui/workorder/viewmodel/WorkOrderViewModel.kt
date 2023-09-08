@@ -21,6 +21,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
     val deptInfoLiveData = MutableLiveData<LoadDataModel<List<WorkDeptInfo>?>>()
     val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<WorkFactoryInfo>?>>()
     val addNewWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val deleteWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
     val closeCaseWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
     val reviewWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
@@ -234,6 +235,14 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .searchWorkOrderCheckList(searchParams.state, searchParams.startDate, searchParams.endDate,1, 999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
+    }
+
+    fun deleteWorkOrderInfo(billNo: String) {
+        deleteWorkOrderLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .deleteWorkOrderInfo(billNo)
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(deleteWorkOrderLiveData))
     }
 
 }

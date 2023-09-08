@@ -33,6 +33,7 @@ import kotlinx.android.parcel.Parcelize
 
 class WorkOrderFragment : BaseFragment() {
 
+    private var deletePos: Int? = null
     private var searchParams: SearchParams? = null
     private var sourceList = mutableListOf<WorkOrderInfo>()
     private val checkedBillNos = arrayListOf<String>()
@@ -95,7 +96,6 @@ class WorkOrderFragment : BaseFragment() {
     private fun initViewModel() {
         workOrderViewModel.workOrderListLiveData.observe(viewLifecycleOwner) { result ->
             if (!result.isLoading) {
-                hideLoading()
                 if (result.isPullRefresh) {
                     binding.smartRefreshLayout.finishRefresh()
                 } else {
@@ -120,22 +120,34 @@ class WorkOrderFragment : BaseFragment() {
             }
         }
 
+        workOrderViewModel.deleteWorkOrderLiveData.observe(viewLifecycleOwner) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                ToastUtils.showToast("删除成功")
+                deletePos?.let {
+                    adapter.removeAt(it)
+                }
+            }
+        }
+
         accountViewModel.userProfileLiveData.observe(viewLifecycleOwner) { result ->
             if (result.isSuccess) {
                 judgeRolePermission()
             }
         }
 
-        showProgressbarLoading()
-        loadData(true)
+        lifecycleScope.launchWhenResumed {
+            if (AccountManager.instance.getUser() == null) {
+                accountViewModel.getUserProfile()
+            }
+            loadData(true)
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
-
-        if (AccountManager.instance.getUser() == null) {
-            accountViewModel.getUserProfile()
-        } else {
+        if (AccountManager.instance.getUser() != null) {
             judgeRolePermission()
         }
     }
@@ -171,17 +183,16 @@ class WorkOrderFragment : BaseFragment() {
     }
 
     private fun loadData(isRefresh: Boolean) {
-        lifecycleScope.launchWhenStarted {
-            workOrderViewModel.getWorkOrderList(isRefresh, page)
-        }
+        workOrderViewModel.getWorkOrderList(isRefresh, page)
     }
 
     private fun addListener() {
 
         adapter.setOnItemChildClickListener { _, view, position ->
             val workOrderInfo = adapter.data[position]
-            if (view.id == R.id.mcb_check) {
-                if ((view as MaterialCheckBox).isChecked) {
+            when(view.id) {
+                R.id.mcb_check -> {
+                    if ((view as MaterialCheckBox).isChecked) {
 //                    if (workOrderInfo.waitCheckCount.bigDecimal() <= BigDecimal.ZERO) {
 //                        DoubleBtnDialogFragment.newInstance("确定勾选", "此工单还未经排查，确定要勾选吗？")
 //                            .addConfirmClickLisntener(object :
@@ -199,10 +210,26 @@ class WorkOrderFragment : BaseFragment() {
 //                    } else {
                         checkedBillNos.add(workOrderInfo.billNo)
 //                    }
-                } else {
-                    if (checkedBillNos.contains(workOrderInfo.billNo)) {
-                        checkedBillNos.remove(workOrderInfo.billNo)
+                    } else {
+                        if (checkedBillNos.contains(workOrderInfo.billNo)) {
+                            checkedBillNos.remove(workOrderInfo.billNo)
+                        }
                     }
+                }
+
+                R.id.mbt_delete -> {
+                    if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_REMOVE.printableName, true)) return@setOnItemChildClickListener
+
+                    deletePos = position
+                    SingleBtnDialogFragment.newInstance("删除", "确定要删除此工单吗？")
+                        .addConfrimClickLisntener(object :
+                            SingleBtnDialogFragment.OnConfirmClickLisenter {
+                            override fun onConfrimClick() {
+                                workOrderViewModel.deleteWorkOrderInfo(workOrderInfo.billNo)
+                            }
+
+                        })
+                        .show(childFragmentManager, "delete_work_order_dialog")
                 }
             }
         }

@@ -134,7 +134,7 @@ class UserManagerActivity : BaseActivity() {
             if (result.isSuccess) {
                 ToastUtils.showToast("删除成功")
                 clickItemPos?.let {
-                    adapter.notifyItemRemoved(it)
+                    adapter.removeAt(it)
                 }
             }
         }
