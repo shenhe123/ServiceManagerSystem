@@ -161,4 +161,7 @@ interface ApiService {
 
     @POST("staging-api/qm/tripReport")
     fun addNewTravelReport(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
+    @DELETE("staging-api/system/role/{roleId}")
+    fun deleteRoleInfo(@Path("roleId") roleId: String): Observable<BaseHttpResult<Any>>
 }

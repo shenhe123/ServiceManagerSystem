@@ -17,5 +17,6 @@ data class Role(
     val roleKey: String,
     var roleName: String,
     val roleSort: Int,
-    var remark: String?
+    var remark: String?,
+    var createTime: String,
 ) : Parcelable

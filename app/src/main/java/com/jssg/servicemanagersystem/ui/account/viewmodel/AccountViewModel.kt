@@ -24,6 +24,7 @@ class AccountViewModel : AutoDisposViewModel() {
 
     val deptInfoLiveData = MutableLiveData<LoadDataModel<List<DeptInfo>?>>()
     val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<FactoryInfo>?>>()
+    val deleteRoleInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val deleteUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateUserProfileLiveData = MutableLiveData<LoadDataModel<Any>>()
@@ -287,5 +288,13 @@ class AccountViewModel : AutoDisposViewModel() {
             .updateRoleInfo(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(updateRoleInfoLiveData))
+    }
+
+    fun deleteRoleInfo(roleId: String) {
+        deleteRoleInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .deleteRoleInfo(roleId)
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(deleteRoleInfoLiveData))
     }
 }

@@ -60,34 +60,12 @@
 
     </RelativeLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/layout_header"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/layout_search">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="角色ID" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:gravity="end"
-            android:text="备注" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/smart_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_header">
+        app:layout_constraintTop_toBottomOf="@id/layout_search">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

@@ -32,7 +32,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class RoleManagerActivity : BaseActivity() {
-    private var clickItemPos: Int? = null
     private lateinit var adapter: RoleManagerAdapter
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var binding: ActivityRoleManagerBinding
@@ -65,7 +64,6 @@ class RoleManagerActivity : BaseActivity() {
         binding.recyclerView.adapter = adapter
 
         adapter.setOnItemClickListener { _, v, position ->
-            clickItemPos = position
             val role = adapter.data[position]
             updateRoleLauncher.launch(
                 UpdateRoleActivity.InputData(
@@ -73,6 +71,23 @@ class RoleManagerActivity : BaseActivity() {
                     role
                 )
             )
+        }
+
+        adapter.setOnItemChildClickListener { _, v, position ->
+            val role = adapter.data[position]
+            if (v.id == R.id.mbt_delete) {
+                if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_ROLE_REMOVE.printableName, true)) return@setOnItemChildClickListener
+
+                SingleBtnDialogFragment.newInstance("删除", "确定要删除此角色吗？")
+                    .addConfrimClickLisntener(object :
+                        SingleBtnDialogFragment.OnConfirmClickLisenter {
+                        override fun onConfrimClick() {
+                            accountViewModel.deleteRoleInfo(role.roleId)
+                        }
+
+                    })
+                    .show(supportFragmentManager, "delete_user_dialog")
+            }
         }
 
         binding.fbtnAddNew.setOnClickListener {
@@ -122,15 +137,13 @@ class RoleManagerActivity : BaseActivity() {
             }
         }
 
-//        accountViewModel.deleteUserInfoLiveData.observe(this) { result ->
-//            updateLoading(result, true)
-//            if (result.isSuccess) {
-//                ToastUtils.showToast("删除成功")
-//                clickItemPos?.let {
-//                    adapter.notifyItemRemoved(it)
-//                }
-//            }
-//        }
+        accountViewModel.deleteRoleInfoLiveData.observe(this) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                ToastUtils.showToast("删除成功")
+                loadData(true)
+            }
+        }
 
         showProgressbarLoading()
         loadData(true)
