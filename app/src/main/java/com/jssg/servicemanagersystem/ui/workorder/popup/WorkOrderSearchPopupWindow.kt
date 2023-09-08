@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.workorder.fragment
+package com.jssg.servicemanagersystem.ui.workorder.popup
 
 import android.content.Context
 import android.text.Editable
@@ -14,6 +14,7 @@ import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.MainActivity
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
@@ -80,6 +81,20 @@ class WorkOrderSearchPopupWindow(
             }
         })
 
+        binding.etFactory.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivFactoryClose.isVisible = content.isNotEmpty()
+            }
+        })
+
         binding.tvStartDate.setOnClickListener {
             showSelectDateDialog(binding.tvStartDate, 0, binding)
         }
@@ -110,6 +125,10 @@ class WorkOrderSearchPopupWindow(
             binding.etOrderId.setText("")
         }
 
+        binding.ivFactoryClose.setOnClickListener {
+            binding.etFactory.setText("")
+        }
+
         binding.mbtSearch.setOnClickListener {
             if (this::listener.isInitialized) {
                 var startDate = binding.tvStartDate.text.toString()
@@ -124,13 +143,23 @@ class WorkOrderSearchPopupWindow(
                 } else {
                     "$endDate 23:59:59"
                 }
+
+                val state = when (binding.rgCheckState.checkedRadioButtonId) {
+                    binding.rbStart.id -> "0"
+                    binding.rbChecking.id -> "1"
+                    binding.rbFinish.id -> "2"
+                    else -> ""
+                }
+
                 listener.onClick(
                     WorkOrderFragment.SearchParams(
                         binding.etProductDesc.text.toString(),
                         binding.etProductCode.text.toString(),
                         startDate,
                         endDate,
-                        binding.etOrderId.text.toString()
+                        binding.etOrderId.text.toString(),
+                        binding.etFactory.text.toString(),
+                        state
                     )
                 )
             }
@@ -144,6 +173,7 @@ class WorkOrderSearchPopupWindow(
             binding.etProductDesc.setText(it.productDesc)
             binding.etProductCode.setText(it.productCode)
             binding.etOrderId.setText(it.oaBillNo)
+            binding.etFactory.setText(it.factory)
             val startDate = it.startDate?.split(" ")?.get(0)
             binding.tvStartDate.text = startDate
             val endDate = it.endDate?.split(" ")?.get(0)
@@ -152,6 +182,11 @@ class WorkOrderSearchPopupWindow(
             binding.ivStartDateClose.isVisible = !startDate.isNullOrEmpty()
             binding.ivEndDateClose.isVisible = !endDate.isNullOrEmpty()
 
+            when(it.state) {
+                "0" -> binding.rbStart.isChecked = true
+                "1" -> binding.rbChecking.isChecked = true
+                "2" -> binding.rbFinish.isChecked = true
+            }
         }
     }
 

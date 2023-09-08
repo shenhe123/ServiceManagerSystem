@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.workorder.fragment
+package com.jssg.servicemanagersystem.ui.workorder.popup
 
 import android.content.Context
 import android.text.Editable
@@ -14,6 +14,7 @@ import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderDetailBinding
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckListFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar

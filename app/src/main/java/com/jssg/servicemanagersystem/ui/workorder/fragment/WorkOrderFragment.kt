@@ -23,14 +23,13 @@ import com.jssg.servicemanagersystem.ui.workorder.AddWorkOrderActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
-import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.parcel.Parcelize
-import java.math.BigDecimal
 
 class WorkOrderFragment : BaseFragment() {
 
@@ -293,6 +292,8 @@ class WorkOrderFragment : BaseFragment() {
         val productCode: String?,
         val startDate: String?,
         val endDate: String?,
-        val oaBillNo: String?
+        val oaBillNo: String?,
+        val factory: String,
+        val state: String
     ) : Parcelable
 }

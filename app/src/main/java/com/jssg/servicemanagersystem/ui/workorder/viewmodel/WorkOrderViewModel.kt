@@ -50,6 +50,8 @@ class WorkOrderViewModel : AutoDisposViewModel() {
                 searchParams.startDate,
                 searchParams.endDate,
                 searchParams.oaBillNo,
+                searchParams.factory,
+                searchParams.state,
                 1,
                 9999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())

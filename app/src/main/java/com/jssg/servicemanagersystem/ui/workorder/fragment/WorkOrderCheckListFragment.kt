@@ -17,6 +17,7 @@ import com.jssg.servicemanagersystem.ui.workorder.WorkOrderCheckDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderCheckAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderDetailSearchPopupWindow
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
@@ -100,7 +101,7 @@ class WorkOrderCheckListFragment : BaseFragment() {
 
     private fun showTipPopupWindow(target: View) {
         val popupWindow = WorkOrderDetailSearchPopupWindow(requireContext(), binding.root, searchParams)
-        popupWindow.setOnClickListener(object :WorkOrderDetailSearchPopupWindow.OnSearchBtnClick{
+        popupWindow.setOnClickListener(object : WorkOrderDetailSearchPopupWindow.OnSearchBtnClick{
             override fun onClick(searchParams: SearchParams) {
                 showProgressbarLoading()
                 this@WorkOrderCheckListFragment.searchParams = searchParams

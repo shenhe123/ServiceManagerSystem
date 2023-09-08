@@ -121,6 +121,8 @@ interface ApiService {
         @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
         @Query("params[\"endApplyDate\"]") endApplyDate: String?,
         @Query("oaBillNo") oaBillNo: String?,
+        @Query("orgService") orgService: String?,
+        @Query("checkState") checkState: String?,
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
