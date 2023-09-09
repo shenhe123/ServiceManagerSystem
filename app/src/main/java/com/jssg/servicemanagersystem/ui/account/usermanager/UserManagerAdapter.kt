@@ -26,6 +26,8 @@ class UserManagerAdapter: BaseBindingAdapter<User, ItemUserManagerLayoutBinding>
 
         //userId小于100的用户，不允许编辑和修改
         holder.binding.layoutOptionBtn.isVisible = item.userId >= 100
+
+        holder.binding.mbtPermission.isVisible = item.userType?.equals("end_user") == false
     }
 
 }
