@@ -55,7 +55,7 @@ class WorkOrderCheckAdapter :
 
         //排查工单删除
         // 1、自己单子&&保存状态
-        // 2、不是三方人员角色 并且有删除权限的 并且状态是保存和退文
+        // 2、非三方人员角色 并且有删除权限的 并且状态是保存和退文
         val deletePermission =
             RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_REMOVE.printableName)
 
@@ -63,7 +63,7 @@ class WorkOrderCheckAdapter :
             deletePermission && AccountManager.instance.getUser()?.user?.userName.equals(item.createBy) && item.state == 0
 
         val canDeleteOrder =
-            deletePermission && AccountManager.instance.getUser()?.user?.userType.equals("end_user") && (item.state == 0 || item.state == 3)
+            deletePermission && !AccountManager.instance.getUser()?.user?.userType.equals("end_user") && (item.state == 0 || item.state == 3)
 
         holder.binding.mbtDelete.isVisible = canDeleteOrder || isMyOrder
 
