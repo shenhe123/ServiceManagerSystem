@@ -22,6 +22,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
     val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<WorkFactoryInfo>?>>()
     val addNewWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
     val deleteWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
+    val deleteWorkOrderCheckDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val closeCaseWorkOrderLiveData = MutableLiveData<LoadDataModel<Any>>()
     val reviewWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updateWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
@@ -245,6 +246,14 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .deleteWorkOrderInfo(billNo)
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(deleteWorkOrderLiveData))
+    }
+
+    fun deleteWorkOrderCheckDetailInfo(billDetailNo: String) {
+        deleteWorkOrderCheckDetailLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .deleteWorkOrderCheckDetailInfo(billDetailNo)
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(deleteWorkOrderCheckDetailLiveData))
     }
 
     fun getWorkOrderInfo(billNo: String) {

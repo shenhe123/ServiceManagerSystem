@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/text_600"
         android:layout_margin="12dp"
-        android:text="注：不良图片、外箱标签图片、批次信息图片最多可添加3张, 返回图片可添加5张，图片格式支持PNG、JPG、JPEG等格式图片"
+        android:text="注：不良图片、外箱标签图片、批次信息图片最多可添加3张, 返工图片可添加5张，图片格式支持PNG、JPG、JPEG等格式图片"
         style="@style/SubTitleStyle"/>
 
     <androidx.core.widget.NestedScrollView

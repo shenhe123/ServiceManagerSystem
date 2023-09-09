@@ -27,6 +27,7 @@ import kotlinx.android.parcel.Parcelize
 
 class WorkOrderCheckListFragment : BaseFragment() {
 
+    private var deletePos: Int? = null
     private var searchParams: SearchParams? = null
     private lateinit var adapter: WorkOrderCheckAdapter
     private lateinit var workOrderViewModel: WorkOrderViewModel
@@ -86,10 +87,29 @@ class WorkOrderCheckListFragment : BaseFragment() {
         }
 
         adapter.setOnItemChildClickListener { _, view, position ->
-            if (view.id == R.id.mbt_review) { //审核
-                val workOrderInfo = adapter.data[position]
-                workOrderCheckLauncher.launch(WorkOrderCheckDetailActivity.InputData(workOrderInfo, true))
+            val workOrderInfo = adapter.data[position]
+            when(view.id) {
+                R.id.mbt_review -> {  //审核
+                    workOrderCheckLauncher.launch(WorkOrderCheckDetailActivity.InputData(workOrderInfo, true))
+                }
+
+                R.id.mbt_delete -> { //删除
+                    if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_REMOVE.printableName, true)) return@setOnItemChildClickListener
+
+                    deletePos = position
+                    com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment.newInstance("删除", "确定要删除此排查工单吗？")
+                        .addConfrimClickLisntener(object :
+                            com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment.OnConfirmClickLisenter {
+                            override fun onConfrimClick() {
+                                workOrderViewModel.deleteWorkOrderCheckDetailInfo(workOrderInfo.billDetailNo)
+                            }
+
+                        })
+                        .show(childFragmentManager, "delete_work_order_dialog")
+
+                }
             }
+
         }
 
         binding.inputSearch.setOnClickListener {
@@ -127,6 +147,16 @@ class WorkOrderCheckListFragment : BaseFragment() {
                 updateWorkOrderList(result)
             } else if (result.isError) {
                 ToastUtils.showToast(result.msg)
+            }
+        }
+
+        workOrderViewModel.deleteWorkOrderCheckDetailLiveData.observe(viewLifecycleOwner) { result ->
+            updateLoading(result, true)
+            if (result.isSuccess) {
+                ToastUtils.showToast("删除成功")
+                deletePos?.let {
+                    adapter.removeAt(it)
+                }
             }
         }
 
