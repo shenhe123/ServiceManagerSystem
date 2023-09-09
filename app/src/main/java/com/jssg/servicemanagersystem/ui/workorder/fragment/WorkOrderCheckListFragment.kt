@@ -94,7 +94,7 @@ class WorkOrderCheckListFragment : BaseFragment() {
                 }
 
                 R.id.mbt_delete -> { //删除
-                    if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_REMOVE.printableName, true)) return@setOnItemChildClickListener
+                    if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_REMOVE.printableName, true)) return@setOnItemChildClickListener
 
                     deletePos = position
                     com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment.newInstance("删除", "确定要删除此排查工单吗？")
