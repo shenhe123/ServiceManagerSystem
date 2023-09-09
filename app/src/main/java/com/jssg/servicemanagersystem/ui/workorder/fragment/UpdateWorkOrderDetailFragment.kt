@@ -37,6 +37,8 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
             binding.mbtSave.isVisible = true
             binding.mbtSubmit.isVisible = true
 
+            isEditable = true
+
             isAddPictureEnable = true && hasPermission
 
         } else if (inputData?.state == 1) { //已提交，是不能修改为已保存的,也不能再次更新
