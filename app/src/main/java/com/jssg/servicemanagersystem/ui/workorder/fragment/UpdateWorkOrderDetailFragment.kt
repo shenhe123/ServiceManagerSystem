@@ -43,6 +43,8 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
 
             isAddReworkPictureEnable = true && hasPermission
 
+            isPictureLongClickable = true
+
         } else if (inputData?.state == 1) { //已提交，是不能修改为已保存的,也不能再次更新
 
             //所以需隐藏保存按钮
@@ -50,6 +52,8 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
             binding.mbtSubmit.isVisible = false
 
             isAddPictureEnable = false
+
+            isPictureLongClickable = true
 
         } else if (inputData?.state == 2 || inputData?.state == 4) {
 
@@ -64,6 +68,8 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
             binding.mbtSubmit.isVisible = true
 
             isAddPictureEnable = true && hasPermission
+
+            isPictureLongClickable = true
         }
 
         binding.ivAddBadPhoto.isVisible = isAddPictureEnable
