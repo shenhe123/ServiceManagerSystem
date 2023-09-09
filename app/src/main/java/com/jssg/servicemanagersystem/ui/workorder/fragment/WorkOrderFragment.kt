@@ -96,6 +96,7 @@ class WorkOrderFragment : BaseFragment() {
     private fun initViewModel() {
         workOrderViewModel.workOrderListLiveData.observe(viewLifecycleOwner) { result ->
             if (!result.isLoading) {
+                hideLoading()
                 if (result.isPullRefresh) {
                     binding.smartRefreshLayout.finishRefresh()
                 } else {
