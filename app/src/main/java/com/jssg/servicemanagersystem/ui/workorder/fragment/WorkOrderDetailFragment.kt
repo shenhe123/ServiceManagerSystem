@@ -1,21 +1,23 @@
 package com.jssg.servicemanagersystem.ui.workorder.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
+import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderDetailBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.AddWorkOrderCheckActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
-import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
-class WorkOrderDetailFragment : Fragment() {
+class WorkOrderDetailFragment : BaseFragment() {
+    private lateinit var workOrderViewModel: WorkOrderViewModel
     private lateinit var binding: FragmentWorkOrderDetailBinding
     private var inputData: WorkOrderInfo? = null
 
@@ -40,9 +42,67 @@ class WorkOrderDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentWorkOrderDetailBinding.inflate(inflater, container, false)
-        initView()
-        // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initView()
+
+        initViewModel()
+
+        addListener()
+    }
+
+    private fun initViewModel() {
+        workOrderViewModel = ViewModelProvider(this)[WorkOrderViewModel::class.java]
+
+        workOrderViewModel.workOrderInfoLiveData.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
+                result.data?.let {
+                    inputData = it
+                    initView()
+
+                    checkButtonState(it)
+                }
+            }
+        }
+
+        inputData?.let {
+            workOrderViewModel.getWorkOrderInfo(it.billNo)
+        }
+    }
+
+    private fun checkButtonState(workOrderInfo: WorkOrderInfo) {
+        //已排查的隐藏去排查按钮
+        // 0 -> = "未开始"
+        // 1 -> = "排查中"
+        // 2 -> = "已完成"
+
+        val isVisible =
+            workOrderInfo.checkState != 2 && RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)
+        binding.mbtCheckOrder.isVisible = isVisible
+
+        if (isVisible) {
+            //已排查的总数 小于 总共需要排查的数量
+            val canCheck = workOrderInfo.submitCheckCount.bigDecimal() < workOrderInfo.checkNum.bigDecimal()
+            binding.mbtCheckOrder.isEnabled = canCheck
+            if (!canCheck) {
+                binding.mbtCheckOrder.text = "已排查完"
+            }
+        }
+    }
+
+    private fun addListener() {
+
+        binding.mbtCheckOrder.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)) return@setOnClickListener
+
+            inputData?.let {
+                addNewLauncer.launch(it)
+            }
+        }
     }
 
     private fun initView() {
@@ -67,38 +127,8 @@ class WorkOrderDetailFragment : Fragment() {
             binding.tvCheckNumTotal.text = "已排查数量：${it.checkNumTotal ?: "0"}"
             binding.etRemark.setText(it.remark)
 
-            //已排查的隐藏去排查按钮
-            // 0 -> = "未开始"
-            // 1 -> = "排查中"
-            // 2 -> = "已完成"
-
-            val isVisible =
-                it.checkState != 2 && RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)
-            binding.mbtCheckOrder.isVisible = isVisible
-
-            if (isVisible) {
-                //已排查的总数 小于 总共需要排查的数量
-                val canCheck = it.submitCheckCount.bigDecimal() < it.checkNum.bigDecimal()
-                binding.mbtCheckOrder.isEnabled = canCheck
-                if (!canCheck) {
-                    binding.mbtCheckOrder.text = "已排查完"
-                }
-            }
         }
 
-        binding.mbtCheckOrder.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)) return@setOnClickListener
-
-            inputData?.let {
-                addNewLauncer.launch(it)
-            }
-        }
-
-        binding.mbtCheckOrderDetail.setOnClickListener {
-//            inputData?.let {
-//                WorkOrderCheckDetailActivity.goActivity(requireContext(), it)
-//            }
-        }
 
     }
 

@@ -99,6 +99,9 @@ interface ApiService {
     @GET("staging-api/qm/workOrder/list")
     fun getWorkOrderList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
+    @GET("staging-api/qm/workOrder/{billNo}/")
+    fun getWorkOrderInfo(@Path("billNo") billNo: String): Observable<BaseHttpResult<WorkOrderInfo?>>
+
     @GET("staging-api/qm/workOrderDetail/list")
     fun getWorkOrderCheckList(
         @Query("billNo") billNo: String,
