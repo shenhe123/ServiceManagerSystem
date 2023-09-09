@@ -41,6 +41,7 @@ class ProfileInfoActivity : BaseActivity() {
             updateLoading(result, true)
             if (result.isSuccess) {
                 result.data?.let {
+                    binding.etUsername.setText(it.user.userName)
                     binding.etNickname.setText(it.user.nickName)
                     binding.etPhoneNum.setText(it.user.phonenumber)
                     binding.etCardId.setText(it.user.idNo)
@@ -74,7 +75,7 @@ class ProfileInfoActivity : BaseActivity() {
         binding.btnUpdate.setOnClickListener {
             val nickname = binding.etNickname.text.toString()
             if (nickname.isEmpty()) {
-                ToastUtils.showToast("用户名不能为空")
+                ToastUtils.showToast("姓名不能为空")
                 return@setOnClickListener
             }
             val phoneNumber = binding.etPhoneNum.text.toString()
