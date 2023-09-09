@@ -26,7 +26,7 @@ data class WorkOrderCheckInfo(
     val workOrderVo: WorkOrderInfo?,
     val applyInfoVos: List<ApplyInfoVos>?,
     val remark: String?,
-    val createBy: String,
+    val createBy: String?,
 ) : Parcelable
 
 @Parcelize

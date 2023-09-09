@@ -128,6 +128,15 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         selectPicturesViewModel =
             ViewModelProvider(requireActivity())[SelectorPictureViewModel::class.java]
 
+        workOrderViewModel.workOrderCheckInfoLiveData.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
+                result.data?.let {
+                    inputData = it
+                    initWorkOrderCheckDetail(it)
+                }
+            }
+        }
+
         //网络图片加载
         selectPicturesViewModel.badOssListLiveData.observe(viewLifecycleOwner) { result ->
             if (result.isSuccess) {
@@ -353,6 +362,10 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                 requireActivity().finish()
             }
         }
+
+        inputData?.let {
+            workOrderViewModel.getWorkOrderDetailInfo(it.billDetailNo)
+        }
     }
 
     private fun onSubmit(state: Int) {
@@ -428,47 +441,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
     private fun initData() {
         inputData?.let {
-            binding.tvLocationAddress.text = it.place
-            binding.tvCheckDate.text = it.checkDate
-            checkDate = it.checkDate
-            val checkNumTotal = it.workOrderVo?.checkNumTotal ?: 0
-            binding.tvCheckNumTotal.text = checkNumTotal.toString()
-            val badNumTotal = it.workOrderVo?.badNumTotal ?: 0
-            binding.tvBadNumTotal.text = badNumTotal.toString()
-            binding.etCheckNum.setText(it.checkNum.toString())
-            binding.etBadNum.setText(it.badNum.toString())
-            binding.etRemark.setText(it.remark)
-
-            if (it.state > 0) {
-                //已经有审核意见且审核数据不为空
-                if (!it.applyInfoVos.isNullOrEmpty()) {
-                    binding.layoutReviewRemark.isVisible = true
-
-                    binding.recyclerView.layoutManager =
-                        object : LinearLayoutManager(requireContext()) {
-                            override fun canScrollVertically(): Boolean {
-                                return false
-                            }
-                        }
-                    binding.recyclerView.addItemDecoration(
-                        ThemeLineItemDecoration(
-                            ResourcesCompat.getColor(
-                                resources,
-                                R.color.x_divider,
-                                null
-                            ), 1, 0
-                        )
-                    )
-                    val applyInfoAdapter = ApplyInfoAdapter()
-                    binding.recyclerView.adapter = applyInfoAdapter
-
-                    applyInfoAdapter.setList(it.applyInfoVos)
-                }
-            }
-
-            binding.etBadNum.isEnabled = isEditable
-            binding.etCheckNum.isEnabled = isEditable
-            binding.etRemark.isEnabled = isEditable
+            initWorkOrderCheckDetail(it)
 
             selectPicturesViewModel.getBadPictures(it.badPicNames)
             selectPicturesViewModel.getBoxPictures(it.boxPicNames)
@@ -476,6 +449,51 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             selectPicturesViewModel.getReworkPictures(it.reworkPicNames)
         }
     }
+
+    private fun initWorkOrderCheckDetail(it: WorkOrderCheckInfo) {
+        binding.tvLocationAddress.text = it.place
+        binding.tvCheckDate.text = it.checkDate
+        checkDate = it.checkDate
+        val checkNumTotal = it.workOrderVo?.checkNumTotal ?: 0
+        binding.tvCheckNumTotal.text = checkNumTotal.toString()
+        val badNumTotal = it.workOrderVo?.badNumTotal ?: 0
+        binding.tvBadNumTotal.text = badNumTotal.toString()
+        binding.etCheckNum.setText(it.checkNum.toString())
+        binding.etBadNum.setText(it.badNum.toString())
+        binding.etRemark.setText(it.remark)
+
+        if (it.state > 0) {
+            //已经有审核意见且审核数据不为空
+            if (!it.applyInfoVos.isNullOrEmpty()) {
+                binding.layoutReviewRemark.isVisible = true
+
+                binding.recyclerView.layoutManager =
+                    object : LinearLayoutManager(requireContext()) {
+                        override fun canScrollVertically(): Boolean {
+                            return false
+                        }
+                    }
+                binding.recyclerView.addItemDecoration(
+                    ThemeLineItemDecoration(
+                        ResourcesCompat.getColor(
+                            resources,
+                            R.color.x_divider,
+                            null
+                        ), 1, 0
+                    )
+                )
+                val applyInfoAdapter = ApplyInfoAdapter()
+                binding.recyclerView.adapter = applyInfoAdapter
+
+                applyInfoAdapter.setList(it.applyInfoVos)
+            }
+        }
+
+        binding.etBadNum.isEnabled = isEditable
+        binding.etCheckNum.isEnabled = isEditable
+        binding.etRemark.isEnabled = isEditable
+    }
+
 
     private fun initImageWidget(tag: String, url: String, parent: ViewGroup, addView: ImageView, isRework: Boolean = false) {
         val img = layoutInflater.inflate(R.layout.item_image_view, null)

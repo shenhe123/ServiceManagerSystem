@@ -28,6 +28,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
     val addWorkOrderDetailLiveData = MutableLiveData<LoadDataModel<Any>>()
     val workOrderListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderInfo>?>>()
     val workOrderInfoLiveData = MutableLiveData<LoadDataModel<WorkOrderInfo?>>()
+    val workOrderCheckInfoLiveData = MutableLiveData<LoadDataModel<WorkOrderCheckInfo?>>()
     val workOrderCheckListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderCheckInfo>?>>()
     fun getWorkOrderList(isRefresh: Boolean, page: Int) {
         workOrderListLiveData.value = LoadListDataModel(isRefresh)
@@ -252,6 +253,14 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             .getWorkOrderInfo(billNo)
             .compose(RxSchedulersHelper.ObsResultWithMain())
             .subscribe(createObserver(workOrderInfoLiveData))
+    }
+
+    fun getWorkOrderDetailInfo(billDetailNo: String) {
+        workOrderCheckInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getWorkOrderCheckDetailInfo(billDetailNo)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(workOrderCheckInfoLiveData))
     }
 
 }
