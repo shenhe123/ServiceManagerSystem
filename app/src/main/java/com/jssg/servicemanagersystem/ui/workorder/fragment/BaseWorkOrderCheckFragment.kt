@@ -424,7 +424,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
         inputData?.let {
 
-            val availableCheckNum = it.checkNum.bigDecimal().subtract(it.workOrderVo?.checkNumTotal.bigDecimal())
+            val availableCheckNum = it.workOrderVo?.checkNum.bigDecimal().subtract(it.workOrderVo?.checkNumTotal.bigDecimal())
             if (checkNum.bigDecimal() > availableCheckNum) {
                 ToastUtils.showToast("不能超过最大可排查数量${availableCheckNum.toInt()}")
                 return

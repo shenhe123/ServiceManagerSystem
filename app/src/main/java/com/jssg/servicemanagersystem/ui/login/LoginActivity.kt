@@ -11,6 +11,7 @@ import com.jssg.servicemanagersystem.ui.MainActivity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.account.network.ChooseHostActivity
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
+import com.tencent.mmkv.MMKV
 
 /**
  * ServiceManagerSystem
@@ -75,6 +76,32 @@ class LoginActivity: BaseActivity() {
                 finish()
             }
         }
+
+//        dashBoardViewModel.updateLiveData.observe(viewLifecycleOwner) { data: LoadUpdateDataModel<UpdateEntity?> ->
+//            if (data.isSuccess) {
+//                val mUpdateEntity = data.data
+//                val isNeedShowUpdateDialog =
+//                    UpdateDialogFragment.isCanShowUpdateDialog(mUpdateEntity)
+//                if (isNeedShowUpdateDialog) {
+//                    //假如既满足APP推送弹窗，也满足更新弹窗，将APP启动时弹窗的时间置为3个小时后
+//                    UpdateDialogFragment.newInstance(mUpdateEntity)
+//                        .show(childFragmentManager, "update")
+//                    if (NotificationDialogFragment.isNotificationDisable()) {
+//                        MMKV.defaultMMKV()!!
+//                            .encode(
+//                                NotificationDialogFragment.NOTIFICATION_TIME_CANCLE,
+//                                System.currentTimeMillis() - 69 * 60 * 60 * 1000
+//                            )
+//                    }
+//                } else {
+//                    //如果不弹版本升级弹窗。则检查是否禁用通知
+//                    checkIsDisableNotification()
+//                }
+//            } else if (data.isError) {
+//                //不弹 APP推送弹窗，并将下一次APP启动时弹窗的时间置为3个小时后
+//                checkIsDisableNotification()
+//            }
+//        }
     }
 
     private fun addListener() {

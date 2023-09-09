@@ -171,4 +171,7 @@ dependencies {
     implementation project(':pickerview')
 
     implementation 'top.zibin:Luban:1.1.8'
+
+    // event-bus
+    implementation 'org.greenrobot:eventbus:3.3.1'
 }
