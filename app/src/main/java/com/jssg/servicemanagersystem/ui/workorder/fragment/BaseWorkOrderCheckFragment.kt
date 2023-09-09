@@ -28,6 +28,7 @@ import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.PicturesPrevie
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureDialog
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureViewModel
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
+import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.FileUtils
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
@@ -193,7 +194,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                     )
                 }
                 //返工图片不允许修改
-                binding.ivAddReworkPhoto.isVisible = false
+                binding.ivAddReworkPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3 && isAddReworkPictureEnable
             }
         }
 
@@ -332,7 +333,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             }
 
             //返工图片不允许修改
-            binding.ivAddReworkPhoto.isVisible = false
+            binding.ivAddReworkPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3 && isAddReworkPictureEnable
         }
 
         selectPicturesViewModel.fileOssUploadLiveData.observe(viewLifecycleOwner) { result ->
@@ -422,6 +423,18 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         }
 
         inputData?.let {
+
+            val availableCheckNum = it.checkNum.bigDecimal().subtract(it.workOrderVo?.checkNumTotal.bigDecimal())
+            if (checkNum.bigDecimal() > availableCheckNum) {
+                ToastUtils.showToast("不能超过最大可排查数量${availableCheckNum.toInt()}")
+                return
+            }
+
+            if (badNum.bigDecimal() > checkNum.bigDecimal()) {
+                ToastUtils.showToast("不良数量不能超过排查数量")
+                return
+            }
+
             workOrderViewModel.updateWorkOrderDetail(
                 it.billNo,
                 it.billDetailNo,
@@ -593,6 +606,9 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
     //添加图片按钮是否可用
     var isAddPictureEnable: Boolean = false
+
+    //返工图片 添加按钮是否可用
+    var isAddReworkPictureEnable: Boolean = false
 
     //输入框是否可编辑
     var isEditable: Boolean = false

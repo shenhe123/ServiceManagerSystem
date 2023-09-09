@@ -41,6 +41,8 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
 
             isAddPictureEnable = true && hasPermission
 
+            isAddReworkPictureEnable = true && hasPermission
+
         } else if (inputData?.state == 1) { //已提交，是不能修改为已保存的,也不能再次更新
 
             //所以需隐藏保存按钮
@@ -67,6 +69,7 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
         binding.ivAddBadPhoto.isVisible = isAddPictureEnable
         binding.ivAddBoxPhoto.isVisible = isAddPictureEnable
         binding.ivAddBatchInfoPhoto.isVisible = isAddPictureEnable
+        binding.ivAddReworkPhoto.isVisible = isAddReworkPictureEnable
 
     }
 }
