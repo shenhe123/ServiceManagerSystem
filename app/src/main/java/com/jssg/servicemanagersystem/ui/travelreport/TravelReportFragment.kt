@@ -45,6 +45,13 @@ class TravelReportFragment : BaseFragment() {
         }
     }
 
+    private val detailLauncher = registerForActivityResult(TravelReportDetailActivity.TravelReportDetailContracts()){
+        it?.let {
+            adapter.data[it.pos] = it.inputData
+            adapter.notifyItemChanged(it.pos)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -153,7 +160,7 @@ class TravelReportFragment : BaseFragment() {
 
         adapter.setOnItemClickListener { _, _, position ->
             val travelReportInfo = adapter.data[position]
-            TravelReportDetailActivity.goActivity(requireContext(), travelReportInfo)
+            detailLauncher.launch(TravelReportDetailActivity.TravelReportInputData(travelReportInfo, position))
         }
 
         binding.fbtnAddNew.setOnClickListener {

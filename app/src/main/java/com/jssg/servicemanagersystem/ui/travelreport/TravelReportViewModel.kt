@@ -14,6 +14,8 @@ import com.jssg.servicemanagersystem.utils.HUtils
 
 class TravelReportViewModel : AutoDisposViewModel() {
 
+    val travelReportInfoLiveData = MutableLiveData<LoadDataModel<TravelReportInfo?>>()
+    val updateTravelReportLiveData = MutableLiveData<LoadDataModel<Any>>()
     val addNewTravelReportLiveData = MutableLiveData<LoadDataModel<Any>>()
     val deptInfoLiveData = MutableLiveData<LoadDataModel<List<WorkDeptInfo>?>>()
     val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<WorkFactoryInfo>?>>()
@@ -86,5 +88,39 @@ class TravelReportViewModel : AutoDisposViewModel() {
             .addNewTravelReport(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(addNewTravelReportLiveData))
+    }
+
+    fun updateTravelReport(travelReportInfo: TravelReportInfo) {
+        updateTravelReportLiveData.value = LoadDataModel()
+        val params = HashMap<String, Any>()
+        params["billNo"] = travelReportInfo.billNo
+        params["dept"] = travelReportInfo.dept
+        params["orgId"] = travelReportInfo.orgId ?: ""
+        params["partner"] = travelReportInfo.partner
+        params["customer"] = travelReportInfo.customer
+        params["productCode"] = travelReportInfo.productCode
+        params["projectCode"] = travelReportInfo.projectCode
+        params["placeFrom"] = travelReportInfo.placeFrom
+        params["placeTo"] = travelReportInfo.placeTo
+        params["address"] = travelReportInfo.address
+        params["startDate"] = travelReportInfo.startDate
+        params["endDate"] = travelReportInfo.endDate
+        params["purpose"] = travelReportInfo.purpose
+        params["mainTask"] = travelReportInfo.mainTask
+        params["expectedResult"] = travelReportInfo.expectedResult
+        params["schedule"] = travelReportInfo.schedule
+        RetrofitService.apiService
+            .updateTravelReport(HUtils.createRequestBodyMap(params))
+            .compose(RxSchedulersHelper.io_main())
+            .subscribe(createObserver(updateTravelReportLiveData))
+    }
+
+    fun getTravelReportInfo(billNo: String) {
+        travelReportInfoLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getTravelReportInfo(billNo)
+            .compose(RxSchedulersHelper.io_main())
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(travelReportInfoLiveData))
     }
 }

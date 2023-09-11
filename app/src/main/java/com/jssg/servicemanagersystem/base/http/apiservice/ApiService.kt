@@ -173,6 +173,9 @@ interface ApiService {
     @POST("staging-api/qm/tripReport")
     fun addNewTravelReport(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
+    @PUT("staging-api/qm/tripReport")
+    fun updateTravelReport(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
+
     @DELETE("staging-api/system/role/{roleId}")
     fun deleteRoleInfo(@Path("roleId") roleId: String): Observable<BaseHttpResult<Any>>
 
@@ -181,4 +184,7 @@ interface ApiService {
 
     @DELETE("staging-api/qm/workOrderDetail/{billDetailNo}")
     fun deleteWorkOrderCheckDetailInfo(@Path("billDetailNo") billDetailNo: String): Observable<BaseHttpResult<Any>>
+
+    @GET("staging-api/qm/tripReport/{billNo}")
+    fun getTravelReportInfo(@Path("billNo") billNo: String): Observable<BaseHttpResult<TravelReportInfo?>>
 }
