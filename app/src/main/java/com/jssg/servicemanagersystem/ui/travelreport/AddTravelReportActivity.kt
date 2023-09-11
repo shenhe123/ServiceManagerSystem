@@ -114,7 +114,7 @@ class AddTravelReportActivity : BaseActivity() {
             binding.etPlaceFrom.setText(it.placeFrom)
             binding.etPlaceTo.setText(it.placeTo)
             binding.etStartDate.text = it.startDate
-            binding.etEndDate.setText(it.endDate)
+            binding.etEndDate.text = it.endDate
             binding.etAddress.setText(it.address)
 
             binding.etPurpose.setText(it.purpose)

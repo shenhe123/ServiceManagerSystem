@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.ui.travelreport
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,19 +12,27 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentTravelReportBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
+import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.travelreport.adapter.TravelReportAdapter
 import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
+import com.jssg.servicemanagersystem.ui.travelreport.popup.TravelReportSearchPopupWindow
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
+import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
+import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.launch
 
 class TravelReportFragment : BaseFragment() {
 
+    private var searchParams: TravelSearchParams? = null
+    private lateinit var accountViewModel: AccountViewModel
     private val page: Int = 1
     private lateinit var sourceList: MutableList<TravelReportInfo>
     private lateinit var adapter: TravelReportAdapter
@@ -42,7 +51,8 @@ class TravelReportFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTravelReportBinding.inflate(inflater, container, false)
-        travelReportViewModel = ViewModelProvider(this).get(TravelReportViewModel::class.java)
+        travelReportViewModel = ViewModelProvider(this)[TravelReportViewModel::class.java]
+        accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
         return binding.root
     }
 
@@ -86,9 +96,23 @@ class TravelReportFragment : BaseFragment() {
             }
         }
 
+        accountViewModel.userProfileLiveData.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
+                judgeRolePermission()
+            }
+        }
+
         lifecycleScope.launchWhenResumed {
+            if (AccountManager.instance.getUser() == null) {
+                accountViewModel.getUserProfile()
+            }
             loadData(true)
         }
+    }
+
+    private fun judgeRolePermission() {
+        binding.fbtnAddNew.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.printableName)
     }
 
     private fun showNoData(isVisible: Boolean) {
@@ -120,8 +144,9 @@ class TravelReportFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.fbtnAddNew.isVisible =
-            RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.printableName)
+        if (AccountManager.instance.getUser() != null) {
+            judgeRolePermission()
+        }
     }
 
     private fun addListener() {
@@ -137,18 +162,34 @@ class TravelReportFragment : BaseFragment() {
             addNewLauncher.launch("")
         }
 
+        binding.layoutSearch.setOnClickListener {
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.printableName, true)) return@setOnClickListener
 
-        binding.mbtSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_QUERY.printableName, true)) return@setOnClickListener
+            showTipPopupWindow(binding.layoutSearch)
+        }
 
-            val input = binding.inputSearch.text.toString()
-            if (input.isEmpty()) {
-                return@setOnClickListener
+    }
+
+    private fun showTipPopupWindow(target: View) {
+        val popupWindow = TravelReportSearchPopupWindow(requireContext(), binding.root, searchParams)
+        popupWindow.setOnClickListener(object : TravelReportSearchPopupWindow.OnSearchBtnClick {
+            override fun onClick(searchParams: TravelSearchParams) {
+                showProgressbarLoading()
+                this@TravelReportFragment.searchParams = searchParams
+                travelReportViewModel.searchTravelReport(searchParams)
             }
 
-            travelReportViewModel.searchTravelReport(input)
-        }
+        })
+        popupWindow.showAsDropDown(target, 0, 0)
     }
+
+    @Parcelize
+    data class TravelSearchParams(
+        val applyName: String?,
+        val startDate: String?,
+        val endDate: String?,
+        val factory: String,
+    ) : Parcelable
 
     companion object {
         fun newInstance() =

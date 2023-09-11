@@ -32,12 +32,19 @@ class TravelReportViewModel : AutoDisposViewModel() {
             .subscribe(createListObserver(travelReportListLiveData, isRefresh, page))
     }
 
-    fun searchTravelReport(input: String) {
+    fun searchTravelReport(searchParams: TravelReportFragment.TravelSearchParams) {
         travelReportListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .searchTravelReportList(input,1, 999)
+            .searchTravelReportList(
+                searchParams.applyName,
+                searchParams.startDate,
+                searchParams.endDate,
+                searchParams.factory,
+                1,
+                9999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(travelReportListLiveData, true, 1))
+
     }
 
     fun getFactoryInfo() {

@@ -17,7 +17,7 @@ class TravelReportDetailActivity : BaseActivity() {
         binding = ActivityTravelReportDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolBar.setNavigationOnClickListener { finish() }
+        addListener()
 
         inputData = intent?.getParcelableExtra("inputData")
         inputData?.let {
@@ -38,6 +38,10 @@ class TravelReportDetailActivity : BaseActivity() {
             binding.etExpectedResult.setText(it.expectedResult)
             binding.etSchedule.setText(it.schedule)
         }
+    }
+
+    private fun addListener() {
+        binding.toolBar.setNavigationOnClickListener { finish() }
     }
 
     companion object {

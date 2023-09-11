@@ -157,7 +157,12 @@ interface ApiService {
     fun getTravelReportList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 
     @GET("staging-api/qm/tripReport/list")
-    fun searchTravelReportList(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
+    fun searchTravelReportList(@Query("applyName") applyName: String?,
+                               @Query("params[\"beginTripDate\"]") beginTripDate: String?,
+                               @Query("params[\"endTripDate\"]") endTripDate: String?,
+                               @Query("factory") factory: String?,
+                               @Query("pageNum") pageNum: Int,
+                               @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 
     @GET("staging-api/qm/tripReport/orgList")
     fun getTravelReportFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>
