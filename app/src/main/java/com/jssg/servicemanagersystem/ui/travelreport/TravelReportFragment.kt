@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
@@ -19,15 +18,12 @@ import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.travelreport.adapter.TravelReportAdapter
 import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.travelreport.popup.TravelReportSearchPopupWindow
-import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
-import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
-import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
+import com.jssg.servicemanagersystem.ui.travelreport.viewmodel.TravelReportViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.parcel.Parcelize
-import kotlinx.coroutines.launch
 
 class TravelReportFragment : BaseFragment() {
 

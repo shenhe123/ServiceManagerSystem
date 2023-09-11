@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.travelreport
+package com.jssg.servicemanagersystem.ui.travelreport.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.jssg.servicemanagersystem.base.http.RetrofitService
@@ -6,10 +6,10 @@ import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
+import com.jssg.servicemanagersystem.ui.travelreport.TravelReportFragment
 import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
-import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.HUtils
 
 class TravelReportViewModel : AutoDisposViewModel() {
