@@ -191,7 +191,8 @@ class TravelReportFragment : BaseFragment() {
         val applyName: String?,
         val startDate: String?,
         val endDate: String?,
-        val factory: String,
+        val orgId: String,
+        val dept: String,
     ) : Parcelable
 
     companion object {

@@ -41,7 +41,8 @@ class TravelReportViewModel : AutoDisposViewModel() {
                 searchParams.applyName,
                 searchParams.startDate,
                 searchParams.endDate,
-                searchParams.factory,
+                searchParams.orgId,
+                searchParams.dept,
                 1,
                 9999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())

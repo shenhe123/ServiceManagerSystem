@@ -160,7 +160,8 @@ interface ApiService {
     fun searchTravelReportList(@Query("applyName") applyName: String?,
                                @Query("params[\"beginTripDate\"]") beginTripDate: String?,
                                @Query("params[\"endTripDate\"]") endTripDate: String?,
-                               @Query("factory") factory: String?,
+                               @Query("orgId") orgId: String?,
+                               @Query("dept") dept: String?,
                                @Query("pageNum") pageNum: Int,
                                @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 

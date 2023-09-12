@@ -69,6 +69,20 @@ class TravelReportSearchPopupWindow(
             }
         })
 
+        binding.etDept.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivDeptClose.isVisible = content.isNotEmpty()
+            }
+        })
+
         binding.tvStartDate.setOnClickListener {
             showSelectDateDialog(binding.tvStartDate, 0, binding)
         }
@@ -95,6 +109,10 @@ class TravelReportSearchPopupWindow(
             binding.etFactory.setText("")
         }
 
+        binding.ivDeptClose.setOnClickListener {
+            binding.etDept.setText("")
+        }
+
         binding.mbtSearch.setOnClickListener {
             if (this::listener.isInitialized) {
                 var startDate = binding.tvStartDate.text.toString()
@@ -115,7 +133,8 @@ class TravelReportSearchPopupWindow(
                         binding.etApplyName.text.toString(),
                         startDate,
                         endDate,
-                        binding.etFactory.text.toString()
+                        binding.etFactory.text.toString(),
+                        binding.etDept.text.toString(),
                     )
                 )
             }
@@ -127,7 +146,8 @@ class TravelReportSearchPopupWindow(
     private fun initData() {
         searchParams?.let {
             binding.etApplyName.setText(it.applyName)
-            binding.etFactory.setText(it.factory)
+            binding.etFactory.setText(it.orgId)
+            binding.etDept.setText(it.dept)
             val startDate = it.startDate?.split(" ")?.get(0)
             binding.tvStartDate.text = startDate
             val endDate = it.endDate?.split(" ")?.get(0)
