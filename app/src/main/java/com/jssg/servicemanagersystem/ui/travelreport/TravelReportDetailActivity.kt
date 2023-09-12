@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -13,6 +14,8 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.bigkoo.pickerview.builder.TimePickerBuilder
+import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityTravelReportDetailBinding
@@ -20,8 +23,10 @@ import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.travelreport.viewmodel.TravelReportViewModel
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
+import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import kotlinx.android.parcel.Parcelize
+import java.util.Calendar
 
 class TravelReportDetailActivity : BaseActivity() {
     private var travelReportInputData: TravelReportInputData? = null
@@ -86,8 +91,6 @@ class TravelReportDetailActivity : BaseActivity() {
                 }
 
                 binding.acsFactory.prompt = inputData?.orgId ?: "请选择工厂"
-
-                binding.tvFactory.text = binding.acsFactory.prompt
             }
         }
 
@@ -115,8 +118,6 @@ class TravelReportDetailActivity : BaseActivity() {
                 }
 
                 binding.acsDept.prompt = inputData?.orgId ?: "请选择部门"
-
-                binding.tvDept.text = binding.acsDept.prompt
             }
         }
 
@@ -237,6 +238,64 @@ class TravelReportDetailActivity : BaseActivity() {
                 }
             }
         }
+
+        binding.tvStartDate.setOnClickListener {
+            showSelectDateDialog(binding.tvStartDate)
+        }
+
+        binding.tvEndDate.setOnClickListener {
+            showSelectDateDialog(binding.tvEndDate)
+        }
+
+        binding.tvStartDate.isClickable = false
+        binding.tvEndDate.isClickable = false
+    }
+
+    private fun showSelectDateDialog(textView: TextView) {
+        val calendar = Calendar.getInstance() //获取日期格式器对象
+
+        //chose b
+        val pvTime: TimeDialogFragment =
+            TimePickerBuilder(
+                this@TravelReportDetailActivity
+            ) { date -> //选中事件回调
+                textView.setText(DateUtil.getFullData(date.time))
+            }
+                .setType(booleanArrayOf(true, true, true, true, true, true)) //默认全部显示
+                .setGravity(
+                    intArrayOf(
+                        Gravity.CENTER,
+                        Gravity.CENTER,
+                        Gravity.CENTER,
+                        Gravity.CENTER,
+                        Gravity.CENTER,
+                        Gravity.CENTER
+                    )
+                )
+                .setCancelText("取消") //取消按钮文字
+                .setSubmitText(getString(com.jssg.servicemanagersystem.R.string.app_confirm)) //确认按钮文字
+                .setContentTextSize(18) //滚轮文字大小
+                .setTitleSize(18) //标题文字大小
+                .setTitleText("选择过期时间") //标题文字
+                .isCyclic(true) //是否循环滚动
+                .setTextColorCenter(getColor(R.color.purple_700)) //设置选中项的颜色
+                .setTitleColor(getColor(R.color.x_text_01)) //标题文字颜色
+                .setSubmitColor(getColor(R.color.purple_700)) //确定按钮文字颜色
+                .setCancelColor(getColor(R.color.x_text_01)) //取消按钮文字颜色
+                .setTitleBgColor(getColor(R.color.white)) //标题背景颜色 Night mode
+                .setBgColor(getColor(R.color.white)) //滚轮背景颜色 Night mode
+                .setDate(calendar) // 如果不设置的话，默认是系统时间*/
+                .setLabel(
+                    "年",
+                    "月",
+                    "日",
+                    "时",
+                    "分",
+                    "秒"
+                )
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .build()
+        pvTime.show(supportFragmentManager, "timepicker")
     }
 
     private fun checkParams(): Boolean {
@@ -336,7 +395,7 @@ class TravelReportDetailActivity : BaseActivity() {
 
     private fun updateViewStatus() {
 
-        binding.etApplyName.isEnabled = editable
+//        binding.etApplyName.isEnabled = editable
         binding.etPartner.isEnabled = editable
         binding.etCustomer.isEnabled = editable
         binding.etProductCode.isEnabled = editable
@@ -349,6 +408,9 @@ class TravelReportDetailActivity : BaseActivity() {
         binding.etMainTask.isEnabled = editable
         binding.etExpectedResult.isEnabled = editable
         binding.etSchedule.isEnabled = editable
+
+        binding.tvStartDate.isClickable = editable
+        binding.tvEndDate.isClickable = editable
 
         updateLayoutBackground(binding.etApplyName)
         updateLayoutBackground(binding.etPartner)

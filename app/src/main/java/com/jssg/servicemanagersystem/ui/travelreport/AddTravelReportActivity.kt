@@ -122,6 +122,10 @@ class AddTravelReportActivity : BaseActivity() {
             binding.etExpectedResult.setText(it.expectedResult)
             binding.etSchedule.setText(it.schedule)
         }
+
+        if (travelReportInfo == null) {
+            binding.etApplyName.setText(AccountManager.instance.getUser()?.user?.nickName)
+        }
     }
 
     private fun addListener() {
