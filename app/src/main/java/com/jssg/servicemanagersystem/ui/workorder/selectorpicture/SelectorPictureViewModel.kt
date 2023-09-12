@@ -9,6 +9,7 @@ import com.jssg.servicemanagersystem.base.http.observer.WQBaseObserver
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.core.AppApplication
+import com.jssg.servicemanagersystem.ui.workorder.entity.AudioRecordEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.utils.FileUtils
 import com.luck.picture.lib.entity.LocalMedia
@@ -39,6 +40,9 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
 
     //返工图片
     val reworkPicturesLiveData = MutableLiveData<ArrayList<LocalMedia?>>()
+
+    //录音附录
+    val audioRecordLiveData = MutableLiveData<AudioRecordEntity>()
 
     //上传结果
     val fileOssUploadLiveData = MutableLiveData<LoadDataModel<UploadEntity?>>()

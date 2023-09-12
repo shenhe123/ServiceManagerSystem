@@ -16,12 +16,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.bumptech.glide.Glide
+import com.ezreal.audiorecordbutton.AudioRecordButton
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
+import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityAddWorkOrderCheckBinding
 import com.jssg.servicemanagersystem.databinding.ItemImageViewBinding
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
+import com.jssg.servicemanagersystem.ui.workorder.entity.AudioRecordEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.PicturesPreviewActivity
@@ -42,6 +45,7 @@ import java.io.File
 import java.util.Locale
 
 class AddWorkOrderCheckActivity : BaseActivity() {
+    private lateinit var permissionHelper: PermissionHelper
     private var billDetailNo: String? = null
     private var uploadSize: Int = 0
     private var state: Int = 0
@@ -67,11 +71,28 @@ class AddWorkOrderCheckActivity : BaseActivity() {
             binding.tvBadNumTotal.text = (it.badNumTotal ?: 0).toString()
         }
 
+        initAudioPermission()
+
         initViewModel()
 
         getLocationInfo()
 
         addListener()
+    }
+
+    private fun initAudioPermission() {
+        permissionHelper = PermissionHelper.Builder().with(this).build()
+        permissionHelper.request("需要录音权限", Manifest.permission.RECORD_AUDIO
+        ) { granted, isAlwaysDenied ->
+            if (granted) {
+
+            } else {
+                finish()
+            }
+        }
+
+        // 录音按钮初始化和录音监听
+        binding.btnAudioRecord.init(cacheDir.absolutePath + File.separator + "audio")
     }
 
     private fun addListener() {
@@ -90,6 +111,29 @@ class AddWorkOrderCheckActivity : BaseActivity() {
         binding.ivAddReworkPhoto.setOnClickListener {
             SelectorPictureDialog.newInstance(3).show(supportFragmentManager, "selector_picture_dialog")
         }
+
+        binding.ivAddAudioRecord.setOnClickListener {
+            binding.layoutAudioRecord.isVisible = true
+            binding.layoutNormal.isVisible = false
+        }
+
+        binding.ivCloseAudioRecord.setOnClickListener {
+            binding.layoutAudioRecord.isVisible = false
+            binding.layoutNormal.isVisible = true
+        }
+
+        binding.btnAudioRecord.setRecordingListener(object : AudioRecordButton.OnRecordingListener {
+            override fun recordFinish(audioFilePath: String?, recordTime: Long) {
+                audioFilePath?.let {
+                    selectorPictureViewModel.audioRecordLiveData.value = AudioRecordEntity(audioFilePath, recordTime)
+                }
+            }
+
+            override fun recordError(message: String?) {
+                ToastUtils.showToast(message)
+            }
+
+        })
 
         binding.mbtSave.setOnClickListener {
             onSubmit(0)
@@ -292,6 +336,15 @@ class AddWorkOrderCheckActivity : BaseActivity() {
             }
 
             binding.ivAddReworkPhoto.isVisible = binding.xflReworkPicture.childCount < 5
+        }
+
+        selectorPictureViewModel.audioRecordLiveData.observe(this) { result ->
+            if (binding.flowAudio.childCount >= 3) {
+                ToastUtils.showToast("最多只能录制3条语音！")
+                return@observe
+            }
+
+            ToastUtils.showToast("录制成功")
         }
 
         selectorPictureViewModel.fileOssUploadLiveData.observe(this) { result ->

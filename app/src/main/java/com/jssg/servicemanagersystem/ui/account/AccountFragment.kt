@@ -7,21 +7,20 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.BuildConfig
-import com.jssg.servicemanagersystem.ui.login.LoginActivity
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
-import com.jssg.servicemanagersystem.ui.account.profile.ProfileInfoActivity
 import com.jssg.servicemanagersystem.ui.account.network.ChooseHostActivity
+import com.jssg.servicemanagersystem.ui.account.profile.ProfileInfoActivity
 import com.jssg.servicemanagersystem.ui.account.role.RoleManagerActivity
-import com.jssg.servicemanagersystem.ui.account.usermanager.UserManagerActivity
 import com.jssg.servicemanagersystem.ui.account.updatepwd.UpdatePasswordActivity
+import com.jssg.servicemanagersystem.ui.account.usermanager.UserManagerActivity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
+import com.jssg.servicemanagersystem.ui.login.LoginActivity
 import com.jssg.servicemanagersystem.ui.login.LoginViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
-import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 class AccountFragment : BaseFragment() {
 

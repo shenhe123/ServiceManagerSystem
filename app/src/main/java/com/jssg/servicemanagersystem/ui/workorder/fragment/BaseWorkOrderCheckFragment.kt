@@ -1,9 +1,11 @@
 package com.jssg.servicemanagersystem.ui.workorder.fragment
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.ezreal.audiorecordbutton.AudioRecordButton.OnRecordingListener
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AppApplication
@@ -35,6 +38,7 @@ import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.jssg.servicemanagersystem.widgets.decoration.ThemeLineItemDecoration
 import com.luck.picture.lib.entity.LocalMedia
+import net.arvin.permissionhelper.PermissionHelper
 import top.zibin.luban.Luban
 import top.zibin.luban.OnCompressListener
 import java.io.File
@@ -42,6 +46,7 @@ import java.util.Locale
 
 abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
+    private lateinit var permissionHelper: PermissionHelper
     protected var uploadSize: Int = 0
     protected var checkDate: String? = null
     protected var state: Int = 0
@@ -67,6 +72,8 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         inputData = arguments?.getParcelable("input")
 
+        initAudioPermission()
+
         initViewVisible()
 
         initViewModel()
@@ -74,6 +81,21 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         initData()
 
         addListener()
+    }
+
+    private fun initAudioPermission() {
+        permissionHelper = PermissionHelper.Builder().with(this).build()
+        permissionHelper.request("需要录音权限", Manifest.permission.RECORD_AUDIO
+        ) { granted, isAlwaysDenied ->
+            if (granted) {
+
+            } else {
+                requireActivity().finish()
+            }
+        }
+
+        // 录音按钮初始化和录音监听
+        binding.btnAudioRecord.init(requireContext().cacheDir.absolutePath + File.separator + "audio")
     }
 
     private fun addListener() {
@@ -96,6 +118,17 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             SelectorPictureDialog.newInstance(3)
                 .show(childFragmentManager, "selector_picture_dialog")
         }
+
+        binding.btnAudioRecord.setRecordingListener(object :OnRecordingListener{
+            override fun recordFinish(audioFilePath: String?, recordTime: Long) {
+
+            }
+
+            override fun recordError(message: String?) {
+                ToastUtils.showToast(message)
+            }
+
+        })
 
         binding.mbtSave.setOnClickListener {
             onSubmit(0)
