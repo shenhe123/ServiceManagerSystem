@@ -129,6 +129,8 @@ class TravelReportDetailActivity : BaseActivity() {
                 binding.tvFactory.text = binding.acsFactory.prompt
                 binding.tvDept.text = binding.acsDept.prompt
 
+                toggleEditStatus()
+
                 setResult(Activity.RESULT_OK, Intent().apply {
                     putExtra("output", travelReportInputData)
                 })
@@ -169,8 +171,7 @@ class TravelReportDetailActivity : BaseActivity() {
         binding.toolBar.setNavigationOnClickListener { finish() }
 
         binding.tvEdit.setOnClickListener {
-            editable = !editable
-            updateViewStatus()
+            toggleEditStatus()
         }
 
         binding.acsFactory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -227,8 +228,8 @@ class TravelReportDetailActivity : BaseActivity() {
                     it.placeFrom = binding.etPlaceFrom.text.toString()
                     it.placeTo = binding.etPlaceTo.text.toString()
                     it.address = binding.etAddress.text.toString()
-                    it.startDate = binding.tvStartDate.text.toString()
-                    it.endDate = binding.tvEndDate.text.toString()
+                    it.startDate = binding.tvStartDate.text.toString() + " 00:00:00"
+                    it.endDate = binding.tvEndDate.text.toString()+ " 23:59:59"
                     it.purpose = binding.etPurpose.text.toString()
                     it.mainTask = binding.etMainTask.text.toString()
                     it.expectedResult = binding.etExpectedResult.text.toString()
@@ -251,6 +252,11 @@ class TravelReportDetailActivity : BaseActivity() {
         binding.tvEndDate.isClickable = false
     }
 
+    private fun toggleEditStatus() {
+        editable = !editable
+        updateViewStatus()
+    }
+
     private fun showSelectDateDialog(textView: TextView) {
         val calendar = Calendar.getInstance() //获取日期格式器对象
 
@@ -259,9 +265,9 @@ class TravelReportDetailActivity : BaseActivity() {
             TimePickerBuilder(
                 this@TravelReportDetailActivity
             ) { date -> //选中事件回调
-                textView.setText(DateUtil.getFullData(date.time))
+                textView.setText(DateUtil.getDateyyMMdd(date.time))
             }
-                .setType(booleanArrayOf(true, true, true, true, true, true)) //默认全部显示
+                .setType(booleanArrayOf(true, true, true, false, false, false)) //默认全部显示
                 .setGravity(
                     intArrayOf(
                         Gravity.CENTER,

@@ -8,21 +8,27 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.bumptech.glide.Glide
+import com.ezreal.audiorecordbutton.AudioPlayManager
 import com.ezreal.audiorecordbutton.AudioRecordButton
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
-import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityAddWorkOrderCheckBinding
+import com.jssg.servicemanagersystem.databinding.ItemAudioRecordLayoutBinding
 import com.jssg.servicemanagersystem.databinding.ItemImageViewBinding
+import com.jssg.servicemanagersystem.helper.AudioPlayHandler
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.AudioRecordEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
@@ -38,6 +44,7 @@ import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.MyLocationClient
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
+import com.nex3z.flowlayout.FlowLayout
 import net.arvin.permissionhelper.PermissionHelper
 import top.zibin.luban.Luban
 import top.zibin.luban.OnCompressListener
@@ -45,6 +52,8 @@ import java.io.File
 import java.util.Locale
 
 class AddWorkOrderCheckActivity : BaseActivity() {
+    private var isAudioPlay: Boolean = false
+    private var mAudioPlayHandler: AudioPlayHandler? = null
     private lateinit var permissionHelper: PermissionHelper
     private var billDetailNo: String? = null
     private var uploadSize: Int = 0
@@ -82,14 +91,6 @@ class AddWorkOrderCheckActivity : BaseActivity() {
 
     private fun initAudioPermission() {
         permissionHelper = PermissionHelper.Builder().with(this).build()
-        permissionHelper.request("需要录音权限", Manifest.permission.RECORD_AUDIO
-        ) { granted, isAlwaysDenied ->
-            if (granted) {
-
-            } else {
-                finish()
-            }
-        }
 
         // 录音按钮初始化和录音监听
         binding.btnAudioRecord.init(cacheDir.absolutePath + File.separator + "audio")
@@ -113,8 +114,13 @@ class AddWorkOrderCheckActivity : BaseActivity() {
         }
 
         binding.ivAddAudioRecord.setOnClickListener {
-            binding.layoutAudioRecord.isVisible = true
-            binding.layoutNormal.isVisible = false
+            permissionHelper.request("需要录音权限", Manifest.permission.RECORD_AUDIO
+            ) { granted, isAlwaysDenied ->
+                if (granted) {
+                    binding.layoutAudioRecord.isVisible = true
+                    binding.layoutNormal.isVisible = false
+                }
+            }
         }
 
         binding.ivCloseAudioRecord.setOnClickListener {
@@ -344,7 +350,11 @@ class AddWorkOrderCheckActivity : BaseActivity() {
                 return@observe
             }
 
-            ToastUtils.showToast("录制成功")
+            uploadSize = 1
+            showProgressbarLoading()
+            initAudioWidget(result, binding.flowAudio)
+
+            binding.ivAddAudioRecord.isVisible = binding.flowAudio.childCount < 3
         }
 
         selectorPictureViewModel.fileOssUploadLiveData.observe(this) { result ->
@@ -449,6 +459,41 @@ class AddWorkOrderCheckActivity : BaseActivity() {
         parent.addView(img)
     }
 
+    private fun initAudioWidget(result: AudioRecordEntity?, flowAudio: FlowLayout) {
+        result?.let { audioRecord ->
+            val audioView = layoutInflater.inflate(R.layout.item_audio_record_layout, null)
+            val bind = ItemAudioRecordLayoutBinding.bind(audioView)
+
+            bind.tvAudioTime.text = audioRecord.recordTime.toString()
+
+            bind.layoutAudioRecordMsg.setOnClickListener {
+                playAudio(bind.layoutAudioRecordMsg, audioRecord)
+            }
+
+            val tag = "audio.${audioRecord.audioFilePath}"
+            audioView.tag = tag
+
+            bind.layoutAudioRecordMsg.setOnLongClickListener {
+                SingleBtnDialogFragment.newInstance("删除语音", "确定要删除语音条吗？")
+                    .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
+                        override fun onConfrimClick() {
+                            flowAudio.removeView(it)
+                            binding.ivAddAudioRecord.isVisible = true
+
+                            selectPictures.removeIf { p -> p.tag.equals(audioView.tag.toString(), false) }
+                        }
+
+                    })
+                    .show(supportFragmentManager, "delete_audio")
+
+                return@setOnLongClickListener true
+            }
+
+            val file = getOriginPathFile(audioRecord.audioFilePath)
+            selectorPictureViewModel.fileOssUpload(file, tag)
+        }
+    }
+
     private fun getOriginPathFile(path: String): File {
         val fileOriginPath = if (path.startsWith("content")) {
             FileUtils.getFileOriginPath(AppApplication.get(), Uri.parse(path))
@@ -489,6 +534,64 @@ class AddWorkOrderCheckActivity : BaseActivity() {
             }).launch()
 
         return compressFile
+    }
+
+
+    /*** 播放音频，并监听播放进度，更新页面动画  */
+    private fun playAudio(layout: LinearLayoutCompat, audioRecord: AudioRecordEntity) {
+        if (isAudioPlay) {
+            // 如果正在播放，那会先关闭当前播放
+            AudioPlayManager.pause()
+            AudioPlayManager.release()
+            mAudioPlayHandler?.stopAnimTimer()
+            isAudioPlay = false
+        }
+
+        if (mAudioPlayHandler == null) {
+            mAudioPlayHandler = AudioPlayHandler()
+        }
+
+        //设置语音条宽度
+        setAudioLayoutWidth(layout, audioRecord.recordTime)
+        //播放音频和动画
+        val imageView: ImageView = layout.findViewById(R.id.iv_audio_sound)
+        AudioPlayManager.playAudio(this, audioRecord.audioFilePath,
+            object : AudioPlayManager.OnPlayAudioListener {
+                override fun onPlay() {
+                    // 启动播放动画
+                    isAudioPlay = true
+                    mAudioPlayHandler?.startAudioAnim(imageView, true)
+                }
+
+                override fun onComplete() {
+                    isAudioPlay = false
+                    mAudioPlayHandler?.stopAnimTimer()
+                }
+
+                override fun onError(message: String) {
+                    isAudioPlay = false
+                    mAudioPlayHandler?.stopAnimTimer()
+                    ToastUtils.showToast(message)
+                }
+            })
+    }
+
+    private fun setAudioLayoutWidth(layout: LinearLayoutCompat, duration: Long) {
+        val perSecondWidth = 4.0f
+        val second = duration / 1000.0f
+        var width = second * perSecondWidth
+        if (width < 60) {
+            width = 60.0f
+        } else if (width > 240) {
+            width = 240.0f
+        }
+        val dpWidth = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, width,
+            resources.displayMetrics
+        ).toInt()
+        val params = layout.layoutParams
+        params.width = dpWidth
+        layout.layoutParams = params
     }
 
     class AddWordOrderDetailContracts: ActivityResultContract<WorkOrderInfo, Boolean?>(){
