@@ -28,7 +28,8 @@ public class AudioPlayManager {
         }
 
         assert sAudioManager != null;
-        sAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+
+        setSpeakerphone(sAudioManager, true);
 
         if (sMediaPlayer == null) {
             sMediaPlayer = new MediaPlayer();
@@ -38,6 +39,8 @@ public class AudioPlayManager {
             }
             sMediaPlayer.reset();
         }
+
+        sMediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
 
         sMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -87,6 +90,15 @@ public class AudioPlayManager {
             release();
         }
 
+    }
+
+    /**
+     * 设置是否开启扬声器
+     * @param isSpeakerOn 是否开启
+     */
+    public static void setSpeakerphone(AudioManager audioManager, boolean isSpeakerOn) {
+        audioManager.setMode(isSpeakerOn ? AudioManager.MODE_NORMAL : AudioManager.MODE_IN_COMMUNICATION);
+        audioManager.setSpeakerphoneOn(isSpeakerOn);
     }
 
     /**
