@@ -267,11 +267,11 @@
                     style="@style/SubTitleStyle"
                     android:text="录制语音附录："/>
 
-                <com.nex3z.flowlayout.FlowLayout
-                    android:id="@+id/flow_audio"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/audio_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:flChildSpacing="12dp"/>
+                    android:layout_marginTop="12dp"/>
 
                 <ImageView
                     android:id="@+id/iv_add_audio_record"

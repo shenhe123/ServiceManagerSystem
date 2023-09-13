@@ -11,4 +11,9 @@ import kotlinx.android.parcel.Parcelize
 data class AudioRecordEntity(
     val audioFilePath: String,
     val recordTime: Long,
-) : Parcelable
+) : Parcelable {
+    fun getTag(): String {
+        return "audio.${audioFilePath}"
+    }
+
+}

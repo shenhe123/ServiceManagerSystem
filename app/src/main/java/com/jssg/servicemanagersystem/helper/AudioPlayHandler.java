@@ -5,6 +5,7 @@ import android.os.Message;
 import android.widget.ImageView;
 
 import com.jssg.servicemanagersystem.R;
+import com.jssg.servicemanagersystem.ui.workorder.adapter.AudioRecordAdapter;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,12 +29,12 @@ public class AudioPlayHandler {
     /**
      * 播放音频动画
      */
-    public void startAudioAnim(ImageView imageView,boolean isLeft){
+    public void startAudioAnim(AudioRecordAdapter adapter, int pos, boolean isLeft){
 
         stopAnimTimer();
 
         // 语音播放动画效果
-        mAudioAnimHandler = new AudioAnimHandler(imageView,isLeft);
+        mAudioAnimHandler = new AudioAnimHandler(adapter,pos, isLeft);
 
         mTimerTask = new TimerTask() {
             @Override
@@ -70,7 +71,8 @@ public class AudioPlayHandler {
 
     private static class AudioAnimHandler extends Handler {
 
-        private final ImageView mIvAudio;
+        private final AudioRecordAdapter adapter;
+        private final int pos;
         private final boolean isLeft;
 
         private int[] mLeftIndex = {
@@ -79,8 +81,9 @@ public class AudioPlayHandler {
         private int[] mRightIndex = {
                 R.mipmap.sound_right_1, R.mipmap.sound_right_2,R.mipmap.sound_right_3};
 
-        AudioAnimHandler(ImageView imageView,boolean isLeft){
-            this.mIvAudio = imageView;
+        AudioAnimHandler(AudioRecordAdapter adapter, int pos, boolean isLeft){
+            this.adapter = adapter;
+            this.pos = pos;
             this.isLeft = isLeft;
         }
 
@@ -89,16 +92,20 @@ public class AudioPlayHandler {
             super.handleMessage(msg);
             switch (msg.what){
                 case 0:
-                    mIvAudio.setImageResource(isLeft? mLeftIndex[0]:mRightIndex[0]);
+                    adapter.setVoiceImageRes(mLeftIndex[0], pos);
+//                    mIvAudio.setImageResource(isLeft? mLeftIndex[0]:mRightIndex[0]);
                     break;
                 case 1:
-                    mIvAudio.setImageResource(isLeft? mLeftIndex[1]:mRightIndex[1]);
+                    adapter.setVoiceImageRes(mLeftIndex[1], pos);
+//                    mIvAudio.setImageResource(isLeft? mLeftIndex[1]:mRightIndex[1]);
                     break;
                 case 2:
-                    mIvAudio.setImageResource(isLeft? mLeftIndex[2]:mRightIndex[2]);
+                    adapter.setVoiceImageRes(mLeftIndex[2], pos);
+//                    mIvAudio.setImageResource(isLeft? mLeftIndex[2]:mRightIndex[2]);
                     break;
                 default:
-                    mIvAudio.setImageResource(isLeft? R.mipmap.sound_left_0:R.mipmap.sound_right_0);
+                    adapter.setVoiceImageRes(R.mipmap.sound_left_0, pos);
+//                    mIvAudio.setImageResource(isLeft? R.mipmap.sound_left_0:R.mipmap.sound_right_0);
                     removeCallbacks(null);
                     break;
             }

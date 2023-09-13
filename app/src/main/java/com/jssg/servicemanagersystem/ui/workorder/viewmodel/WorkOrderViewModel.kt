@@ -70,6 +70,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         boxPicNames: String,
         batchPicNames: String,
         reworkPicNames: String,
+        voicesNames: String,
         checkNum: String,
         badNum: String,
         checkDate: String,
@@ -87,6 +88,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["boxPicNames"] = boxPicNames
         params["batchPicNames"] = batchPicNames
         params["reworkPicNames"] = reworkPicNames
+        params["voices"] = voicesNames
         params["checkNum"] = checkNum
         params["badNum"] = badNum
         params["checkDate"] = checkDate
