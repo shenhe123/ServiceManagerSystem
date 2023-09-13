@@ -41,7 +41,7 @@ class TravelReportViewModel : AutoDisposViewModel() {
                 searchParams.applyName,
                 searchParams.startDate,
                 searchParams.endDate,
-                searchParams.orgId,
+                searchParams.orgName,
                 searchParams.dept,
                 1,
                 9999)
@@ -70,8 +70,10 @@ class TravelReportViewModel : AutoDisposViewModel() {
     fun addNewTravelReport(travelReportInfo: TravelReportInfo) {
         addNewTravelReportLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
-        params["dept"] = travelReportInfo.dept
+        params["dept"] = travelReportInfo.dept ?: ""
+        params["deptId"] = travelReportInfo.deptId ?: ""
         params["orgId"] = travelReportInfo.orgId ?: ""
+        params["orgName"] = travelReportInfo.orgName ?: ""
         params["partner"] = travelReportInfo.partner
         params["customer"] = travelReportInfo.customer
         params["productCode"] = travelReportInfo.productCode
@@ -95,8 +97,10 @@ class TravelReportViewModel : AutoDisposViewModel() {
         updateTravelReportLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
         params["billNo"] = travelReportInfo.billNo
-        params["dept"] = travelReportInfo.dept
+        params["dept"] = travelReportInfo.dept ?: ""
+        params["deptId"] = travelReportInfo.deptId ?: ""
         params["orgId"] = travelReportInfo.orgId ?: ""
+        params["orgName"] = travelReportInfo.orgName ?: ""
         params["partner"] = travelReportInfo.partner
         params["customer"] = travelReportInfo.customer
         params["productCode"] = travelReportInfo.productCode

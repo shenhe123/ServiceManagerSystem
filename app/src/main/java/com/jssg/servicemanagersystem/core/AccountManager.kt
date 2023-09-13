@@ -134,7 +134,7 @@ class AccountManager {
         return null
     }
 
-    fun saveNewTravelReport(travelReportInfo: TravelReportInfo) {
+    fun saveNewTravelReport(travelReportInfo: TravelReportInfo?) {
         MMKV.defaultMMKV().encode("travel_report_info", travelReportInfo)
     }
 

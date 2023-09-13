@@ -101,8 +101,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/selector_input_stroke"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp"
+                            android:paddingEnd="2dp"
+                            android:paddingStart="2dp"
                             android:visibility="gone" />
                     </FrameLayout>
 
@@ -142,8 +142,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/selector_input_stroke"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp"
+                            android:paddingEnd="2dp"
+                            android:paddingStart="2dp"
                             android:visibility="gone" />
 
                     </FrameLayout>
@@ -332,7 +332,6 @@
                             android:id="@+id/tv_place_from_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
                             android:text="从" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -352,7 +351,7 @@
                             android:id="@+id/tv_place_to_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="8dp"
                             android:text="到"/>
 
                         <androidx.appcompat.widget.AppCompatEditText

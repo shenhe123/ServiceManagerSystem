@@ -27,8 +27,8 @@ import java.util.Calendar
 
 class AddTravelReportActivity : BaseActivity() {
     private lateinit var travelReportViewModel: TravelReportViewModel
-    private var deptId: String? = null
-    private var orgId: String? = null
+    private var deptInfo: WorkDeptInfo? = null
+    private var orgInfo: WorkFactoryInfo? = null
     private var deptInfos: List<WorkDeptInfo>? = null
     private var factoryInfos: List<WorkFactoryInfo>? = null
     private var travelReportInfo: TravelReportInfo? = null
@@ -58,7 +58,7 @@ class AddTravelReportActivity : BaseActivity() {
                     listOf("请选择工厂")
                 } else {
                     factoryInfos = result.data!!
-                    result.data!!.map { info -> info.orgShortName }
+                    result.data!!.map { info -> info.orgName }
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -90,6 +90,8 @@ class AddTravelReportActivity : BaseActivity() {
             updateLoading(result, true)
             if (result.isSuccess) {
                 ToastUtils.showToast("添加成功")
+                //清空保存的缓存
+                AccountManager.instance.saveNewTravelReport(null)
                 setResult(Activity.RESULT_OK, Intent().apply {
                     putExtra("output", true)
                 })
@@ -113,8 +115,8 @@ class AddTravelReportActivity : BaseActivity() {
             binding.etProjectCode.setText(it.projectCode)
             binding.etPlaceFrom.setText(it.placeFrom)
             binding.etPlaceTo.setText(it.placeTo)
-            binding.etStartDate.text = it.startDate
-            binding.etEndDate.text = it.endDate
+            binding.etStartDate.text = it.startDate.split(" ")[0]
+            binding.etEndDate.text = it.endDate.split(" ")[0]
             binding.etAddress.setText(it.address)
 
             binding.etPurpose.setText(it.purpose)
@@ -165,10 +167,12 @@ class AddTravelReportActivity : BaseActivity() {
                 id: Long
             ) {
                 factoryInfos?.let {
-                    binding.asFactory.prompt = it[position].orgShortName
+                    binding.asFactory.prompt = it[position].orgName
 
-                    if (!it[position].orgName.equals("请选择工厂")) {
-                        orgId = it[position].orgShortName
+                    orgInfo = if (it[position].orgName.equals("请选择工厂")) {
+                        null
+                    } else {
+                        it[position]
                     }
 
                 }
@@ -188,8 +192,10 @@ class AddTravelReportActivity : BaseActivity() {
                 deptInfos?.let {
                     binding.asDept.prompt = it[position].deptName
 
-                    if (!it[position].deptName.equals("请选择部门")) {
-                        deptId = it[position].deptName
+                    deptInfo = if (!it[position].deptName.equals("请选择部门")) {
+                        it[position]
+                    } else {
+                        null
                     }
                 }
             }
@@ -206,9 +212,9 @@ class AddTravelReportActivity : BaseActivity() {
             TimePickerBuilder(
                 this@AddTravelReportActivity
             ) { date -> //选中事件回调
-                textView.setText(DateUtil.getFullData(date.time))
+                textView.setText(DateUtil.getDateyyMMdd(date.time))
             }
-                .setType(booleanArrayOf(true, true, true, true, true, true)) //默认全部显示
+                .setType(booleanArrayOf(true, true, true, false, false, false)) //默认全部显示
                 .setGravity(
                     intArrayOf(
                         Gravity.CENTER,
@@ -326,20 +332,22 @@ class AddTravelReportActivity : BaseActivity() {
             return false
         }
 
-        if (deptId.isNullOrEmpty()) {
+        if (deptInfo == null) {
             ToastUtils.showToast("请选择部门")
             return false
         }
 
-        if (orgId.isNullOrEmpty()) {
+        if (orgInfo == null) {
             ToastUtils.showToast("请选择工厂")
             return false
         }
 
         travelReportInfo = TravelReportInfo(
             "",
-            orgId!!,
-            deptId!!,
+            orgInfo!!.orgId,
+            orgInfo!!.orgName,
+            deptInfo!!.deptId.toString(),
+            deptInfo!!.deptName,
             nickName,
             partner,
             clientName,
@@ -348,8 +356,8 @@ class AddTravelReportActivity : BaseActivity() {
             placeFrom,
             placeTo,
             address,
-            startDate,
-            endDate,
+            "$startDate 00:00:00",
+            "$endDate 23:59:59",
             purpose,
             mainTask,
             expectedResult,

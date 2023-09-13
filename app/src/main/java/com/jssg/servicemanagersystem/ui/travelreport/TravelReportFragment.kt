@@ -191,7 +191,7 @@ class TravelReportFragment : BaseFragment() {
         val applyName: String?,
         val startDate: String?,
         val endDate: String?,
-        val orgId: String,
+        val orgName: String,
         val dept: String,
     ) : Parcelable
 

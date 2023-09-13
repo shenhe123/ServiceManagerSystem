@@ -30,8 +30,8 @@ import java.util.Calendar
 
 class TravelReportDetailActivity : BaseActivity() {
     private var travelReportInputData: TravelReportInputData? = null
-    private var deptId: String? = null
-    private var orgId: String? = null
+    private var deptInfo: WorkDeptInfo? = null
+    private var orgInfo: WorkFactoryInfo? = null
     private var deptInfos: List<WorkDeptInfo>? = null
     private var factoryInfos: List<WorkFactoryInfo>? = null
     private var editable: Boolean = false
@@ -73,7 +73,7 @@ class TravelReportDetailActivity : BaseActivity() {
                     listOf("请选择工厂")
                 } else {
                     factoryInfos = result.data!!
-                    result.data!!.map { info -> info.orgShortName }
+                    result.data!!.map { info -> info.orgName }
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -83,14 +83,14 @@ class TravelReportDetailActivity : BaseActivity() {
                 binding.acsFactory.adapter = adapter
 
                 //初始化工厂默认值
-                inputData?.orgId?.let {
+                inputData?.orgName?.let {
                     val pos = list.indexOf(it)
                     if (pos != -1) {
                         binding.acsFactory.setSelection(pos, false)
                     }
                 }
 
-                binding.acsFactory.prompt = inputData?.orgId ?: "请选择工厂"
+                binding.acsFactory.prompt = inputData?.orgName ?: "请选择工厂"
             }
         }
 
@@ -117,7 +117,7 @@ class TravelReportDetailActivity : BaseActivity() {
                     }
                 }
 
-                binding.acsDept.prompt = inputData?.orgId ?: "请选择部门"
+                binding.acsDept.prompt = inputData?.dept ?: "请选择部门"
             }
         }
 
@@ -146,10 +146,8 @@ class TravelReportDetailActivity : BaseActivity() {
     }
 
     private fun updateTravelReportInfo(it: TravelReportInfo) {
-        binding.tvFactory.text = it.orgId
-        orgId = it.orgId
+        binding.tvFactory.text = it.orgName
         binding.tvDept.text = it.dept
-        deptId = it.dept
         binding.etApplyName.setText(it.applyName)
         binding.etPartner.setText(it.partner)
         binding.etCustomer.setText(it.customer)
@@ -157,8 +155,8 @@ class TravelReportDetailActivity : BaseActivity() {
         binding.etProjectCode.setText(it.projectCode)
         binding.etPlaceFrom.setText(it.placeFrom)
         binding.etPlaceTo.setText(it.placeTo)
-        binding.tvStartDate.text = it.startDate
-        binding.tvEndDate.text = it.endDate
+        binding.tvStartDate.text = it.startDate.split(" ")[0]
+        binding.tvEndDate.text = it.endDate.split(" ")[0]
         binding.etAddress.setText(it.address)
 
         binding.etPurpose.setText(it.purpose)
@@ -183,10 +181,10 @@ class TravelReportDetailActivity : BaseActivity() {
             ) {
                 factoryInfos?.let {
                     binding.acsFactory.prompt = it[position].orgName
-                    orgId = if (it[position].orgName.equals("请选择工厂")) {
+                    orgInfo = if (it[position].orgName.equals("请选择工厂")) {
                         null
                     } else {
-                        it[position].orgName
+                        it[position]
                     }
                 }
             }
@@ -205,8 +203,8 @@ class TravelReportDetailActivity : BaseActivity() {
                 deptInfos?.let {
                     binding.acsDept.prompt = it[position].deptName
 
-                    deptId = if (!it[position].deptName.equals("请选择部门")) {
-                        it[position].deptName
+                    deptInfo = if (!it[position].deptName.equals("请选择部门")) {
+                        it[position]
                     } else {
                         null
                     }
@@ -218,8 +216,10 @@ class TravelReportDetailActivity : BaseActivity() {
         binding.btnUpdate.setOnClickListener{
             if (checkParams()) {
                 inputData?.let {
-                    it.orgId = orgId
-                    it.dept = deptId!!
+                    it.orgId = orgInfo?.orgId
+                    it.orgName = orgInfo?.orgName
+                    it.deptId = deptInfo?.deptId.toString()
+                    it.dept = deptInfo?.deptName
                     it.applyName = binding.etApplyName.text.toString()
                     it.partner = binding.etPartner.text.toString()
                     it.customer = binding.etCustomer.text.toString()
@@ -385,12 +385,12 @@ class TravelReportDetailActivity : BaseActivity() {
             return false
         }
 
-        if (deptId.isNullOrEmpty()) {
+        if (deptInfo == null) {
             ToastUtils.showToast("请选择部门")
             return false
         }
 
-        if (orgId.isNullOrEmpty()) {
+        if (orgInfo == null) {
             ToastUtils.showToast("请选择工厂")
             return false
         }

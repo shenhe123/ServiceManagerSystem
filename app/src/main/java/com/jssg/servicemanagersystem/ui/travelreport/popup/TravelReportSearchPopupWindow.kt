@@ -146,7 +146,7 @@ class TravelReportSearchPopupWindow(
     private fun initData() {
         searchParams?.let {
             binding.etApplyName.setText(it.applyName)
-            binding.etFactory.setText(it.orgId)
+            binding.etFactory.setText(it.orgName)
             binding.etDept.setText(it.dept)
             val startDate = it.startDate?.split(" ")?.get(0)
             binding.tvStartDate.text = startDate
