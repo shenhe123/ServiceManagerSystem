@@ -252,7 +252,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -270,7 +271,8 @@
                     android:id="@+id/iv_add_audio_record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/add_photo"/>
+                    android:src="@mipmap/add_photo"
+                    android:visibility="gone"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -494,7 +496,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="20dp"
         android:gravity="center_vertical"
         android:visibility="gone">
 
@@ -502,15 +504,15 @@
             android:id="@+id/btn_audio_record"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="36dp"
+            android:layout_height="48dp"
             android:gravity="center"
             android:textColor="@color/x_text_03"
             android:textSize="14sp"/>
 
         <ImageView
             android:id="@+id/iv_close_audio_record"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:scaleType="center"
             android:src="@drawable/svg_close"
             app:tint="@color/x_text_03" />

@@ -107,6 +107,11 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
         audioAdapter.setOnItemChildLongClickListener{ _, view, position ->
             if (view.id == R.id.layout_audio_record_msg) {
+
+                if (!isPictureLongClickable) return@setOnItemChildLongClickListener true
+                //退文状态的也不能删除
+                if (inputData?.state == 3) return@setOnItemChildLongClickListener true
+
                 SingleBtnDialogFragment.newInstance("删除语音", "确定要删除语音条吗？")
                     .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
                         override fun onConfrimClick() {
@@ -277,6 +282,13 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
         selectPicturesViewModel.audioVoicesOssListLiveData.observe(viewLifecycleOwner) { result ->
             if (result.isSuccess) {
+
+                if (isAddReworkPictureEnable && inputData?.state == 0) {
+                    binding.layoutAudio.isVisible = true
+                } else {
+                    binding.layoutAudio.isVisible = result.data.isNotEmpty()
+                }
+
                 result.data.forEach {
                     it.tag = "audio.${it.url}"
                     selectPictures.add(it)
@@ -284,7 +296,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                 }
 
                 //返工图片不允许修改
-                binding.ivAddReworkPhoto.isVisible = audioAdapter.data.size < 3 && isAddReworkPictureEnable
+                binding.ivAddAudioRecord.isVisible = audioAdapter.data.size < 3 && isAddReworkPictureEnable
             }
         }
 

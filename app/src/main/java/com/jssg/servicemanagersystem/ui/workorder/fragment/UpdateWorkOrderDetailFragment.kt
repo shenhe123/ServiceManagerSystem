@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.ui.workorder.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
@@ -53,7 +54,7 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
 
             isAddPictureEnable = false
 
-            isPictureLongClickable = true
+            isPictureLongClickable = false
 
         } else if (inputData?.state == 2 || inputData?.state == 4) {
 

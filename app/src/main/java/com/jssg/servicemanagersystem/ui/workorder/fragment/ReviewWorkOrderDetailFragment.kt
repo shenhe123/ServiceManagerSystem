@@ -3,6 +3,7 @@ package com.jssg.servicemanagersystem.ui.workorder.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import com.jssg.servicemanagersystem.ui.workorder.entity.AudioRecordEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 
 /**
@@ -11,10 +12,6 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
  */
 class ReviewWorkOrderDetailFragment: BaseWorkOrderCheckFragment() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
 
     override fun initViewVisible() {
         binding.layoutReview.isVisible = true

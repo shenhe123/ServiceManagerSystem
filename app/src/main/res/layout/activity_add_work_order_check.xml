@@ -472,15 +472,15 @@
             android:id="@+id/btn_audio_record"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="36dp"
+            android:layout_height="48dp"
             android:gravity="center"
             android:textColor="@color/x_text_03"
             android:textSize="14sp"/>
 
         <ImageView
             android:id="@+id/iv_close_audio_record"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:scaleType="center"
             android:src="@drawable/svg_close"
             app:tint="@color/x_text_03" />
