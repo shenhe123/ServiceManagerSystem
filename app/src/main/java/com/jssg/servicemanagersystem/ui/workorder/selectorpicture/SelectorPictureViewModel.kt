@@ -51,6 +51,7 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
     val boxOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
     val batchOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
     val reworkOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
+    val audioVoicesOssListLiveData = MutableLiveData<LoadDataModel<List<UploadEntity>>>()
 
     //content:/media/external_primary/images/media/1000027063
     fun fileOssUpload(file: File, tag: String) {
@@ -120,5 +121,14 @@ class SelectorPictureViewModel: AutoDisposViewModel() {
             .getOssListByIds(ossIds)
             .compose(RxSchedulersHelper.ObsResultWithMain())
             .subscribe(createObserver(reworkOssListLiveData))
+    }
+
+    fun getAudioVoices(ossIds: String?) {
+        if (ossIds.isNullOrEmpty()) return
+        audioVoicesOssListLiveData.value = LoadDataModel()
+        RetrofitService.apiService
+            .getOssListByIds(ossIds)
+            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .subscribe(createObserver(audioVoicesOssListLiveData))
     }
 }

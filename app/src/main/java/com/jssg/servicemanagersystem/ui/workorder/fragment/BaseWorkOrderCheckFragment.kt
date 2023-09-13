@@ -3,9 +3,10 @@ package com.jssg.servicemanagersystem.ui.workorder.fragment
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -16,15 +17,19 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.ezreal.audiorecordbutton.AudioRecordButton.OnRecordingListener
+import com.ezreal.audiorecordbutton.AudioPlayManager
+import com.ezreal.audiorecordbutton.AudioRecordButton
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.FragmentBaseWorkOrderCheckBinding
 import com.jssg.servicemanagersystem.databinding.ItemImageViewBinding
+import com.jssg.servicemanagersystem.helper.AudioPlayHandler
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.adapter.ApplyInfoAdapter
+import com.jssg.servicemanagersystem.ui.workorder.adapter.AudioRecordAdapter
+import com.jssg.servicemanagersystem.ui.workorder.entity.AudioRecordEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.PicturesPreviewActivity
@@ -44,9 +49,13 @@ import top.zibin.luban.OnCompressListener
 import java.io.File
 import java.util.Locale
 
+
 abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
-    private lateinit var permissionHelper: PermissionHelper
+    protected var isAudioPlay: Boolean = false
+    protected var mAudioPlayHandler: AudioPlayHandler? = null
+    protected lateinit var audioAdapter: AudioRecordAdapter
+    protected lateinit var permissionHelper: PermissionHelper
     protected var uploadSize: Int = 0
     protected var checkDate: String? = null
     protected var state: Int = 0
@@ -85,13 +94,33 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
     private fun initAudioPermission() {
         permissionHelper = PermissionHelper.Builder().with(this).build()
-        permissionHelper.request("需要录音权限", Manifest.permission.RECORD_AUDIO
-        ) { granted, isAlwaysDenied ->
-            if (granted) {
 
-            } else {
-                requireActivity().finish()
+        binding.audioRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        audioAdapter = AudioRecordAdapter()
+        binding.audioRecyclerView.adapter = audioAdapter
+
+        audioAdapter.setOnItemChildClickListener{ _, view, position ->
+            if (view.id == R.id.layout_audio_record_msg) {
+                playAudio(audioAdapter.data[position], position)
             }
+        }
+
+        audioAdapter.setOnItemChildLongClickListener{ _, view, position ->
+            if (view.id == R.id.layout_audio_record_msg) {
+                SingleBtnDialogFragment.newInstance("删除语音", "确定要删除语音条吗？")
+                    .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
+                        override fun onConfrimClick() {
+                            selectPictures.removeIf { p -> p.tag.equals(audioAdapter.data[position].getTag(), false) }
+
+                            audioAdapter.removeAt(position)
+                            binding.ivAddAudioRecord.isVisible = true
+                        }
+
+                    })
+                    .show(childFragmentManager, "delete_audio")
+            }
+
+            return@setOnItemChildLongClickListener true
         }
 
         // 录音按钮初始化和录音监听
@@ -119,9 +148,24 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                 .show(childFragmentManager, "selector_picture_dialog")
         }
 
-        binding.btnAudioRecord.setRecordingListener(object :OnRecordingListener{
-            override fun recordFinish(audioFilePath: String?, recordTime: Long) {
+        binding.ivAddAudioRecord.setOnClickListener {
+            permissionHelper.request("需要录音权限", Manifest.permission.RECORD_AUDIO
+            ) { granted, isAlwaysDenied ->
+                if (granted) {
+                    showAudioRecordButton()
+                }
+            }
+        }
 
+        binding.ivCloseAudioRecord.setOnClickListener {
+            hideAudioRecordButton()
+        }
+
+        binding.btnAudioRecord.setRecordingListener(object : AudioRecordButton.OnRecordingListener {
+            override fun recordFinish(audioFilePath: String?, recordTime: Long) {
+                audioFilePath?.let {
+                    selectPicturesViewModel.audioRecordLiveData.value = AudioRecordEntity(audioFilePath, recordTime)
+                }
             }
 
             override fun recordError(message: String?) {
@@ -228,6 +272,19 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
                 }
                 //返工图片不允许修改
                 binding.ivAddReworkPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3 && isAddReworkPictureEnable
+            }
+        }
+
+        selectPicturesViewModel.audioVoicesOssListLiveData.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
+                result.data.forEach {
+                    it.tag = "audio.${it.url}"
+                    selectPictures.add(it)
+                    audioAdapter.addData(AudioRecordEntity(it.url, getDuration(it.url)))
+                }
+
+                //返工图片不允许修改
+                binding.ivAddReworkPhoto.isVisible = audioAdapter.data.size < 3 && isAddReworkPictureEnable
             }
         }
 
@@ -369,6 +426,24 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             binding.ivAddReworkPhoto.isVisible = binding.xflBatchInfoPicture.childCount < 3 && isAddReworkPictureEnable
         }
 
+        selectPicturesViewModel.audioRecordLiveData.observe(viewLifecycleOwner) { result ->
+            if (audioAdapter.data.size >= 3) {
+                ToastUtils.showToast("最多只能录制3条语音！")
+                return@observe
+            }
+
+            uploadSize = 1
+            showProgressbarLoading()
+            audioAdapter.addData(result)
+
+            val file = getOriginPathFile(result.audioFilePath)
+            selectPicturesViewModel.fileOssUpload(file, result.getTag())
+
+            binding.ivAddAudioRecord.isVisible = audioAdapter.data.size < 3 && isAddReworkPictureEnable
+
+            hideAudioRecordButton()
+        }
+
         selectPicturesViewModel.fileOssUploadLiveData.observe(viewLifecycleOwner) { result ->
             if (result.isSuccess) {
                 result.data?.let {
@@ -400,6 +475,22 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         inputData?.let {
             workOrderViewModel.getWorkOrderDetailInfo(it.billDetailNo)
         }
+    }
+
+    /**
+     * 获取 视频 或 音频 时长
+     * @param path 视频 或 音频 文件路径
+     * @return 时长 毫秒值
+     */
+    open fun getDuration(path: String?): Long {
+        val mediaPlayer =  MediaPlayer()
+        var duration: Long = 0
+        path?.let {
+            mediaPlayer.setDataSource(path)
+            mediaPlayer.prepare()
+            duration = mediaPlayer.duration.toLong()
+        }
+        return duration
     }
 
     private fun onSubmit(state: Int) {
@@ -493,6 +584,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             selectPicturesViewModel.getBoxPictures(it.boxPicNames)
             selectPicturesViewModel.getBatchPictures(it.batchPicNames)
             selectPicturesViewModel.getReworkPictures(it.reworkPicNames)
+            selectPicturesViewModel.getAudioVoices(it.voices)
         }
     }
 
@@ -540,6 +632,15 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         binding.etRemark.isEnabled = isEditable
     }
 
+    private fun hideAudioRecordButton() {
+        binding.layoutAudioRecord.isVisible = false
+        binding.layoutNormal.isVisible = true
+    }
+
+    private fun showAudioRecordButton() {
+        binding.layoutAudioRecord.isVisible = true
+        binding.layoutNormal.isVisible = false
+    }
 
     private fun initImageWidget(tag: String, url: String, parent: ViewGroup, addView: ImageView, isRework: Boolean = false) {
         val img = layoutInflater.inflate(R.layout.item_image_view, null)
@@ -591,6 +692,43 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         parent.addView(img)
     }
 
+    /*** 播放音频，并监听播放进度，更新页面动画  */
+    private fun playAudio(audioRecordEntity: AudioRecordEntity, pos: Int) {
+        if (isAudioPlay) {
+            // 如果正在播放，那会先关闭当前播放
+            AudioPlayManager.pause()
+            AudioPlayManager.release()
+            mAudioPlayHandler?.stopAnimTimer()
+            isAudioPlay = false
+
+            return
+        }
+
+        if (mAudioPlayHandler == null) {
+            mAudioPlayHandler = AudioPlayHandler()
+        }
+
+        //播放音频和动画
+        AudioPlayManager.playAudio(requireContext(), audioRecordEntity.audioFilePath,
+            object : AudioPlayManager.OnPlayAudioListener {
+                override fun onPlay() {
+                    // 启动播放动画
+                    isAudioPlay = true
+                    mAudioPlayHandler?.startAudioAnim(audioAdapter, pos, true)
+                }
+
+                override fun onComplete() {
+                    isAudioPlay = false
+                    mAudioPlayHandler?.stopAnimTimer()
+                }
+
+                override fun onError(message: String) {
+                    isAudioPlay = false
+                    mAudioPlayHandler?.stopAnimTimer()
+                    ToastUtils.showToast(message)
+                }
+            })
+    }
 
     private fun getOriginPathFile(path: String): File {
         val fileOriginPath = if (path.startsWith("content")) {

@@ -587,45 +587,6 @@ class AddWorkOrderCheckActivity : BaseActivity() {
         return compressFile
     }
 
-
-//    /*** 播放音频，并监听播放进度，更新页面动画  */
-//    private fun playAudio(layout: LinearLayoutCompat, ivAudioSound: ImageView, audioPath: String, recordTime: Long) {
-//        if (isAudioPlay) {
-//            // 如果正在播放，那会先关闭当前播放
-//            AudioPlayManager.pause()
-//            AudioPlayManager.release()
-//            mAudioPlayHandler?.stopAnimTimer()
-//            isAudioPlay = false
-//        }
-//
-//        if (mAudioPlayHandler == null) {
-//            mAudioPlayHandler = AudioPlayHandler()
-//        }
-//
-//
-//        //播放音频和动画
-//        AudioPlayManager.playAudio(this, audioPath,
-//            object : AudioPlayManager.OnPlayAudioListener {
-//                override fun onPlay() {
-//                    // 启动播放动画
-//                    isAudioPlay = true
-//                    mAudioPlayHandler?.startAudioAnim(ivAudioSound, true)
-//                }
-//
-//                override fun onComplete() {
-//                    isAudioPlay = false
-//                    mAudioPlayHandler?.stopAnimTimer()
-//                }
-//
-//                override fun onError(message: String) {
-//                    isAudioPlay = false
-//                    mAudioPlayHandler?.stopAnimTimer()
-//                    ToastUtils.showToast(message)
-//                }
-//            })
-//    }
-
-
     /*** 播放音频，并监听播放进度，更新页面动画  */
     private fun playAudio(audioRecordEntity: AudioRecordEntity, pos: Int) {
         if (isAudioPlay) {

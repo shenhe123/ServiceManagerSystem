@@ -227,34 +227,6 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/layout_audio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/SubTitleStyle"
-                    android:text="语音附录："/>
-
-                <com.nex3z.flowlayout.FlowLayout
-                    android:id="@+id/flow_audio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:flChildSpacing="12dp"/>
-
-                <ImageView
-                    android:id="@+id/iv_add_audio_record"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/add_photo"
-                    android:visibility="gone"/>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -272,6 +244,33 @@
                     android:layout_height="wrap_content"
                     android:src="@mipmap/add_photo"
                     android:visibility="gone"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_audio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubTitleStyle"
+                    android:text="录制语音附录："/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/audio_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"/>
+
+                <ImageView
+                    android:id="@+id/iv_add_audio_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/add_photo"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

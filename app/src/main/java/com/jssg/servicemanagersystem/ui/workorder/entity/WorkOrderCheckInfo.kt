@@ -22,6 +22,7 @@ data class WorkOrderCheckInfo(
     val checkerName: String?,
     val place: String,
     val reworkPicNames: String?,
+    val voices: String?,
     val state: Int,
     val workOrderVo: WorkOrderInfo?,
     val applyInfoVos: List<ApplyInfoVos>?,
