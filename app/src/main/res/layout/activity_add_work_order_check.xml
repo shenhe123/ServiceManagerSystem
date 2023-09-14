@@ -265,7 +265,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/SubTitleStyle"
-                    android:text="录制语音附录："/>
+                    android:text="录制语音："/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/audio_recycler_view"
