@@ -95,7 +95,6 @@
             android:text="主要目的"
             android:textSize="13sp"
             app:layout_constraintTop_toTopOf="@id/tv_place_title"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
@@ -105,7 +104,6 @@
             style="@style/SecTitleStyle"
             tools:text="text"
             app:layout_constraintTop_toBottomOf="@id/tv_place_title"
-            app:layout_constraintStart_toStartOf="@id/tv_purpose_title"
             app:layout_constraintEnd_toEndOf="@id/tv_purpose_title"/>
 
         <TextView

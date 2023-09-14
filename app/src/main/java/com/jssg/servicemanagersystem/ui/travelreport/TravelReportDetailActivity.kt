@@ -73,7 +73,7 @@ class TravelReportDetailActivity : BaseActivity() {
                     listOf("请选择工厂")
                 } else {
                     factoryInfos = result.data!!
-                    result.data!!.map { info -> info.orgName }
+                    result.data!!.map { info -> info.orgShortName }
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -153,7 +153,6 @@ class TravelReportDetailActivity : BaseActivity() {
         binding.etCustomer.setText(it.customer)
         binding.etProductCode.setText(it.productCode)
         binding.etProjectCode.setText(it.projectCode)
-        binding.etPlaceFrom.setText(it.placeFrom)
         binding.etPlaceTo.setText(it.placeTo)
         binding.tvStartDate.text = it.startDate.split(" ")[0]
         binding.tvEndDate.text = it.endDate.split(" ")[0]
@@ -180,8 +179,8 @@ class TravelReportDetailActivity : BaseActivity() {
                 id: Long
             ) {
                 factoryInfos?.let {
-                    binding.acsFactory.prompt = it[position].orgName
-                    orgInfo = if (it[position].orgName.equals("请选择工厂")) {
+                    binding.acsFactory.prompt = it[position].orgShortName
+                    orgInfo = if (it[position].orgShortName.equals("请选择工厂")) {
                         null
                     } else {
                         it[position]
@@ -217,7 +216,7 @@ class TravelReportDetailActivity : BaseActivity() {
             if (checkParams()) {
                 inputData?.let {
                     it.orgId = orgInfo?.orgId
-                    it.orgName = orgInfo?.orgName
+                    it.orgName = orgInfo?.orgShortName
                     it.deptId = deptInfo?.deptId.toString()
                     it.dept = deptInfo?.deptName
                     it.applyName = binding.etApplyName.text.toString()
@@ -225,7 +224,6 @@ class TravelReportDetailActivity : BaseActivity() {
                     it.customer = binding.etCustomer.text.toString()
                     it.productCode = binding.etProductCode.text.toString()
                     it.projectCode = binding.etProjectCode.text.toString()
-                    it.placeFrom = binding.etPlaceFrom.text.toString()
                     it.placeTo = binding.etPlaceTo.text.toString()
                     it.address = binding.etAddress.text.toString()
                     it.startDate = binding.tvStartDate.text.toString() + " 00:00:00"
@@ -331,15 +329,9 @@ class TravelReportDetailActivity : BaseActivity() {
             return false
         }
 
-        val placeFrom = binding.etPlaceFrom.text.toString()
-        if (placeFrom.isEmpty()) {
-            ToastUtils.showToast("出差起点不能为空")
-            return false
-        }
-
         val placeTo = binding.etPlaceTo.text.toString()
         if (placeTo.isEmpty()) {
-            ToastUtils.showToast("出差终点不能为空")
+            ToastUtils.showToast("出差地点不能为空")
             return false
         }
 
@@ -406,7 +398,6 @@ class TravelReportDetailActivity : BaseActivity() {
         binding.etCustomer.isEnabled = editable
         binding.etProductCode.isEnabled = editable
         binding.etProjectCode.isEnabled = editable
-        binding.etPlaceFrom.isEnabled = editable
         binding.etPlaceTo.isEnabled = editable
         binding.etAddress.isEnabled = editable
 
@@ -423,7 +414,6 @@ class TravelReportDetailActivity : BaseActivity() {
         updateLayoutBackground(binding.etCustomer)
         updateLayoutBackground(binding.etProductCode)
         updateLayoutBackground(binding.etProjectCode)
-        updateLayoutBackground(binding.etPlaceFrom)
         updateLayoutBackground(binding.etPlaceTo)
         updateLayoutBackground(binding.etAddress)
         updateLayoutBackground(binding.tvStartDate)

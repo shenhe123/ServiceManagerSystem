@@ -15,7 +15,7 @@ class TravelReportAdapter: BaseBindingAdapter<TravelReportInfo, ItemTravelReport
         holder.binding.tvApplyName.text = item.applyName
         holder.binding.tvDept.text = item.dept
         holder.binding.tvCustomer.text = item.customer
-        holder.binding.tvPlace.text = "${item.placeFrom} - ${item.placeTo}"
+        holder.binding.tvPlace.text = item.placeTo
         holder.binding.tvPurpose.text = item.purpose
         holder.binding.tvStartDate.text = item.startDate.split(" ")[0]
         holder.binding.tvEndDate.text = item.endDate.split(" ")[0]

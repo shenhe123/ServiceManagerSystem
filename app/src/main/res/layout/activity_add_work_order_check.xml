@@ -273,11 +273,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"/>
 
-                <ImageView
+                <FrameLayout
                     android:id="@+id/iv_add_audio_record"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/add_photo"/>
+                    android:layout_width="66dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:src="@drawable/shape_add_audio"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="center"
+                        android:layout_gravity="center"
+                        android:src="@drawable/svg_audio"/>
+
+                </FrameLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

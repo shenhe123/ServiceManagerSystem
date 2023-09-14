@@ -19,7 +19,7 @@ data class TravelReportInfo(
     var customer: String,   //客户",
     var productCode: String,   //产品编码",
     var projectCode: String,   //项目编码",
-    var placeFrom: String,   //从地点",
+//    var placeFrom: String? = null,   //从地点",
     var placeTo: String,   //到地点",
     var address: String,   //地址",
     var startDate: String,   //2023-08-30 00:00:00",

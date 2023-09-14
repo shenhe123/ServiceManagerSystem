@@ -58,7 +58,7 @@ class AddTravelReportActivity : BaseActivity() {
                     listOf("请选择工厂")
                 } else {
                     factoryInfos = result.data!!
-                    result.data!!.map { info -> info.orgName }
+                    result.data!!.map { info -> info.orgShortName }
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -113,7 +113,6 @@ class AddTravelReportActivity : BaseActivity() {
             binding.etClientName.setText(it.customer)
             binding.etProductCode.setText(it.productCode)
             binding.etProjectCode.setText(it.projectCode)
-            binding.etPlaceFrom.setText(it.placeFrom)
             binding.etPlaceTo.setText(it.placeTo)
             binding.etStartDate.text = it.startDate.split(" ")[0]
             binding.etEndDate.text = it.endDate.split(" ")[0]
@@ -167,9 +166,9 @@ class AddTravelReportActivity : BaseActivity() {
                 id: Long
             ) {
                 factoryInfos?.let {
-                    binding.asFactory.prompt = it[position].orgName
+                    binding.asFactory.prompt = it[position].orgShortName
 
-                    orgInfo = if (it[position].orgName.equals("请选择工厂")) {
+                    orgInfo = if (it[position].orgShortName.equals("请选择工厂")) {
                         null
                     } else {
                         it[position]
@@ -278,15 +277,9 @@ class AddTravelReportActivity : BaseActivity() {
             return false
         }
 
-        val placeFrom = binding.etPlaceFrom.text.toString()
-        if (placeFrom.isEmpty()) {
-            ToastUtils.showToast("出差起点不能为空")
-            return false
-        }
-
         val placeTo = binding.etPlaceTo.text.toString()
         if (placeTo.isEmpty()) {
-            ToastUtils.showToast("出差终点不能为空")
+            ToastUtils.showToast("出差地点不能为空")
             return false
         }
 
@@ -345,7 +338,7 @@ class AddTravelReportActivity : BaseActivity() {
         travelReportInfo = TravelReportInfo(
             "",
             orgInfo!!.orgId,
-            orgInfo!!.orgName,
+            orgInfo!!.orgShortName,
             deptInfo!!.deptId.toString(),
             deptInfo!!.deptName,
             nickName,
@@ -353,7 +346,6 @@ class AddTravelReportActivity : BaseActivity() {
             clientName,
             productCode,
             projectCode,
-            placeFrom,
             placeTo,
             address,
             "$startDate 00:00:00",

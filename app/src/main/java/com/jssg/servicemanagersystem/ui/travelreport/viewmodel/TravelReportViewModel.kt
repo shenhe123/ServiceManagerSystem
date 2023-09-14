@@ -78,7 +78,6 @@ class TravelReportViewModel : AutoDisposViewModel() {
         params["customer"] = travelReportInfo.customer
         params["productCode"] = travelReportInfo.productCode
         params["projectCode"] = travelReportInfo.projectCode
-        params["placeFrom"] = travelReportInfo.placeFrom
         params["placeTo"] = travelReportInfo.placeTo
         params["address"] = travelReportInfo.address
         params["startDate"] = travelReportInfo.startDate
@@ -105,7 +104,6 @@ class TravelReportViewModel : AutoDisposViewModel() {
         params["customer"] = travelReportInfo.customer
         params["productCode"] = travelReportInfo.productCode
         params["projectCode"] = travelReportInfo.projectCode
-        params["placeFrom"] = travelReportInfo.placeFrom
         params["placeTo"] = travelReportInfo.placeTo
         params["address"] = travelReportInfo.address
         params["startDate"] = travelReportInfo.startDate
