@@ -15,6 +15,7 @@ enum class MenuEnum(val printableName: String) {
     QM_TRIPREPORT_ADD("qm:TripReport:add"), //出差报告新增
     QM_TRIPREPORT_EDIT("qm:TripReport:edit"), //出差报告修改
     QM_TRIPREPORT_REMOVE("qm:TripReport:remove"), //出差报告删除
+    QM_TRIPREPORT_EXPORT("qm:TripReport:export"), //出差报告导出
     QM_WORKORDER_QUERY("qm:WorkOrder:query"), //工单查询
     QM_WORKORDER_ADD("qm:WorkOrder:add"), //工单新增
     QM_WORKORDER_EDIT("qm:WorkOrder:edit"), //工单修改

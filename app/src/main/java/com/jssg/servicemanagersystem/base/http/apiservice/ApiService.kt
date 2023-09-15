@@ -18,6 +18,8 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
@@ -27,6 +29,8 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Streaming
+import retrofit2.http.Url
 
 /**
  * Created by gongdongyang on 2018/9/25.
@@ -188,4 +192,8 @@ interface ApiService {
 
     @GET("staging-api/qm/tripReport/{billNo}")
     fun getTravelReportInfo(@Path("billNo") billNo: String): Observable<BaseHttpResult<TravelReportInfo?>>
+
+    @Streaming
+    @GET("staging-api/qm/tripReport/export")
+    fun getTravelReportExport(@Query("billNo") billNo: String): Call<ResponseBody>
 }
