@@ -12,6 +12,7 @@ import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityMainBinding
 import com.jssg.servicemanagersystem.ui.account.AccountFragment
 import com.jssg.servicemanagersystem.ui.report.ReportFragment
+import com.jssg.servicemanagersystem.ui.report.ReportFragment2
 import com.jssg.servicemanagersystem.ui.travelreport.TravelReportFragment
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 
@@ -57,7 +58,7 @@ class MainActivity : BaseActivity() {
             when (position) {
                 0 -> return WorkOrderFragment.newInstance()
                 1 -> return TravelReportFragment.newInstance()
-                2 -> return ReportFragment.newInstance()
+                2 -> return ReportFragment2.newInstance()
                 3-> return AccountFragment.newInstance()
             }
             return WorkOrderFragment.newInstance()

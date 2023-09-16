@@ -198,6 +198,10 @@ interface ApiService {
     @GET("staging-api/qm/tripReport/export")
     fun getTravelReportExport(@Query("billNo") billNo: String): Call<ResponseBody>
 
+    @Streaming
+    @GET("staging-api/qm/workOrderDetail/reportExport")
+    fun getWorkOrderDetailExport(): Call<ResponseBody>
+
     @GET("staging-api/monitor/logininfor/list")
     fun getLogInfoList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<LogInfo>?>>
 }

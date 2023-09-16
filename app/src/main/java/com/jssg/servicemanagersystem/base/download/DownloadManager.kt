@@ -32,9 +32,9 @@ object DownloadManager {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun downloadWorkOrderDetailReport(billNo: String, file: File): Flow<DownloadState> {
+    suspend fun downloadWorkOrderDetailReport(file: File): Flow<DownloadState> {
         return flow {
-            val response = RetrofitService.apiService.getTravelReportExport(billNo).execute()
+            val response = RetrofitService.apiService.getWorkOrderDetailExport().execute()
             if (response.isSuccessful) {
                 saveToFile(response.body()!!, file) {
                     emit(DownloadState.InProgress(it))
