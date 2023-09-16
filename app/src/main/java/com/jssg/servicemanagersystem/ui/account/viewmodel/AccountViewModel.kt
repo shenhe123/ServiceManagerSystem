@@ -231,7 +231,7 @@ class AccountViewModel : AutoDisposViewModel() {
         userListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
             .searchUser(input, 1, 9999)
-            .compose(RxSchedulersHelper.ObsResultWithMain())
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(userListLiveData, true, 1))
     }
 

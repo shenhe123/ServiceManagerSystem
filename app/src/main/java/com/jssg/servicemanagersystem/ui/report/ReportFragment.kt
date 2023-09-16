@@ -19,7 +19,7 @@ import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.report.adapter.WorkOrderReportAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
-import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils

@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.workorder.fragment
+package com.jssg.servicemanagersystem.ui.workorder
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -19,8 +19,6 @@ import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.DoubleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
-import com.jssg.servicemanagersystem.ui.workorder.AddWorkOrderActivity
-import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow

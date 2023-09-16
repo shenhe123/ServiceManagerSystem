@@ -96,6 +96,7 @@ class UserManagerActivity : BaseActivity() {
 
                 return@setOnClickListener
             }
+            binding.smartRefreshLayout.setEnableLoadMore(false)
             accountViewModel.searchUser(input)
         }
 
@@ -165,6 +166,8 @@ class UserManagerActivity : BaseActivity() {
 
     private fun loadData(isRefresh: Boolean) {
         page = if (isRefresh) {
+            binding.smartRefreshLayout.setEnableLoadMore(true)
+            binding.inputSearch.clearFocus()
             1
         } else {
             page + 1
