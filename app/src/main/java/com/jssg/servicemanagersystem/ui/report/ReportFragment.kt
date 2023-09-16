@@ -1,11 +1,11 @@
 package com.jssg.servicemanagersystem.ui.report
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -16,10 +16,8 @@ import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentReportBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
-import com.jssg.servicemanagersystem.ui.dialog.DoubleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.report.adapter.WorkOrderReportAdapter
-import com.jssg.servicemanagersystem.ui.report.viewmodel.ReportViewModel
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderFragment
 import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
@@ -46,7 +44,6 @@ class ReportFragment : BaseFragment() {
     private lateinit var workOrderViewModel: WorkOrderViewModel
     private lateinit var adapter: WorkOrderReportAdapter
     private lateinit var binding: FragmentReportBinding
-    private lateinit var reportViewModel: ReportViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,7 +77,6 @@ class ReportFragment : BaseFragment() {
     }
 
     private fun initViewModel() {
-        reportViewModel = ViewModelProvider(this)[ReportViewModel::class.java]
         accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
 
         workOrderViewModel = ViewModelProvider(this)[WorkOrderViewModel::class.java]

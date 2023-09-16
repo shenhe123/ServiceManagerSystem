@@ -11,6 +11,7 @@ import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
+import com.jssg.servicemanagersystem.ui.account.logmanager.LogManagerActivity
 import com.jssg.servicemanagersystem.ui.account.network.ChooseHostActivity
 import com.jssg.servicemanagersystem.ui.account.profile.ProfileInfoActivity
 import com.jssg.servicemanagersystem.ui.account.role.RoleManagerActivity
@@ -63,7 +64,9 @@ class AccountFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        judgeRolePermission()
+        if (AccountManager.instance.getUser() != null) {
+            judgeRolePermission()
+        }
         accountViewModel.getUserProfile()
     }
 
@@ -72,6 +75,8 @@ class AccountFragment : BaseFragment() {
             RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_ROLE_QUERY.printableName)
         binding.tvUserManager.isVisible =
             RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.printableName)
+        binding.tvLogsManager.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.MONITOR_LOGININFOR_QUERY.printableName)
     }
 
     private fun addListener() {
@@ -110,6 +115,10 @@ class AccountFragment : BaseFragment() {
 //            if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_RESETPWD.printableName)) return@setOnClickListener
 
             UpdatePasswordActivity.goActivity(requireContext())
+        }
+
+        binding.tvLogsManager.setOnClickListener {
+            LogManagerActivity.goActivity(requireContext())
         }
     }
 

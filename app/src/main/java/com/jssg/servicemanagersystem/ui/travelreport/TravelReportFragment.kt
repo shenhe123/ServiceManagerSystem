@@ -1,7 +1,6 @@
 package com.jssg.servicemanagersystem.ui.travelreport
 
 import android.Manifest
-import android.content.Context
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
@@ -33,10 +31,6 @@ import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.parcel.Parcelize
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import net.arvin.permissionhelper.PermissionHelper
 import java.io.File
 
@@ -207,7 +201,7 @@ class TravelReportFragment : BaseFragment() {
                                     override fun onConfrimClick() {
                                         showProgressbarLoading()
                                         lifecycleScope.launchWhenResumed {
-                                            DownloadManager.download(travelReportInfo.billNo, File(fileName)).collect {
+                                            DownloadManager.downloadTravelReport(travelReportInfo.billNo, File(fileName)).collect {
                                                 when (it) {
                                                     is DownloadState.InProgress -> {
 //                                                        Log.d("~~~", "download in progress: ${it.progress}.")

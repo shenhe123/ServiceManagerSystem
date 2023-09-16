@@ -3,6 +3,7 @@ package com.jssg.servicemanagersystem.base.http.apiservice
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
 import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
+import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
@@ -196,4 +197,7 @@ interface ApiService {
     @Streaming
     @GET("staging-api/qm/tripReport/export")
     fun getTravelReportExport(@Query("billNo") billNo: String): Call<ResponseBody>
+
+    @GET("staging-api/monitor/logininfor/list")
+    fun getLogInfoList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<LogInfo>?>>
 }
