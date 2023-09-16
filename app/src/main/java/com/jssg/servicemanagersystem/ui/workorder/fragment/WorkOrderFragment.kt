@@ -184,6 +184,8 @@ class WorkOrderFragment : BaseFragment() {
 
     private fun loadData(isRefresh: Boolean) {
         page = if (isRefresh) {
+            searchParams = null
+            binding.smartRefreshLayout.setEnableLoadMore(true)
             1
         } else {
             page + 1
@@ -301,6 +303,7 @@ class WorkOrderFragment : BaseFragment() {
             override fun onClick(searchParams: SearchParams) {
                 showProgressbarLoading()
                 this@WorkOrderFragment.searchParams = searchParams
+                binding.smartRefreshLayout.setEnableLoadMore(false)
                 workOrderViewModel.searchWorkOrder(searchParams)
             }
 

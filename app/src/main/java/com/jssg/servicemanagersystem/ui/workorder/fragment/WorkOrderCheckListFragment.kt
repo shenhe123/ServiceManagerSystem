@@ -72,6 +72,7 @@ class WorkOrderCheckListFragment : BaseFragment() {
         binding.smartRefreshLayout.setEnableLoadMore(false)
         binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onRefresh(refreshLayout: RefreshLayout) {
+                searchParams = null
                 loadData()
             }
 

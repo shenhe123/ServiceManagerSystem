@@ -157,6 +157,8 @@ class TravelReportFragment : BaseFragment() {
 
     private fun loadData(isRefresh: Boolean) {
         page = if (isRefresh) {
+            searchParams = null
+            binding.smartRefreshLayout.setEnableLoadMore(true)
             1
         } else {
             page + 1
@@ -247,6 +249,7 @@ class TravelReportFragment : BaseFragment() {
             override fun onClick(searchParams: TravelSearchParams) {
                 showProgressbarLoading()
                 this@TravelReportFragment.searchParams = searchParams
+                binding.smartRefreshLayout.setEnableLoadMore(false)
                 travelReportViewModel.searchTravelReport(searchParams)
             }
 
