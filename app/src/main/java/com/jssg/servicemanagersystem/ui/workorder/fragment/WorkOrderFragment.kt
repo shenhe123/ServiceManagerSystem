@@ -35,9 +35,8 @@ class WorkOrderFragment : BaseFragment() {
 
     private var deletePos: Int? = null
     private var searchParams: SearchParams? = null
-    private var sourceList = mutableListOf<WorkOrderInfo>()
     private val checkedBillNos = arrayListOf<String>()
-    private val page: Int = 1
+    private var page: Int = 1
     private lateinit var adapter: WorkOrderAdapter
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var workOrderViewModel: WorkOrderViewModel
@@ -102,6 +101,8 @@ class WorkOrderFragment : BaseFragment() {
                 } else {
                     binding.smartRefreshLayout.finishLoadMore()
                 }
+
+                binding.pbLoading.isVisible = false
             }
             if (result.isSuccess) {
                 updateWorkOrderList(result)
@@ -178,12 +179,15 @@ class WorkOrderFragment : BaseFragment() {
             }
         }
 
-        sourceList = adapter.data
-
         showNoData(adapter.data.isEmpty())
     }
 
     private fun loadData(isRefresh: Boolean) {
+        page = if (isRefresh) {
+            1
+        } else {
+            page + 1
+        }
         workOrderViewModel.getWorkOrderList(isRefresh, page)
     }
 

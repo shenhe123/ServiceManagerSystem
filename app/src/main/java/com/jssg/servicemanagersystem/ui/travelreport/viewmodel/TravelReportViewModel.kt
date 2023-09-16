@@ -23,13 +23,8 @@ class TravelReportViewModel : AutoDisposViewModel() {
 
     fun getTravelReportList(isRefresh: Boolean, page: Int) {
         travelReportListLiveData.value = LoadListDataModel(isRefresh)
-        val mPage = if (isRefresh) {
-            1
-        } else {
-            page + 1
-        }
         RetrofitService.apiService
-            .getTravelReportList(mPage, 20)
+            .getTravelReportList(page, 20)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(travelReportListLiveData, isRefresh, page))
     }

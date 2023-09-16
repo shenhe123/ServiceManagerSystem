@@ -127,13 +127,9 @@ class AccountViewModel : AutoDisposViewModel() {
 
     fun getUserList(page: Int, isRefresh: Boolean) {
         userListLiveData.value = LoadListDataModel(isRefresh)
-        val mPage = if (isRefresh) {
-            1
-        } else {
-            page + 1
-        }
+
         RetrofitService.apiService
-            .getUserList(mPage, 20)
+            .getUserList(page, 20)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(userListLiveData, isRefresh, page))
     }

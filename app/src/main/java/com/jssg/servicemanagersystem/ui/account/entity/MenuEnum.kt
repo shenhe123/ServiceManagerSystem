@@ -27,7 +27,7 @@ enum class MenuEnum(val printableName: String) {
     QM_WORKORDERDETAIL_ADD("qm:WorkOrderDetail:add"), //派工单明细新增
     QM_WORKORDERDETAIL_EDIT("qm:WorkOrderDetail:edit"), //派工单明细修改
     QM_WORKORDERDETAIL_REMOVE("qm:WorkOrderDetail:remove"), //派工单明细删除
-    QM_WORKDERDETAIL_REPORT("qm:WorkOrderDetail:report"), //派工单明细报表
+    QM_WORKODERDETAIL_REPORT("qm:WorkOrderDetail:report"), //派工单明细报表
     QM_WORKORDERLOG_QUERY("qm:WorkOrderLog:query"), //派工单变更日志查询
     QM_WORKORDERLOG_ADD("qm:WorkOrderLog:add"), //派工单变更日志新增
     QM_WORKORDERLOG_EDIT("qm:WorkOrderLog:edit"), //派工单变更日志修改

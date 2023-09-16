@@ -164,6 +164,11 @@ class UserManagerActivity : BaseActivity() {
     }
 
     private fun loadData(isRefresh: Boolean) {
+        page = if (isRefresh) {
+            1
+        } else {
+            page + 1
+        }
         accountViewModel.getUserList(page, isRefresh)
     }
 

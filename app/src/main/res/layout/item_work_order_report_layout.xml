@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_order_id_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="工单编号"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_order_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id_title"
+            app:layout_constraintStart_toStartOf="@id/tv_order_id_title"/>
+
+        <TextView
+            android:id="@+id/tv_order_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="申请日期"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_apply_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_date_title"
+            app:layout_constraintEnd_toEndOf="@id/tv_order_date_title"/>
+
+        <TextView
+            android:id="@+id/tv_apply_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="申请人"
+            android:textSize="13sp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id"
+            app:layout_constraintStart_toStartOf="@id/tv_order_id"/>
+
+        <TextView
+            android:id="@+id/tv_apply_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name_title"
+            app:layout_constraintStart_toStartOf="@id/tv_apply_name_title"/>
+
+        <TextView
+            android:id="@+id/tv_apply_factory_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="申请工厂"
+            android:textSize="13sp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_apply_factory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_apply_dept_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="申请部门"
+            android:textSize="13sp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_apply_dept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name_title"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/tv_product_desc_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="问题描述"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_review_num"/>
+
+        <TextView
+            android:id="@+id/tv_product_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_desc_title"
+            app:layout_constraintStart_toStartOf="@id/tv_product_desc_title"
+            app:layout_constraintEnd_toStartOf="@id/mcb_check"
+            />
+
+        <TextView
+            android:id="@+id/tv_wait_check_num_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="剩余排查数量"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_review_num_title"/>
+
+        <TextView
+            android:id="@+id/tv_wait_check_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            android:textColor="@color/teal_700"
+            app:layout_constraintTop_toBottomOf="@id/tv_wait_check_num_title"
+            app:layout_constraintStart_toStartOf="@id/tv_wait_check_num_title"
+            app:layout_constraintEnd_toEndOf="@id/tv_wait_check_num_title"/>
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_order_state_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="13sp"-->
+<!--            android:text="工单状态"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_product_desc"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_order_state"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/SecTitleStyle"-->
+<!--            tools:text="text"-->
+<!--            android:textColor="@color/text_600"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_order_state_title"-->
+<!--            app:layout_constraintStart_toStartOf="@id/tv_order_state_title"/>-->
+
+
+        <TextView
+            android:id="@+id/tv_review_num_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="待审核数量"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_name"/>
+
+        <TextView
+            android:id="@+id/tv_review_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            android:textColor="@color/text_600"
+            app:layout_constraintTop_toBottomOf="@id/tv_review_num_title"
+            app:layout_constraintStart_toStartOf="@id/tv_review_num_title"/>
+
+
+        <TextView
+            android:id="@+id/tv_check_state_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="排查状态"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_review_num_title"/>
+
+        <TextView
+            android:id="@+id/tv_check_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            android:textColor="@color/teal_200"
+            app:layout_constraintTop_toBottomOf="@id/tv_check_state_title"
+            app:layout_constraintEnd_toEndOf="@id/tv_check_state_title"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/mcb_check"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_product_desc"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

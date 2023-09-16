@@ -45,7 +45,7 @@ class TravelReportFragment : BaseFragment() {
     private var permissionHelper: PermissionHelper? = null
     private var searchParams: TravelSearchParams? = null
     private lateinit var accountViewModel: AccountViewModel
-    private val page: Int = 1
+    private var page: Int = 1
     private lateinit var sourceList: MutableList<TravelReportInfo>
     private lateinit var adapter: TravelReportAdapter
     private lateinit var travelReportViewModel: TravelReportViewModel
@@ -109,6 +109,8 @@ class TravelReportFragment : BaseFragment() {
                 } else {
                     binding.smartRefreshLayout.finishLoadMore()
                 }
+
+                binding.pbLoading.isVisible = false
             }
             if (result.isSuccess) {
                 updateWorkOrderList(result)
@@ -160,6 +162,11 @@ class TravelReportFragment : BaseFragment() {
     }
 
     private fun loadData(isRefresh: Boolean) {
+        page = if (isRefresh) {
+            1
+        } else {
+            page + 1
+        }
         travelReportViewModel.getTravelReportList(isRefresh, page)
     }
 

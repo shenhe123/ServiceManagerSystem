@@ -7,23 +7,116 @@
     android:orientation="vertical"
     tools:context=".ui.report.ReportFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="报表导出"
-        app:titleTextColor="@color/white"
-        android:background="@color/purple_700"
-        app:titleCentered="true"/>
+        android:background="@color/purple_700">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
+        <CheckBox
+            android:id="@+id/cb_check_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全选"
+            android:buttonTint="@color/white"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_gravity="start"
+            android:textStyle="bold"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="派工单进度报表"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+
+
+        <TextView
+            android:id="@+id/tv_export"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_input_stroke"
+            android:text="导出"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_gravity="end"
+            android:textStyle="bold"
+            android:layout_marginEnd="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:visibility="gone"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/layout_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager_2"
+        <TextView
+            android:id="@+id/input_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:clickable="false"
+            android:textSize="16sp"
+            android:text="@string/app_search"
+            android:background="@drawable/selector_input_stroke"
+            android:paddingStart="40dp"/>
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_alignStart="@id/input_search"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_search"
+            app:tint="@color/x_text_03" />
+
+    </RelativeLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="暂无工单报表"
+            android:textColor="@color/x_text_03"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

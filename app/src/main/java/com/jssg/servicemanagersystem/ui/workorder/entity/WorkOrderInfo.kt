@@ -72,4 +72,5 @@ data class WorkOrderInfo(
        val badNumTotal: Int?,   // 不良数量
        val sysOrganizationVo: WorkFactoryInfo?,
        val oaBillNo: String?,
+       var isChecked: Boolean = false
 ) : Parcelable
