@@ -134,7 +134,7 @@ class ReportFragment : BaseFragment() {
     private fun addListener() {
 
         binding.layoutSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.printableName, true)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKODERDETAIL_REPORT.printableName, true)) return@setOnClickListener
 
             showTipPopupWindow(binding.layoutSearch)
         }
