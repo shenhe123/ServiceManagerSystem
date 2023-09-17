@@ -34,18 +34,18 @@ object RetrofitService {
         httpApi = createApiService(ApiService::class.java)
     }
 
-    fun <T> createApiService(tClass: Class<T>): T {
+    private fun <T> createApiService(tClass: Class<T>, timeout: Long = OkHttpClientFactory.DEFAULT_TIMEOUT): T {
         if (retrofit == null) {
-            retrofit = createRetrofit()
+            retrofit = createRetrofit(timeout)
         }
         return retrofit!!.create(tClass)
     }
 
-    fun createRetrofit(): Retrofit {
+    private fun createRetrofit(timeout: Long = OkHttpClientFactory.DEFAULT_TIMEOUT): Retrofit {
         evictAllConnection()
         currentClient = OkHttpClientFactory.createOkHttpClient(
             true,
-            OkHttpClientFactory.DEFAULT_TIMEOUT
+            timeout
         )
         val url: String = if (BuildConfig.IS_TEST_HOST) Constants.Test_Host else Constants.Release_Host
         if (!URLUtil.isHttpsUrl(url)) {
@@ -65,6 +65,11 @@ object RetrofitService {
                 httpApi = createApiService(ApiService::class.java)
             }
             return httpApi!!
+        }
+
+    val downloadApiServie: ApiService
+        get() {
+            return createRetrofit(10 * 60 * 1000).create(ApiService::class.java)
         }
 
     /**

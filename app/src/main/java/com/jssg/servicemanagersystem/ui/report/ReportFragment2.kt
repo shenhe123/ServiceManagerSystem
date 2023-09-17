@@ -2,6 +2,7 @@ package com.jssg.servicemanagersystem.ui.report
 
 import android.net.http.SslError
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
+import java.io.File
 
 
 class ReportFragment2 : BaseFragment() {
@@ -93,7 +95,7 @@ class ReportFragment2 : BaseFragment() {
             ): WebResourceResponse? {
 
                 request?.url?.let {
-                    val response = RetrofitService.apiService.getWorkOrderDetailExport().execute()
+                    val response = RetrofitService.downloadApiServie.getWorkOrderDetailExport().execute()
                     return WebResourceResponse(
                         response.headers()["content-type"] ?: response.body()?.contentType()?.type,
                         response.headers()["content-encoding"] ?: "utf-8",
@@ -160,6 +162,7 @@ class ReportFragment2 : BaseFragment() {
      */
     private fun progressChanged(view: WebView?) {
         binding.progressBar.visibility = View.GONE
+        hideLoading()
     }
 
     override fun onResume() {
@@ -176,7 +179,52 @@ class ReportFragment2 : BaseFragment() {
 
     private fun loadData() {
         val baseUrl: String = if (BuildConfig.IS_TEST_HOST) Constants.Test_Host else Constants.Release_Host
-        binding.webView.loadUrl("${baseUrl}staging-api/qm/workOrderDetail/reportExport")
+        val url = "${baseUrl}staging-api/qm/workOrderDetail/reportExport"
+        binding.webView.loadUrl(url)
+        showProgressbarLoading()
+
+//        val directoryPictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+//        val fileDirectory = File(directoryPictures.absolutePath + File.separator + "workOrder")
+//        val fileName = fileDirectory.absolutePath + File.separator + "workOrder_2023-09-17-13:54:43.xls"
+//        binding.webView.loadUrl("https://view.officeapps.live.com/op/view.aspx?src=$fileName")
+
+//        PermissionHelper.Builder().with(this).build().request("需要读写权限", Manifest.permission.WRITE_EXTERNAL_STORAGE
+//        ) { granted, isAlwaysDenied ->
+//            if (granted) {
+//                //申请权限成功
+//                val directoryPictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+//
+//                directoryPictures?.let {
+//                    val fileDirectory = File(directoryPictures.absolutePath + File.separator + "workOrder")
+//                    if (!fileDirectory.exists()) {
+//                        fileDirectory.mkdirs()
+//                    }
+//                    val fileName = fileDirectory.absolutePath + File.separator + "workOrder_${DateUtil.getFullData(System.currentTimeMillis())}.xls"
+//                    LogUtil.e("shenhe", "外置SD卡路径：" + fileDirectory.absolutePath)
+//
+//                    lifecycleScope.launchWhenResumed {
+//                        showProgressbarLoading()
+//                        DownloadManager.downloadWorkOrderDetailReport(File(fileName)).collect {
+//                            when (it) {
+//                                is DownloadState.InProgress -> {
+//                                    LogUtil.e("shenhe", "download progress = ${it.progress}")
+//                                }
+//                                is DownloadState.Success -> {
+//                                    hideLoading()
+//                                    ToastUtils.showToast("下载成功")
+////                                    binding.webView.loadUrl(fileName)
+//                                    LogUtil.e("shenhe", "download success")
+//                                }
+//                                is DownloadState.Error -> {
+//                                    hideLoading()
+//                                    ToastUtils.showToast(it.throwable.message)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     private fun addListener() {

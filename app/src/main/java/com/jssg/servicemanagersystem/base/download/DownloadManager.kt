@@ -18,7 +18,7 @@ object DownloadManager {
 
     suspend fun downloadTravelReport(billNo: String, file: File): Flow<DownloadState> {
         return flow {
-            val response = RetrofitService.apiService.getTravelReportExport(billNo).execute()
+            val response = RetrofitService.downloadApiServie.getTravelReportExport(billNo).execute()
             if (response.isSuccessful) {
                 saveToFile(response.body()!!, file) {
                     emit(DownloadState.InProgress(it))
@@ -34,7 +34,7 @@ object DownloadManager {
 
     suspend fun downloadWorkOrderDetailReport(file: File): Flow<DownloadState> {
         return flow {
-            val response = RetrofitService.apiService.getWorkOrderDetailExport().execute()
+            val response = RetrofitService.downloadApiServie.getWorkOrderDetailExport().execute()
             if (response.isSuccessful) {
                 saveToFile(response.body()!!, file) {
                     emit(DownloadState.InProgress(it))

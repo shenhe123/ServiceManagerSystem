@@ -1,10 +1,11 @@
 package com.jssg.servicemanagersystem.core
 
 import android.app.Activity
-import android.app.Application
 import android.os.Bundle
 import com.baidu.location.LocationClient
+import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.base.http.RetrofitService
+import com.jssg.servicemanagersystem.base.refresh.RefreshLayoutManager
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastTool
 import com.jssg.servicemanagersystem.utils.toast.style.BitMaxStyle
@@ -12,9 +13,7 @@ import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.LinkedList
-import com.jssg.servicemanagersystem.BuildConfig
-import com.jssg.servicemanagersystem.base.refresh.RefreshLayoutManager
-import java.lang.IllegalStateException
+
 
 /**
  * ServiceManagerSystem

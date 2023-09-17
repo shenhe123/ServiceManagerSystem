@@ -1,6 +1,8 @@
 package com.jssg.servicemanagersystem.ui.report
 
+import android.Manifest
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
+import com.jssg.servicemanagersystem.base.download.DownloadManager
+import com.jssg.servicemanagersystem.base.download.DownloadState
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentReportBinding
@@ -22,10 +26,14 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
+import com.jssg.servicemanagersystem.utils.DateUtil
+import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import net.arvin.permissionhelper.PermissionHelper
+import java.io.File
 
 class ReportFragment : BaseFragment() {
 
@@ -38,7 +46,6 @@ class ReportFragment : BaseFragment() {
     }
 
     private var searchParams: WorkOrderFragment.SearchParams? = null
-    private val checkedBillNos = arrayListOf<String>()
     private var page: Int = 1
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var workOrderViewModel: WorkOrderViewModel
@@ -57,7 +64,7 @@ class ReportFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = WorkOrderReportAdapter(false)
+        adapter = WorkOrderReportAdapter()
         binding.recyclerView.adapter = adapter
 
         binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
@@ -143,8 +150,6 @@ class ReportFragment : BaseFragment() {
             }
         }
 
-        updateCheckedIsAllBillNo()
-
         showNoData(adapter.data.isEmpty())
     }
 
@@ -161,64 +166,75 @@ class ReportFragment : BaseFragment() {
 
     private fun addListener() {
 
-        adapter.setOnItemChildClickListener { _, view, position ->
-            val workOrderInfo = adapter.data[position]
-            when(view.id) {
-                R.id.mcb_check -> {
-                    if ((view as MaterialCheckBox).isChecked) {
-                        checkedBillNos.add(workOrderInfo.billNo)
-                    } else {
-                        if (checkedBillNos.contains(workOrderInfo.billNo)) {
-                            checkedBillNos.remove(workOrderInfo.billNo)
-                        }
-                    }
-                }
-            }
-        }
-
-//        adapter.setOnItemClickListener { _, _, position ->
-//            val workOrderInfo = adapter.data[position]
-//            workOrderLauncher.launch(workOrderInfo)
-//        }
-
         binding.layoutSearch.setOnClickListener {
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.printableName, true)) return@setOnClickListener
 
             showTipPopupWindow(binding.layoutSearch)
         }
 
-        binding.cbCheckAll.setOnClickListener {
-            adapter.toggleCheckedState()
-
-            updateCheckedIsAllBillNo()
-        }
-
         binding.tvExport.setOnClickListener {
 
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKODERDETAIL_REPORT.printableName, true)) return@setOnClickListener
 
-            if (checkedBillNos.isNotEmpty()) {
-                SingleBtnDialogFragment.newInstance("确定导出", "确定将所选工单的报表全部导出吗？")
+            if (searchParams == null) {
+                SingleBtnDialogFragment.newInstance("确定导出", "确定将全部工单的报表全部导出吗？")
                     .addConfrimClickLisntener(object :
                         SingleBtnDialogFragment.OnConfirmClickLisenter {
                         override fun onConfrimClick() {
-
+                            exportWorkOrder()
                         }
 
                     }).show(childFragmentManager, "close_case_dialog")
             } else {
-                ToastUtils.showToast("请先选择要导出的工单报表")
+                SingleBtnDialogFragment.newInstance("确定导出", "确定将当前搜索结果的报表全部导出吗？")
+                    .addConfrimClickLisntener(object :
+                        SingleBtnDialogFragment.OnConfirmClickLisenter {
+                        override fun onConfrimClick() {
+                            exportWorkOrder()
+                        }
+
+                    }).show(childFragmentManager, "close_case_dialog")
             }
 
         }
     }
 
-    private fun updateCheckedIsAllBillNo() {
-        if (binding.cbCheckAll.isChecked) {
-            checkedBillNos.clear()
-            checkedBillNos.addAll(adapter.data.map { it.billNo })
-        } else {
-            checkedBillNos.clear()
+    private fun exportWorkOrder() {
+                PermissionHelper.Builder().with(this).build().request("需要读写权限", Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) { granted, isAlwaysDenied ->
+            if (granted) {
+                //申请权限成功
+                val directoryPictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+                directoryPictures?.let {
+                    val fileDirectory = File(directoryPictures.absolutePath + File.separator + "workOrder")
+                    if (!fileDirectory.exists()) {
+                        fileDirectory.mkdirs()
+                    }
+                    val fileName = fileDirectory.absolutePath + File.separator + "workOrder_${DateUtil.getFullData(System.currentTimeMillis())}.xls"
+                    LogUtil.e("shenhe", "外置SD卡路径：" + fileDirectory.absolutePath)
+
+                    lifecycleScope.launchWhenResumed {
+                        showProgressbarLoading()
+                        DownloadManager.downloadWorkOrderDetailReport(File(fileName)).collect {
+                            when (it) {
+                                is DownloadState.InProgress -> {
+                                    LogUtil.e("shenhe", "download progress = ${it.progress}")
+                                }
+                                is DownloadState.Success -> {
+                                    hideLoading()
+                                    ToastUtils.showToast("下载成功")
+                                    LogUtil.e("shenhe", "download success")
+                                }
+                                is DownloadState.Error -> {
+                                    hideLoading()
+                                    ToastUtils.showToast(it.throwable.message)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

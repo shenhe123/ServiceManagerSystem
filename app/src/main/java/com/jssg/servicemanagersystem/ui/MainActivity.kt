@@ -58,7 +58,7 @@ class MainActivity : BaseActivity() {
             when (position) {
                 0 -> return WorkOrderFragment.newInstance()
                 1 -> return TravelReportFragment.newInstance()
-                2 -> return ReportFragment2.newInstance()
+                2 -> return ReportFragment.newInstance()
                 3-> return AccountFragment.newInstance()
             }
             return WorkOrderFragment.newInstance()
