@@ -112,12 +112,12 @@ class ReportFragment : BaseFragment() {
 
     private fun showNoData(isVisible: Boolean) {
         binding.tvEmpty.isVisible = isVisible
+        binding.table.isVisible = !isVisible
     }
 
     private fun updateReportList(result: LoadListDataModel<List<ReportListInfo>?>) {
         result.rows?.let {
             val reversedList = it
-//            val tableData = MapTableData.create("报表", reversedList)
             binding.table.setData(reversedList)
         }
 

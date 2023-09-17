@@ -42,6 +42,35 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <RelativeLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/input_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:clickable="false"
+            android:textSize="16sp"
+            android:text="@string/app_search"
+            android:background="@drawable/selector_input_stroke"
+            android:paddingStart="40dp"/>
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_alignStart="@id/input_search"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_search"
+            app:tint="@color/x_text_03" />
+
+    </RelativeLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -50,45 +79,15 @@
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/smart_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp">
+            android:layout_height="match_parent">
 
             <com.bin.david.form.core.SmartTable
                 android:id="@+id/table"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:layout_marginTop="-30dp"/>
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/dp_10">
-
-            <TextView
-                android:id="@+id/input_search"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical"
-                android:clickable="false"
-                android:textSize="16sp"
-                android:text="@string/app_search"
-                android:background="@drawable/selector_input_stroke"
-                android:paddingStart="40dp"/>
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="12dp"
-                android:layout_alignStart="@id/input_search"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_search"
-                app:tint="@color/x_text_03" />
-
-        </RelativeLayout>
 
         <ProgressBar
             android:id="@+id/pb_loading"
