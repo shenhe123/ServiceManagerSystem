@@ -1,13 +1,16 @@
 package com.jssg.servicemanagersystem.ui.report.entity
 
+import android.os.Parcelable
 import com.bin.david.form.annotation.SmartColumn
 import com.bin.david.form.annotation.SmartTable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * ServiceManagerSystem
  * Created by he.shen on 2023/9/17.
  */
 @SmartTable(name = "")
+@Parcelize
 data class ReportListInfo(
     @SmartColumn(id = 2,name ="申请日期")
     val applyDate: String,
@@ -52,4 +55,4 @@ data class ReportListInfo(
     val totalPrice: Int,
     @SmartColumn(id = 8,name ="服务单价")
     val unitPrice: Int
-)
+) : Parcelable

@@ -339,3 +339,11 @@
 # Accessed via reflection, avoid renaming or removal
 -keep class org.greenrobot.eventbus.android.AndroidComponentsImpl
 #EventBus --- 结束
+
+#SmartTable ---开始
+-keepattributes *Annotation*
+#-keepclassmembers class ** {
+#    @com.bin.david.form.annotation.SmartTable<fields>;
+#}
+-keep enum com.bin.david.form.annotation.ColumnType { *; }
+#SmartTable ---结束
