@@ -202,6 +202,18 @@ interface ApiService {
     @GET("staging-api/qm/workOrderDetail/reportExport")
     fun getWorkOrderDetailExport(): Call<ResponseBody>
 
+    @Streaming
+    @GET("staging-api/qm/workOrderDetail/reportExport")
+    fun searchWorkOrderDetailExport(@Query("productCode") productCode: String?,
+                                    @Query("productDes") productDes: String?,
+                                    @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
+                                    @Query("params[\"endApplyDate\"]") endApplyDate: String?,
+                                    @Query("oaBillNo") oaBillNo: String?,
+                                    @Query("orgService") orgService: String?,
+                                    @Query("checkState") checkState: String?,
+                                    @Query("pageNum") pageNum: Int,
+                                    @Query("pageSize") pageSize: Int): Call<ResponseBody>
+
     @GET("staging-api/monitor/logininfor/list")
     fun getLogInfoList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<LogInfo>?>>
 }

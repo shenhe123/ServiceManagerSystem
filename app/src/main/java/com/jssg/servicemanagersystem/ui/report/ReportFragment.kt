@@ -10,8 +10,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.checkbox.MaterialCheckBox
-import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.download.DownloadManager
 import com.jssg.servicemanagersystem.base.download.DownloadState
@@ -176,21 +174,22 @@ class ReportFragment : BaseFragment() {
 
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKODERDETAIL_REPORT.printableName, true)) return@setOnClickListener
 
+            val fileName = "workOrder_${DateUtil.getFullData(System.currentTimeMillis())}.xls"
             if (searchParams == null) {
-                SingleBtnDialogFragment.newInstance("确定导出", "确定将全部工单的报表全部导出吗？")
+                SingleBtnDialogFragment.newInstance("确定导出", "确定将全部工单的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName")
                     .addConfrimClickLisntener(object :
                         SingleBtnDialogFragment.OnConfirmClickLisenter {
                         override fun onConfrimClick() {
-                            exportWorkOrder()
+                            exportWorkOrder(fileName)
                         }
 
                     }).show(childFragmentManager, "close_case_dialog")
             } else {
-                SingleBtnDialogFragment.newInstance("确定导出", "确定将当前搜索结果的报表全部导出吗？")
+                SingleBtnDialogFragment.newInstance("确定导出", "确定将当前搜索结果的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName")
                     .addConfrimClickLisntener(object :
                         SingleBtnDialogFragment.OnConfirmClickLisenter {
                         override fun onConfrimClick() {
-                            exportWorkOrder()
+                            exportWorkOrder(fileName)
                         }
 
                     }).show(childFragmentManager, "close_case_dialog")
@@ -199,7 +198,7 @@ class ReportFragment : BaseFragment() {
         }
     }
 
-    private fun exportWorkOrder() {
+    private fun exportWorkOrder(fileName: String) {
                 PermissionHelper.Builder().with(this).build().request("需要读写权限", Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) { granted, isAlwaysDenied ->
             if (granted) {
@@ -211,19 +210,19 @@ class ReportFragment : BaseFragment() {
                     if (!fileDirectory.exists()) {
                         fileDirectory.mkdirs()
                     }
-                    val fileName = fileDirectory.absolutePath + File.separator + "workOrder_${DateUtil.getFullData(System.currentTimeMillis())}.xls"
+                    val filePath = fileDirectory.absolutePath + File.separator + fileName
                     LogUtil.e("shenhe", "外置SD卡路径：" + fileDirectory.absolutePath)
 
                     lifecycleScope.launchWhenResumed {
                         showProgressbarLoading()
-                        DownloadManager.downloadWorkOrderDetailReport(File(fileName)).collect {
+                        DownloadManager.downloadWorkOrderDetailReport(searchParams, File(filePath)).collect {
                             when (it) {
                                 is DownloadState.InProgress -> {
                                     LogUtil.e("shenhe", "download progress = ${it.progress}")
                                 }
                                 is DownloadState.Success -> {
                                     hideLoading()
-                                    ToastUtils.showToast("下载成功")
+                                    ToastUtils.showToast("导出成功")
                                     LogUtil.e("shenhe", "download success")
                                 }
                                 is DownloadState.Error -> {

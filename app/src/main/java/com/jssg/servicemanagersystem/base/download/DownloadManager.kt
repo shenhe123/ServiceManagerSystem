@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.base.download
 
 import com.jssg.servicemanagersystem.base.http.RetrofitService
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.ResponseBody
 import okio.IOException
+import retrofit2.Response
 import java.io.File
 
 /**
@@ -32,9 +34,26 @@ object DownloadManager {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun downloadWorkOrderDetailReport(file: File): Flow<DownloadState> {
+    suspend fun downloadWorkOrderDetailReport(
+        searchParams: WorkOrderFragment.SearchParams?,
+        file: File
+    ): Flow<DownloadState> {
         return flow {
-            val response = RetrofitService.downloadApiServie.getWorkOrderDetailExport().execute()
+            val response: Response<ResponseBody> = if (searchParams == null) {
+                RetrofitService.downloadApiServie.getWorkOrderDetailExport().execute()
+            } else {
+                RetrofitService.downloadApiServie.searchWorkOrderDetailExport(
+                    searchParams.productCode,
+                    searchParams.productDesc,
+                    searchParams.startDate,
+                    searchParams.endDate,
+                    searchParams.oaBillNo,
+                    searchParams.factory,
+                    searchParams.state,
+                    1,
+                    9999
+                ).execute()
+            }
             if (response.isSuccessful) {
                 saveToFile(response.body()!!, file) {
                     emit(DownloadState.InProgress(it))
