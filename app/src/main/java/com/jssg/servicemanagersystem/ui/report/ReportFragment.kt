@@ -60,6 +60,7 @@ class ReportFragment : BaseFragment() {
         binding.smartRefreshLayout.setOnRefreshListener { loadData(true) }
 
         binding.table.config.isShowTableTitle = false
+        binding.table.config.isShowXSequence = false
 
         addListener()
 
