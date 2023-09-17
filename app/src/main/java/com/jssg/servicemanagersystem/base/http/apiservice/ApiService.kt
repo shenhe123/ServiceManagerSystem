@@ -10,6 +10,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.account.entity.UserRoles
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
+import com.jssg.servicemanagersystem.ui.report.entity.ReportListInfo
 import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
@@ -31,7 +32,6 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Streaming
-import retrofit2.http.Url
 
 /**
  * Created by gongdongyang on 2018/9/25.
@@ -200,20 +200,30 @@ interface ApiService {
 
     @Streaming
     @GET("staging-api/qm/workOrderDetail/reportExport")
-    fun getWorkOrderDetailExport(): Call<ResponseBody>
+    fun getReportListExport(): Call<ResponseBody>
 
     @Streaming
     @GET("staging-api/qm/workOrderDetail/reportExport")
-    fun searchWorkOrderDetailExport(@Query("productCode") productCode: String?,
-                                    @Query("productDes") productDes: String?,
-                                    @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
-                                    @Query("params[\"endApplyDate\"]") endApplyDate: String?,
-                                    @Query("oaBillNo") oaBillNo: String?,
-                                    @Query("orgService") orgService: String?,
-                                    @Query("checkState") checkState: String?,
-                                    @Query("pageNum") pageNum: Int,
-                                    @Query("pageSize") pageSize: Int): Call<ResponseBody>
+    fun searchReportListExport(@Query("productCode") productCode: String?,
+                               @Query("productDes") productDes: String?,
+                               @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
+                               @Query("params[\"endApplyDate\"]") endApplyDate: String?,
+                               @Query("oaBillNo") oaBillNo: String?,
+                               @Query("orgService") orgService: String?,
+                               @Query("checkState") checkState: String?): Call<ResponseBody>
 
     @GET("staging-api/monitor/logininfor/list")
     fun getLogInfoList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<LogInfo>?>>
+
+    @GET("staging-api/qm/workOrderDetail/reportList")
+    fun getReportList(): Observable<BaseHttpResult<List<ReportListInfo>?>>
+
+    @GET("staging-api/qm/workOrderDetail/reportList")
+    fun searchReportList(@Query("productCode") productCode: String?,
+                         @Query("productDes") productDes: String?,
+                         @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
+                         @Query("params[\"endApplyDate\"]") endApplyDate: String?,
+                         @Query("oaBillNo") oaBillNo: String?,
+                         @Query("orgService") orgService: String?,
+                         @Query("checkState") checkState: String?): Observable<BaseHttpResult<List<ReportListInfo>?>>
 }

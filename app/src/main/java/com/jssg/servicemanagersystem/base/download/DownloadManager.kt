@@ -40,9 +40,9 @@ object DownloadManager {
     ): Flow<DownloadState> {
         return flow {
             val response: Response<ResponseBody> = if (searchParams == null) {
-                RetrofitService.downloadApiServie.getWorkOrderDetailExport().execute()
+                RetrofitService.downloadApiServie.getReportListExport().execute()
             } else {
-                RetrofitService.downloadApiServie.searchWorkOrderDetailExport(
+                RetrofitService.downloadApiServie.searchReportListExport(
                     searchParams.productCode,
                     searchParams.productDesc,
                     searchParams.startDate,
@@ -50,8 +50,6 @@ object DownloadManager {
                     searchParams.oaBillNo,
                     searchParams.factory,
                     searchParams.state,
-                    1,
-                    9999
                 ).execute()
             }
             if (response.isSuccessful) {

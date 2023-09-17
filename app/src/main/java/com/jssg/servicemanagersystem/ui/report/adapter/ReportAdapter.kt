@@ -10,7 +10,7 @@ import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
  * ServiceManagerSystem
  * Created by he.shen on 2023/8/24.
  */
-class WorkOrderReportAdapter(): BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderReportLayoutBinding>(ItemWorkOrderReportLayoutBinding::inflate) {
+class ReportAdapter(): BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderReportLayoutBinding>(ItemWorkOrderReportLayoutBinding::inflate) {
     override fun convert(holder: VBViewHolder<ItemWorkOrderReportLayoutBinding>, item: WorkOrderInfo) {
         holder.binding.tvOrderId.text = item.billNo
 

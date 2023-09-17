@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.download.DownloadManager
 import com.jssg.servicemanagersystem.base.download.DownloadState
@@ -19,19 +18,17 @@ import com.jssg.servicemanagersystem.databinding.FragmentReportBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
-import com.jssg.servicemanagersystem.ui.report.adapter.WorkOrderReportAdapter
-import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.ui.report.entity.ReportListInfo
+import com.jssg.servicemanagersystem.ui.report.viewmodel.ReportViewModel
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
-import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
-import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import net.arvin.permissionhelper.PermissionHelper
 import java.io.File
+
 
 class ReportFragment : BaseFragment() {
 
@@ -43,11 +40,9 @@ class ReportFragment : BaseFragment() {
         }
     }
 
+    private lateinit var reportViewModel: ReportViewModel
     private var searchParams: WorkOrderFragment.SearchParams? = null
-    private var page: Int = 1
     private lateinit var accountViewModel: AccountViewModel
-    private lateinit var workOrderViewModel: WorkOrderViewModel
-    private lateinit var adapter: WorkOrderReportAdapter
     private lateinit var binding: FragmentReportBinding
 
     override fun onCreateView(
@@ -61,20 +56,8 @@ class ReportFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = WorkOrderReportAdapter()
-        binding.recyclerView.adapter = adapter
-
-        binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onRefresh(refreshLayout: RefreshLayout) {
-                loadData(true)
-            }
-
-            override fun onLoadMore(refreshLayout: RefreshLayout) {
-                loadData(false)
-            }
-
-        })
+        binding.smartRefreshLayout.setEnableLoadMore(false)
+        binding.smartRefreshLayout.setOnRefreshListener { loadData(true) }
 
         addListener()
 
@@ -84,20 +67,17 @@ class ReportFragment : BaseFragment() {
     private fun initViewModel() {
         accountViewModel = ViewModelProvider(this)[AccountViewModel::class.java]
 
-        workOrderViewModel = ViewModelProvider(this)[WorkOrderViewModel::class.java]
-        workOrderViewModel.workOrderListLiveData.observe(viewLifecycleOwner) { result ->
+        reportViewModel = ViewModelProvider(this)[ReportViewModel::class.java]
+        reportViewModel.reportListLiveData.observe(viewLifecycleOwner) { result ->
             if (!result.isLoading) {
                 hideLoading()
-                if (result.isPullRefresh) {
+                if (binding.smartRefreshLayout.isRefreshing) {
                     binding.smartRefreshLayout.finishRefresh()
-                } else {
-                    binding.smartRefreshLayout.finishLoadMore()
                 }
-
                 binding.pbLoading.isVisible = false
             }
             if (result.isSuccess) {
-                updateWorkOrderList(result)
+                updateReportList(result)
             } else if (result.isError) {
                 ToastUtils.showToast(result.msg)
             }
@@ -134,32 +114,21 @@ class ReportFragment : BaseFragment() {
         binding.tvEmpty.isVisible = isVisible
     }
 
-    private fun updateWorkOrderList(result: LoadListDataModel<List<WorkOrderInfo>?>) {
+    private fun updateReportList(result: LoadListDataModel<List<ReportListInfo>?>) {
         result.rows?.let {
             val reversedList = it
-            if (result.isPullRefresh) {
-                adapter.setList(reversedList)
-            } else {
-                if (reversedList.isEmpty()) { //无更多数据
-                    binding.smartRefreshLayout.setNoMoreData(true)
-                } else {
-                    adapter.addData(reversedList)
-                }
-            }
+//            val tableData = MapTableData.create("报表", reversedList)
+            binding.table.setData(reversedList)
         }
 
-        showNoData(adapter.data.isEmpty())
+        showNoData(result.rows.isNullOrEmpty())
     }
 
     private fun loadData(isRefresh: Boolean) {
-        page = if (isRefresh) {
+        if (isRefresh) {
             searchParams = null
-            binding.smartRefreshLayout.setEnableLoadMore(true)
-            1
-        } else {
-            page + 1
         }
-        workOrderViewModel.getWorkOrderList(isRefresh, page)
+        reportViewModel.getReportList()
     }
 
     private fun addListener() {
@@ -243,8 +212,7 @@ class ReportFragment : BaseFragment() {
             override fun onClick(searchParams: WorkOrderFragment.SearchParams) {
                 showProgressbarLoading()
                 this@ReportFragment.searchParams = searchParams
-                binding.smartRefreshLayout.setEnableLoadMore(false)
-                workOrderViewModel.searchWorkOrder(searchParams)
+                reportViewModel.searchReportList(searchParams)
             }
 
         })

@@ -2,19 +2,16 @@ package com.jssg.servicemanagersystem.ui.account.logmanager
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.ActivityLogManagerBinding
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
 import com.jssg.servicemanagersystem.ui.account.logmanager.adapter.LogManagerAdapter
 import com.jssg.servicemanagersystem.ui.account.logmanager.viewmodel.LogManagerViewModel
-import com.jssg.servicemanagersystem.ui.report.adapter.WorkOrderReportAdapter
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
