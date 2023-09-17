@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
  * ServiceManagerSystem
  * Created by he.shen on 2023/9/17.
  */
-@SmartTable(name = "")
+@SmartTable(name = "报表")
 @Parcelize
 data class ReportListInfo(
     @SmartColumn(id = 2,name ="申请日期")

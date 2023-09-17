@@ -59,6 +59,8 @@ class ReportFragment : BaseFragment() {
         binding.smartRefreshLayout.setEnableLoadMore(false)
         binding.smartRefreshLayout.setOnRefreshListener { loadData(true) }
 
+        binding.table.config.isShowTableTitle = false
+
         addListener()
 
         initViewModel()
