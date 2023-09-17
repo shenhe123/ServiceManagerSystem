@@ -36,6 +36,7 @@ data class ReportListInfo(
     @SmartColumn(id = 15,name ="排查数量总（至今）")
     val checkNumTotal: Int,
     @SmartColumn(id = 17,name ="工单状态")
+    var checkStateName: String?,
     val checkState: Int,
     @SmartColumn(id = 6,name ="服务人员名称")
     val checkerName: String?,

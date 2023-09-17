@@ -21,7 +21,20 @@ class ReportViewModel: AutoDisposViewModel() {
         RetrofitService.apiService
             .getReportList()
             .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .doOnNext { list ->
+                mapCheckState(list)
+            }
             .subscribe(createListObserver(reportListLiveData, true, 1))
+    }
+
+    private fun mapCheckState(list: List<ReportListInfo>?) {
+        list?.forEach {
+            when (it.checkState) {
+                0 -> it.checkStateName = "未开始"
+                1 -> it.checkStateName = "排查中"
+                2 -> it.checkStateName = "已完成"
+            }
+        }
     }
 
     fun searchReportList(searchParams: WorkOrderFragment.SearchParams) {
@@ -36,7 +49,11 @@ class ReportViewModel: AutoDisposViewModel() {
                 searchParams.factory,
                 searchParams.state)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .doOnNext { list ->
+                mapCheckState(list)
+            }
             .subscribe(createListObserver(reportListLiveData, true, 1))
     }
+
 
 }
