@@ -6,9 +6,13 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bin.david.form.core.TableConfig
+import com.bin.david.form.data.CellInfo
+import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat
 import com.bin.david.form.data.style.FontStyle
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
@@ -62,8 +66,28 @@ class ReportFragment : BaseFragment() {
         binding.smartRefreshLayout.setOnRefreshListener { loadData(true) }
 
         binding.table.config.isShowTableTitle = false
-        binding.table.config.columnTitleStyle = FontStyle(requireContext(), 16, resources.getColor(R.color.x_text_01, null))
-//        binding.table.config.isShowXSequence = false
+        binding.table.config.columnTitleStyle =
+            FontStyle(requireContext(), 16, resources.getColor(R.color.purple_700, null))
+
+//        binding.table.config.columnTitleBackground =
+//            BaseBackgroundFormat(ContextCompat.getColor(requireContext(), R.color.grey))
+
+        binding.table.config.ySequenceStyle =
+            FontStyle(requireContext(), 16, resources.getColor(R.color.purple_700, null))
+
+        binding.table.config.isFixedYSequence = true
+
+        binding.table.config.contentCellBackgroundFormat = object :BaseCellBackgroundFormat<CellInfo<Any>>() {
+            override fun getBackGroundColor(cellInfo: CellInfo<Any>): Int {
+                if(cellInfo.row % 2 == 0) {
+                    return ContextCompat.getColor(requireContext(), R.color.grey);
+                }
+                return TableConfig.INVALID_COLOR;
+            }
+
+        }
+
+        binding.table.config.isShowXSequence = false
 
         addListener()
 
@@ -125,6 +149,8 @@ class ReportFragment : BaseFragment() {
         result.rows?.let {
             val reversedList = it
             binding.table.setData(reversedList)
+
+//            binding.table.tableData.columns[0].isFixed = true
         }
 
         showNoData(result.rows.isNullOrEmpty())
@@ -140,18 +166,31 @@ class ReportFragment : BaseFragment() {
     private fun addListener() {
 
         binding.layoutSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKODERDETAIL_REPORT.printableName, true)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(
+                    MenuEnum.QM_WORKODERDETAIL_REPORT.printableName,
+                    true
+                )
+            ) return@setOnClickListener
 
             showTipPopupWindow(binding.layoutSearch)
         }
 
         binding.tvExport.setOnClickListener {
 
-            if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKODERDETAIL_REPORT.printableName, true)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(
+                    MenuEnum.QM_WORKODERDETAIL_REPORT.printableName,
+                    true
+                )
+            ) return@setOnClickListener
 
-            val fileName = "workOrder_${DateUtil.getFullData(System.currentTimeMillis()).replace(":", ".")}.xls"
+            val fileName = "workOrder_${
+                DateUtil.getFullData(System.currentTimeMillis()).replace(":", ".")
+            }.xls"
             if (searchParams == null) {
-                SingleBtnDialogFragment.newInstance("确定导出", "确定将全部工单的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName")
+                SingleBtnDialogFragment.newInstance(
+                    "确定导出",
+                    "确定将全部工单的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName"
+                )
                     .addConfrimClickLisntener(object :
                         SingleBtnDialogFragment.OnConfirmClickLisenter {
                         override fun onConfrimClick() {
@@ -160,7 +199,10 @@ class ReportFragment : BaseFragment() {
 
                     }).show(childFragmentManager, "close_case_dialog")
             } else {
-                SingleBtnDialogFragment.newInstance("确定导出", "确定将当前搜索结果的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName")
+                SingleBtnDialogFragment.newInstance(
+                    "确定导出",
+                    "确定将当前搜索结果的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName"
+                )
                     .addConfrimClickLisntener(object :
                         SingleBtnDialogFragment.OnConfirmClickLisenter {
                         override fun onConfrimClick() {
@@ -174,14 +216,17 @@ class ReportFragment : BaseFragment() {
     }
 
     private fun exportWorkOrder(fileName: String) {
-                PermissionHelper.Builder().with(this).build().request("需要读写权限", Manifest.permission.WRITE_EXTERNAL_STORAGE
+        PermissionHelper.Builder().with(this).build().request(
+            "需要读写权限", Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) { granted, isAlwaysDenied ->
             if (granted) {
                 //申请权限成功
-                val directoryPictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                val directoryPictures =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
                 directoryPictures?.let {
-                    val fileDirectory = File(directoryPictures.absolutePath + File.separator + "workOrder")
+                    val fileDirectory =
+                        File(directoryPictures.absolutePath + File.separator + "workOrder")
                     if (!fileDirectory.exists()) {
                         fileDirectory.mkdirs()
                     }
@@ -190,22 +235,25 @@ class ReportFragment : BaseFragment() {
 
                     lifecycleScope.launchWhenResumed {
                         showProgressbarLoading()
-                        DownloadManager.downloadWorkOrderDetailReport(searchParams, File(filePath)).collect {
-                            when (it) {
-                                is DownloadState.InProgress -> {
-                                    LogUtil.e("shenhe", "download progress = ${it.progress}")
-                                }
-                                is DownloadState.Success -> {
-                                    hideLoading()
-                                    ToastUtils.showToast("导出成功")
-                                    LogUtil.e("shenhe", "download success")
-                                }
-                                is DownloadState.Error -> {
-                                    hideLoading()
-                                    ToastUtils.showToast(it.throwable.message)
+                        DownloadManager.downloadWorkOrderDetailReport(searchParams, File(filePath))
+                            .collect {
+                                when (it) {
+                                    is DownloadState.InProgress -> {
+                                        LogUtil.e("shenhe", "download progress = ${it.progress}")
+                                    }
+
+                                    is DownloadState.Success -> {
+                                        hideLoading()
+                                        ToastUtils.showToast("导出成功")
+                                        LogUtil.e("shenhe", "download success")
+                                    }
+
+                                    is DownloadState.Error -> {
+                                        hideLoading()
+                                        ToastUtils.showToast(it.throwable.message)
+                                    }
                                 }
                             }
-                        }
                     }
                 }
             }
