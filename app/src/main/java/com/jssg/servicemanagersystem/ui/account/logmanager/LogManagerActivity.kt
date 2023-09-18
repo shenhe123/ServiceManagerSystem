@@ -49,7 +49,7 @@ class LogManagerActivity : BaseActivity() {
     }
 
     private fun loadData(isRefresh: Boolean) {
-        page = if (isRefresh) 1 else page++
+        page = if (isRefresh) 1 else page + 1
 
         logManagerViewModel.getLogInfo(isRefresh, page)
     }
@@ -83,14 +83,13 @@ class LogManagerActivity : BaseActivity() {
 
     private fun updateLogInfoList(result: LoadListDataModel<List<LogInfo>?>) {
         result.rows?.let {
-            val reversedList = it.reversed()
             if (result.isPullRefresh) {
-                adapter.setList(reversedList)
+                adapter.setList(it)
             } else {
-                if (reversedList.isEmpty()) { //无更多数据
+                if (it.isEmpty()) { //无更多数据
                     binding.smartRefreshLayout.setNoMoreData(true)
                 } else {
-                    adapter.addData(reversedList)
+                    adapter.addData(it)
                 }
             }
         }

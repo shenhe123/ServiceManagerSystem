@@ -45,7 +45,7 @@ data class ReportListInfo(
     @SmartColumn(id = 16,name ="排查结束日期")
     val checkEnd: String?,
     @SmartColumn(id = 17,name ="工厂CQE工程师")
-    val approverName: String?,
+    val reviewer: String?,
     @SmartColumn(id = 18,name ="审核意见")
     val applyRemark: String?,
     @SmartColumn(id = 19,name ="排查数量总（至今）")
@@ -54,10 +54,11 @@ data class ReportListInfo(
     val badNumTotal: Int,
     @SmartColumn(id = 21,name ="工单状态")
     var checkStateName: String?,
-
-
-
     val badNum: Int,
+
+
+
+    val approverName: String?,
     val badPicNames: String,
     val batchPicNames: String,
     val boxPicNames: String,
