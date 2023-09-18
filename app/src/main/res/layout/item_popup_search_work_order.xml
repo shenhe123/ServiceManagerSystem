@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="产品描述"
+                android:text="产品名称"
                 android:layout_centerVertical="true"/>
 
             <androidx.appcompat.widget.AppCompatEditText
