@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bin.david.form.data.style.FontStyle
+import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.download.DownloadManager
 import com.jssg.servicemanagersystem.base.download.DownloadState
@@ -60,7 +62,8 @@ class ReportFragment : BaseFragment() {
         binding.smartRefreshLayout.setOnRefreshListener { loadData(true) }
 
         binding.table.config.isShowTableTitle = false
-        binding.table.config.isShowXSequence = false
+        binding.table.config.columnTitleStyle = FontStyle(requireContext(), 16, resources.getColor(R.color.x_text_01, null))
+//        binding.table.config.isShowXSequence = false
 
         addListener()
 
@@ -146,7 +149,7 @@ class ReportFragment : BaseFragment() {
 
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKODERDETAIL_REPORT.printableName, true)) return@setOnClickListener
 
-            val fileName = "workOrder_${DateUtil.getFullData(System.currentTimeMillis())}.xls"
+            val fileName = "workOrder_${DateUtil.getFullData(System.currentTimeMillis()).replace(":", ".")}.xls"
             if (searchParams == null) {
                 SingleBtnDialogFragment.newInstance("确定导出", "确定将全部工单的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName")
                     .addConfrimClickLisntener(object :
