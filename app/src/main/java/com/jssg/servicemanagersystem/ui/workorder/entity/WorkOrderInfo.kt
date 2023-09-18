@@ -52,7 +52,7 @@ data class WorkOrderInfo(
        val customer: String?,    // 客户名称
        val salesManager: String,    // 销售经理
        val serviceAdd: String,   	// 服务地址
-       val productCode: String,    // 产品编号
+       val productCode: String,    // 产品编码
        val productDes: String,    // 产品描述
        val checkNum: String?,   // 0, // 需排查数量
        val productNum: String?,   // 0, // 问题产品数量

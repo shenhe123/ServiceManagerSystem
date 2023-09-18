@@ -112,8 +112,8 @@ class WorkOrderDetailFragment : BaseFragment() {
             binding.tvApplyFactory.text = "申请工厂：${it.orgService}"
             binding.tvApplyDate.text = "申请日期：${it.applyDate}"
 
-            binding.tvProductDesc.text = "问题描述：${it.productDes}"
-            binding.tvProductCode.text = "产品编号：${it.productCode}"
+            binding.tvProductDesc.text = "产品名称：${it.productDes}"
+            binding.tvProductCode.text = "产品编码：${it.productCode}"
             binding.tvProductNum.text = "问题数量：${it.productNum ?: "0"}"
 
             binding.tvClientName.text = "服务客户名称：${it.customer ?: ""}"

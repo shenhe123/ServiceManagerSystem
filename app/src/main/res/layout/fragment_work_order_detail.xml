@@ -106,7 +106,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_product_num"
+                app:layout_constraintBottom_toBottomOf="@id/layout_service_desc"
                 app:layout_constraintTop_toBottomOf="@id/mcd_apply_info_bg" />
 
             <TextView
@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
-                tools:text="问题描述：shenhe"
+                tools:text="产品名称：shenhe"
                 app:layout_constraintStart_toStartOf="@id/v_product_line"
                 app:layout_constraintTop_toBottomOf="@id/v_product_line" />
 
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
-                tools:text="产品编号：工厂A"
+                tools:text="产品编码：工厂A"
                 app:layout_constraintStart_toStartOf="@id/tv_product_desc"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_desc" />
 
@@ -162,10 +162,44 @@
                 android:layout_weight="1"
                 android:elevation="2dp"
                 android:gravity="end"
-                android:paddingBottom="12dp"
-                tools:text="产品数量：2023-08-25"
+                tools:text="产品数量：12"
                 app:layout_constraintStart_toStartOf="@id/tv_product_code"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_code" />
+
+            <RelativeLayout
+                android:id="@+id/layout_service_desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:elevation="2dp"
+                android:paddingBottom="12dp"
+                app:layout_constraintEnd_toEndOf="@id/mcd_product_bg"
+                app:layout_constraintStart_toStartOf="@id/tv_product_num"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_num">
+
+                <TextView
+                    android:id="@+id/tv_service_desc"
+                    style="@style/SubTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容描述：" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:gravity="start|top"
+                    android:padding="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_below="@id/tv_service_desc"
+                    android:background="@drawable/selector_input_stroke"
+                    android:minLines="4"
+                    android:textColor="@color/x_text_03" />
+
+            </RelativeLayout>
 
 
             <androidx.cardview.widget.CardView
@@ -176,7 +210,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toBottomOf="@id/layout_service_desc"
+                app:layout_constraintBottom_toBottomOf="@id/tv_address"
                 app:layout_constraintTop_toBottomOf="@id/mcd_product_bg" />
 
             <TextView
@@ -327,43 +361,8 @@
                 android:elevation="2dp"
                 android:text="服务地点：北京市四季青"
                 app:layout_constraintStart_toStartOf="@id/layout_service_total"
-                app:layout_constraintTop_toBottomOf="@id/layout_service_total"/>
-
-            <RelativeLayout
-                android:id="@+id/layout_service_desc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:elevation="2dp"
-                android:paddingBottom="12dp"
-                app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"
-                app:layout_constraintStart_toStartOf="@id/tv_address"
-                app:layout_constraintTop_toBottomOf="@id/tv_address">
-
-                <TextView
-                    android:id="@+id/tv_service_desc"
-                    style="@style/SubTitleStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="服务内容描述：" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_remark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:gravity="start|top"
-                    android:padding="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="12dp"
-                    android:textSize="@dimen/sp_14"
-                    android:layout_below="@id/tv_service_desc"
-                    android:background="@drawable/selector_input_stroke"
-                    android:lines="8"
-                    android:textColor="@color/x_text_03"
-                    android:maxLines="10" />
-
-            </RelativeLayout>
+                app:layout_constraintTop_toBottomOf="@id/layout_service_total"
+                android:paddingBottom="12dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

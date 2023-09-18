@@ -163,13 +163,13 @@ class AddWorkOrderActivity : BaseActivity() {
 
             val productCode = binding.etProductCode.text.toString()
             if (productCode.isEmpty()) {
-                ToastUtils.showToast("产品编号不能为空")
+                ToastUtils.showToast("产品编码不能为空")
                 return@setOnClickListener
             }
 
             val productDesc = binding.etProductDesc.text.toString()
             if (productDesc.isEmpty()) {
-                ToastUtils.showToast("产品问题描述不能为空")
+                ToastUtils.showToast("产品名称不能为空")
                 return@setOnClickListener
             }
 
@@ -210,7 +210,10 @@ class AddWorkOrderActivity : BaseActivity() {
             }
 
             val remark = binding.etRemark.text.toString()
-
+            if (remark.isEmpty()) {
+                ToastUtils.showToast("内容描述不能为空")
+                return@setOnClickListener
+            }
 
             workOrderViewModel.addNewWorkOrder(
                 nickName,
