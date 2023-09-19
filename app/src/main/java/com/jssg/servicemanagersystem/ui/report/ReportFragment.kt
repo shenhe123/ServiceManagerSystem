@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bin.david.form.core.TableConfig
 import com.bin.david.form.data.CellInfo
 import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat
+import com.bin.david.form.data.format.draw.MultiLineDrawFormat
 import com.bin.david.form.data.style.FontStyle
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
@@ -150,7 +151,10 @@ class ReportFragment : BaseFragment() {
             val reversedList = it
             binding.table.setData(reversedList)
 
-//            binding.table.tableData.columns[0].isFixed = true
+            binding.table.tableData.columns[17].isFixed = true
+            binding.table.tableData.columns[17].isAutoCount = true
+            binding.table.tableData.columns[17].setDrawFormat(MultiLineDrawFormat<String>(requireContext(), 200))
+
         }
 
         showNoData(result.rows.isNullOrEmpty())
