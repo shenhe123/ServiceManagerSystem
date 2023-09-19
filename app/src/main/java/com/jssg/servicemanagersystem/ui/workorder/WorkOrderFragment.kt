@@ -184,6 +184,7 @@ class WorkOrderFragment : BaseFragment() {
         page = if (isRefresh) {
             searchParams = null
             binding.smartRefreshLayout.setEnableLoadMore(true)
+            resetCloseCaseStatus()
             1
         } else {
             page + 1
@@ -283,9 +284,7 @@ class WorkOrderFragment : BaseFragment() {
                     ).addCancelClickLisntener(object :
                         DoubleBtnDialogFragment.OnCancelClickLisenter {
                         override fun onCancelClick() {
-                            binding.tvCloseCase.text = "结案"
-                            adapter.isCloseCase = false
-                            adapter.notifyDataSetChanged()
+                            resetCloseCaseStatus()
                         }
                     }).show(childFragmentManager, "close_case_dialog")
                 }
@@ -293,6 +292,12 @@ class WorkOrderFragment : BaseFragment() {
             }
 
         }
+    }
+
+    private fun resetCloseCaseStatus() {
+        binding.tvCloseCase.text = "结案"
+        adapter.isCloseCase = false
+        adapter.notifyDataSetChanged()
     }
 
     private fun showTipPopupWindow(target: View) {
