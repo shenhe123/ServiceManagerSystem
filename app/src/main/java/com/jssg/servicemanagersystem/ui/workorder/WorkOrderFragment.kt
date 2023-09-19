@@ -266,28 +266,31 @@ class WorkOrderFragment : BaseFragment() {
                 adapter.isCloseCase = true
                 adapter.notifyDataSetChanged()
             } else {
-                if (checkedBillNos.isNotEmpty()) {
-                    SingleBtnDialogFragment.newInstance("确定结案", "确定将所选工单全部结案吗？")
-                        .addConfrimClickLisntener(object :
-                            SingleBtnDialogFragment.OnConfirmClickLisenter {
-                            override fun onConfrimClick() {
-                                workOrderViewModel.closeCaseWorkOrder(checkedBillNos)
-                            }
-
-                        }).show(childFragmentManager, "close_case_dialog")
+                val tipsContent = if (checkedBillNos.isNotEmpty()) {
+                    "确定将所选工单全部结案吗？"
                 } else {
-                    DoubleBtnDialogFragment.newInstance(
-                        "提示",
-                        "还没有选择工单哦，继续结案吗",
-                        "关闭结案",
-                        "继续结案"
-                    ).addCancelClickLisntener(object :
-                        DoubleBtnDialogFragment.OnCancelClickLisenter {
-                        override fun onCancelClick() {
-                            resetCloseCaseStatus()
-                        }
-                    }).show(childFragmentManager, "close_case_dialog")
+                    "还没有选择工单哦，继续结案吗"
                 }
+
+                DoubleBtnDialogFragment.newInstance(
+                    "提示",
+                    tipsContent,
+                    "关闭结案",
+                    "继续结案"
+                ).addCancelClickLisntener(object :
+                    DoubleBtnDialogFragment.OnCancelClickLisenter {
+                    override fun onCancelClick() {
+                        resetCloseCaseStatus()
+                    }
+                }).addConfirmClickLisntener(object : DoubleBtnDialogFragment.OnConfirmClickLisenter {
+                    override fun onConfrimClick() {
+                        if (checkedBillNos.isNotEmpty()) {
+                            workOrderViewModel.closeCaseWorkOrder(checkedBillNos)
+                        }
+                    }
+
+                })
+                    .show(childFragmentManager, "close_case_dialog")
 
             }
 
