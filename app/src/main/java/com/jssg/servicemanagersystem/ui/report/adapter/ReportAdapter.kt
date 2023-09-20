@@ -17,7 +17,7 @@ class ReportAdapter(): BaseBindingAdapter<WorkOrderInfo, ItemWorkOrderReportLayo
         holder.binding.tvApplyName.text = item.applyName
         holder.binding.tvApplyDept.text = item.applyDept
         holder.binding.tvApplyFactory.text = item.sysOrganizationVo?.orgShortName ?: item.orgService
-        holder.binding.tvApplyDate.text = item.applyDate
+        holder.binding.tvApplyDate.text = item.applyDate ?: ""
         holder.binding.tvProductDesc.text = item.productDes
 
 //        when(item.state) {

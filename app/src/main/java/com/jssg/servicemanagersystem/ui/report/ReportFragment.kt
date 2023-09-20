@@ -151,9 +151,9 @@ class ReportFragment : BaseFragment() {
             val reversedList = it
             binding.table.setData(reversedList)
 
-            binding.table.tableData.columns[17].isFixed = true
-            binding.table.tableData.columns[17].isAutoCount = true
-            binding.table.tableData.columns[17].setDrawFormat(MultiLineDrawFormat<String>(requireContext(), 200))
+//            binding.table.tableData.columns[17].isFixed = true
+//            binding.table.tableData.columns[17].isAutoCount = true
+//            binding.table.tableData.columns[17].setDrawFormat(MultiLineDrawFormat<String>(requireContext(), 200))
 
         }
 

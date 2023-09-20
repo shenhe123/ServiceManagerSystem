@@ -42,7 +42,7 @@ data class WorkOrderInfo(
         */
        val billNo: String,   // 工单号",
        val applyName: String,   // 申请人",
-       val applyDate: String,   // 申请时间",
+       val applyDate: String?,   // 申请时间",
        val applyDept: String,   // 申请部门",
        val orgService: String,   // 服务工厂",
        val tel: String,   // 电话",

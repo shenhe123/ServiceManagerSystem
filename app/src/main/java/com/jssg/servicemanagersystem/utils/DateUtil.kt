@@ -1,15 +1,16 @@
-package com.jssg.servicemanagersystem.utils;
+package com.jssg.servicemanagersystem.utils
 
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class DateUtil {
-
-    public static final DateFormat FULL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    public static final DateFormat FORMAT_yyyy_MM_dd = new SimpleDateFormat("yyyy-MM-dd");
-
+object DateUtil {
+    val fullDateFormat: String = "yyyy-MM-dd HH:mm:ss"
+    val yyyyMMddDateFormat: String = "yyyy-MM-dd"
+    val FULL_DATE_FORMAT: DateFormat = SimpleDateFormat(fullDateFormat)
+    val FORMAT_yyyy_MM_dd: DateFormat = SimpleDateFormat(yyyyMMddDateFormat)
 
     /**
      * "yyyy-MM-dd HH:mm:ss"
@@ -17,13 +18,25 @@ public class DateUtil {
      * @param time
      * @return
      */
-    public static String getFullData(long time) {
-        return FULL_DATE_FORMAT.format(new Date(time));
+    fun getFullData(time: Long): String {
+        return FULL_DATE_FORMAT.format(Date(time))
     }
 
-    public static String getDateyyMMdd(long time) {
-        return FORMAT_yyyy_MM_dd.format(new Date(time));
+    fun getDateyyMMdd(time: Long): String {
+        return FORMAT_yyyy_MM_dd.format(Date(time))
     }
 
+    fun formatDateString(fromDate: String, formatPattern: String): String? {
+        var date: Date? = null
+        try {
+            date = FULL_DATE_FORMAT.parse(fromDate)
+        } catch (e: ParseException) {
+            LogUtil.e(DateUtil::class.java.simpleName, e.toString())
+        }
+
+        date?.let {
+            return SimpleDateFormat(formatPattern).format(date)
+        }
+        return null
+    }
 }
-
