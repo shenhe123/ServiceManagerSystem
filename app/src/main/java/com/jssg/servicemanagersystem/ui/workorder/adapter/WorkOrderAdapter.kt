@@ -26,7 +26,7 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
     }
 
     override fun convert(holder: VBViewHolder<ItemWorkOrderLayoutBinding>, item: WorkOrderInfo) {
-        holder.binding.tvOrderId.text = item.billNo
+        holder.binding.tvOrderId.text = item.oaBillNo?.ifEmpty { item.billNo } ?: item.billNo
 
         holder.binding.tvApplyName.text = item.applyName
         holder.binding.tvApplyDept.text = item.applyDept

@@ -238,7 +238,7 @@ class ReportFragment : BaseFragment() {
                     LogUtil.e("shenhe", "外置SD卡路径：" + fileDirectory.absolutePath)
 
                     lifecycleScope.launchWhenResumed {
-                        showProgressbarLoading()
+                        showProgressbarLoading("正在导出...", true, false)
                         DownloadManager.downloadWorkOrderDetailReport(searchParams, File(filePath))
                             .collect {
                                 when (it) {

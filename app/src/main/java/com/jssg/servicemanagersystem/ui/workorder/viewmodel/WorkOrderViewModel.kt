@@ -45,6 +45,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         workOrderListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
             .searchWorkOrderList(
+                searchParams.applyName,
                 searchParams.productCode,
                 searchParams.productDesc,
                 searchParams.startDate,
@@ -163,6 +164,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         phoneNumber: String,
         clientName: String,
         serviceName: String,
+        salesManager: String,
         checkNum: String,
         servicePrice: String,
         servicePeriod: String,
@@ -191,7 +193,8 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["unitPrice"] = servicePrice
         params["checkNum"] = checkNum
         params["totalPrice"] = serviceTotal
-        params["salesManager"] = serviceName
+        params["serviceStaff"] = serviceName
+        params["salesManager"] = salesManager
         params["serviceAdd"] = serviceAddress
         params["productCode"] = productCode
         params["productDes"] = productDesc

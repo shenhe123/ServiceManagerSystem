@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import com.jssg.servicemanagersystem.R
 
 /**
@@ -66,12 +67,13 @@ class LoadingDialog: Dialog {
             val inflater = LayoutInflater.from(context)
             val view: View = inflater.inflate(R.layout.dialog_progress_loading, null)
             val loadingDailog = LoadingDialog(context, R.style.MyDialogStyle)
-            //            TextView msgText= view.findViewById(R.id.tipTextView);
-//            if(isShowMessage){
-//                msgText.setText(message);
-//            }else{
-//                msgText.setVisibility(View.GONE);
-//            }
+            val msgText = view.findViewById<TextView>(R.id.tipTextView)
+            if(isShowMessage){
+                msgText.text = message
+                msgText.visibility = View.VISIBLE
+            }else{
+                msgText.visibility = View.GONE
+            }
 
             loadingDailog.setContentView(view)
             loadingDailog.setCancelable(isCancelable)

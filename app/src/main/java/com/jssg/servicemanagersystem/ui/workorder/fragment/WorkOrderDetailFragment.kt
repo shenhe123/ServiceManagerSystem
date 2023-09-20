@@ -117,7 +117,8 @@ class WorkOrderDetailFragment : BaseFragment() {
             binding.tvProductNum.text = "问题数量：${it.productNum ?: "0"}"
 
             binding.tvClientName.text = "服务客户名称：${it.customer ?: ""}"
-            binding.tvServiceName.text = "服务人员名称：${it.salesManager}"
+            binding.tvServiceName.text = "服务人员名称：${it.serviceStaff ?: ""}"
+            binding.tvSalesManager.text = "销售客服经理：${it.salesManager ?: ""}"
             binding.tvTel.text = "联系方式：${it.tel}"
             binding.tvCheckNum.text = "总排查数量：${it.checkNum ?: 0}"
             binding.tvUnitPrice.text = "服务单价：${it.unitPrice}"

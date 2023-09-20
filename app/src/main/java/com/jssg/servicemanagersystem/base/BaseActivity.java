@@ -131,6 +131,19 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void showProgressbarLoading(String msg, boolean isShowMsg, boolean isCancel) {
+        if (loadingDialog == null) {
+            loadingDialog = new LoadingDialog.Builder(this)
+                    .setMessage(msg)
+                    .setShowMessage(isShowMsg)
+                    .setCancelable(isCancel)
+                    .create();
+        }
+        if (!loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
+    }
+
 
     public void hideLoading() {
         if (loadingDialog == null) return;

@@ -39,6 +39,19 @@ class WorkOrderSearchPopupWindow(
         binding = ItemPopupSearchWorkOrderBinding.bind(mView)
 
         binding.layoutRoot.setOnClickListener { v: View? -> dismiss() }
+        binding.etApplyName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivApplyNameClose.isVisible = content.isNotEmpty()
+            }
+        })
         binding.etProductDesc.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -103,6 +116,10 @@ class WorkOrderSearchPopupWindow(
             showSelectDateDialog(binding.tvEndDate, 1, binding)
         }
 
+        binding.ivApplyNameClose.setOnClickListener {
+            binding.etApplyName.setText("")
+        }
+
         binding.ivProductDescClose.setOnClickListener {
             binding.etProductDesc.setText("")
         }
@@ -153,6 +170,7 @@ class WorkOrderSearchPopupWindow(
 
                 listener.onClick(
                     WorkOrderFragment.SearchParams(
+                        binding.etApplyName.text.toString(),
                         binding.etProductDesc.text.toString(),
                         binding.etProductCode.text.toString(),
                         startDate,

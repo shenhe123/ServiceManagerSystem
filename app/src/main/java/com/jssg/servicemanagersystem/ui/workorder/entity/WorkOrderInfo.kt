@@ -50,7 +50,8 @@ data class WorkOrderInfo(
        val unitPrice: String,   // 0, // 服务单价
        val totalPrice: String,   // 0, // 服务总价
        val customer: String?,    // 客户名称
-       val salesManager: String,    // 销售经理
+       val salesManager: String?,    // 销售经理
+       val serviceStaff: String?,    // 服务人员名称
        val serviceAdd: String,   	// 服务地址
        val productCode: String,    // 产品编码
        val productDes: String,    // 产品描述

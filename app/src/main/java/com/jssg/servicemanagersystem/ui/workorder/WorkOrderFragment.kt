@@ -329,6 +329,7 @@ class WorkOrderFragment : BaseFragment() {
 
     @Parcelize
     data class SearchParams(
+        val applyName: String?,
         val productDesc: String?,
         val productCode: String?,
         val startDate: String?,

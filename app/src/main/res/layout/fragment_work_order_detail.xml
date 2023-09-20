@@ -352,6 +352,26 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_sales_manager"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:elevation="2dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"
+                app:layout_constraintStart_toStartOf="@id/layout_service_total"
+                app:layout_constraintTop_toBottomOf="@id/layout_service_total">
+
+                <TextView
+                    android:id="@+id/tv_sales_manager"
+                    style="@style/SubTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="销售客服经理：12344" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
             <TextView
                 android:id="@+id/tv_address"
                 style="@style/SubTitleStyle"
@@ -360,8 +380,8 @@
                 android:layout_height="wrap_content"
                 android:elevation="2dp"
                 android:text="服务地点：北京市四季青"
-                app:layout_constraintStart_toStartOf="@id/layout_service_total"
-                app:layout_constraintTop_toBottomOf="@id/layout_service_total"
+                app:layout_constraintStart_toStartOf="@id/layout_sales_manager"
+                app:layout_constraintTop_toBottomOf="@id/layout_sales_manager"
                 android:paddingBottom="12dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

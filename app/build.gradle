@@ -69,11 +69,13 @@ android {
         //进入测试环境可以使用此渠道
         sms_test {
             buildConfigField "boolean", "IS_TEST_HOST", "true"
+            buildConfigField "String", "stagApi", "\"staging-api/\""
             buildConfigField "boolean", "SSL_ENABLE", "false"
         }
         //企业版使用渠道
         sms_release {
             buildConfigField "boolean", "IS_TEST_HOST", "false"
+            buildConfigField "String", "stagApi", "\"\""
             buildConfigField "boolean", "SSL_ENABLE", "true"
         }
     }

@@ -30,6 +30,11 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    public void showProgressbarLoading(String msg, boolean isShowMsg, boolean isCancel) {
+        if (getActivity() != null && getActivity() instanceof BaseActivity) {
+            ((BaseActivity) getActivity()).showProgressbarLoading(msg, isShowMsg, isCancel);
+        }
+    }
 
     public void hideLoading() {
         if (getActivity() != null && getActivity() instanceof BaseActivity) {

@@ -161,6 +161,12 @@ class AddWorkOrderActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            val salesManager = binding.etSalesManager.text.toString()
+            if (salesManager.isEmpty()) {
+                ToastUtils.showToast("销售客服经理不能为空")
+                return@setOnClickListener
+            }
+
             val productCode = binding.etProductCode.text.toString()
             if (productCode.isEmpty()) {
                 ToastUtils.showToast("产品编码不能为空")
@@ -220,6 +226,7 @@ class AddWorkOrderActivity : BaseActivity() {
                 phoneNumber,
                 clientName,
                 serviceName,
+                salesManager,
                 checkNum,
                 servicePrice,
                 servicePeriod,
