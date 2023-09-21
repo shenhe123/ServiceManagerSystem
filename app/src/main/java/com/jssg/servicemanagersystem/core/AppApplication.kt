@@ -31,6 +31,12 @@ class AppApplication: BaseCoreApplication() {
     }
 
     private fun init() {
+        try {
+            MMKV.initialize(this)
+        } catch (e: UnsatisfiedLinkError) {
+            //在一些低端机型会有小概率问题 isuse:02c72e5de1d6971970aa87d61ab0ab71
+        }
+
         RetrofitService.init()
 
         //RxJava2 当取消订阅后(dispose())，RxJava抛出的异常后续无法接收(此时后台线程仍在跑，可能会抛出IO等异常),全部由RxJavaPlugin接收，需要提前设置ErrorHandler
@@ -49,12 +55,6 @@ class AppApplication: BaseCoreApplication() {
         LocationClient.setAgreePrivacy(true)
 
         ToastTool.init(this, BitMaxStyle(false))
-
-        try {
-            MMKV.initialize(this)
-        } catch (e: UnsatisfiedLinkError) {
-            //在一些低端机型会有小概率问题 isuse:02c72e5de1d6971970aa87d61ab0ab71
-        }
 
         CrashReport.initCrashReport(applicationContext, "6ade02869d", BuildConfig.DEBUG);
 

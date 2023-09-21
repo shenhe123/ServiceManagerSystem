@@ -4,12 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.CheckedTextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.view.get
+import com.jssg.servicemanagersystem.R
+import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.core.AccountManager
+import com.jssg.servicemanagersystem.core.Constants
 import com.jssg.servicemanagersystem.databinding.ActivityChooseHostBinding
+import com.jssg.servicemanagersystem.databinding.ItemCheckedTextViewBinding
+import com.jssg.servicemanagersystem.utils.DpPxUtils
 
-class ChooseHostActivity : AppCompatActivity(), View.OnClickListener {
+class ChooseHostActivity : AppCompatActivity() {
     private var lastChooseHost: String = ""
     private lateinit var binding: ActivityChooseHostBinding
 
@@ -25,38 +34,43 @@ class ChooseHostActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         updateHostChoose()
-
-        binding.ckLine2.setOnClickListener(this)
-        binding.ckLine1.setOnClickListener(this)
     }
 
     private fun updateHostChoose() {
-//        hosts = HostManger.getHostService().getHostArray(false)
-        lastChooseHost = AccountManager.instance.getChooseHost() ?: "192.168.1.1"
-//        if (hosts == null || hosts.size < 2) {
-//            finish()
-//            ToastUtils.show("host_error")
-//            return
-//        }
+        val hostArray = Constants.hostArray
+        lastChooseHost = AccountManager.instance.getChooseHost()
+        hostArray.forEach {
+            addCheckedTextView(it)
+        }
+    }
 
-        binding.ckLine1.tag = "192.168.1.1"
-        binding.ckLine2.tag = "192.168.1.2"
-        checkMark()
+    private fun addCheckedTextView(host: String) {
+        val checkedView =
+            LayoutInflater.from(this).inflate(R.layout.item_checked_text_view, null)
+        val bind = ItemCheckedTextViewBinding.bind(checkedView)
+        bind.ckLine.layoutParams = LinearLayoutCompat.LayoutParams(-1, DpPxUtils.dip2px(this, 64.0f))
+        bind.ckLine.text = host
+        bind.ckLine.tag = host
+        bind.ckLine.isChecked = TextUtils.equals(lastChooseHost, host)
+
+        bind.ckLine.setOnClickListener {
+            if (!TextUtils.equals(lastChooseHost, host)) {
+                lastChooseHost = host
+                checkMark()
+
+                AccountManager.instance.saveChooseHost(lastChooseHost)
+                RetrofitService.recreateRetrofit()
+                finish()
+            }
+        }
+
+        binding.layoutHost.addView(checkedView)
     }
 
     private fun checkMark() {
-        binding.ckLine1.isChecked = TextUtils.equals(lastChooseHost, binding.ckLine1.tag.toString())
-        binding.ckLine2.isChecked = TextUtils.equals(lastChooseHost, binding.ckLine2.tag.toString())
-    }
-
-    override fun onClick(v: View) {
-        if (!TextUtils.equals(lastChooseHost, v.tag.toString())) {
-            lastChooseHost = v.tag.toString()
-//            HostManger.getHostService().changeNowUseHost(lastChooseHost, false)
-            checkMark()
-
-            AccountManager.instance.saveChooseHost(lastChooseHost)
-            finish()
+        for (i in 0 until binding.layoutHost.childCount) {
+            val checkedTextView = binding.layoutHost[0] as CheckedTextView
+            checkedTextView.isChecked = lastChooseHost.equals(checkedTextView.tag.toString(), false)
         }
     }
 

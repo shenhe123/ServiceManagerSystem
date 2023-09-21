@@ -3,6 +3,7 @@ package com.jssg.servicemanagersystem.base.http
 import android.webkit.URLUtil
 import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.base.http.apiservice.ApiService
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.core.Constants
 import com.jssg.servicemanagersystem.utils.LogUtil
 import okhttp3.OkHttpClient
@@ -47,7 +48,7 @@ object RetrofitService {
             true,
             timeout
         )
-        val url: String = if (BuildConfig.IS_TEST_HOST) Constants.Test_Host else Constants.Release_Host
+        val url: String = AccountManager.instance.getChooseHost()
         if (!URLUtil.isHttpsUrl(url)) {
             LogUtil.e(RetrofitService::class.simpleName, "http url  不合法$url".trimIndent())
         }

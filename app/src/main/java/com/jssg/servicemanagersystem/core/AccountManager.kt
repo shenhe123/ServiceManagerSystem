@@ -63,8 +63,8 @@ class AccountManager {
         MMKV.defaultMMKV().encode("choose_host", lastChooseHost)
     }
 
-    fun getChooseHost(): String? {
-        return MMKV.defaultMMKV().getString("choose_host", null)
+    fun getChooseHost(): String {
+        return MMKV.defaultMMKV().decodeString("choose_host") ?: Constants.Release_Host
     }
 
     fun getCookie(): String? {

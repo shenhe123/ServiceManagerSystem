@@ -7,5 +7,5 @@ package com.jssg.servicemanagersystem.core
 object Constants {
     val Test_Host = "http://qm.tiaodou21.cn/"
     val Release_Host = "http://123.249.25.5:19888/"
-    val stagApi = "staging-api/"
+    val hostArray = arrayOf(Release_Host)
 }
