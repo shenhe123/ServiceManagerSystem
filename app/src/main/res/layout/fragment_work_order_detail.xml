@@ -248,7 +248,8 @@
                 <TextView
                     android:id="@+id/tv_client_name"
                     style="@style/SubTitleStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
                     android:layout_height="wrap_content"
                     tools:text="服务客户名称：sSSS" />
 
