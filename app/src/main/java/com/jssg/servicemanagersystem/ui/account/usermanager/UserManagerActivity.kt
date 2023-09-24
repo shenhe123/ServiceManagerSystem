@@ -34,6 +34,13 @@ class UserManagerActivity : BaseActivity() {
         }
     }
 
+    private val launcherUserDetail = registerForActivityResult(UserManagerDetailActivity.UserDetailContracts()) { newUser ->
+        newUser?.let {
+            adapter.data[it.pos] = it.user
+            adapter.notifyItemChanged(it.pos)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,7 +57,9 @@ class UserManagerActivity : BaseActivity() {
             clickItemPos = position
             val user = adapter.data[position]
             when(v.id) {
-                R.id.card_layout -> UserManagerDetailActivity.goActivity(this, user)
+                R.id.card_layout -> {
+                    launcherUserDetail.launch(UserManagerDetailActivity.InputData(user, position))
+                }
 
                 R.id.mbt_permission -> {
                     if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_EDIT.printableName, true)) return@setOnItemChildClickListener

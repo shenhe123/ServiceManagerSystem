@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
+import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -13,6 +15,8 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.bigkoo.pickerview.builder.TimePickerBuilder
+import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerDetailBinding
@@ -20,9 +24,13 @@ import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
 import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
+import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
+import kotlinx.android.parcel.Parcelize
+import java.util.Calendar
 
 class UserManagerDetailActivity : BaseActivity() {
+    private var inputData: InputData? = null
     private var deptId: String? = null
     private var orgId: String? = null
     private var deptInfos: List<DeptInfo>? = null
@@ -39,7 +47,8 @@ class UserManagerDetailActivity : BaseActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-        user = intent?.getParcelableExtra("data")
+        inputData = intent?.getParcelableExtra("input")
+        user = inputData?.user
         user?.let {
             updateUserInfo(it)
         }
@@ -54,7 +63,7 @@ class UserManagerDetailActivity : BaseActivity() {
         binding.etCardId.setText(it.idNo)
         binding.etPhoneNum.setText(it.phonenumber)
         binding.etAddress.setText(it.address)
-        binding.etExpiredDate.setText(it.expireDate)
+        binding.tvExpiredDate.text = it.expireDate
         binding.etCreatePerson.setText(it.createBy)
         binding.etCreateTime.setText(it.createTime)
         binding.etUpdatePerson.setText(it.updateBy)
@@ -76,6 +85,12 @@ class UserManagerDetailActivity : BaseActivity() {
 
                 binding.tvFactory.text = binding.asFactory.prompt
                 binding.tvDept.text = binding.asDept.prompt
+
+                toggleEdit()
+
+                setResult(Activity.RESULT_OK, Intent().apply {
+                    putExtra("output", inputData)
+                })
             } else if (result.isError) {
                 ToastUtils.showToast(result.msg)
             }
@@ -172,9 +187,7 @@ class UserManagerDetailActivity : BaseActivity() {
         updateEditWidgets()
 
         binding.tvEdit.setOnClickListener {
-            editable = !editable
-            updateEditWidgets()
-            binding.layoutPasswordRoot.isVisible = editable
+            toggleEdit()
         }
 
         binding.toolBar.setNavigationOnClickListener { finish() }
@@ -233,13 +246,50 @@ class UserManagerDetailActivity : BaseActivity() {
             }
         }
 
-        binding.etExpiredDate.setOnFocusChangeListener { v, hasFocus ->
-            binding.layoutExpiredDate.isSelected = hasFocus
-            val drawable = if (editable) ResourcesCompat.getDrawable(resources, R.drawable.selector_input_stroke, null) else null
-            binding.layoutExpiredDate.background = drawable
-            if (hasFocus) {
-                setLast(binding.etExpiredDate)
-            }
+        binding.layoutExpiredDate.setOnClickListener {
+            val calendar = Calendar.getInstance() //获取日期格式器对象
+
+            //chose b
+            val pvTime: TimeDialogFragment =
+                TimePickerBuilder(this@UserManagerDetailActivity
+                ) { date -> //选中事件回调
+                    binding.tvExpiredDate.text = DateUtil.getFullData(date.time)
+                }
+                    .setType(booleanArrayOf(true, true, true, true, true, true)) //默认全部显示
+                    .setGravity(
+                        intArrayOf(
+                            Gravity.CENTER,
+                            Gravity.CENTER,
+                            Gravity.CENTER,
+                            Gravity.CENTER,
+                            Gravity.CENTER,
+                            Gravity.CENTER
+                        )
+                    )
+                    .setCancelText("取消") //取消按钮文字
+                    .setSubmitText(getString(R.string.app_confirm)) //确认按钮文字
+                    .setContentTextSize(18) //滚轮文字大小
+                    .setTitleSize(18) //标题文字大小
+                    .setTitleText("选择过期时间") //标题文字
+                    .isCyclic(true) //是否循环滚动
+                    .setTextColorCenter(getColor(R.color.purple_700)) //设置选中项的颜色
+                    .setTitleColor(getColor(R.color.x_text_01)) //标题文字颜色
+                    .setSubmitColor(getColor(R.color.purple_700)) //确定按钮文字颜色
+                    .setCancelColor(getColor(R.color.x_text_01)) //取消按钮文字颜色
+                    .setTitleBgColor(getColor(R.color.white)) //标题背景颜色 Night mode
+                    .setBgColor(getColor(R.color.white)) //滚轮背景颜色 Night mode
+                    .setDate(calendar) // 如果不设置的话，默认是系统时间*/
+                    .setLabel(
+                        "年",
+                        "月",
+                        "日",
+                        "时",
+                        "分",
+                        "秒"
+                    )
+                    .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                    .build()
+            pvTime.show(supportFragmentManager, "timepicker")
         }
 
         binding.asFactory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -314,7 +364,7 @@ class UserManagerDetailActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            val expiredDate = binding.etExpiredDate.text.toString()
+            val expiredDate = binding.tvExpiredDate.text.toString()
             if (expiredDate.isEmpty()) {
                 ToastUtils.showToast("有效日期不能为空")
                 return@setOnClickListener
@@ -339,9 +389,16 @@ class UserManagerDetailActivity : BaseActivity() {
                 it.idNo = cardId
                 it.address = address
                 it.expireDate = expiredDate
+
                 accountViewModel.updateUserInfo(it.roleIds, it, orgId, deptId, password)
             }
         }
+    }
+
+    private fun toggleEdit() {
+        editable = !editable
+        updateEditWidgets()
+        binding.layoutPasswordRoot.isVisible = editable
     }
 
     private fun updateEditWidgets() {
@@ -350,6 +407,7 @@ class UserManagerDetailActivity : BaseActivity() {
         binding.etCardId.isEnabled = editable
         binding.etAddress.isEnabled = editable
         binding.etPassword.isEnabled = editable
+//        binding.etExpiredDate.isEnabled = editable
 
         binding.tvFactory.isVisible = !editable
         binding.layoutFactory.isVisible = editable
@@ -378,27 +436,25 @@ class UserManagerDetailActivity : BaseActivity() {
         edit.setSelection(len ?: 0)
     }
 
-    companion object {
-        fun goActivity(context: Context, user: User) {
-            context.startActivity(Intent(context, UserManagerDetailActivity::class.java).apply {
-                putExtra("data", user)
-            })
-        }
-    }
-
-    class UserDetailContracts: ActivityResultContract<User, User?>() {
-        override fun createIntent(context: Context, input: User): Intent {
+    class UserDetailContracts: ActivityResultContract<InputData, InputData?>() {
+        override fun createIntent(context: Context, input: InputData): Intent {
             return Intent(context, UserManagerDetailActivity::class.java).apply {
-                putExtra("input_data", input)
+                putExtra("input", input)
             }
         }
 
-        override fun parseResult(resultCode: Int, intent: Intent?): User? {
-            val newUser = intent?.getParcelableExtra<User>("output")
+        override fun parseResult(resultCode: Int, intent: Intent?): InputData? {
+            val newUser = intent?.getParcelableExtra<InputData>("output")
             return if (resultCode == Activity.RESULT_OK) {
                 newUser
             } else null
         }
 
     }
+
+    @Parcelize
+    data class InputData(
+        var user: User,
+        val pos: Int
+    ) : Parcelable
 }
