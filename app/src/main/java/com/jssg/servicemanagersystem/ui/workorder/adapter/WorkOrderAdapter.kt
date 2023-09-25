@@ -55,7 +55,7 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
 
         val hasPermission =
             RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_REMOVE.printableName)
-        holder.binding.groupDelete.isVisible = hasPermission && item.checkState == 0
+        holder.binding.groupDelete.isVisible = hasPermission && item.checkState == 0 && item.oaBillNo.isNullOrEmpty()
     }
 
 
