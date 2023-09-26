@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.R
 
 /**
@@ -70,9 +71,9 @@ class LoadingDialog: Dialog {
             val msgText = view.findViewById<TextView>(R.id.tipTextView)
             if(isShowMessage){
                 msgText.text = message
-                msgText.visibility = View.VISIBLE
+                msgText.isVisible = !message.isNullOrEmpty()
             }else{
-                msgText.visibility = View.GONE
+                msgText.isVisible = false
             }
 
             loadingDailog.setContentView(view)
