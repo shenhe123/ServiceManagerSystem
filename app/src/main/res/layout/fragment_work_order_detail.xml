@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.workorder.fragment.WorkOrderDetailFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/layout_bottom">
+        app:layout_constraintBottom_toTopOf="@id/layout_bottom"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -57,9 +57,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
-                tools:text="申请人：shenhe"
                 app:layout_constraintStart_toStartOf="@id/v_title_line"
-                app:layout_constraintTop_toBottomOf="@id/v_title_line" />
+                app:layout_constraintTop_toBottomOf="@id/v_title_line"
+                tools:text="申请人：shenhe" />
 
             <TextView
                 android:id="@+id/tv_apply_dept"
@@ -70,9 +70,9 @@
                 android:layout_weight="1"
                 android:elevation="2dp"
                 android:gravity="end"
-                tools:text="申请部门：销售部"
                 app:layout_constraintEnd_toEndOf="@id/mcd_apply_info_bg"
-                app:layout_constraintTop_toTopOf="@id/tv_apply_name" />
+                app:layout_constraintTop_toTopOf="@id/tv_apply_name"
+                tools:text="申请部门：销售部" />
 
             <TextView
                 android:id="@+id/tv_apply_factory"
@@ -81,9 +81,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
-                tools:text="申请工厂：工厂A"
                 app:layout_constraintStart_toStartOf="@id/v_title_line"
-                app:layout_constraintTop_toBottomOf="@id/tv_apply_name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_apply_name"
+                tools:text="申请工厂：工厂A" />
 
             <TextView
                 android:id="@+id/tv_apply_date"
@@ -95,9 +95,9 @@
                 android:elevation="2dp"
                 android:gravity="end"
                 android:paddingBottom="12dp"
-                tools:text="申请日期：2023-08-25"
                 app:layout_constraintStart_toStartOf="@id/tv_apply_factory"
-                app:layout_constraintTop_toBottomOf="@id/tv_apply_factory" />
+                app:layout_constraintTop_toBottomOf="@id/tv_apply_factory"
+                tools:text="申请日期：2023-08-25" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/mcd_product_bg"
@@ -138,9 +138,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
-                tools:text="产品名称：shenhe"
                 app:layout_constraintStart_toStartOf="@id/v_product_line"
-                app:layout_constraintTop_toBottomOf="@id/v_product_line" />
+                app:layout_constraintTop_toBottomOf="@id/v_product_line"
+                tools:text="产品名称：shenhe" />
 
             <TextView
                 android:id="@+id/tv_product_code"
@@ -149,9 +149,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
-                tools:text="产品编码：工厂A"
                 app:layout_constraintStart_toStartOf="@id/tv_product_desc"
-                app:layout_constraintTop_toBottomOf="@id/tv_product_desc" />
+                app:layout_constraintTop_toBottomOf="@id/tv_product_desc"
+                tools:text="产品编码：工厂A" />
 
             <TextView
                 android:id="@+id/tv_product_num"
@@ -162,9 +162,9 @@
                 android:layout_weight="1"
                 android:elevation="2dp"
                 android:gravity="end"
-                tools:text="产品数量：12"
                 app:layout_constraintStart_toStartOf="@id/tv_product_code"
-                app:layout_constraintTop_toBottomOf="@id/tv_product_code" />
+                app:layout_constraintTop_toBottomOf="@id/tv_product_code"
+                tools:text="产品数量：12" />
 
             <RelativeLayout
                 android:id="@+id/layout_service_desc"
@@ -188,16 +188,16 @@
                     android:id="@+id/et_remark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:gravity="start|top"
-                    android:padding="10dp"
+                    android:layout_below="@id/tv_service_desc"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="12dp"
-                    android:textSize="@dimen/sp_14"
-                    android:layout_below="@id/tv_service_desc"
                     android:background="@drawable/selector_input_stroke"
+                    android:enabled="false"
+                    android:gravity="start|top"
                     android:minLines="4"
-                    android:textColor="@color/x_text_03" />
+                    android:padding="10dp"
+                    android:textColor="@color/x_text_03"
+                    android:textSize="@dimen/sp_14" />
 
             </RelativeLayout>
 
@@ -241,6 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"
                 app:layout_constraintStart_toStartOf="@id/v_service_title_line"
                 app:layout_constraintTop_toBottomOf="@id/v_service_title_line">
@@ -248,19 +249,17 @@
                 <TextView
                     android:id="@+id/tv_client_name"
                     style="@style/SubTitleStyle"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="服务客户名称：sSSS" />
 
                 <TextView
                     android:id="@+id/tv_service_name"
                     style="@style/SubTitleStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="12dp"
-                    android:layout_weight="1"
-                    android:gravity="end"
                     android:text="服务人员名称：AAA" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -358,6 +357,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
                 android:elevation="2dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"
@@ -376,14 +376,16 @@
             <TextView
                 android:id="@+id/tv_address"
                 style="@style/SubTitleStyle"
-                android:layout_marginTop="12dp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
                 android:elevation="2dp"
+                android:paddingBottom="12dp"
                 android:text="服务地点：北京市四季青"
+                app:layout_constraintEnd_toEndOf="@id/card_service_info_bg"
                 app:layout_constraintStart_toStartOf="@id/layout_sales_manager"
-                app:layout_constraintTop_toBottomOf="@id/layout_sales_manager"
-                android:paddingBottom="12dp"/>
+                app:layout_constraintTop_toBottomOf="@id/layout_sales_manager" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -398,11 +400,11 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbt_check_order"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="12dp"
+            android:layout_weight="1"
             android:text="新增排查"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -410,14 +412,14 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbt_check_order_detail"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="12dp"
+            android:layout_weight="1"
             android:text="排查详情"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
