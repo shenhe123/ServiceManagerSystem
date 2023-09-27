@@ -6,6 +6,8 @@ import com.baidu.location.LocationClient
 import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.base.http.RetrofitService
 import com.jssg.servicemanagersystem.base.refresh.RefreshLayoutManager
+import com.jssg.servicemanagersystem.ui.main.MainActivity
+import com.jssg.servicemanagersystem.ui.main.MainViewModel
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastTool
 import com.jssg.servicemanagersystem.utils.toast.style.BitMaxStyle
@@ -21,6 +23,8 @@ import java.util.LinkedList
  */
 class AppApplication: BaseCoreApplication() {
 
+    private lateinit var mainViewModel: MainViewModel
+    var isColdOpen = true
     var isRunInBackground = false
     private var appCount = 0
     private val activityList = LinkedList<Activity>()
@@ -71,6 +75,9 @@ class AppApplication: BaseCoreApplication() {
 
             override fun onActivityStarted(activity: Activity) {
                 appCount++
+                if (activity is MainActivity) {
+                    isColdOpen = false
+                }
 
                 if (isRunInBackground) {
                     //应用从后台回到前台 需要做的操作
@@ -116,6 +123,13 @@ class AppApplication: BaseCoreApplication() {
 
     fun getLastActivity(): Activity {
         return activityList.last
+    }
+
+    fun getMainViewModel(): MainViewModel {
+        if (!this::mainViewModel.isInitialized) {
+            mainViewModel = MainViewModel(this)
+        }
+        return mainViewModel
     }
 
     companion object {

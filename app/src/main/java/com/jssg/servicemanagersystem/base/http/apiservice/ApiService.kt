@@ -17,6 +17,7 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.utils.download.UpdateEntity
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -227,4 +228,8 @@ interface ApiService {
                          @Query("oaBillNo") oaBillNo: String?,
                          @Query("orgService") orgService: String?,
                          @Query("checkState") checkState: String?): Observable<BaseHttpResult<List<ReportListInfo>?>>
+
+
+    @GET("${BuildConfig.stagApi}qm/appVersionConfig")
+    fun getUpdateInfo(): Observable<BaseHttpResult<UpdateEntity?>>
 }

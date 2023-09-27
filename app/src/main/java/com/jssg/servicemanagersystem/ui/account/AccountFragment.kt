@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.core.AccountManager
+import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.FragmentAccountLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.logmanager.LogManagerActivity
@@ -21,7 +22,9 @@ import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.login.LoginActivity
 import com.jssg.servicemanagersystem.ui.login.LoginViewModel
+import com.jssg.servicemanagersystem.ui.main.update.UpdateDialogFragment
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 class AccountFragment : BaseFragment() {
 
@@ -43,7 +46,9 @@ class AccountFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvVersion.text = "v${BuildConfig.VERSION_NAME}"
+        addListener()
+
+        binding.tvNowVersion.text = "v${BuildConfig.VERSION_NAME}"
 
         loginViewModel.logoutLiveData.observe(viewLifecycleOwner) { result ->
             updateLoading(result, true)
@@ -59,7 +64,31 @@ class AccountFragment : BaseFragment() {
             }
         }
 
-        addListener()
+        AppApplication.get().getMainViewModel().updateInfoLiveData.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
+                result.data?.let {
+                    if (it.hasUpdate()) {
+                        binding.ivNewVersion.isVisible = true
+                        if (result.isSelfCheck) {
+                            UpdateDialogFragment.newInstance(it)
+                                .show(childFragmentManager, "update_dialog")
+                        }
+                    } else {
+                        binding.ivNewVersion.isVisible = false
+                        if (result.isSelfCheck) {
+                            ToastUtils.showToast("已经是最新版本")
+                        }
+                    }
+                }
+            } else if (result.isError) {
+                if (result.isSelfCheck) {
+                    ToastUtils.showToast(result.msg)
+                }
+            }
+        }
+
+        AppApplication.get().getMainViewModel().getUpdateInfo(false)
+
     }
 
     override fun onResume() {
@@ -119,6 +148,10 @@ class AccountFragment : BaseFragment() {
 
         binding.tvLogsManager.setOnClickListener {
             LogManagerActivity.goActivity(requireContext())
+        }
+
+        binding.llCheckUpdate.setOnClickListener {
+            AppApplication.get().getMainViewModel().getUpdateInfo(true)
         }
     }
 

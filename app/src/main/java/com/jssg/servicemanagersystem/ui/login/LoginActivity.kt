@@ -7,11 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActLoginLayoutBinding
-import com.jssg.servicemanagersystem.ui.MainActivity
+import com.jssg.servicemanagersystem.ui.main.MainActivity
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.account.network.ChooseHostActivity
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
-import com.tencent.mmkv.MMKV
 
 /**
  * ServiceManagerSystem

@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.account.update
+package com.jssg.servicemanagersystem.ui.main.update
 
 import android.app.Dialog
 import android.app.DownloadManager
@@ -16,7 +16,7 @@ import com.jssg.servicemanagersystem.core.AppApplication.Companion.get
 import com.jssg.servicemanagersystem.databinding.UpdataDialogBinding
 import com.jssg.servicemanagersystem.utils.download.ApkDownLoadService
 import com.jssg.servicemanagersystem.utils.download.ApkDownLoadService.install
-import com.jssg.servicemanagersystem.utils.download.ApkDownloadTaskInfo
+import com.jssg.servicemanagersystem.utils.download.UpdateEntity
 import com.jssg.servicemanagersystem.utils.download.DownloadApkProgressEvent
 import com.tencent.mmkv.MMKV
 import org.greenrobot.eventbus.EventBus
@@ -29,11 +29,11 @@ import java.io.File
  * @create 2019-05-31 11:07
  */
 class UpdateDialogFragment : DialogFragment() {
-    private var apkDownloadTaskInfo: ApkDownloadTaskInfo? = null
+    private var updateEntity: UpdateEntity? = null
     private lateinit var binding: UpdataDialogBinding
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        apkDownloadTaskInfo = arguments?.getParcelable("mUpdateEntity")
+        updateEntity = arguments?.getParcelable("mUpdateEntity")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -54,16 +54,16 @@ class UpdateDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (apkDownloadTaskInfo == null) dismiss()
+        if (updateEntity == null) dismiss()
         status = MMKV.defaultMMKV()
-            .decodeInt("app_download_" + apkDownloadTaskInfo!!.version, DownloadManager.STATUS_PENDING)
-        binding.tvVersion.text = "Version ${apkDownloadTaskInfo!!.version}"
+            .decodeInt("app_download_" + updateEntity!!.version, DownloadManager.STATUS_PENDING)
+        binding.tvVersion.text = "Version ${updateEntity!!.version}"
 
-        binding.tvUpdateContent.text = apkDownloadTaskInfo!!.updateInfo
+        binding.tvUpdateContent.text = updateEntity!!.updateInfo
         binding.ivCancel.setOnClickListener { v: View? -> dismiss() }
 
         //强制升级
-        if (apkDownloadTaskInfo!!.force) {
+        if (updateEntity!!.force) {
             binding.ivCancel.visibility = View.GONE
             isCancelable = false
         } else {
@@ -124,14 +124,14 @@ class UpdateDialogFragment : DialogFragment() {
                 binding.dialogBtnSure.text = "下载完成点击安装"
             }
         }
-        MMKV.defaultMMKV().encode("app_download_" + apkDownloadTaskInfo!!.version, status)
+        MMKV.defaultMMKV().encode("app_download_" + updateEntity!!.version, status)
     }
 
     private val isDownLoadSuccess: Boolean
         private get() {
-            val file = File((get().cacheDir.absolutePath) + "/customer_manager_system.apk")
+            val file = File((get().getExternalFilesDir("apk")!!.absolutePath) + "/customer_manager_system.apk")
 
-            if (checkDownLoadAPKIsSuccess(apkDownloadTaskInfo!!.version, file)) {
+            if (checkDownLoadAPKIsSuccess(updateEntity!!.version, file)) {
                 status = DownloadManager.STATUS_SUCCESSFUL
             }
             return status == DownloadManager.STATUS_SUCCESSFUL && file.exists() && file.length() > 90000000
@@ -161,18 +161,15 @@ class UpdateDialogFragment : DialogFragment() {
 
 
     private fun startUpdate(isInstall: Boolean) {
-        val file = File(get().cacheDir.absolutePath + "/customer_manager_system.apk")
+        val file = File(get().getExternalFilesDir("apk")!!.absolutePath + "/customer_manager_system.apk")
+        updateEntity?.apkLocalPath = file.absolutePath
         if (isInstall) {
             install(context, file.absolutePath)
         } else {
             val intent = Intent(activity, ApkDownLoadService::class.java)
             intent.putExtra(ApkDownLoadService.DO_WHAT, ApkDownLoadService.ACTION_DOWNLOAD)
-            intent.putExtra("taskInfo", apkDownloadTaskInfo)
+            intent.putExtra("taskInfo", updateEntity)
             requireActivity().startService(intent)
-            //            ToastUtils.showToast(getResources().getString(R.string.app_loading_now));
-//        if (mUpdateEntity.getIsForced() != 1) {
-//            dismiss();
-//        }
         }
     }
 
@@ -188,7 +185,7 @@ class UpdateDialogFragment : DialogFragment() {
         private const val SHOW_DURATION = (1 * 24 * 60 * 60 * 1000).toLong()
 
         @JvmStatic
-        fun newInstance(mUpdateEntity: ApkDownloadTaskInfo?): UpdateDialogFragment {
+        fun newInstance(mUpdateEntity: UpdateEntity?): UpdateDialogFragment {
             val args = Bundle()
             args.putParcelable("mUpdateEntity", mUpdateEntity)
             val fragment = UpdateDialogFragment()
@@ -204,7 +201,7 @@ class UpdateDialogFragment : DialogFragment() {
          * @param mUpdateEntity
          * @return
          */
-        fun isCanShowUpdateDialog(mUpdateEntity: ApkDownloadTaskInfo?): Boolean {
+        fun isCanShowUpdateDialog(mUpdateEntity: UpdateEntity?): Boolean {
             if (mUpdateEntity == null) return false
             //发现强制升级版本 直接提示升级
             if (mUpdateEntity.hasUpdate() && mUpdateEntity.force) {
@@ -213,24 +210,13 @@ class UpdateDialogFragment : DialogFragment() {
 
             //当前是最新版本则重置普通升级标记
             if (!mUpdateEntity.hasUpdate()) {
-                MMKV.defaultMMKV().putBoolean("has_normal_update", false)
                 return false
             }
-            //是否有未升级的普通版本
-            val hasNormalUpdate = MMKV.defaultMMKV().decodeBool("has_normal_update", false)
 
-            //当前版本配置了小红点提示升级 并且之前没有未升级的普通版本
-            return if (!hasNormalUpdate) {
-                false
-            } else {
-                //本地标记 有普通版本未升级、当升级之后会重置该值
-                MMKV.defaultMMKV().putBoolean("has_normal_update", true)
-
-                //有普通升级未升级  每隔1天提醒一次
-                val lastShowTime =
-                    MMKV.defaultMMKV().decodeLong(CANCEL_TIME_KEY, 0)
-                mUpdateEntity.hasUpdate() && System.currentTimeMillis() - lastShowTime > SHOW_DURATION
-            }
+            //有普通升级未升级  每隔1天提醒一次
+            val lastShowTime =
+                MMKV.defaultMMKV().decodeLong(CANCEL_TIME_KEY, 0)
+            return mUpdateEntity.hasUpdate() && System.currentTimeMillis() - lastShowTime > SHOW_DURATION
         }
     }
 }

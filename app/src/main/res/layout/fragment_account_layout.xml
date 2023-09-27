@@ -33,7 +33,7 @@
         android:textSize="16sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
         app:drawableStartCompat="@drawable/svg_person"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <View
         style="@style/xToolbarDivider"
@@ -54,7 +54,7 @@
         android:textSize="16sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
         app:drawableStartCompat="@drawable/svg_password"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <View
         style="@style/xToolbarDivider"
@@ -75,7 +75,7 @@
         android:textSize="16sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
         app:drawableStartCompat="@drawable/svg_role"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <View
         style="@style/xToolbarDivider"
@@ -96,7 +96,7 @@
         android:textSize="16sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
         app:drawableStartCompat="@drawable/svg_user"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <View
         style="@style/xToolbarDivider"
@@ -117,7 +117,7 @@
         android:textSize="16sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
         app:drawableStartCompat="@drawable/svg_record_voice"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <View
         style="@style/xToolbarDivider"
@@ -138,7 +138,6 @@
         android:textSize="16sp"
         app:drawableEndCompat="@drawable/svg_arrow_right"
         app:drawableStartCompat="@drawable/svg_network"
-        app:layout_constraintTop_toTopOf="parent"
         app:drawableTint="@color/x_text_01" />
 
     <View
@@ -146,20 +145,54 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <TextView
-        android:id="@+id/tv_version"
+    <LinearLayout
+        android:id="@+id/ll_check_update"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:drawablePadding="@dimen/dp_10"
-        android:gravity="center_vertical|end"
-        android:lines="1"
+        android:layout_height="52dp"
         android:paddingStart="16dp"
         android:paddingEnd="12dp"
-        android:text="v1.0.0"
-        android:textColor="@color/x_text_03"
-        android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/svg_update"
+            app:tint="@color/x_text_01" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="当前版本"
+            android:textColor="@color/x_text_03"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/tv_now_version"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:layout_marginEnd="5dp"
+            android:text="--"
+            android:textColor="@color/x_text_03"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/iv_new_version"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/red_badage"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/svg_arrow_right" />
+
+    </LinearLayout>
 
     <View android:layout_width="match_parent"
         android:layout_height="0dp"

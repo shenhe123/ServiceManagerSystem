@@ -54,7 +54,7 @@ public class ApkDownLoadService extends Service {
     }
 
 
-    private ApkDownloadTaskInfo taskInfo;
+    private UpdateEntity taskInfo;
     private NotificationManager notificationManager;
     private Notification notification;
     private NotificationCompat.Builder builder;
@@ -114,7 +114,7 @@ public class ApkDownLoadService extends Service {
     private Disposable disposable;
 
 
-    public void downloadApk(ApkDownloadTaskInfo taskInfo) {
+    public void downloadApk(UpdateEntity taskInfo) {
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         if (downloadId != 0) {
             downloadManager.remove(downloadId);
@@ -128,7 +128,8 @@ public class ApkDownLoadService extends Service {
         //下载完成之后显示系统的点击安装
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION);
         //创建目录
-        File file = new File(getCacheDir().getAbsolutePath() + "/customer_manager_system.apk");
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdir();
+        File file = new File(taskInfo.getApkLocalPath());
         if (file.exists()) {
             file.delete();
         }
@@ -241,7 +242,7 @@ public class ApkDownLoadService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // 由于没有在Activity环境下启动Activity,设置下面的标签
             //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
-            Uri apkUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+            Uri apkUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", file);
             //添加这一句表示对目标应用临时授权该Uri所代表的文件
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setDataAndType(apkUri, "application/vnd.android.package-archive");

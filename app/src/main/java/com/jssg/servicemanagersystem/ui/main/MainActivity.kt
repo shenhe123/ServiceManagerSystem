@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui
+package com.jssg.servicemanagersystem.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -9,8 +9,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
+import com.jssg.servicemanagersystem.base.loadmodel.LoadUpdateDataModel
+import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityMainBinding
 import com.jssg.servicemanagersystem.ui.account.AccountFragment
+import com.jssg.servicemanagersystem.ui.main.update.UpdateDialogFragment
 import com.jssg.servicemanagersystem.ui.report.ReportFragment
 import com.jssg.servicemanagersystem.ui.travelreport.TravelReportFragment
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
@@ -25,6 +28,22 @@ class MainActivity : BaseActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppApplication.get().getMainViewModel().updateInfoLiveData.observe(this) { result ->
+            if (result.isSuccess) {
+                result.data?.let {
+                    val isNeedShowUpdateDialog: Boolean = UpdateDialogFragment.isCanShowUpdateDialog(it)
+
+                    if (isNeedShowUpdateDialog) {
+                        //更新弹窗，假如是非强制更新，则下次提醒时间为1天后
+                        UpdateDialogFragment.newInstance(it).show(supportFragmentManager, "update_dialog")
+                    }
+
+                }
+            }
+        }
+
+        AppApplication.get().getMainViewModel().getUpdateInfo(false)
 
         homePageAdapter = HomePageAdapter(this)
         binding.viewPager.adapter = homePageAdapter
@@ -69,6 +88,12 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        AppApplication.get().getMainViewModel().updateInfoLiveData.value =
+            LoadUpdateDataModel(false)
+    }
 
     companion object {
         fun goActivity(context: Context) {

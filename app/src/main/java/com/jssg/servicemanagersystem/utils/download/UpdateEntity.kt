@@ -10,11 +10,12 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class ApkDownloadTaskInfo(
+data class UpdateEntity(
     val version: String,
     val downloadUrl: String,
     val force: Boolean,
-    val updateInfo: String
+    val updateInfo: String,
+    var apkLocalPath: String,
 ) : Parcelable {
     fun hasUpdate(): Boolean {
         try {
