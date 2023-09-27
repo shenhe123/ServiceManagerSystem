@@ -185,7 +185,7 @@ public class ApkDownLoadService extends Service {
         if (status == DownloadManager.STATUS_SUCCESSFUL) {
             //点击通知安装
 //            String filePath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+File.separator+taskInfo.getApkFileName();
-            String filePath = getCacheDir().getAbsolutePath() + "/customer_manager_system.apk";
+            String filePath = getExternalFilesDir("apk").getAbsolutePath() + "/customer_manager_system.apk";
             //直接安装更新
             try {
                 install(this, filePath);
