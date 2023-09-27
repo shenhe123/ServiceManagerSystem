@@ -3,7 +3,6 @@ package com.jssg.servicemanagersystem.base.http.apiservice
 import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
-import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
@@ -88,7 +87,7 @@ interface ApiService {
     fun getUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<UserData?>>
 
     @GET("${BuildConfig.stagApi}system/user/organizations")
-    fun getFactoryInfo(): Observable<BaseHttpResult<List<FactoryInfo>?>>
+    fun getFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>
 
     @GET("${BuildConfig.stagApi}system/user/deptTree")
     fun getDeptInfo(@Query("parentId") parentId: Int = 1): Observable<BaseHttpResult<List<DeptInfo>?>>

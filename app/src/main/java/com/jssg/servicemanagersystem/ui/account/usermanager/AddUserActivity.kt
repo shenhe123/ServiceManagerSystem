@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatCheckBox
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -22,13 +21,12 @@ import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityAddUserBinding
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
-import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.DpPxUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
-import java.math.BigDecimal
 import java.util.Calendar
 
 class AddUserActivity : BaseActivity() {
@@ -36,7 +34,7 @@ class AddUserActivity : BaseActivity() {
     private var deptId: String? = null
     private var orgId: String? = null
     private var deptInfos: List<DeptInfo>? = null
-    private var factoryInfos: MutableList<FactoryInfo> = mutableListOf()
+    private var factoryInfos: MutableList<WorkFactoryInfo> = mutableListOf()
     private var checkedRoleIds: MutableList<String>? = null
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var binding: ActivityAddUserBinding
@@ -66,8 +64,8 @@ class AddUserActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                binding.asFactory.prompt = factoryInfos[position].orgName
-                orgId = if (factoryInfos[position].orgName.equals("请选择工厂")) {
+                binding.asFactory.prompt = factoryInfos[position].orgShortName
+                orgId = if (factoryInfos[position].orgShortName.equals("请选择工厂")) {
                     null
                 } else {
                     factoryInfos[position].orgId
@@ -128,10 +126,10 @@ class AddUserActivity : BaseActivity() {
             }
 
             val address = binding.etAddress.text.toString()
-            if (address.isEmpty()) {
-                ToastUtils.showToast("居住地址不能为空")
-                return@setOnClickListener
-            }
+//            if (address.isEmpty()) {
+//                ToastUtils.showToast("居住地址不能为空")
+//                return@setOnClickListener
+//            }
 
             val expiredDate = binding.tvExpiredDate.text.toString()
             if (expiredDate.isEmpty()) {
@@ -241,17 +239,18 @@ class AddUserActivity : BaseActivity() {
         accountViewModel.factoryInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
                 result.data?.let {
-                    factoryInfos.add(FactoryInfo("", "请选择工厂"))
+                    factoryInfos.add(WorkFactoryInfo("", "", "请选择工厂", "", "请选择工厂"))
                     factoryInfos.addAll(it)
 
                     val list = mutableListOf<String>()
                     list.add("请选择工厂")
-                    list.addAll(result.data!!.map { info -> info.orgName })
+                    list.addAll(result.data!!.map { info -> info.orgShortName })
                     val adapter = ArrayAdapter<String>(
                         this, android.R.layout.simple_spinner_item, list
                     )
                     adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
                     binding.asFactory.adapter = adapter
+
                 }
             }
         }

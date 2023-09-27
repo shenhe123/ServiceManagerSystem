@@ -89,10 +89,10 @@ class ProfileInfoActivity : BaseActivity() {
                 return@setOnClickListener
             }
             val address = binding.etAddress.text.toString()
-            if (address.isEmpty()) {
-                ToastUtils.showToast("居住地址不能为空")
-                return@setOnClickListener
-            }
+//            if (address.isEmpty()) {
+//                ToastUtils.showToast("居住地址不能为空")
+//                return@setOnClickListener
+//            }
 
             AccountManager.instance.getUser()?.let {
                 accountViewModel.updateUserProfile(nickname, phoneNumber, cardId, address, it.user.userId.toString(), it.user.roleIds)

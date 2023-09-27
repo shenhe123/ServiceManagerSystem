@@ -21,9 +21,9 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerDetailBinding
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
-import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import kotlinx.android.parcel.Parcelize
@@ -34,7 +34,7 @@ class UserManagerDetailActivity : BaseActivity() {
     private var deptId: String? = null
     private var orgId: String? = null
     private var deptInfos: List<DeptInfo>? = null
-    private var factoryInfos: List<FactoryInfo>? = null
+    private var factoryInfos: List<WorkFactoryInfo>? = null
     private var user: User? = null
     private lateinit var accountViewModel: AccountViewModel
     private var editable: Boolean = false
@@ -124,7 +124,7 @@ class UserManagerDetailActivity : BaseActivity() {
                         listOf("请选择工厂")
                     } else {
                         factoryInfos = result.data!!
-                        result.data!!.map { info -> info.orgName }
+                        result.data!!.map { info -> info.orgShortName }
                     }
 
                     val adapter = ArrayAdapter<String>(
@@ -133,14 +133,14 @@ class UserManagerDetailActivity : BaseActivity() {
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_right_item)
                     binding.asFactory.adapter = adapter
 
-                    user?.sysOrganizationVo?.orgName?.let {
+                    user?.sysOrganizationVo?.orgShortName?.let {
                         val pos = list.indexOf(it)
                         if (pos != -1) {
                             binding.asFactory.setSelection(pos, false)
                         }
                     }
 
-                    binding.asFactory.prompt = user?.sysOrganizationVo?.orgName ?: "请选择工厂"
+                    binding.asFactory.prompt = user?.sysOrganizationVo?.orgShortName ?: "请选择工厂"
 
                     binding.tvFactory.text = binding.asFactory.prompt
                 }
@@ -300,8 +300,8 @@ class UserManagerDetailActivity : BaseActivity() {
                 id: Long
             ) {
                 factoryInfos?.let {
-                    binding.asFactory.prompt = it[position].orgName
-                    orgId = if (it[position].orgName.equals("请选择工厂")) {
+                    binding.asFactory.prompt = it[position].orgShortName
+                    orgId = if (it[position].orgShortName.equals("请选择工厂")) {
                         null
                     } else {
                         it[position].orgId
@@ -359,10 +359,10 @@ class UserManagerDetailActivity : BaseActivity() {
             }
 
             val address = binding.etAddress.text.toString()
-            if (address.isEmpty()) {
-                ToastUtils.showToast("居住地址不能为空")
-                return@setOnClickListener
-            }
+//            if (address.isEmpty()) {
+//                ToastUtils.showToast("居住地址不能为空")
+//                return@setOnClickListener
+//            }
 
             val expiredDate = binding.tvExpiredDate.text.toString()
             if (expiredDate.isEmpty()) {

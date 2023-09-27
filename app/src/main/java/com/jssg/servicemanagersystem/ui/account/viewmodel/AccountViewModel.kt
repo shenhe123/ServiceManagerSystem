@@ -8,12 +8,12 @@ import com.jssg.servicemanagersystem.base.loadmodel.LoadDataModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
-import com.jssg.servicemanagersystem.ui.account.entity.FactoryInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.account.entity.UserRoles
+import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.utils.HUtils
 
 /**
@@ -23,7 +23,7 @@ import com.jssg.servicemanagersystem.utils.HUtils
 class AccountViewModel : AutoDisposViewModel() {
 
     val deptInfoLiveData = MutableLiveData<LoadDataModel<List<DeptInfo>?>>()
-    val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<FactoryInfo>?>>()
+    val factoryInfoLiveData = MutableLiveData<LoadDataModel<List<WorkFactoryInfo>?>>()
     val deleteRoleInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val deleteUserInfoLiveData = MutableLiveData<LoadDataModel<Any>>()
     val updatePasswordLiveData = MutableLiveData<LoadDataModel<Any>>()

@@ -21,7 +21,7 @@ class UserManagerAdapter: BaseBindingAdapter<User, ItemUserManagerLayoutBinding>
     override fun convert(holder: VBViewHolder<ItemUserManagerLayoutBinding>, item: User) {
         holder.binding.tvName.text = "用户名：${item.nickName}"
         holder.binding.tvPhone.text = "联系方式：${item.phonenumber}"
-        holder.binding.tvAddress.text = "居住地址：${item.address}"
+        holder.binding.tvFactory.text = "所属工厂：${item.sysOrganizationVo?.orgShortName ?: ""}"
         holder.binding.tvExpiredDate.text = "有效期至：${item.expireDate}"
 
         //userId小于100的用户，不允许编辑和修改
