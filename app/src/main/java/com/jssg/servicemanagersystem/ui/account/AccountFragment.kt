@@ -87,7 +87,7 @@ class AccountFragment : BaseFragment() {
             }
         }
 
-//        AppApplication.get().getMainViewModel().getUpdateInfo(false)
+        AppApplication.get().getMainViewModel().getUpdateInfo(false)
 
     }
 
@@ -151,7 +151,7 @@ class AccountFragment : BaseFragment() {
         }
 
         binding.llCheckUpdate.setOnClickListener {
-//            AppApplication.get().getMainViewModel().getUpdateInfo(true)
+            AppApplication.get().getMainViewModel().getUpdateInfo(true)
         }
     }
 

@@ -43,7 +43,7 @@ class MainActivity : BaseActivity() {
             }
         }
 
-//        AppApplication.get().getMainViewModel().getUpdateInfo(false)
+        AppApplication.get().getMainViewModel().getUpdateInfo(false)
 
         homePageAdapter = HomePageAdapter(this)
         binding.viewPager.adapter = homePageAdapter

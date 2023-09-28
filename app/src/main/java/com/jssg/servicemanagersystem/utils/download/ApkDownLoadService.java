@@ -195,7 +195,7 @@ public class ApkDownLoadService extends Service {
                 e.printStackTrace();
                 //安装权限被禁止 则通知栏提示点击安装
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                Uri apkUri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileprovider", new File(filePath));
+                Uri apkUri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".fileProvider", new File(filePath));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 //添加这一句表示对目标应用临时授权该Uri所代表的文件
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
