@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.base.BaseFragment
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentWorkOrderDetailBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.AddWorkOrderCheckActivity
@@ -130,7 +131,10 @@ class WorkOrderDetailFragment : BaseFragment() {
 
         }
 
-
+        //三方人员 需隐藏
+        val isThirdUser = AccountManager.instance.getUser()?.user?.userType.equals("end_user")
+        binding.tvUnitPrice.isVisible = !isThirdUser
+        binding.layoutServiceTotal.isVisible = !isThirdUser
     }
 
     companion object {
