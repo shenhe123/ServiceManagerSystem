@@ -322,13 +322,10 @@ class UserManagerDetailActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                val item = binding.asDept.adapter.getItem(position).toString()
-                if (item == "请选择部门") {
-                    deptId = null
+                deptId = if (position == 0) {
+                    null
                 } else {
-                    deptInfos?.let {
-                        deptId = it[position - 1].id
-                    }
+                    deptInfos?.get(position - 1)?.id
                 }
 
             }
