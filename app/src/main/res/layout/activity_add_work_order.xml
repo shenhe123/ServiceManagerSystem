@@ -491,6 +491,13 @@
                         android:textColor="@color/x_text_01"
                         android:textSize="16sp" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="元/小时"
+                        android:textColor="@color/x_text_03"
+                        android:layout_marginEnd="12dp"/>
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </LinearLayout>
@@ -529,6 +536,12 @@
                         android:textColor="@color/x_text_01"
                         android:textSize="16sp" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="小时"
+                        android:textColor="@color/x_text_03"
+                        android:layout_marginEnd="12dp"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </LinearLayout>
