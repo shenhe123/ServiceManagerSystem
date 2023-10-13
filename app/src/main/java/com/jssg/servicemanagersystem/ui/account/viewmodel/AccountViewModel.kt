@@ -176,9 +176,7 @@ class AccountViewModel : AutoDisposViewModel() {
         orgId?.let {
             params["orgId"] = it
         }
-        deptId?.let {
-            params["deptId"] = it
-        }
+        params["deptId"] = deptId ?: ""
         RetrofitService.apiService
             .updateUserInfo(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())

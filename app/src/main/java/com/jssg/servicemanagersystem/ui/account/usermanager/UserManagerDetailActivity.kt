@@ -153,7 +153,9 @@ class UserManagerDetailActivity : BaseActivity() {
                     listOf("请选择部门")
                 } else {
                     deptInfos = result.data!!
-                    result.data!!.map { info -> info.label }
+                    mutableListOf("请选择部门").apply {
+                        addAll(result.data!!.map { info -> info.label })
+                    }.toList()
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -320,15 +322,15 @@ class UserManagerDetailActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                deptInfos?.let {
-                    binding.asDept.prompt = it[position].label
-
-                    deptId = if (!it[position].label.equals("请选择部门")) {
-                        it[position].id
-                    } else {
-                        null
+                val item = binding.asDept.adapter.getItem(position).toString()
+                if (item == "请选择部门") {
+                    deptId = null
+                } else {
+                    deptInfos?.let {
+                        deptId = it[position - 1].id
                     }
                 }
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -377,9 +379,12 @@ class UserManagerDetailActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            if (deptId.isNullOrEmpty()) {
-                ToastUtils.showToast("请选择部门")
-                return@setOnClickListener
+            //部门可以为空
+            if (deptId.isNullOrEmpty() || deptId.equals("请选择部门")) {
+//                ToastUtils.showToast("请选择部门")
+//                return@setOnClickListener
+
+                deptId = null
             }
 
             user?.let {
