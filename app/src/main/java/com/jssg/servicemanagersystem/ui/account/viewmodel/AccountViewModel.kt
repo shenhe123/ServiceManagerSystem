@@ -212,13 +212,9 @@ class AccountViewModel : AutoDisposViewModel() {
         params["password"] = password
         params["phonenumber"] = phoneNumber
         params["expireDate"] = expiredDate
-        params["roleIds"] = checkedRoleIds
-        orgId?.let {
-            params["orgId"] = it
-        }
-        deptId?.let {
-            params["deptId"] = it
-        }
+        params["roleIds"] = checkedRoleIds ?: listOf<String>()
+        params["orgId"] = orgId ?: ""
+        params["deptId"] = deptId ?: ""
         RetrofitService.apiService
             .addNewUser(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())

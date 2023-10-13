@@ -83,12 +83,10 @@ class AddUserActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                deptInfos?.let {
-                    binding.asDept.prompt = it[position].label
-
-                    if (!it[position].label.equals("请选择部门")) {
-                        deptId = it[position].id
-                    }
+                deptId = if (position == 0) {
+                    null
+                } else {
+                    deptInfos?.get(position - 1)?.id
                 }
             }
 
@@ -137,23 +135,24 @@ class AddUserActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            //工厂用户 不用判断角色信息、工厂、部门
-            if (!isFactoryUser) {
-                if (checkedRoleIds.isNullOrEmpty()) {
-                    ToastUtils.showToast("请选择角色信息")
-                    return@setOnClickListener
-                }
-
-                if (orgId.isNullOrEmpty()) {
-                    ToastUtils.showToast("请选择工厂")
-                    return@setOnClickListener
-                }
-
-                if (deptId.isNullOrEmpty()) {
-                    ToastUtils.showToast("请选择部门")
-                    return@setOnClickListener
-                }
-            }
+            //所有用户 角色信息、工厂、部门这几项非必填
+//            //工厂用户 不用判断角色信息、工厂、部门
+//            if (!isFactoryUser) {
+//                if (checkedRoleIds.isNullOrEmpty()) {
+//                    ToastUtils.showToast("请选择角色信息")
+//                    return@setOnClickListener
+//                }
+//
+//                if (orgId.isNullOrEmpty()) {
+//                    ToastUtils.showToast("请选择工厂")
+//                    return@setOnClickListener
+//                }
+//
+//                if (deptId.isNullOrEmpty()) {
+//                    ToastUtils.showToast("请选择部门")
+//                    return@setOnClickListener
+//                }
+//            }
 
             accountViewModel.addNewUser(userName, nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)
         }
@@ -257,11 +256,18 @@ class AddUserActivity : BaseActivity() {
 
         accountViewModel.deptInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                val list = if (result.data.isNullOrEmpty()) {
-                    listOf("请选择部门")
-                } else {
-                    deptInfos = result.data!!
-                    result.data!!.map { info -> info.label }
+//                val list = if (result.data.isNullOrEmpty()) {
+//                    listOf("请选择部门")
+//                } else {
+//                    deptInfos = result.data!!
+//                    result.data!!.map { info -> info.label }
+//                }
+
+                deptInfos = result.data
+                val list = mutableListOf<String>()
+                list.add("请选择部门")
+                deptInfos?.let {
+                    list.addAll(it.map { info -> info.label })
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
