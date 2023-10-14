@@ -35,6 +35,8 @@ import kotlinx.android.parcel.Parcelize
 import java.util.Calendar
 
 class UserManagerDetailActivity : BaseActivity() {
+    private var userType: String? = null
+    private var userTypeArray: Array<String> = arrayOf()
     private var inputData: InputData? = null
     private var deptId: String? = null
     private var orgId: String? = null
@@ -56,6 +58,44 @@ class UserManagerDetailActivity : BaseActivity() {
         user = inputData?.user
         user?.let {
             updateUserInfo(it)
+        }
+
+        //sys_user 都不隐藏, 角色信息、工厂、部门这几项非必填
+        //main_factor_cqe, 这个角色角色信息、工厂显示, 部门隐藏；工厂必填，角色非必填
+        //else 角色信息、工厂、部门隐藏
+        if (AccountManager.instance.isSysUser) {
+            binding.layoutUserType.isVisible = true
+            userTypeArray = resources.getStringArray(R.array.sys_user)
+
+            binding.layoutFactoryRoot.isVisible = true
+            binding.layoutDept.isVisible = true
+        } else if (AccountManager.instance.isMainFactorCqe) {
+            binding.layoutUserType.isVisible = true
+            userTypeArray = resources.getStringArray(R.array.main_factor_cqe)
+
+            binding.layoutFactoryRoot.isVisible = true
+            binding.layoutDept.isVisible = false
+        } else {
+            binding.layoutUserType.isVisible = false
+
+            binding.layoutFactoryRoot.isVisible = false
+            binding.layoutDept.isVisible = false
+        }
+
+        if (userTypeArray.isNotEmpty()) {
+            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                this, R.layout.simple_spinner_right_item, userTypeArray
+            )
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_right_item)
+            binding.asUserType.adapter = adapter
+
+            if (user?.userType.equals("sys_user")) {
+                binding.asUserType.setSelection(userTypeArray.indexOf("集团用户"))
+            } else if (user?.userType.equals("factory_user")) {
+                binding.asUserType.setSelection(userTypeArray.indexOf("工厂用户"))
+            } else if (user?.userType.equals("end_user")) {
+                binding.asUserType.setSelection(userTypeArray.indexOf("三方用户"))
+            }
         }
 
         initView()
@@ -287,6 +327,35 @@ class UserManagerDetailActivity : BaseActivity() {
             pvTime.show(supportFragmentManager, "timepicker")
         }
 
+        binding.asUserType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val userTypeValue = if (position == 0) {
+                    null
+                } else {
+                    userTypeArray[position]
+                }
+
+                if (userTypeValue.equals("集团用户")) {
+                    userType = "sys_user"
+                } else if (userTypeValue.equals("工厂用户")) {
+                    userType = "factory_user"
+                } else if (userTypeValue.equals("三方用户")) {
+                    userType = "end_user"
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
+        binding.tvUserType.setOnClickListener {  }
+
         binding.layoutFactory.setOnClickListener {
             showFactoryPopup(binding.layoutFactory, !AccountManager.instance.isMultiFactory)
         }
@@ -362,11 +431,22 @@ class UserManagerDetailActivity : BaseActivity() {
 
             val password = binding.etPassword.text.toString()
 
-//            if (orgId.isNullOrEmpty()) {
-//                ToastUtils.showToast("请选择工厂")
-//                return@setOnClickListener
-//            }
+            if (AccountManager.instance.isMultiFactory) {
+                if (userType.isNullOrEmpty()) {
+                    ToastUtils.showToast("请选择用户类型")
+                    return@setOnClickListener
+                }
+            }
 
+            //sys_user 都不隐藏, 角色信息、工厂、部门这几项非必填
+            //main_factor_cqe, 这个角色角色信息、工厂显示, 部门隐藏；工厂必填，角色非必填
+            //else 角色信息、工厂、部门隐藏
+            if (AccountManager.instance.isMainFactorCqe) {
+                if (orgId.isNullOrEmpty()) {
+                    ToastUtils.showToast("请选择工厂")
+                    return@setOnClickListener
+                }
+            }
 
             //部门可以为空
             if (deptId.isNullOrEmpty() || deptId.equals("请选择部门")) {
@@ -384,7 +464,7 @@ class UserManagerDetailActivity : BaseActivity() {
                 it.address = address
                 it.expireDate = expiredDate
 
-                accountViewModel.updateUserInfo(it.roleIds, it, orgId, deptId, password)
+                accountViewModel.updateUserInfo(it.roleIds, it, orgId, deptId, password, userType)
             }
         }
     }
@@ -429,6 +509,8 @@ class UserManagerDetailActivity : BaseActivity() {
 
         binding.layoutFactory.isEnabled = editable
 
+        binding.tvUserType.isVisible = !editable
+
         binding.ivFactoryClose.isVisible = !orgId.isNullOrEmpty() && editable
         binding.ivDeptClose.isVisible = !deptId.isNullOrEmpty() && editable
 
@@ -440,6 +522,7 @@ class UserManagerDetailActivity : BaseActivity() {
         updateLayoutBackground(binding.layoutExpiredDate)
         updateLayoutBackground(binding.layoutFactory)
         updateLayoutBackground(binding.layoutDept)
+        updateLayoutBackground(binding.asUserType)
 
         binding.btnUpdate.isVisible = editable
     }

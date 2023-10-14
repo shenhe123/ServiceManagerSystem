@@ -88,7 +88,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
             }
 
             user?.let {
-                accountViewModel.updateUserInfo(checkedRoleIds, it, it.orgId, it.deptId)
+                accountViewModel.updateUserInfo(checkedRoleIds, it, it.orgId, it.deptId, "", it.userType)
             }
         }
     }

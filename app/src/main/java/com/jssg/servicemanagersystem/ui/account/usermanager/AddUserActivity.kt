@@ -113,7 +113,7 @@ class AddUserActivity : BaseActivity() {
                 if (userTypeValue.equals("集团用户")) {
                     userType = "sys_user"
                 } else if (userTypeValue.equals("工厂用户")) {
-                    userType = "main_factor_cqe"
+                    userType = "factory_user"
                 } else if (userTypeValue.equals("三方用户")) {
                     userType = "end_user"
                 }

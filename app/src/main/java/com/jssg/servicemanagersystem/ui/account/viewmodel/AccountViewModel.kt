@@ -156,7 +156,8 @@ class AccountViewModel : AutoDisposViewModel() {
         user: User,
         orgId: String?,
         deptId: String?,
-        password: String = ""
+        password: String = "",
+        userType: String?,
     ) {
         updateUserInfoLiveData.value = LoadDataModel()
         val params = HashMap<String, Any?>()
@@ -173,10 +174,10 @@ class AccountViewModel : AutoDisposViewModel() {
             params["roleIds"] = checkedRoleIds
         }
         params["expireDate"] = user.expireDate
-        orgId?.let {
-            params["orgId"] = it
-        }
+        params["orgId"] = orgId ?: ""
         params["deptId"] = deptId ?: ""
+
+        params["userType"] = userType ?: ""
         RetrofitService.apiService
             .updateUserInfo(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
