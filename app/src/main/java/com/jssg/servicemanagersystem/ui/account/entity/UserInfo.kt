@@ -12,6 +12,7 @@ import kotlinx.android.parcel.Parcelize
 data class UserInfo(
     val permissions: List<String>,
     val user: User,
+    val roles: List<String>?,
 ) : Parcelable
 
 @Parcelize

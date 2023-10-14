@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.SpinnerAdapter
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.res.ResourcesCompat
@@ -19,11 +21,14 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityUserManagerDetailBinding
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
+import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import kotlinx.android.parcel.Parcelize
@@ -34,7 +39,7 @@ class UserManagerDetailActivity : BaseActivity() {
     private var deptId: String? = null
     private var orgId: String? = null
     private var deptInfos: List<DeptInfo>? = null
-    private var factoryInfos: List<WorkFactoryInfo>? = null
+    private var factoryInfos: MutableList<WorkFactoryInfo> = mutableListOf()
     private var user: User? = null
     private lateinit var accountViewModel: AccountViewModel
     private var editable: Boolean = false
@@ -83,7 +88,6 @@ class UserManagerDetailActivity : BaseActivity() {
                     accountViewModel.getUserInfo(it.userId)
                 }
 
-                binding.tvFactory.text = binding.asFactory.prompt
                 binding.tvDept.text = binding.asDept.prompt
 
                 toggleEdit()
@@ -119,45 +123,32 @@ class UserManagerDetailActivity : BaseActivity() {
         accountViewModel.factoryInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
                 result.data?.let {
-
-                    val list = if (result.data.isNullOrEmpty()) {
-                        listOf("请选择工厂")
-                    } else {
-                        factoryInfos = result.data!!
-                        result.data!!.map { info -> info.orgShortName }
-                    }
-
-                    val adapter = ArrayAdapter<String>(
-                        this, R.layout.simple_spinner_right_item, list
-                    )
-                    adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_right_item)
-                    binding.asFactory.adapter = adapter
+                    factoryInfos.addAll(it)
 
                     user?.sysOrganizationVo?.orgShortName?.let {
-                        val pos = list.indexOf(it)
+                        val pos = factoryInfos.indexOfFirst { item -> item.orgShortName == it }
                         if (pos != -1) {
-                            binding.asFactory.setSelection(pos, false)
+                            factoryInfos[pos].isChecked = true
+                            binding.tvFactory.text = factoryInfos[pos].orgShortName
+
+                            orgId = factoryInfos[pos].orgId
+                            binding.ivFactoryClose.isVisible = true && editable
                         }
                     }
 
-                    binding.asFactory.prompt = user?.sysOrganizationVo?.orgShortName ?: "请选择工厂"
-
-                    binding.tvFactory.text = binding.asFactory.prompt
                 }
             }
         }
 
         accountViewModel.deptInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                val list = if (result.data.isNullOrEmpty()) {
-                    listOf("请选择部门")
-                } else {
-                    deptInfos = result.data!!
-                    mutableListOf("请选择部门").apply {
-                        addAll(result.data!!.map { info -> info.label })
-                    }.toList()
-                }
+                deptInfos = result.data
 
+                val list = mutableListOf<String>()
+                list.add("请选择部门")
+                deptInfos?.let {
+                    list.addAll(it.map { info -> info.label })
+                }
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                     this, R.layout.simple_spinner_right_item, list
                 )
@@ -166,13 +157,15 @@ class UserManagerDetailActivity : BaseActivity() {
 
                 user?.dept?.deptName?.let {
                     val pos = list.indexOf(it)
-                    if (pos != -1) {
+                    if (pos > 0) {
                         binding.asDept.setSelection(pos, false)
+                        deptId = deptInfos?.get(pos - 1)?.id
+                    } else {
+                        binding.asDept.setSelection(0, false)
                     }
                 }
 
-                binding.asDept.prompt = user?.dept?.deptName ?: "请选择部门"
-                binding.tvDept.text = binding.asDept.prompt
+                binding.tvDept.text = user?.dept?.deptName ?: "请选择部门"
             }
         }
 
@@ -294,26 +287,17 @@ class UserManagerDetailActivity : BaseActivity() {
             pvTime.show(supportFragmentManager, "timepicker")
         }
 
-        binding.asFactory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                factoryInfos?.let {
-                    binding.asFactory.prompt = it[position].orgShortName
-                    orgId = if (it[position].orgShortName.equals("请选择工厂")) {
-                        null
-                    } else {
-                        it[position].orgId
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        binding.layoutFactory.setOnClickListener {
+            showFactoryPopup(binding.layoutFactory, !AccountManager.instance.isMultiFactory)
         }
 
+        binding.ivFactoryClose.setOnClickListener {
+            binding.ivFactoryClose.isVisible = false
+            binding.tvFactory.text = "请选择工厂"
+            orgId = ""
+
+            factoryInfos.forEach { it.isChecked = false }
+        }
 
         binding.asDept.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -327,10 +311,17 @@ class UserManagerDetailActivity : BaseActivity() {
                 } else {
                     deptInfos?.get(position - 1)?.id
                 }
-
+                binding.ivDeptClose.isVisible = !deptId.isNullOrEmpty() && editable
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        binding.ivDeptClose.setOnClickListener {
+            binding.ivDeptClose.isVisible = false
+            deptId = ""
+
+            binding.asDept.setSelection(0, false)
         }
 
         binding.btnUpdate.setOnClickListener {
@@ -371,10 +362,11 @@ class UserManagerDetailActivity : BaseActivity() {
 
             val password = binding.etPassword.text.toString()
 
-            if (orgId.isNullOrEmpty()) {
-                ToastUtils.showToast("请选择工厂")
-                return@setOnClickListener
-            }
+//            if (orgId.isNullOrEmpty()) {
+//                ToastUtils.showToast("请选择工厂")
+//                return@setOnClickListener
+//            }
+
 
             //部门可以为空
             if (deptId.isNullOrEmpty() || deptId.equals("请选择部门")) {
@@ -397,6 +389,29 @@ class UserManagerDetailActivity : BaseActivity() {
         }
     }
 
+    private fun showFactoryPopup(target: View, isSingleCheck: Boolean) {
+        val popupWindow = FactorySelectPopupWindow(this, binding.root, isSingleCheck, factoryInfos)
+        popupWindow.setOnClickListener(object : FactorySelectPopupWindow.OnItemClick {
+
+            override fun onSingleClick(factoryInfo: WorkFactoryInfo) {
+                orgId = factoryInfo.orgId
+            }
+
+            override fun onMultiClick(factoryInfos: MutableList<WorkFactoryInfo>) {
+                val checkedList = factoryInfos.filter { it.isChecked }
+                orgId = checkedList.joinToString(",") { it.orgId }
+                binding.tvFactory.text = checkedList.joinToString(",") { it.orgShortName }
+                binding.ivFactoryClose.isVisible = !orgId.isNullOrEmpty() && editable
+
+                if (orgId.isNullOrEmpty()) {
+                    binding.tvFactory.text = "请选择工厂"
+                }
+
+            }
+        })
+        popupWindow.showAsDropDown(target, 0, 10)
+    }
+
     private fun toggleEdit() {
         editable = !editable
         updateEditWidgets()
@@ -409,12 +424,11 @@ class UserManagerDetailActivity : BaseActivity() {
         binding.etCardId.isEnabled = editable
         binding.etAddress.isEnabled = editable
         binding.etPassword.isEnabled = editable
-//        binding.etExpiredDate.isEnabled = editable
-
-        binding.tvFactory.isVisible = !editable
-        binding.layoutFactory.isVisible = editable
         binding.tvDept.isVisible = !editable
         binding.layoutDept.isVisible = editable
+
+        binding.ivFactoryClose.isVisible = !orgId.isNullOrEmpty() && editable
+        binding.ivDeptClose.isVisible = !deptId.isNullOrEmpty() && editable
 
         updateLayoutBackground(binding.layoutNickname)
         updateLayoutBackground(binding.layoutPhoneNum)
@@ -428,7 +442,7 @@ class UserManagerDetailActivity : BaseActivity() {
         binding.btnUpdate.isVisible = editable
     }
 
-    private fun updateLayoutBackground(layout: LinearLayoutCompat) {
+    private fun updateLayoutBackground(layout: ViewGroup) {
         val drawable = if (editable) ResourcesCompat.getDrawable(resources, R.drawable.selector_input_stroke, null) else null
         layout.background = drawable
     }

@@ -13,5 +13,6 @@ data class WorkFactoryInfo(
     val orgId: String,
     val orgName: String,
     val orgNameEn: String?,
-    val orgShortName: String
+    val orgShortName: String,
+    var isChecked: Boolean = false
 ) : Parcelable

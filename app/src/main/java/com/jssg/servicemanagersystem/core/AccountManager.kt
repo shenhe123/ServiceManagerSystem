@@ -109,11 +109,17 @@ class AccountManager {
     }
 
     fun getNewTravelReport(): TravelReportInfo? {
-        return MMKV.defaultMMKV().decodeParcelable("travel_report_info", TravelReportInfo::class.java)
+        return MMKV.defaultMMKV()
+            .decodeParcelable("travel_report_info", TravelReportInfo::class.java)
     }
 
-    companion object{
-        val instance by lazy(LazyThreadSafetyMode.NONE){
+    //工厂是否是多选模式
+    val isMultiFactory: Boolean
+        get() = getUser()?.user?.userType.equals("sys_user") || getUser()?.roles?.contains("main_factor_cqe") == true
+
+
+    companion object {
+        val instance by lazy(LazyThreadSafetyMode.NONE) {
             AccountManager()
         }
     }

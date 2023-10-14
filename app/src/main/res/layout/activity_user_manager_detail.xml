@@ -341,36 +341,41 @@
                         android:textColor="@color/x_text_03"
                         android:textSize="14sp" />
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
+                    <FrameLayout
                         android:id="@+id/layout_factory"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_weight="1"
-                        android:gravity="end|center_vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/as_factory"
+                        <TextView
+                            android:id="@+id/tv_factory"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@null"
-                            android:enabled="false"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
+                            android:text="请选择工厂"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:textColor="@color/x_text_01"
-                            android:textSize="14sp" />
+                            android:gravity="end|center_vertical"/>
 
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                        <ImageView
+                            android:id="@+id/iv_factory_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/svg_close"
+                            app:tint="@color/x_text_03"
+                            android:alpha="0.8"
+                            android:layout_marginStart="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone"/>
 
-                    <TextView
-                        android:id="@+id/tv_factory"
-                        android:layout_width="0dp"
-                        android:layout_height="36dp"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="28dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/x_text_01"
-                        android:gravity="end|center_vertical"/>
+                    </FrameLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -387,7 +392,7 @@
                         android:textColor="@color/x_text_03"
                         android:textSize="14sp" />
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
+                    <FrameLayout
                         android:id="@+id/layout_dept"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
@@ -405,15 +410,26 @@
                             android:textColor="@color/x_text_01"
                             android:textSize="14sp" />
 
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                        <ImageView
+                            android:id="@+id/iv_dept_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/svg_close"
+                            app:tint="@color/x_text_03"
+                            android:alpha="0.8"
+                            android:layout_marginStart="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone"/>
+
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/tv_dept"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
+                        android:layout_weight="1"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="28dp"
-                        android:layout_weight="1"
                         android:textColor="@color/x_text_01"
                         android:gravity="end|center_vertical"/>
 
