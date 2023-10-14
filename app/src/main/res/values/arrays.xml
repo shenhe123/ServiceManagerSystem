@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sys_user">
+        <item>请选择用户类型</item>
+        <item>集团用户</item>
+        <item>工厂用户</item>
+        <item>三方用户</item>
+    </string-array>
+    <string-array name="main_factor_cqe">
+        <item>请选择用户类型</item>
+        <item>工厂用户</item>
+        <item>三方用户</item>
+    </string-array>
+</resources>

@@ -201,7 +201,8 @@ class AccountViewModel : AutoDisposViewModel() {
         expiredDate: String,
         checkedRoleIds: List<String>?,
         orgId: String?,
-        deptId: String?
+        deptId: String?,
+        userType: String?
     ) {
         addNewUserLiveData.value = LoadDataModel()
         val params = HashMap<String, Any?>()
@@ -215,6 +216,7 @@ class AccountViewModel : AutoDisposViewModel() {
         params["roleIds"] = checkedRoleIds ?: listOf<String>()
         params["orgId"] = orgId ?: ""
         params["deptId"] = deptId ?: ""
+        params["userType"] = userType ?: ""
         RetrofitService.apiService
             .addNewUser(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())

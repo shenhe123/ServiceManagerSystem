@@ -115,9 +115,15 @@ class AccountManager {
 
     //工厂是否是多选模式
     val isMultiFactory: Boolean
-        get() = getUser()?.user?.userType.equals("sys_user") || getUser()?.roles?.contains("main_factor_cqe") == true
+        get() = isSysUser || isMainFactorCqe
 
+    //是否是集团用户
+    val isSysUser: Boolean
+        get() = getUser()?.user?.userType.equals("sys_user")
 
+    //是否是main_factor_cqe用户
+    val isMainFactorCqe: Boolean
+        get() = getUser()?.roles?.contains("main_factor_cqe") == true
     companion object {
         val instance by lazy(LazyThreadSafetyMode.NONE) {
             AccountManager()

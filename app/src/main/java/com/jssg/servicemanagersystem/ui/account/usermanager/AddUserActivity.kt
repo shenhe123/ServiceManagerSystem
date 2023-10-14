@@ -31,6 +31,8 @@ import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import java.util.Calendar
 
 class AddUserActivity : BaseActivity() {
+    private var userType: String? = null
+    private var userTypeArray: Array<String> = arrayOf()
     private var isFactoryUser: Boolean = false
     private var deptId: String? = null
     private var orgId: String? = null
@@ -50,6 +52,24 @@ class AddUserActivity : BaseActivity() {
         val user = AccountManager.instance.getUser()
         isFactoryUser = user?.user?.userType?.equals("factory_user", true) == true
 
+        if (AccountManager.instance.isSysUser) {
+            binding.layoutUserType.isVisible = true
+            userTypeArray = resources.getStringArray(R.array.sys_user)
+        } else if (AccountManager.instance.isMainFactorCqe) {
+            binding.layoutUserType.isVisible = true
+            userTypeArray = resources.getStringArray(R.array.main_factor_cqe)
+        } else {
+            binding.layoutUserType.isVisible = false
+        }
+
+        if (userTypeArray.isNotEmpty()) {
+            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                this, R.layout.simple_spinner_left_item, userTypeArray
+            )
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_left_item)
+            binding.asUserType.adapter = adapter
+        }
+
         initViewModel()
 
         addListener()
@@ -64,6 +84,33 @@ class AddUserActivity : BaseActivity() {
             orgId = ""
 
             factoryInfos.forEach { it.isChecked = false }
+        }
+
+        binding.asUserType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val userTypeValue = if (position == 0) {
+                    null
+                } else {
+                    userTypeArray[position]
+                }
+
+                if (userTypeValue.equals("集团用户")) {
+                    userType = "sys_user"
+                } else if (userTypeValue.equals("工厂用户")) {
+                    userType = "main_factor_cqe"
+                } else if (userTypeValue.equals("三方用户")) {
+                    userType = "end_user"
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
         }
 
         binding.tvFactory.setOnClickListener {
@@ -139,6 +186,13 @@ class AddUserActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            if (AccountManager.instance.isMultiFactory) {
+                if (userType.isNullOrEmpty()) {
+                    ToastUtils.showToast("请选择用户类型")
+                    return@setOnClickListener
+                }
+            }
+
             //所有用户 角色信息、工厂、部门这几项非必填
 //            //工厂用户 不用判断角色信息、工厂、部门
 //            if (!isFactoryUser) {
@@ -168,7 +222,8 @@ class AddUserActivity : BaseActivity() {
                 expiredDate,
                 checkedRoleIds,
                 orgId,
-                deptId
+                deptId,
+                userType
             )
         }
 
