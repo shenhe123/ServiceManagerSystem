@@ -26,6 +26,7 @@ import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.DpPxUtils
+import com.jssg.servicemanagersystem.utils.ScreenUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import java.util.Calendar
 
@@ -57,22 +58,16 @@ class AddUserActivity : BaseActivity() {
     private fun addListener() {
         binding.toolBar.setNavigationOnClickListener { finish() }
 
-        binding.asFactory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                binding.asFactory.prompt = factoryInfos[position].orgShortName
-                orgId = if (factoryInfos[position].orgShortName.equals("请选择工厂")) {
-                    null
-                } else {
-                    factoryInfos[position].orgId
-                }
-            }
+        binding.ivFactoryClose.setOnClickListener {
+            binding.ivFactoryClose.isVisible = false
+            binding.tvFactory.text = "请选择工厂"
+            orgId = ""
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            factoryInfos.forEach { it.isChecked = false }
+        }
+
+        binding.tvFactory.setOnClickListener {
+            showFactoryPopup(binding.layoutFactory, !AccountManager.instance.isMultiFactory)
         }
 
 
@@ -88,9 +83,18 @@ class AddUserActivity : BaseActivity() {
                 } else {
                     deptInfos?.get(position - 1)?.id
                 }
+
+                binding.ivDeptClose.isVisible = !deptId.isNullOrEmpty()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        binding.ivDeptClose.setOnClickListener {
+            binding.ivDeptClose.isVisible = false
+            deptId = ""
+
+            binding.asDept.setSelection(0, false)
         }
 
         binding.mbtSubmit.setOnClickListener {
@@ -154,7 +158,18 @@ class AddUserActivity : BaseActivity() {
 //                }
 //            }
 
-            accountViewModel.addNewUser(userName, nickName, phoneNumber, password, cardId, address, expiredDate, checkedRoleIds, orgId, deptId)
+            accountViewModel.addNewUser(
+                userName,
+                nickName,
+                phoneNumber,
+                password,
+                cardId,
+                address,
+                expiredDate,
+                checkedRoleIds,
+                orgId,
+                deptId
+            )
         }
 
         binding.tvExpiredDate.setOnClickListener {
@@ -162,7 +177,8 @@ class AddUserActivity : BaseActivity() {
 
             //chose b
             val pvTime: TimeDialogFragment =
-                TimePickerBuilder(this@AddUserActivity
+                TimePickerBuilder(
+                    this@AddUserActivity
                 ) { date -> //选中事件回调
                     binding.tvExpiredDate.text = DateUtil.getFullData(date.time)
                 }
@@ -204,6 +220,38 @@ class AddUserActivity : BaseActivity() {
         }
     }
 
+    private fun showFactoryPopup(target: View, isSingleCheck: Boolean) {
+        val popupWindow =
+            FactorySelectPopupWindow(this, binding.root, false, isSingleCheck, factoryInfos)
+        popupWindow.setOnClickListener(object : FactorySelectPopupWindow.OnItemClick {
+
+            override fun onSingleClick(factoryInfo: WorkFactoryInfo) {
+                orgId = factoryInfo.orgId
+            }
+
+            override fun onMultiClick(factoryInfos: MutableList<WorkFactoryInfo>) {
+                val checkedList = factoryInfos.filter { it.isChecked }
+                orgId = checkedList.joinToString(",") { it.orgId }
+                binding.tvFactory.text = checkedList.joinToString(",") { it.orgShortName }
+                binding.ivFactoryClose.isVisible = !orgId.isNullOrEmpty()
+
+                if (orgId.isNullOrEmpty()) {
+                    binding.tvFactory.text = "请选择工厂"
+                }
+
+            }
+        })
+        popupWindow.showAsDropDown(target, 0, -DpPxUtils.dip2px(this, 200f))
+//        popupWindow.showAsDropDown(target, 0, 10)
+
+//        val rectF = ScreenUtils.calcViewScreenLocation(target)
+//        popupWindow.showAtLocation(
+//            target,
+//            Gravity.NO_GRAVITY ,
+//            rectF.left.toInt(), rectF.top.toInt()
+//        )
+    }
+
     private fun initRoleData(roleList: List<Role>) {
         checkedRoleIds = mutableListOf()
         binding.layoutRoles.removeAllViews()
@@ -238,31 +286,13 @@ class AddUserActivity : BaseActivity() {
         accountViewModel.factoryInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
                 result.data?.let {
-                    factoryInfos.add(WorkFactoryInfo("", "", "请选择工厂", "", "请选择工厂"))
                     factoryInfos.addAll(it)
-
-                    val list = mutableListOf<String>()
-                    list.add("请选择工厂")
-                    list.addAll(result.data!!.map { info -> info.orgShortName })
-                    val adapter = ArrayAdapter<String>(
-                        this, android.R.layout.simple_spinner_item, list
-                    )
-                    adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-                    binding.asFactory.adapter = adapter
-
                 }
             }
         }
 
         accountViewModel.deptInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-//                val list = if (result.data.isNullOrEmpty()) {
-//                    listOf("请选择部门")
-//                } else {
-//                    deptInfos = result.data!!
-//                    result.data!!.map { info -> info.label }
-//                }
-
                 deptInfos = result.data
                 val list = mutableListOf<String>()
                 list.add("请选择部门")
@@ -271,22 +301,22 @@ class AddUserActivity : BaseActivity() {
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                    this, android.R.layout.simple_spinner_item, list
+                    this, R.layout.simple_spinner_left_item, list
                 )
-                adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+                adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_left_item)
                 binding.asDept.adapter = adapter
             }
         }
 
-        if (isFactoryUser) {
-            binding.layoutRolesRoot.isVisible = false
-            binding.layoutFactory.isVisible = false
-            binding.layoutDept.isVisible = false
-        } else {
-            accountViewModel.getUserRoleList()
-            accountViewModel.getFactoryInfo()
-            accountViewModel.getDeptInfo()
-        }
+//        if (isFactoryUser) {
+//            binding.layoutRolesRoot.isVisible = false
+//            binding.layoutFactory.isVisible = false
+//            binding.layoutDept.isVisible = false
+//        } else {
+        accountViewModel.getUserRoleList()
+        accountViewModel.getFactoryInfo()
+        accountViewModel.getDeptInfo()
+//        }
     }
 
     private fun addCheckBoxWidget(role: Role): AppCompatCheckBox {
@@ -309,7 +339,7 @@ class AddUserActivity : BaseActivity() {
     }
 
 
-    class AddUserContracts: ActivityResultContract<Any, Boolean>() {
+    class AddUserContracts : ActivityResultContract<Any, Boolean>() {
         override fun createIntent(context: Context, input: Any): Intent {
             return Intent(context, AddUserActivity::class.java)
         }

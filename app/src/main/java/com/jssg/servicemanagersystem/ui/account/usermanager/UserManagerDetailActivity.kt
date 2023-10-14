@@ -390,7 +390,7 @@ class UserManagerDetailActivity : BaseActivity() {
     }
 
     private fun showFactoryPopup(target: View, isSingleCheck: Boolean) {
-        val popupWindow = FactorySelectPopupWindow(this, binding.root, isSingleCheck, factoryInfos)
+        val popupWindow = FactorySelectPopupWindow(this, binding.root, true, isSingleCheck, factoryInfos)
         popupWindow.setOnClickListener(object : FactorySelectPopupWindow.OnItemClick {
 
             override fun onSingleClick(factoryInfo: WorkFactoryInfo) {

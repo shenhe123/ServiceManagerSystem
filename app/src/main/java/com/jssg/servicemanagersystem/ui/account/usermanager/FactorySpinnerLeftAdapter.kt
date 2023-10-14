@@ -4,13 +4,14 @@ import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
 import com.jssg.servicemanagersystem.databinding.ItemFactorySpinnerBinding
+import com.jssg.servicemanagersystem.databinding.ItemFactorySpinnerLeftBinding
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 
 /**
  * ServiceManagerSystem
  * Created by he.shen on 2023/10/14.
  */
-class FactorySpinnerAdapter(isSingleCheck: Boolean): BaseBindingAdapter<WorkFactoryInfo, ItemFactorySpinnerBinding>(ItemFactorySpinnerBinding::inflate) {
+class FactorySpinnerLeftAdapter(isSingleCheck: Boolean): BaseBindingAdapter<WorkFactoryInfo, ItemFactorySpinnerLeftBinding>(ItemFactorySpinnerLeftBinding::inflate) {
 
     private var isSingleCheck: Boolean
 
@@ -18,7 +19,7 @@ class FactorySpinnerAdapter(isSingleCheck: Boolean): BaseBindingAdapter<WorkFact
         this.isSingleCheck = isSingleCheck
     }
 
-    override fun convert(holder: VBViewHolder<ItemFactorySpinnerBinding>, item: WorkFactoryInfo) {
+    override fun convert(holder: VBViewHolder<ItemFactorySpinnerLeftBinding>, item: WorkFactoryInfo) {
         holder.binding.tvName.text = item.orgShortName
         holder.binding.checkBox.isChecked = item.isChecked
 
@@ -26,7 +27,7 @@ class FactorySpinnerAdapter(isSingleCheck: Boolean): BaseBindingAdapter<WorkFact
     }
 
     override fun convert(
-        holder: VBViewHolder<ItemFactorySpinnerBinding>,
+        holder: VBViewHolder<ItemFactorySpinnerLeftBinding>,
         item: WorkFactoryInfo,
         payloads: List<Any>
     ) {

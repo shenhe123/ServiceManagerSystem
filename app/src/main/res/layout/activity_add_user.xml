@@ -278,7 +278,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_factory"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
@@ -293,18 +292,38 @@
                     android:textColor="@color/x_text_03"
                     android:textSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/as_factory"
+                <FrameLayout
+                    android:id="@+id/layout_factory"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="5"
-                    android:background="@drawable/selector_input_stroke"
-                    android:gravity="center_vertical"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:textColor="@color/x_text_01"
-                    android:textSize="14sp" />
+                    android:background="@drawable/selector_input_stroke">
+
+                    <TextView
+                        android:id="@+id/tv_factory"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="28dp"
+                        android:text="请选择工厂"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/x_text_01"
+                        android:gravity="center_vertical"/>
+
+                    <ImageView
+                        android:id="@+id/iv_factory_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/svg_close"
+                        app:tint="@color/x_text_03"
+                        android:alpha="0.8"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:visibility="gone"/>
+
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -324,18 +343,36 @@
                     android:textColor="@color/x_text_03"
                     android:textSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/as_dept"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="5"
-                    android:background="@drawable/selector_input_stroke"
-                    android:gravity="center_vertical"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:textColor="@color/x_text_01"
-                    android:textSize="14sp" />
+                    android:background="@drawable/selector_input_stroke">
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/as_dept"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:background="@null"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:textColor="@color/x_text_01"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_dept_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/svg_close"
+                        app:tint="@color/x_text_03"
+                        android:alpha="0.8"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:visibility="gone"/>
+
+                </FrameLayout>
 
             </LinearLayout>
 
