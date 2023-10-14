@@ -427,6 +427,8 @@ class UserManagerDetailActivity : BaseActivity() {
         binding.tvDept.isVisible = !editable
         binding.layoutDept.isVisible = editable
 
+        binding.layoutFactory.isEnabled = editable
+
         binding.ivFactoryClose.isVisible = !orgId.isNullOrEmpty() && editable
         binding.ivDeptClose.isVisible = !deptId.isNullOrEmpty() && editable
 
