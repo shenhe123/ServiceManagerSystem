@@ -33,7 +33,6 @@ import java.util.Calendar
 class AddUserActivity : BaseActivity() {
     private var userType: String? = null
     private var userTypeArray: Array<String> = arrayOf()
-    private var isFactoryUser: Boolean = false
     private var deptId: String? = null
     private var orgId: String? = null
     private var deptInfos: List<DeptInfo>? = null
@@ -49,17 +48,29 @@ class AddUserActivity : BaseActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-        val user = AccountManager.instance.getUser()
-        isFactoryUser = user?.user?.userType?.equals("factory_user", true) == true
-
+        //sys_user 都不隐藏, 角色信息、工厂、部门这几项非必填
+        //main_factor_cqe, 这个角色角色信息、工厂显示, 部门隐藏；工厂必填，角色非必填
+        //else 角色信息、工厂、部门隐藏
         if (AccountManager.instance.isSysUser) {
             binding.layoutUserType.isVisible = true
             userTypeArray = resources.getStringArray(R.array.sys_user)
+
+            binding.layoutRolesRoot.isVisible = true
+            binding.layoutFactoryRoot.isVisible = true
+            binding.layoutDept.isVisible = true
         } else if (AccountManager.instance.isMainFactorCqe) {
             binding.layoutUserType.isVisible = true
             userTypeArray = resources.getStringArray(R.array.main_factor_cqe)
+
+            binding.layoutRolesRoot.isVisible = true
+            binding.layoutFactoryRoot.isVisible = true
+            binding.layoutDept.isVisible = false
         } else {
             binding.layoutUserType.isVisible = false
+
+            binding.layoutRolesRoot.isVisible = false
+            binding.layoutFactoryRoot.isVisible = false
+            binding.layoutDept.isVisible = false
         }
 
         if (userTypeArray.isNotEmpty()) {
@@ -193,24 +204,15 @@ class AddUserActivity : BaseActivity() {
                 }
             }
 
-            //所有用户 角色信息、工厂、部门这几项非必填
-//            //工厂用户 不用判断角色信息、工厂、部门
-//            if (!isFactoryUser) {
-//                if (checkedRoleIds.isNullOrEmpty()) {
-//                    ToastUtils.showToast("请选择角色信息")
-//                    return@setOnClickListener
-//                }
-//
-//                if (orgId.isNullOrEmpty()) {
-//                    ToastUtils.showToast("请选择工厂")
-//                    return@setOnClickListener
-//                }
-//
-//                if (deptId.isNullOrEmpty()) {
-//                    ToastUtils.showToast("请选择部门")
-//                    return@setOnClickListener
-//                }
-//            }
+            //sys_user 都不隐藏, 角色信息、工厂、部门这几项非必填
+            //main_factor_cqe, 这个角色角色信息、工厂显示, 部门隐藏；工厂必填，角色非必填
+            //else 角色信息、工厂、部门隐藏
+            if (AccountManager.instance.isMainFactorCqe) {
+                if (orgId.isNullOrEmpty()) {
+                    ToastUtils.showToast("请选择工厂")
+                    return@setOnClickListener
+                }
+            }
 
             accountViewModel.addNewUser(
                 userName,

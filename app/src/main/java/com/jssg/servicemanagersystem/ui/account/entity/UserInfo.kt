@@ -40,7 +40,7 @@ data class User(
     var userName: String,
     val userType: String?,
     var expireDate: String,
-    val sysOrganizationVo: WorkFactoryInfo?
+    val sysOrganizationVos: List<WorkFactoryInfo>?,
 ) : Parcelable
 
 @Parcelize

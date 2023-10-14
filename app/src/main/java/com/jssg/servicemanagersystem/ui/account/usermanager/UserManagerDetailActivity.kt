@@ -106,9 +106,8 @@ class UserManagerDetailActivity : BaseActivity() {
                 result.data?.let {
                     updateUserInfo(it.user)
 
-                    it.user.sysOrganizationVo?.let { newFactory ->
-                        binding.tvFactory.text = newFactory.orgName
-
+                    binding.tvFactory.text = it.user.sysOrganizationVos?.joinToString(",") { newFactory ->
+                        newFactory.orgShortName
                     }
 
                     it.user.dept?.let { newDept ->
@@ -125,8 +124,9 @@ class UserManagerDetailActivity : BaseActivity() {
                 result.data?.let {
                     factoryInfos.addAll(it)
 
-                    user?.sysOrganizationVo?.orgShortName?.let {
-                        val pos = factoryInfos.indexOfFirst { item -> item.orgShortName == it }
+
+                    user?.sysOrganizationVos?.forEach  {
+                        val pos = factoryInfos.indexOfFirst { item -> item.orgShortName == it.orgShortName }
                         if (pos != -1) {
                             factoryInfos[pos].isChecked = true
                             binding.tvFactory.text = factoryInfos[pos].orgShortName
