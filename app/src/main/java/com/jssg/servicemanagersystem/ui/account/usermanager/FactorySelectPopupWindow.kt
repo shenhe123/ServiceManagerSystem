@@ -41,7 +41,6 @@ class FactorySelectPopupWindow(
 
     private fun initData() {
 
-
         val factorySpinnerRightAdapter = if (isLayoutRight) FactorySpinnerRightAdapter(isSingleCheck) else FactorySpinnerLeftAdapter(isSingleCheck)
         binding.recyclerView.adapter = factorySpinnerRightAdapter
         factorySpinnerRightAdapter.setOnItemClickListener { _, _, position ->

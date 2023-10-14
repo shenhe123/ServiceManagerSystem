@@ -1,6 +1,7 @@
 package com.jssg.servicemanagersystem.core
 
 import android.text.TextUtils
+import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
@@ -62,7 +63,8 @@ class AccountManager {
     }
 
     fun getChooseHost(): String {
-        return MMKV.defaultMMKV().decodeString("choose_host") ?: Constants.Release_Host
+        val defaultUrl = if (BuildConfig.IS_TEST_HOST) Constants.Test_Host else Constants.Release_Host
+        return MMKV.defaultMMKV().decodeString("choose_host") ?: defaultUrl
     }
 
     fun getCookie(): String? {

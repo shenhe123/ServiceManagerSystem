@@ -3,6 +3,7 @@ package com.jssg.servicemanagersystem.base.http
 import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.base.http.interceptor.AuthInterceptor
 import com.jssg.servicemanagersystem.base.http.interceptor.CookieInterceptor
+import com.jssg.servicemanagersystem.base.http.interceptor.HttpLoggerFormatInterceptor
 import com.jssg.servicemanagersystem.core.AppApplication
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -41,8 +42,8 @@ object OkHttpClientFactory {
         //        SslUtils.INSTANCE.sslConfig(httpClientBuilder);
         if (BuildConfig.DEBUG) {
             //log 拦截器
-            val loggingInterceptor = HttpLoggingInterceptor()
-            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            val loggingInterceptor = HttpLoggerFormatInterceptor()
+            loggingInterceptor.level = HttpLoggerFormatInterceptor.Level.BODY
             httpClientBuilder.addInterceptor(loggingInterceptor)
         }
 
