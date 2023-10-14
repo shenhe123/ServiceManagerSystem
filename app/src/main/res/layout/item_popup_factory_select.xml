@@ -3,7 +3,7 @@
     android:id="@+id/layout_root"
     android:layout_width="310dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/selector_input_stroke"
+    android:background="@drawable/selector_input_stroke_2"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
