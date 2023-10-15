@@ -21,6 +21,20 @@ class UserManagerAdapter: BaseBindingAdapter<User, ItemUserManagerLayoutBinding>
     override fun convert(holder: VBViewHolder<ItemUserManagerLayoutBinding>, item: User) {
         holder.binding.tvName.text = "用户名：${item.nickName}"
         holder.binding.tvPhone.text = "联系方式：${item.phonenumber}"
+        holder.binding.tvUserType.isVisible = true
+        if (item.admin) {
+            holder.binding.tvUserType.text = "用户类型：管理员"
+        } else {
+            if (item.userType.equals("sys_user")) {
+                holder.binding.tvUserType.text = "用户类型：集团用户"
+            } else if (item.userType.equals("factory_user")) {
+                holder.binding.tvUserType.text = "用户类型：工厂用户"
+            } else if (item.userType.equals("end_user")) {
+                holder.binding.tvUserType.text = "用户类型：三方用户"
+            } else {
+                holder.binding.tvUserType.isVisible = false
+            }
+        }
         holder.binding.tvFactory.text = "所属工厂：${item.sysOrganizationVos?.joinToString(",") { it.orgShortName } ?: ""}"
         holder.binding.tvExpiredDate.text = "有效期至：${item.expireDate}"
 
