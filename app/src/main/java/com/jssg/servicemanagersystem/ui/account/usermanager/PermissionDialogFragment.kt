@@ -26,7 +26,7 @@ import java.math.BigDecimal
 class PermissionDialogFragment: BaseDialogFragment() {
 
     private lateinit var listener: OnFinishListener
-    private lateinit var checkedRoleIds: MutableList<String>
+    private var checkedRoleIds: MutableList<String>? = null
     private lateinit var accountViewModel: AccountViewModel
     private lateinit var binding: DialogPermissionLayoutBinding
 
@@ -82,7 +82,7 @@ class PermissionDialogFragment: BaseDialogFragment() {
         }
 
         binding.mbtConfirm.setOnClickListener {
-            if (checkedRoleIds.isEmpty()) {
+            if (checkedRoleIds.isNullOrEmpty()) {
                 ToastUtils.showToast("请至少选择一个角色")
                 return@setOnClickListener
             }
@@ -125,10 +125,10 @@ class PermissionDialogFragment: BaseDialogFragment() {
 
         checkBox.setOnClickListener {
             if (checkBox.isChecked) {
-                checkedRoleIds.add(role.roleId)
+                checkedRoleIds?.add(role.roleId)
             } else {
-                if (checkedRoleIds.contains(role.roleId)) {
-                    checkedRoleIds.remove(role.roleId)
+                if (checkedRoleIds?.contains(role.roleId) == true) {
+                    checkedRoleIds?.remove(role.roleId)
                 }
             }
         }
