@@ -122,9 +122,14 @@ class WorkOrderDetailFragment : BaseFragment() {
             binding.tvSalesManager.text = "销售客服经理：${it.salesManager ?: ""}"
             binding.tvTel.text = "联系方式：${it.tel}"
             binding.tvCheckNum.text = "总排查数量：${it.checkNum ?: 0}"
-            binding.tvUnitPrice.text = "服务单价：${it.unitPrice}"
-            binding.tvServicePeriod.text = "预估服务周期：${it.servicePeriod}"
-            binding.tvTotalPrice.text = "预估总费用：${it.totalPrice}"
+            binding.tvUnitPrice.text = "服务单价：${it.unitPrice.bigDecimal().stripTrailingZeros().toPlainString()} 元/小时"
+            val servicePeriod = if (it.servicePeriod.contains("小时")) {
+                it.servicePeriod.bigDecimal().stripTrailingZeros().toPlainString()
+            } else {
+                "${it.servicePeriod.bigDecimal().stripTrailingZeros().toPlainString()} 小时"
+            }
+            binding.tvServicePeriod.text = "预估服务周期：$servicePeriod"
+            binding.tvTotalPrice.text = "预估总费用：${it.totalPrice.bigDecimal().stripTrailingZeros().toPlainString()} 元"
             binding.tvAddress.text = "服务地点：${it.serviceAdd}"
             binding.tvCheckNumTotal.text = "已排查数量：${it.checkNumTotal ?: "0"}"
             binding.etRemark.setText(it.remark)
