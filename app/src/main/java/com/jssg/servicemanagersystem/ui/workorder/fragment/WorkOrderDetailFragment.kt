@@ -124,9 +124,9 @@ class WorkOrderDetailFragment : BaseFragment() {
             binding.tvCheckNum.text = "总排查数量：${it.checkNum ?: 0}"
             binding.tvUnitPrice.text = "服务单价：${it.unitPrice.bigDecimal().stripTrailingZeros().toPlainString()} 元/小时"
             val servicePeriod = if (it.servicePeriod.contains("小时")) {
-                it.servicePeriod.bigDecimal().stripTrailingZeros().toPlainString()
+                it.servicePeriod
             } else {
-                "${it.servicePeriod.bigDecimal().stripTrailingZeros().toPlainString()} 小时"
+                "${it.servicePeriod} 小时"
             }
             binding.tvServicePeriod.text = "预估服务周期：$servicePeriod"
             binding.tvTotalPrice.text = "预估总费用：${it.totalPrice.bigDecimal().stripTrailingZeros().toPlainString()} 元"

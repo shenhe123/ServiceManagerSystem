@@ -64,6 +64,11 @@ class UserManagerActivity : BaseActivity() {
                 R.id.mbt_permission -> {
                     if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_EDIT.printableName, true)) return@setOnItemChildClickListener
 
+//                    //所属工厂包含 金色时光的
+//                    if (user.sysOrganizationVos?.find { it.orgId == "1000" } != null) {
+//
+//                    }
+
                     PermissionDialogFragment.newInstance(user)
                         .addOnFinishListener(object :PermissionDialogFragment.OnFinishListener{
                             override fun onFinish(newUser: User) {
