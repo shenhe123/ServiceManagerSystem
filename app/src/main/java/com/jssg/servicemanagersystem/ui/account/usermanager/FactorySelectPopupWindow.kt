@@ -73,7 +73,7 @@ class FactorySelectPopupWindow(
     }
 
     override fun injectParamsWight(): Int {
-        return DpPxUtils.dip2px(mContext, 310f)
+        return DpPxUtils.dip2px(mContext, 294f)
     }
 
     fun setOnClickListener(listener: OnItemClick) {

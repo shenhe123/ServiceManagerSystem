@@ -30,6 +30,7 @@ import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.utils.DateUtil
+import com.jssg.servicemanagersystem.utils.DpPxUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import kotlinx.android.parcel.Parcelize
 import java.util.Calendar
@@ -489,7 +490,12 @@ class UserManagerDetailActivity : BaseActivity() {
 
             }
         })
-        popupWindow.showAsDropDown(target, 0, 10)
+        if (factoryInfos.size <= 5) {
+            popupWindow.showAsDropDown(target, 0, 10)
+        } else {
+            popupWindow.showAsDropDown(target, 0, -DpPxUtils.dip2px(this, 100f))
+        }
+//        popupWindow.showAsDropDown(target, 0, 10)
     }
 
     private fun toggleEdit() {

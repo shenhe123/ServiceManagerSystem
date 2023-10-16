@@ -298,7 +298,13 @@ class AddUserActivity : BaseActivity() {
 
             }
         })
-        popupWindow.showAsDropDown(target, 0, -DpPxUtils.dip2px(this, 200f))
+
+        if (factoryInfos.size <= 5) {
+            popupWindow.showAsDropDown(target, 0, 10)
+        } else {
+            popupWindow.showAsDropDown(target, 0, -DpPxUtils.dip2px(this, 200f))
+        }
+//        popupWindow.showAsDropDown(target, 0, -DpPxUtils.dip2px(this, 200f))
 //        popupWindow.showAsDropDown(target, 0, 10)
 
 //        val rectF = ScreenUtils.calcViewScreenLocation(target)
