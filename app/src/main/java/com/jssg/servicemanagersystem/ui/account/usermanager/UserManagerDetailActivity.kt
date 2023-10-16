@@ -431,6 +431,10 @@ class UserManagerDetailActivity : BaseActivity() {
             }
 
             val password = binding.etPassword.text.toString()
+            if (password.isNotEmpty() && password.length < 5) {
+                ToastUtils.showToast("密码长度不能低于5位")
+                return@setOnClickListener
+            }
 
             if (AccountManager.instance.isMultiFactory) {
                 if (userType.isNullOrEmpty()) {
