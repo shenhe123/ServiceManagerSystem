@@ -49,7 +49,7 @@ class AddUserActivity : BaseActivity() {
         setSupportActionBar(binding.toolBar)
 
         //sys_user 都不隐藏, 角色信息、工厂、部门这几项非必填
-        //main_factor_cqe, 这个角色角色信息、工厂显示, 部门隐藏；工厂必填，角色非必填
+        //main_factor_cqe, 这个角色角色信息、工厂、部门显示；工厂必填，角色、部门非必填
         //else 角色信息、工厂、部门隐藏
         if (AccountManager.instance.isSysUser) {
             binding.layoutUserType.isVisible = true
@@ -64,7 +64,7 @@ class AddUserActivity : BaseActivity() {
 
             binding.layoutRolesRoot.isVisible = true
             binding.layoutFactoryRoot.isVisible = true
-            binding.layoutDept.isVisible = false
+            binding.layoutDept.isVisible = true
         } else {
             binding.layoutUserType.isVisible = false
 
