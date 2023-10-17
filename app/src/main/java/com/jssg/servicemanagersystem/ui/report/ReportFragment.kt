@@ -198,25 +198,25 @@ class ReportFragment : BaseFragment() {
                 DateUtil.getFullData(System.currentTimeMillis()).replace(":", ".")
             }.xls"
             if (searchParams == null) {
-                SingleBtnDialogFragment.newInstance(
+                ExportDialogFragment.newInstance(
                     "确定导出",
                     "确定将全部工单的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName"
                 )
                     .addConfrimClickLisntener(object :
-                        SingleBtnDialogFragment.OnConfirmClickLisenter {
-                        override fun onConfrimClick() {
+                        ExportDialogFragment.OnConfirmClickLisenter {
+                        override fun onConfrimClick(isExportPicture: Boolean) {
                             exportWorkOrder(fileName)
                         }
 
                     }).show(childFragmentManager, "close_case_dialog")
             } else {
-                SingleBtnDialogFragment.newInstance(
+                ExportDialogFragment.newInstance(
                     "确定导出",
                     "确定将当前搜索结果的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName"
                 )
                     .addConfrimClickLisntener(object :
-                        SingleBtnDialogFragment.OnConfirmClickLisenter {
-                        override fun onConfrimClick() {
+                        ExportDialogFragment.OnConfirmClickLisenter {
+                        override fun onConfrimClick(isExportPicture: Boolean) {
                             exportWorkOrder(fileName)
                         }
 
