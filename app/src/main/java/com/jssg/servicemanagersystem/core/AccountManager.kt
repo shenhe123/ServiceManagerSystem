@@ -123,6 +123,10 @@ class AccountManager {
     val isSysUser: Boolean
         get() = getUser()?.user?.userType.equals("sys_user")
 
+    //是否是三方用户
+    val isEndUser: Boolean
+        get() = getUser()?.user?.userType.equals("end_user")
+
     //是否是main_factor_cqe用户
     val isMainFactorCqe: Boolean
         get() = getUser()?.roles?.contains("main_factor_cqe") == true

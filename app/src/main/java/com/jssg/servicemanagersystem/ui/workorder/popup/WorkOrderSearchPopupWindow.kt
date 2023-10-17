@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.main.MainActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
@@ -37,6 +38,13 @@ class WorkOrderSearchPopupWindow(
 
     override fun initView() {
         binding = ItemPopupSearchWorkOrderBinding.bind(mView)
+
+        binding.layoutApplyName.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutProductDesc.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutProductCode.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutApplyDate.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutFactory.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutCheckState.isVisible = !AccountManager.instance.isEndUser
 
         binding.layoutRoot.setOnClickListener { v: View? -> dismiss() }
         binding.etApplyName.addTextChangedListener(object : TextWatcher {
