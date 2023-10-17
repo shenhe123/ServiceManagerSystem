@@ -37,15 +37,15 @@ import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictur
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureViewModel
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
+import com.jssg.servicemanagersystem.utils.BitmapUtils
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.FileUtils
+import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.jssg.servicemanagersystem.widgets.decoration.ThemeLineItemDecoration
 import com.luck.picture.lib.entity.LocalMedia
 import net.arvin.permissionhelper.PermissionHelper
-import top.zibin.luban.Luban
-import top.zibin.luban.OnCompressListener
 import java.io.File
 import java.util.Locale
 
@@ -698,8 +698,16 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
         if (!url.startsWith("http")) {
             val file = getOriginPathFile(url)
-//            val compressFile = compressFile(file)
-            selectPicturesViewModel.fileOssUpload(file, "$tag.$url")
+            val fileSize = FileUtils.getAutoFileOrFilesSize(file.absolutePath)
+            LogUtil.e("shenhe", "压缩前$fileSize")
+            val compressFile = BitmapUtils.compressFile(file, requireContext().cacheDir.absolutePath + File.separator + "compress_img_cache.jpg")
+            if (compressFile != null) {
+                val compressFileSize = FileUtils.getAutoFileOrFilesSize(compressFile.absolutePath)
+                LogUtil.e("shenhe", "压缩后$compressFileSize")
+                selectPicturesViewModel.fileOssUpload(compressFile, "$tag.$url")
+            } else {
+                selectPicturesViewModel.fileOssUpload(file, "$tag.$url")
+            }
         }
         parent.addView(img)
     }
@@ -748,38 +756,6 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
         } else path
 
         return File(fileOriginPath)
-    }
-
-    private fun compressFile(file: File): File {
-        var compressFile: File = file
-        Luban.with(requireContext())
-            .load(file)
-            .ignoreBy(100)
-            .setTargetDir(requireContext().cacheDir.absolutePath)
-            .filter { path ->
-                !(TextUtils.isEmpty(path) || path.lowercase(Locale.getDefault())
-                    .endsWith(".gif"))
-            }
-            .setCompressListener(object : OnCompressListener {
-                override fun onStart() {
-                    //压缩开始前调用，可以在方法内启动 loading UI
-                    showProgressbarLoading()
-                }
-
-                override fun onSuccess(file: File?) {
-                    // 压缩成功后调用，返回压缩后的图片文件
-                    file?.let {
-                        compressFile = file
-                    }
-                }
-
-                override fun onError(e: Throwable?) {
-                    // 当压缩过程出现问题时调用
-                    compressFile = file
-                }
-            }).launch()
-
-        return compressFile
     }
 
     abstract fun initViewVisible()

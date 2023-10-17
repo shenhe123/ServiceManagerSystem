@@ -7,15 +7,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
@@ -26,7 +22,6 @@ import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseActivity
 import com.jssg.servicemanagersystem.core.AppApplication
 import com.jssg.servicemanagersystem.databinding.ActivityAddWorkOrderCheckBinding
-import com.jssg.servicemanagersystem.databinding.ItemAudioRecordLayoutBinding
 import com.jssg.servicemanagersystem.databinding.ItemImageViewBinding
 import com.jssg.servicemanagersystem.helper.AudioPlayHandler
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
@@ -39,19 +34,15 @@ import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictur
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureViewModel
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
+import com.jssg.servicemanagersystem.utils.BitmapUtils
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.FileUtils
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.MyLocationClient
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.luck.picture.lib.entity.LocalMedia
-import com.nex3z.flowlayout.FlowLayout
-import kotlinx.coroutines.launch
 import net.arvin.permissionhelper.PermissionHelper
-import top.zibin.luban.Luban
-import top.zibin.luban.OnCompressListener
 import java.io.File
-import java.util.Locale
 
 class AddWorkOrderCheckActivity : BaseActivity() {
     private lateinit var audioAdapter: AudioRecordAdapter
@@ -500,9 +491,16 @@ class AddWorkOrderCheckActivity : BaseActivity() {
         }
 
         val file = getOriginPathFile(path)
-//        val compressFile = compressFile(file)
-        selectorPictureViewModel.fileOssUpload(file, "$tag.$path")
-
+        val fileSize = FileUtils.getAutoFileOrFilesSize(file.absolutePath)
+        LogUtil.e("shenhe", "压缩前$fileSize")
+        val compressFile = BitmapUtils.compressFile(file, cacheDir.absolutePath + File.separator + "compress_img_cache.jpg")
+        if (compressFile != null) {
+            val compressFileSize = FileUtils.getAutoFileOrFilesSize(compressFile.absolutePath)
+            LogUtil.e("shenhe", "压缩后$compressFileSize")
+            selectorPictureViewModel.fileOssUpload(compressFile, "$tag.$path")
+        } else {
+            selectorPictureViewModel.fileOssUpload(file, "$tag.$path")
+        }
         parent.addView(img)
     }
 
@@ -551,40 +549,6 @@ class AddWorkOrderCheckActivity : BaseActivity() {
         } else path
 
         return File(fileOriginPath)
-    }
-
-    private fun compressFile(file: File): File {
-        var compressFile: File = file
-        Luban.with(this)
-            .load(file)
-            .ignoreBy(100)
-            .setTargetDir(cacheDir.absolutePath)
-            .filter { path ->
-                !(TextUtils.isEmpty(path) || path.lowercase(Locale.getDefault())
-                    .endsWith(".gif"))
-            }
-            .setCompressListener(object : OnCompressListener {
-                override fun onStart() {
-                    //压缩开始前调用，可以在方法内启动 loading UI
-                    showProgressbarLoading()
-                }
-
-                override fun onSuccess(file: File?) {
-                    // 压缩成功后调用，返回压缩后的图片文件
-                    file?.let {
-                        compressFile = file
-                        LogUtil.e("shenhe", "压缩成功 -- ${compressFile.absolutePath}")
-                    }
-                }
-
-                override fun onError(e: Throwable?) {
-                    // 当压缩过程出现问题时调用
-                    compressFile = file
-                    LogUtil.e("shenhe", "压缩失败 -- ${compressFile.absolutePath}")
-                }
-            }).launch()
-
-        return compressFile
     }
 
     /*** 播放音频，并监听播放进度，更新页面动画  */
