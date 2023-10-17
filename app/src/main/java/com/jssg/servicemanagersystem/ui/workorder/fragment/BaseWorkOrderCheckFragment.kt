@@ -7,6 +7,7 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -700,12 +701,30 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
             val file = getOriginPathFile(url)
             val fileSize = FileUtils.getAutoFileOrFilesSize(file.absolutePath)
             LogUtil.e("shenhe", "压缩前$fileSize")
-            val compressFile = BitmapUtils.compressFile(file, requireContext().cacheDir.absolutePath + File.separator + "compress_img_cache.jpg")
-            if (compressFile != null) {
-                val compressFileSize = FileUtils.getAutoFileOrFilesSize(compressFile.absolutePath)
-                LogUtil.e("shenhe", "压缩后$compressFileSize")
-                selectPicturesViewModel.fileOssUpload(compressFile, "$tag.$url")
-            } else {
+
+            val directoryPictures =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            directoryPictures?.let {
+                val fileDirectory =
+                    File(directoryPictures.absolutePath + File.separator + "cache")
+                if (!fileDirectory.exists()) {
+                    fileDirectory.mkdirs()
+                }
+                val compressFile = BitmapUtils.compressFile(
+                    file,
+                    requireContext().cacheDir.absolutePath + File.separator + "compress_img_cache.jpg"
+                )
+                if (compressFile != null) {
+                    val compressFileSize =
+                        FileUtils.getAutoFileOrFilesSize(compressFile.absolutePath)
+                    LogUtil.e("shenhe", "压缩后$compressFileSize")
+                    selectPicturesViewModel.fileOssUpload(compressFile, "$tag.$url")
+                } else {
+                    selectPicturesViewModel.fileOssUpload(file, "$tag.$url")
+                }
+            }
+
+            if (directoryPictures == null) {
                 selectPicturesViewModel.fileOssUpload(file, "$tag.$url")
             }
         }

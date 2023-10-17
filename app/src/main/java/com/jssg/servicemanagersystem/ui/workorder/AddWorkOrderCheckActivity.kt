@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContract
@@ -493,12 +494,26 @@ class AddWorkOrderCheckActivity : BaseActivity() {
         val file = getOriginPathFile(path)
         val fileSize = FileUtils.getAutoFileOrFilesSize(file.absolutePath)
         LogUtil.e("shenhe", "压缩前$fileSize")
-        val compressFile = BitmapUtils.compressFile(file, cacheDir.absolutePath + File.separator + "compress_img_cache.jpg")
-        if (compressFile != null) {
-            val compressFileSize = FileUtils.getAutoFileOrFilesSize(compressFile.absolutePath)
-            LogUtil.e("shenhe", "压缩后$compressFileSize")
-            selectorPictureViewModel.fileOssUpload(compressFile, "$tag.$path")
-        } else {
+        val directoryPictures =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+        directoryPictures?.let {
+            val fileDirectory =
+                File(directoryPictures.absolutePath + File.separator + "cache")
+            if (!fileDirectory.exists()) {
+                fileDirectory.mkdirs()
+            }
+            val compressFile = BitmapUtils.compressFile(file, fileDirectory.absolutePath + File.separator + "compress_img_cache.jpg")
+            if (compressFile != null) {
+                val compressFileSize = FileUtils.getAutoFileOrFilesSize(compressFile.absolutePath)
+                LogUtil.e("shenhe", "压缩后$compressFileSize")
+                selectorPictureViewModel.fileOssUpload(compressFile, "$tag.$path")
+            } else {
+                selectorPictureViewModel.fileOssUpload(file, "$tag.$path")
+            }
+        }
+
+        if (directoryPictures == null) {
             selectorPictureViewModel.fileOssUpload(file, "$tag.$path")
         }
         parent.addView(img)
