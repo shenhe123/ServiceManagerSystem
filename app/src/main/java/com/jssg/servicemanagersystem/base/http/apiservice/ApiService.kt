@@ -1,6 +1,5 @@
 package com.jssg.servicemanagersystem.base.http.apiservice
 
-import com.jssg.servicemanagersystem.BuildConfig
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
@@ -40,85 +39,85 @@ import retrofit2.http.Streaming
 interface ApiService {
 
     //退出登录
-    @POST("${BuildConfig.stagApi}logout")
+    @POST("logout")
     fun logout(): Observable<BaseHttpResult<Any>>
 
     //登录
-    @POST("${BuildConfig.stagApi}login")
+    @POST("login")
     fun postLogin(@Body body: RequestBody): Observable<BaseHttpResult<LoginEntity?>>
 
-    @GET("${BuildConfig.stagApi}getInfo")
+    @GET("getInfo")
     fun getInfo(): Observable<BaseHttpResult<UserInfo?>>
 
-    @PUT("${BuildConfig.stagApi}system/user/profile")
+    @PUT("system/user/profile")
     fun updateUserProfile(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
     @FormUrlEncoded
-    @PUT("${BuildConfig.stagApi}system/user/profile/updatePwd")
+    @PUT("system/user/profile/updatePwd")
     fun updatePassword(@Field("oldPassword") oldPassword: String, @Field("newPassword") newPassword: String): Observable<BaseHttpResult<Any>>
 
-    @POST("${BuildConfig.stagApi}system/role")
+    @POST("system/role")
     fun postAddNewRole(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @GET("${BuildConfig.stagApi}system/user/list")
+    @GET("system/user/list")
     fun getUserList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>>>
 
-    @GET("${BuildConfig.stagApi}system/role/list")
+    @GET("system/role/list")
     fun getRoleList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<Role>>>
 
-    @PUT("${BuildConfig.stagApi}system/user")
+    @PUT("system/user")
     fun updateUserInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @DELETE("${BuildConfig.stagApi}system/user/{userId}")
+    @DELETE("system/user/{userId}")
     fun deleteUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<Any>>
 
-    @POST("${BuildConfig.stagApi}system/user")
+    @POST("system/user")
     fun addNewUser(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @GET("${BuildConfig.stagApi}system/user/")
+    @GET("system/user/")
     fun getUserRoles(): Observable<BaseHttpResult<UserRoles>>
 
-    @GET("${BuildConfig.stagApi}system/user/list")
+    @GET("system/user/list")
     fun searchUser(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>?>>
 
-    @GET("${BuildConfig.stagApi}system/role/list")
+    @GET("system/role/list")
     fun searchRole(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<Role>?>>
 
-    @GET("${BuildConfig.stagApi}system/user/app/{userId}")
+    @GET("system/user/app/{userId}")
     fun getUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<UserData?>>
 
-    @GET("${BuildConfig.stagApi}system/user/organizations")
+    @GET("system/user/organizations")
     fun getFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>
 
-    @GET("${BuildConfig.stagApi}system/user/deptTree")
+    @GET("system/user/deptTree")
     fun getDeptInfo(@Query("parentId") parentId: Int = 1): Observable<BaseHttpResult<List<DeptInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrder/orgList")
+    @GET("qm/workOrder/orgList")
     fun getWorkFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrder/deptList")
+    @GET("qm/workOrder/deptList")
     fun getWorkDeptInfo(): Observable<BaseHttpResult<List<WorkDeptInfo>?>>
 
-    @PUT("${BuildConfig.stagApi}system/role")
+    @PUT("system/role")
     fun updateRoleInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrder/list")
+    @GET("qm/workOrder/list")
     fun getWorkOrderList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrder/{billNo}/")
+    @GET("qm/workOrder/{billNo}/")
     fun getWorkOrderInfo(@Path("billNo") billNo: String): Observable<BaseHttpResult<WorkOrderInfo?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrderDetail/list")
+    @GET("qm/workOrderDetail/list")
     fun getWorkOrderCheckList(
         @Query("billNo") billNo: String,
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int
     ): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrderDetail/{billDetailNo}/")
+    @GET("qm/workOrderDetail/{billDetailNo}/")
     fun getWorkOrderCheckDetailInfo(@Path("billDetailNo") billDetailNo: String): Observable<BaseHttpResult<WorkOrderCheckInfo?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrderDetail/list")
+    @GET("qm/workOrderDetail/list")
     fun searchWorkOrderCheckList(
         @Query("state") state: String?,
         @Query("params[\"beginCheckDate\"]") beginApplyDate: String?,
@@ -126,7 +125,7 @@ interface ApiService {
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrder/list")
+    @GET("qm/workOrder/list")
     fun searchWorkOrderList(
         @Query("applyName") applyName: String?,
         @Query("productCode") productCode: String?,
@@ -139,31 +138,31 @@ interface ApiService {
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
-    @POST("${BuildConfig.stagApi}system/oss/upload")
+    @POST("system/oss/upload")
     fun fileOssUpload(@Body body: MultipartBody): Observable<BaseHttpResult<UploadEntity?>>
 
-    @POST("${BuildConfig.stagApi}qm/workOrderDetail")
+    @POST("qm/workOrderDetail")
     fun addWorkOrderDetail(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @POST("${BuildConfig.stagApi}qm/workOrder")
+    @POST("qm/workOrder")
     fun addWorkOrder(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @PUT("${BuildConfig.stagApi}qm/workOrderDetail")
+    @PUT("qm/workOrderDetail")
     fun updateWorkOrderDetail(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @GET("${BuildConfig.stagApi}system/oss/listByIds/{ossIds}")
+    @GET("system/oss/listByIds/{ossIds}")
     fun getOssListByIds(@Path("ossIds") ids: String): Observable<BaseHttpResult<List<UploadEntity>>>
 
-    @POST("${BuildConfig.stagApi}qm/workOrderDetail/approve")
+    @POST("qm/workOrderDetail/approve")
     fun reviewWorkOrderCheck(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @POST("${BuildConfig.stagApi}qm/workOrder/finish")
+    @POST("qm/workOrder/finish")
     fun closeCaseWorkOrderCheck(@Query("billNos") billNos: String): Observable<BaseHttpResult<Any>>
 
-    @GET("${BuildConfig.stagApi}qm/tripReport/list")
+    @GET("qm/tripReport/list")
     fun getTravelReportList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/tripReport/list")
+    @GET("qm/tripReport/list")
     fun searchTravelReportList(@Query("applyName") applyName: String?,
                                @Query("params[\"beginTripDate\"]") beginTripDate: String?,
                                @Query("params[\"endTripDate\"]") endTripDate: String?,
@@ -172,40 +171,40 @@ interface ApiService {
                                @Query("pageNum") pageNum: Int,
                                @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/tripReport/orgList")
+    @GET("qm/tripReport/orgList")
     fun getTravelReportFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/tripReport/deptList")
+    @GET("qm/tripReport/deptList")
     fun getTravelReportDeptInfo(): Observable<BaseHttpResult<List<WorkDeptInfo>?>>
 
-    @POST("${BuildConfig.stagApi}qm/tripReport")
+    @POST("qm/tripReport")
     fun addNewTravelReport(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @PUT("${BuildConfig.stagApi}qm/tripReport")
+    @PUT("qm/tripReport")
     fun updateTravelReport(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
-    @DELETE("${BuildConfig.stagApi}system/role/{roleId}")
+    @DELETE("system/role/{roleId}")
     fun deleteRoleInfo(@Path("roleId") roleId: String): Observable<BaseHttpResult<Any>>
 
-    @DELETE("${BuildConfig.stagApi}qm/workOrder/{billNo}")
+    @DELETE("qm/workOrder/{billNo}")
     fun deleteWorkOrderInfo(@Path("billNo") billNo: String): Observable<BaseHttpResult<Any>>
 
-    @DELETE("${BuildConfig.stagApi}qm/workOrderDetail/{billDetailNo}")
+    @DELETE("qm/workOrderDetail/{billDetailNo}")
     fun deleteWorkOrderCheckDetailInfo(@Path("billDetailNo") billDetailNo: String): Observable<BaseHttpResult<Any>>
 
-    @GET("${BuildConfig.stagApi}qm/tripReport/{billNo}")
+    @GET("qm/tripReport/{billNo}")
     fun getTravelReportInfo(@Path("billNo") billNo: String): Observable<BaseHttpResult<TravelReportInfo?>>
 
     @Streaming
-    @GET("${BuildConfig.stagApi}qm/tripReport/export")
+    @GET("qm/tripReport/export")
     fun getTravelReportExport(@Query("billNo") billNo: String): Call<ResponseBody>
 
     @Streaming
-    @GET("${BuildConfig.stagApi}qm/workOrderDetail/reportExport")
+    @GET("qm/workOrderDetail/reportExport")
     fun getReportListExport(): Call<ResponseBody>
 
     @Streaming
-    @GET("${BuildConfig.stagApi}qm/workOrderDetail/reportExport")
+    @GET("qm/workOrderDetail/reportExport")
     fun searchReportListExport(@Query("productCode") productCode: String?,
                                @Query("productDes") productDes: String?,
                                @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
@@ -214,13 +213,13 @@ interface ApiService {
                                @Query("orgService") orgService: String?,
                                @Query("checkState") checkState: String?): Call<ResponseBody>
 
-    @GET("${BuildConfig.stagApi}monitor/logininfor/list")
+    @GET("monitor/logininfor/list")
     fun getLogInfoList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<LogInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrderDetail/reportList")
+    @GET("qm/workOrderDetail/reportList")
     fun getReportList(): Observable<BaseHttpResult<List<ReportListInfo>?>>
 
-    @GET("${BuildConfig.stagApi}qm/workOrderDetail/reportList")
+    @GET("qm/workOrderDetail/reportList")
     fun searchReportList(@Query("productCode") productCode: String?,
                          @Query("productDes") productDes: String?,
                          @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
@@ -230,6 +229,6 @@ interface ApiService {
                          @Query("checkState") checkState: String?): Observable<BaseHttpResult<List<ReportListInfo>?>>
 
 
-    @GET("${BuildConfig.stagApi}qm/appVersionConfig")
+    @GET("qm/appVersionConfig")
     fun getUpdateInfo(): Observable<BaseHttpResult<UpdateEntity?>>
 }
