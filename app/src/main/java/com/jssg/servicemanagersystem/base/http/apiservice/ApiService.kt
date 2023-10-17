@@ -216,6 +216,11 @@ interface ApiService {
     @GET("monitor/logininfor/list")
     fun getLogInfoList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<LogInfo>?>>
 
+    @GET("monitor/logininfor/list")
+    fun searchLogInfoList(@Query("userName") userName: String?,
+                          @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
+                          @Query("params[\"endApplyDate\"]") endApplyDate: String?,): Observable<BaseHttpResult<List<LogInfo>?>>
+
     @GET("qm/workOrderDetail/reportList")
     fun getReportList(): Observable<BaseHttpResult<List<ReportListInfo>?>>
 

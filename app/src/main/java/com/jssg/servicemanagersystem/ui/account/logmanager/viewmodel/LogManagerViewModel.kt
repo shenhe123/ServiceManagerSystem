@@ -6,6 +6,7 @@ import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
+import com.jssg.servicemanagersystem.ui.account.logmanager.LogManagerActivity
 
 /**
  * ServiceManagerSystem
@@ -21,6 +22,18 @@ class LogManagerViewModel: AutoDisposViewModel() {
             .getLogInfoList(page, 20)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(logInfoListLiveData, isRefresh, page))
+    }
+
+    fun searchLogInfo(searchParams: LogManagerActivity.SearchParams) {
+        logInfoListLiveData.value = LoadListDataModel(true)
+        RetrofitService.apiService
+            .searchLogInfoList(
+                searchParams.userName,
+                searchParams.startDate,
+                searchParams.endDate
+            )
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .subscribe(createListObserver(logInfoListLiveData, true, 1))
     }
 
 

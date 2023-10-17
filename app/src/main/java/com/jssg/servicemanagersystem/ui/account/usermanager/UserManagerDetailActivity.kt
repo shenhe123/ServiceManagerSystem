@@ -11,9 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.SpinnerAdapter
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -26,9 +24,7 @@ import com.jssg.servicemanagersystem.databinding.ActivityUserManagerDetailBindin
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
-import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
-import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.DpPxUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils

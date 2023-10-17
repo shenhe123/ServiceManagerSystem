@@ -24,7 +24,6 @@ import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.FragmentReportBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
-import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.report.entity.ReportListInfo
 import com.jssg.servicemanagersystem.ui.report.viewmodel.ReportViewModel
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
