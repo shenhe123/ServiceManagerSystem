@@ -157,8 +157,6 @@ class WorkOrderFragment : BaseFragment() {
             RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_FINISH.printableName)
         binding.fbtnAddNew.isVisible =
             RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_ADD.printableName)
-
-        binding.smartRefreshLayout.isVisible = !AccountManager.instance.isEndUser
     }
 
     private fun showNoData(isVisible: Boolean) {
