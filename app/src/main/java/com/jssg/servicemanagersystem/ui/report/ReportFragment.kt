@@ -204,7 +204,7 @@ class ReportFragment : BaseFragment() {
                     .addConfrimClickLisntener(object :
                         ExportDialogFragment.OnConfirmClickLisenter {
                         override fun onConfrimClick(isExportPicture: Boolean) {
-                            exportWorkOrder(fileName)
+                            exportWorkOrder(fileName, !isExportPicture)
                         }
 
                     }).show(childFragmentManager, "close_case_dialog")
@@ -216,7 +216,7 @@ class ReportFragment : BaseFragment() {
                     .addConfrimClickLisntener(object :
                         ExportDialogFragment.OnConfirmClickLisenter {
                         override fun onConfrimClick(isExportPicture: Boolean) {
-                            exportWorkOrder(fileName)
+                            exportWorkOrder(fileName, !isExportPicture)
                         }
 
                     }).show(childFragmentManager, "close_case_dialog")
@@ -225,7 +225,7 @@ class ReportFragment : BaseFragment() {
         }
     }
 
-    private fun exportWorkOrder(fileName: String) {
+    private fun exportWorkOrder(fileName: String, noImage: Boolean) {
         PermissionHelper.Builder().with(this).build().request(
             "需要读写权限", Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) { granted, isAlwaysDenied ->
@@ -245,7 +245,7 @@ class ReportFragment : BaseFragment() {
 
                     lifecycleScope.launchWhenResumed {
                         showProgressbarLoading("正在导出...", true, false)
-                        DownloadManager.downloadWorkOrderDetailReport(searchParams, File(filePath))
+                        DownloadManager.downloadWorkOrderDetailReport(searchParams, File(filePath), noImage)
                             .collect {
                                 when (it) {
                                     is DownloadState.InProgress -> {

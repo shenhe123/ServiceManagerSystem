@@ -201,7 +201,7 @@ interface ApiService {
 
     @Streaming
     @GET("qm/workOrderDetail/reportExport")
-    fun getReportListExport(): Call<ResponseBody>
+    fun getReportListExport(@Query("noImage") noImage: Boolean): Call<ResponseBody>
 
     @Streaming
     @GET("qm/workOrderDetail/reportExport")
@@ -211,15 +211,17 @@ interface ApiService {
                                @Query("params[\"endApplyDate\"]") endApplyDate: String?,
                                @Query("oaBillNo") oaBillNo: String?,
                                @Query("orgService") orgService: String?,
-                               @Query("checkState") checkState: String?): Call<ResponseBody>
+                               @Query("checkState") checkState: String?,
+                               @Query("noImage") noImage: Boolean
+    ): Call<ResponseBody>
 
     @GET("monitor/logininfor/list")
     fun getLogInfoList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<LogInfo>?>>
 
     @GET("monitor/logininfor/list")
     fun searchLogInfoList(@Query("userName") userName: String?,
-                          @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
-                          @Query("params[\"endApplyDate\"]") endApplyDate: String?,): Observable<BaseHttpResult<List<LogInfo>?>>
+                          @Query("params[\"beginTime\"]") beginApplyDate: String?,
+                          @Query("params[\"endTime\"]") endApplyDate: String?,): Observable<BaseHttpResult<List<LogInfo>?>>
 
     @GET("qm/workOrderDetail/reportList")
     fun getReportList(): Observable<BaseHttpResult<List<ReportListInfo>?>>

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flowOn
 import okhttp3.ResponseBody
 import okio.IOException
 import retrofit2.Response
+import retrofit2.http.Query
 import java.io.File
 
 /**
@@ -36,11 +37,12 @@ object DownloadManager {
 
     suspend fun downloadWorkOrderDetailReport(
         searchParams: WorkOrderFragment.SearchParams?,
-        file: File
+        file: File,
+        noImage: Boolean
     ): Flow<DownloadState> {
         return flow {
             val response: Response<ResponseBody> = if (searchParams == null) {
-                RetrofitService.downloadApiServie.getReportListExport().execute()
+                RetrofitService.downloadApiServie.getReportListExport(noImage).execute()
             } else {
                 RetrofitService.downloadApiServie.searchReportListExport(
                     searchParams.productCode,
@@ -50,6 +52,7 @@ object DownloadManager {
                     searchParams.oaBillNo,
                     searchParams.factory,
                     searchParams.state,
+                    noImage
                 ).execute()
             }
             if (response.isSuccessful) {
