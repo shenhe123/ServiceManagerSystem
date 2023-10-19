@@ -43,6 +43,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ServiceManagerSystem"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:label,android:allowBackup,theme">
 
 
