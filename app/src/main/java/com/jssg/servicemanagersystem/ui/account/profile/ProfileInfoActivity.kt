@@ -84,10 +84,10 @@ class ProfileInfoActivity : BaseActivity() {
                 return@setOnClickListener
             }
             val cardId = binding.etCardId.text.toString()
-            if (cardId.isEmpty()) {
-                ToastUtils.showToast("身份证号不能为空")
-                return@setOnClickListener
-            }
+//            if (cardId.isEmpty()) {
+//                ToastUtils.showToast("身份证号不能为空")
+//                return@setOnClickListener
+//            }
             val address = binding.etAddress.text.toString()
 //            if (address.isEmpty()) {
 //                ToastUtils.showToast("居住地址不能为空")
