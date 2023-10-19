@@ -49,9 +49,10 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
             0 -> holder.binding.tvCheckState.text = "未开始"
             1 -> holder.binding.tvCheckState.text = "排查中"
             2 -> holder.binding.tvCheckState.text = "已完成"
+            3 -> holder.binding.tvCheckState.text = "已手工提单"
         }
 
-        holder.binding.mcbCheck.isVisible = isCloseCase && item.checkState != 2
+        holder.binding.mcbCheck.isVisible = isCloseCase && item.checkState < 2
 
         val hasPermission =
             RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_REMOVE.printableName)

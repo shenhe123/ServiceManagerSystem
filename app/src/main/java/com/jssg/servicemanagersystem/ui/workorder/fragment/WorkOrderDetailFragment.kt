@@ -80,9 +80,10 @@ class WorkOrderDetailFragment : BaseFragment() {
         // 0 -> = "未开始"
         // 1 -> = "排查中"
         // 2 -> = "已完成"
+        // 3 -> = "已手工提单"
 
         val isVisible =
-            workOrderInfo.checkState != 2 && RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)
+            workOrderInfo.checkState < 2 && RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDERDETAIL_ADD.printableName)
         binding.mbtCheckOrder.isVisible = isVisible
 
         if (isVisible) {

@@ -255,7 +255,7 @@ class ReportFragment : BaseFragment() {
 
                     lifecycleScope.launchWhenResumed {
                         showProgressbarLoading("正在导出...", true, false)
-                        DownloadManager.downloadWorkOrderDetailReport(searchParams, File(filePath), noImage)
+                        DownloadManager.downloadWorkOrderDetailReport(searchParams, File(filePath), noImage, page)
                             .collect {
                                 when (it) {
                                     is DownloadState.InProgress -> {

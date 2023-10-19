@@ -38,14 +38,16 @@ object DownloadManager {
     suspend fun downloadWorkOrderDetailReport(
         searchParams: WorkOrderFragment.SearchParams?,
         file: File,
-        noImage: Boolean
+        noImage: Boolean,
+        page: Int
     ): Flow<DownloadState> {
         return flow {
             val response: Response<ResponseBody> = if (searchParams == null) {
-                RetrofitService.downloadApiServie.getReportListExport(noImage).execute()
+                RetrofitService.downloadApiServie.getReportListExport( 1, page * 20, noImage).execute()
             } else {
                 RetrofitService.downloadApiServie.searchReportListExport(
                     searchParams.applyName,
+                    searchParams.batchNo,
                     searchParams.productCode,
                     searchParams.productDesc,
                     searchParams.startDate,

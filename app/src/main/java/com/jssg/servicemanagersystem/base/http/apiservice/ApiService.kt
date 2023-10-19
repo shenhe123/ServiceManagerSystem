@@ -228,12 +228,17 @@ interface ApiService {
 
     @Streaming
     @GET("qm/workOrderDetail/reportExport")
-    fun getReportListExport(@Query("noImage") noImage: Boolean): Call<ResponseBody>
+    fun getReportListExport(
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int,
+        @Query("noImage") noImage: Boolean
+    ): Call<ResponseBody>
 
     @Streaming
     @GET("qm/workOrderDetail/reportExport")
     fun searchReportListExport(
         @Query("applyName") applyName: String?,
+        @Query("batchNo") batchNo: String?,
         @Query("productCode") productCode: String?,
         @Query("productDes") productDes: String?,
         @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
