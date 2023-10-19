@@ -41,6 +41,7 @@ class ReportViewModel: AutoDisposViewModel() {
         reportListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
             .searchReportList(
+                searchParams.applyName,
                 searchParams.productCode,
                 searchParams.productDesc,
                 searchParams.startDate,

@@ -54,16 +54,25 @@ interface ApiService {
 
     @FormUrlEncoded
     @PUT("system/user/profile/updatePwd")
-    fun updatePassword(@Field("oldPassword") oldPassword: String, @Field("newPassword") newPassword: String): Observable<BaseHttpResult<Any>>
+    fun updatePassword(
+        @Field("oldPassword") oldPassword: String,
+        @Field("newPassword") newPassword: String
+    ): Observable<BaseHttpResult<Any>>
 
     @POST("system/role")
     fun postAddNewRole(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
     @GET("system/user/list")
-    fun getUserList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>>>
+    fun getUserList(
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<User>>>
 
     @GET("system/role/list")
-    fun getRoleList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<Role>>>
+    fun getRoleList(
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<Role>>>
 
     @PUT("system/user")
     fun updateUserInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
@@ -78,10 +87,18 @@ interface ApiService {
     fun getUserRoles(): Observable<BaseHttpResult<UserRoles>>
 
     @GET("system/user/list")
-    fun searchUser(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<User>?>>
+    fun searchUser(
+        @Query("key") input: String,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<User>?>>
 
     @GET("system/role/list")
-    fun searchRole(@Query("key") input: String, @Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<Role>?>>
+    fun searchRole(
+        @Query("key") input: String,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<Role>?>>
 
     @GET("system/user/app/{userId}")
     fun getUserInfo(@Path("userId") userId: Long): Observable<BaseHttpResult<UserData?>>
@@ -102,7 +119,10 @@ interface ApiService {
     fun updateRoleInfo(@Body body: RequestBody): Observable<BaseHttpResult<Any>>
 
     @GET("qm/workOrder/list")
-    fun getWorkOrderList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
+    fun getWorkOrderList(
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
     @GET("qm/workOrder/{billNo}/")
     fun getWorkOrderInfo(@Path("billNo") billNo: String): Observable<BaseHttpResult<WorkOrderInfo?>>
@@ -123,7 +143,8 @@ interface ApiService {
         @Query("params[\"beginCheckDate\"]") beginApplyDate: String?,
         @Query("params[\"endCheckDate\"]") endApplyDate: String?,
         @Query("pageNum") pageNum: Int,
-        @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<WorkOrderCheckInfo>?>>
 
     @GET("qm/workOrder/list")
     fun searchWorkOrderList(
@@ -136,7 +157,8 @@ interface ApiService {
         @Query("orgService") orgService: String?,
         @Query("checkState") checkState: String?,
         @Query("pageNum") pageNum: Int,
-        @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<WorkOrderInfo>?>>
 
     @POST("system/oss/upload")
     fun fileOssUpload(@Body body: MultipartBody): Observable<BaseHttpResult<UploadEntity?>>
@@ -160,16 +182,21 @@ interface ApiService {
     fun closeCaseWorkOrderCheck(@Query("billNos") billNos: String): Observable<BaseHttpResult<Any>>
 
     @GET("qm/tripReport/list")
-    fun getTravelReportList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
+    fun getTravelReportList(
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 
     @GET("qm/tripReport/list")
-    fun searchTravelReportList(@Query("applyName") applyName: String?,
-                               @Query("params[\"beginTripDate\"]") beginTripDate: String?,
-                               @Query("params[\"endTripDate\"]") endTripDate: String?,
-                               @Query("orgName") orgName: String?,
-                               @Query("dept") dept: String?,
-                               @Query("pageNum") pageNum: Int,
-                               @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<TravelReportInfo>?>>
+    fun searchTravelReportList(
+        @Query("applyName") applyName: String?,
+        @Query("params[\"beginTripDate\"]") beginTripDate: String?,
+        @Query("params[\"endTripDate\"]") endTripDate: String?,
+        @Query("orgName") orgName: String?,
+        @Query("dept") dept: String?,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<TravelReportInfo>?>>
 
     @GET("qm/tripReport/orgList")
     fun getTravelReportFactoryInfo(): Observable<BaseHttpResult<List<WorkFactoryInfo>?>>
@@ -205,35 +232,45 @@ interface ApiService {
 
     @Streaming
     @GET("qm/workOrderDetail/reportExport")
-    fun searchReportListExport(@Query("productCode") productCode: String?,
-                               @Query("productDes") productDes: String?,
-                               @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
-                               @Query("params[\"endApplyDate\"]") endApplyDate: String?,
-                               @Query("oaBillNo") oaBillNo: String?,
-                               @Query("orgService") orgService: String?,
-                               @Query("checkState") checkState: String?,
-                               @Query("noImage") noImage: Boolean
+    fun searchReportListExport(
+        @Query("applyName") applyName: String?,
+        @Query("productCode") productCode: String?,
+        @Query("productDes") productDes: String?,
+        @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
+        @Query("params[\"endApplyDate\"]") endApplyDate: String?,
+        @Query("oaBillNo") oaBillNo: String?,
+        @Query("orgService") orgService: String?,
+        @Query("checkState") checkState: String?,
+        @Query("noImage") noImage: Boolean
     ): Call<ResponseBody>
 
     @GET("monitor/logininfor/list")
-    fun getLogInfoList(@Query("pageNum") pageNum: Int, @Query("pageSize") pageSize: Int): Observable<BaseHttpResult<List<LogInfo>?>>
+    fun getLogInfoList(
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<LogInfo>?>>
 
     @GET("monitor/logininfor/list")
-    fun searchLogInfoList(@Query("userName") userName: String?,
-                          @Query("params[\"beginTime\"]") beginApplyDate: String?,
-                          @Query("params[\"endTime\"]") endApplyDate: String?,): Observable<BaseHttpResult<List<LogInfo>?>>
+    fun searchLogInfoList(
+        @Query("userName") userName: String?,
+        @Query("params[\"beginTime\"]") beginApplyDate: String?,
+        @Query("params[\"endTime\"]") endApplyDate: String?,
+    ): Observable<BaseHttpResult<List<LogInfo>?>>
 
     @GET("qm/workOrderDetail/reportList")
     fun getReportList(): Observable<BaseHttpResult<List<ReportListInfo>?>>
 
     @GET("qm/workOrderDetail/reportList")
-    fun searchReportList(@Query("productCode") productCode: String?,
-                         @Query("productDes") productDes: String?,
-                         @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
-                         @Query("params[\"endApplyDate\"]") endApplyDate: String?,
-                         @Query("oaBillNo") oaBillNo: String?,
-                         @Query("orgService") orgService: String?,
-                         @Query("checkState") checkState: String?): Observable<BaseHttpResult<List<ReportListInfo>?>>
+    fun searchReportList(
+        @Query("applyName") applyName: String?,
+        @Query("productCode") productCode: String?,
+        @Query("productDes") productDes: String?,
+        @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,
+        @Query("params[\"endApplyDate\"]") endApplyDate: String?,
+        @Query("oaBillNo") oaBillNo: String?,
+        @Query("orgService") orgService: String?,
+        @Query("checkState") checkState: String?
+    ): Observable<BaseHttpResult<List<ReportListInfo>?>>
 
 
     @GET("qm/appVersionConfig")
