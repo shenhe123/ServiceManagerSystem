@@ -112,8 +112,10 @@ class ReportFragment : BaseFragment() {
         reportViewModel.reportListLiveData.observe(viewLifecycleOwner) { result ->
             if (!result.isLoading) {
                 hideLoading()
-                if (binding.smartRefreshLayout.isRefreshing) {
+                if (result.isPullRefresh) {
                     binding.smartRefreshLayout.finishRefresh()
+                } else {
+                    binding.smartRefreshLayout.finishLoadMore()
                 }
                 binding.pbLoading.isVisible = false
             }
@@ -158,10 +160,17 @@ class ReportFragment : BaseFragment() {
 
     private fun updateReportList(result: LoadListDataModel<List<ReportListInfo>?>) {
         result.rows?.let {
-            val reversedList = it
-            binding.table.setData(reversedList)
+            if (result.isPullRefresh) {
+                binding.table.setData(it)
+            } else {
+                if (it.isEmpty()) { //无更多数据
+                    binding.smartRefreshLayout.setNoMoreData(true)
+                } else {
+                    binding.table.addData(it, true)
+                }
+            }
 
-            if (it.isNotEmpty()) {
+            if (binding.table.tableData.lineSize > 0) {
 //            binding.table.tableData.columns[7].isFixed = true
                 binding.table.tableData.columns[7].isAutoCount = true
                 binding.table.tableData.columns[7].setDrawFormat(
@@ -174,13 +183,16 @@ class ReportFragment : BaseFragment() {
 
         }
 
-        showNoData(result.rows.isNullOrEmpty())
+        showNoData(binding.table.tableData.lineSize <= 0)
     }
 
     private fun loadData(isRefresh: Boolean) {
         if (isRefresh) {
             searchParams = null
+            binding.smartRefreshLayout.setEnableLoadMore(true)
             page = 1
+        } else {
+            page++
         }
         reportViewModel.getReportList(page)
     }
@@ -208,32 +220,18 @@ class ReportFragment : BaseFragment() {
             val fileName = "workOrder_${
                 DateUtil.getFullData(System.currentTimeMillis()).replace(":", ".")
             }.xls"
-            if (searchParams == null) {
-                ExportDialogFragment.newInstance(
-                    "确定导出",
-                    "确定将全部工单的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName"
-                )
-                    .addConfrimClickLisntener(object :
-                        ExportDialogFragment.OnConfirmClickLisenter {
-                        override fun onConfrimClick(isExportPicture: Boolean) {
-                            exportWorkOrder(fileName, !isExportPicture)
-                        }
 
-                    }).show(childFragmentManager, "close_case_dialog")
-            } else {
-                ExportDialogFragment.newInstance(
-                    "确定导出",
-                    "确定将当前搜索结果的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName"
-                )
-                    .addConfrimClickLisntener(object :
-                        ExportDialogFragment.OnConfirmClickLisenter {
-                        override fun onConfrimClick(isExportPicture: Boolean) {
-                            exportWorkOrder(fileName, !isExportPicture)
-                        }
+            ExportDialogFragment.newInstance(
+                "确定导出",
+                "确定将当前列表的报表全部导出吗？导出后的文件会保存在本地Download/workOrder文件夹的下$fileName"
+            )
+                .addConfrimClickLisntener(object :
+                    ExportDialogFragment.OnConfirmClickLisenter {
+                    override fun onConfrimClick(isExportPicture: Boolean) {
+                        exportWorkOrder(fileName, !isExportPicture)
+                    }
 
-                    }).show(childFragmentManager, "close_case_dialog")
-            }
-
+                }).show(childFragmentManager, "close_case_dialog")
         }
     }
 
@@ -288,6 +286,7 @@ class ReportFragment : BaseFragment() {
             override fun onClick(searchParams: WorkOrderFragment.SearchParams) {
                 showProgressbarLoading()
                 this@ReportFragment.searchParams = searchParams
+                binding.smartRefreshLayout.setEnableLoadMore(false)
                 reportViewModel.searchReportList(searchParams)
             }
 

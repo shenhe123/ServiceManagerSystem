@@ -16,15 +16,15 @@ class ReportViewModel: AutoDisposViewModel() {
 
     val reportListLiveData = MutableLiveData<LoadListDataModel<List<ReportListInfo>?>>()
 
-    fun getReportList(page: Int, ) {
-        reportListLiveData.value = LoadListDataModel(true)
+    fun getReportList(page: Int) {
+        reportListLiveData.value = LoadListDataModel(page == 1)
         RetrofitService.apiService
-            .getReportList()
+            .getReportList(page, 20)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .doOnNext { list ->
                 mapCheckState(list)
             }
-            .subscribe(createListObserver(reportListLiveData, true, 1))
+            .subscribe(createListObserver(reportListLiveData, page == 1, page))
     }
 
     private fun mapCheckState(list: List<ReportListInfo>?) {

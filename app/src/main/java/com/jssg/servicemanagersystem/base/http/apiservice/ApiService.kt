@@ -258,7 +258,10 @@ interface ApiService {
     ): Observable<BaseHttpResult<List<LogInfo>?>>
 
     @GET("qm/workOrderDetail/reportList")
-    fun getReportList(): Observable<BaseHttpResult<List<ReportListInfo>?>>
+    fun getReportList(
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<ReportListInfo>?>>
 
     @GET("qm/workOrderDetail/reportList")
     fun searchReportList(
