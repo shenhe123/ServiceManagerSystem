@@ -167,6 +167,8 @@ class AddWorkOrderActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            val oaBillNo = binding.etOaBillNo.text.toString()
+
             val productCode = binding.etProductCode.text.toString()
             if (productCode.isEmpty()) {
                 ToastUtils.showToast("产品编码不能为空")
@@ -237,10 +239,9 @@ class AddWorkOrderActivity : BaseActivity() {
                 orgId,
                 productCode,
                 productDesc,
-                badNum
+                badNum,
+                oaBillNo
             )
-
-//            workOrderViewModel.addNewWorkOrder()
         }
 
     }

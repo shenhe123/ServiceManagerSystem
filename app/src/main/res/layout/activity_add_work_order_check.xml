@@ -190,6 +190,54 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="批次号："
+                    style="@style/SubTitleStyle"/>
+
+                <TextView
+                    android:id="@+id/tv_batch_no"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    style="@style/SubTitleStyle"/>
+
+                <ImageView
+                    android:id="@+id/iv_batch_no_close"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:scaleType="center"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@drawable/svg_close"
+                    app:tint="@color/x_text_03"
+                    android:alpha="0.8"
+                    android:visibility="gone"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbt_add_batch_no"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    style="@style/NoInsetOutLineThemeButton"
+                    android:text="添加"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* "
+                    android:textColor="@android:color/holo_red_light"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="批次信息图片："
                     style="@style/SubTitleStyle"/>
 

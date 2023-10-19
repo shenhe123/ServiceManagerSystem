@@ -336,6 +336,7 @@ class WorkOrderFragment : BaseFragment() {
         val endDate: String?,
         val oaBillNo: String?,
         val factory: String,
-        val state: String
+        val state: String,
+        val batchNo: String? = null,
     ) : Parcelable
 }

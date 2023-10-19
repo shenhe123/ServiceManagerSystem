@@ -263,6 +263,7 @@ interface ApiService {
     @GET("qm/workOrderDetail/reportList")
     fun searchReportList(
         @Query("applyName") applyName: String?,
+        @Query("batchNo") batchNo: String?,
         @Query("productCode") productCode: String?,
         @Query("productDes") productDes: String?,
         @Query("params[\"beginApplyDate\"]") beginApplyDate: String?,

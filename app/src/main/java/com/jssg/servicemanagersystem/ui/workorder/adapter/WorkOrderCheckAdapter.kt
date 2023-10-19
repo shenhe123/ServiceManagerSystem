@@ -33,7 +33,7 @@ class WorkOrderCheckAdapter :
         item: WorkOrderCheckInfo
     ) {
         holder.binding.tvOrderId.text = item.billNo
-
+        holder.binding.tvBatchNo.text = item.batchNo ?: ""
         holder.binding.tvPlace.text = item.place
         holder.binding.tvCheckDate.text = item.checkDate
         holder.binding.tvBadNum.text = item.badNum.toString()

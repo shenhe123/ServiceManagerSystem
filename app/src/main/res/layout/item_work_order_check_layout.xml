@@ -110,14 +110,34 @@
 
 
         <TextView
+            android:id="@+id/tv_batch_no_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="批次号"
+            android:textSize="13sp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_check_num"
+            app:layout_constraintStart_toStartOf="@id/tv_check_num"/>
+
+        <TextView
+            android:id="@+id/tv_batch_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_batch_no_title"
+            app:layout_constraintStart_toStartOf="@id/tv_batch_no_title"/>
+
+
+        <TextView
             android:id="@+id/tv_place_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="服务地点"
             android:textSize="13sp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_check_num"
-            app:layout_constraintStart_toStartOf="@id/tv_check_num"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_batch_no"
+            app:layout_constraintStart_toStartOf="@id/tv_batch_no"/>
 
         <TextView
             android:id="@+id/tv_place"

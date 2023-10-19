@@ -32,6 +32,8 @@ import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import net.arvin.permissionhelper.PermissionHelper
 import java.io.File
 
@@ -46,6 +48,7 @@ class ReportFragment : BaseFragment() {
         }
     }
 
+    private var page: Int = 1
     private lateinit var reportViewModel: ReportViewModel
     private var searchParams: WorkOrderFragment.SearchParams? = null
     private lateinit var accountViewModel: AccountViewModel
@@ -62,8 +65,16 @@ class ReportFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.smartRefreshLayout.setEnableLoadMore(false)
-        binding.smartRefreshLayout.setOnRefreshListener { loadData(true) }
+        binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object :OnRefreshLoadMoreListener {
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                loadData(true)
+            }
+
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                loadData(false)
+            }
+
+        })
 
         binding.table.config.isShowTableTitle = false
         binding.table.config.columnTitleStyle =
@@ -169,8 +180,9 @@ class ReportFragment : BaseFragment() {
     private fun loadData(isRefresh: Boolean) {
         if (isRefresh) {
             searchParams = null
+            page = 1
         }
-        reportViewModel.getReportList()
+        reportViewModel.getReportList(page)
     }
 
     private fun addListener() {
@@ -271,8 +283,8 @@ class ReportFragment : BaseFragment() {
     }
 
     private fun showTipPopupWindow(target: View) {
-        val popupWindow = WorkOrderSearchPopupWindow(requireContext(), binding.root, searchParams)
-        popupWindow.setOnClickListener(object : WorkOrderSearchPopupWindow.OnSearchBtnClick {
+        val popupWindow = ReportSearchPopupWindow(requireContext(), binding.root, searchParams)
+        popupWindow.setOnClickListener(object : ReportSearchPopupWindow.OnSearchBtnClick {
             override fun onClick(searchParams: WorkOrderFragment.SearchParams) {
                 showProgressbarLoading()
                 this@ReportFragment.searchParams = searchParams

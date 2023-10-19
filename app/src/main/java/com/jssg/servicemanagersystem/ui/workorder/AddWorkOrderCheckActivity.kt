@@ -30,6 +30,7 @@ import com.jssg.servicemanagersystem.ui.workorder.adapter.AudioRecordAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.AudioRecordEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.UploadEntity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
+import com.jssg.servicemanagersystem.ui.workorder.popup.AddBatchNoDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.PicturesPreviewActivity
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureDialog
 import com.jssg.servicemanagersystem.ui.workorder.selectorpicture.SelectorPictureViewModel
@@ -149,6 +150,27 @@ class AddWorkOrderCheckActivity : BaseActivity() {
             hideAudioRecordButton()
         }
 
+        binding.mbtAddBatchNo.setOnClickListener {
+            AddBatchNoDialogFragment.newInstance().addConfrimClickLisntener(object :AddBatchNoDialogFragment.OnConfirmClickLisenter {
+                override fun onConfirmClick(batchNo: String) {
+                    val batchNos = binding.tvBatchNo.text.toString()
+                    if (batchNos.isEmpty()) {
+                        binding.tvBatchNo.text = batchNo
+                    } else {
+                        binding.tvBatchNo.text = "$batchNos,$batchNo"
+                    }
+
+                    binding.ivBatchNoClose.isVisible = true
+                }
+
+            }).show(supportFragmentManager, "add_batch_no_dialog")
+        }
+
+        binding.ivBatchNoClose.setOnClickListener {
+            binding.tvBatchNo.text = ""
+            binding.ivBatchNoClose.isVisible = false
+        }
+
         binding.btnAudioRecord.setRecordingListener(object : AudioRecordButton.OnRecordingListener {
             override fun recordFinish(audioFilePath: String?, recordTime: Long) {
                 audioFilePath?.let {
@@ -207,6 +229,12 @@ class AddWorkOrderCheckActivity : BaseActivity() {
             return
         }
 
+        val batchNo = binding.tvBatchNo.text.toString()
+        if (batchNo.isEmpty()) {
+            ToastUtils.showToast("批次号不能为空")
+            return
+        }
+
         val batchOssIds = batchPictures.map { it.ossId }
 
         val reworkPictures = selectPictures.filter { it.tag.startsWith("rework") }
@@ -256,7 +284,8 @@ class AddWorkOrderCheckActivity : BaseActivity() {
                 badNum,
                 checkDate.toString(),
                 state,
-                binding.etRemark.text.toString()
+                binding.etRemark.text.toString(),
+                batchNo
             )
         }
     }

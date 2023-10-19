@@ -55,6 +55,7 @@ data class WorkOrderInfo(
        val serviceAdd: String,   	// 服务地址
        val productCode: String,    // 产品编码
        val productDes: String,    // 产品描述
+       val batchNo: String?,    // 批次号
        val checkNum: String?,   // 0, // 需排查数量
        val productNum: String?,   // 0, // 问题产品数量
        val remark: String,    // 备注
@@ -72,6 +73,6 @@ data class WorkOrderInfo(
        val checkNumTotal: Int?,   // 排查数量
        val badNumTotal: Int?,   // 不良数量
        val sysOrganizationVo: WorkFactoryInfo?,
-       val oaBillNo: String?,
+       val oaBillNo: String?, //oa编号
        var isChecked: Boolean = false
 ) : Parcelable

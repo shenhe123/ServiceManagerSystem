@@ -72,7 +72,8 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         badNum: String,
         checkDate: String,
         state: Int,
-        remark: String
+        remark: String,
+        batchNo: String
     ) {
         addWorkOrderDetailLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
@@ -91,6 +92,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["checkDate"] = checkDate
         params["state"] = state
         params["remark"] = remark
+        params["batchNo"] = batchNo
         RetrofitService.apiService
             .addWorkOrderDetail(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
@@ -109,7 +111,8 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         badNum: String,
         checkDate: String,
         state: Int,
-        remark: String
+        remark: String,
+        batchNo: String
     ) {
         updateWorkOrderDetailLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
@@ -125,6 +128,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["checkDate"] = checkDate
         params["state"] = state
         params["remark"] = remark
+        params["batchNo"] = batchNo
         RetrofitService.apiService
             .updateWorkOrderDetail(HUtils.createRequestBodyMap(params))
             .compose(RxSchedulersHelper.io_main())
@@ -176,6 +180,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         productCode: String,
         productDesc: String,
         badNum: String,
+        oaBillNo: String?
     ) {
         addNewWorkOrderLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
@@ -197,21 +202,13 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["salesManager"] = salesManager
         params["serviceAdd"] = serviceAddress
         params["productCode"] = productCode
+        params["oaBillNo"] = oaBillNo ?: ""
         params["productDes"] = productDesc
         params["productNum"] = badNum
         params["state"] = 1
         params["remark"] = remark
         RetrofitService.apiService
             .addWorkOrder(HUtils.createRequestBodyMap(params))
-            .compose(RxSchedulersHelper.io_main())
-            .subscribe(createObserver(addNewWorkOrderLiveData))
-    }
-
-    fun addNewWorkOrder() {
-        addNewWorkOrderLiveData.value = LoadDataModel()
-        val json = "{\"unitPrice\":\"123\",\"productNum\":\"4\",\"checkNum\":\"23\",\"totalPrice\":\"4235\",\"remark\":\"你要走里呀就语文预习\",\"productDes\":\"你中午五\",\"servicePeriod\":\"3个月\",\"applyDept\":\"1000\",\"productCode\":\"13369494\",\"orgService\":\"1\",\"salesManager\":\"你有\",\"tel\":\"135969994499\",\"applyName\":\"你名字\",\"applyDate\":\"2023-09-03 20:09:04\",\"serviceAdd\":\"明知\"}"
-        RetrofitService.apiService
-            .addWorkOrder(HUtils.createJson(json))
             .compose(RxSchedulersHelper.io_main())
             .subscribe(createObserver(addNewWorkOrderLiveData))
     }

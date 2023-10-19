@@ -77,6 +77,7 @@ class UpdateWorkOrderDetailFragment : BaseWorkOrderCheckFragment() {
         binding.ivAddBoxPhoto.isVisible = isAddPictureEnable
         binding.ivAddBatchInfoPhoto.isVisible = isAddPictureEnable
         binding.ivAddReworkPhoto.isVisible = isAddReworkPictureEnable
+        binding.mbtAddBatchNo.isVisible = isAddPictureEnable
 
     }
 }

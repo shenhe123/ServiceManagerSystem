@@ -1,4 +1,4 @@
-package com.jssg.servicemanagersystem.ui.workorder.popup
+package com.jssg.servicemanagersystem.ui.report
 
 import android.content.Context
 import android.text.Editable
@@ -12,23 +12,24 @@ import androidx.core.view.isVisible
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
-import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderDetailBinding
-import com.jssg.servicemanagersystem.ui.workorder.WorkOrderDetailActivity
-import com.jssg.servicemanagersystem.ui.workorder.fragment.WorkOrderCheckListFragment
+import com.jssg.servicemanagersystem.core.AccountManager
+import com.jssg.servicemanagersystem.databinding.ItemPopupSearchReportBinding
+import com.jssg.servicemanagersystem.ui.main.MainActivity
+import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
 
-class WorkOrderDetailSearchPopupWindow(
+class ReportSearchPopupWindow(
     context: Context?,
     layoutParent: ViewGroup?,
-    searchParams: WorkOrderCheckListFragment.SearchParams?
+    searchParams: WorkOrderFragment.SearchParams?
 ) :
     BasePWControl(context, layoutParent) {
 
-    private var searchParams: WorkOrderCheckListFragment.SearchParams?
+    private var searchParams: WorkOrderFragment.SearchParams?
     private lateinit var listener: OnSearchBtnClick
-    private lateinit var binding: ItemPopupSearchWorkOrderDetailBinding
+    private lateinit var binding: ItemPopupSearchReportBinding
 
     init {
         this.searchParams = searchParams
@@ -36,8 +37,30 @@ class WorkOrderDetailSearchPopupWindow(
     }
 
     override fun initView() {
-        binding = ItemPopupSearchWorkOrderDetailBinding.bind(mView)
+        binding = ItemPopupSearchReportBinding.bind(mView)
+
+        binding.layoutApplyName.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutBatchNo.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutProductDesc.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutProductCode.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutApplyDate.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutFactory.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutCheckState.isVisible = !AccountManager.instance.isEndUser
+
         binding.layoutRoot.setOnClickListener { v: View? -> dismiss() }
+        binding.etApplyName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivApplyNameClose.isVisible = content.isNotEmpty()
+            }
+        })
 
         binding.etBatchNo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -50,6 +73,20 @@ class WorkOrderDetailSearchPopupWindow(
                 val content = s.toString()
 
                 binding.ivBatchNoClose.isVisible = content.isNotEmpty()
+            }
+        })
+        
+        binding.etProductDesc.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivProductDescClose.isVisible = content.isNotEmpty()
             }
         })
 
@@ -81,6 +118,24 @@ class WorkOrderDetailSearchPopupWindow(
             }
         })
 
+        binding.etFactory.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivFactoryClose.isVisible = content.isNotEmpty()
+            }
+        })
+
+        binding.ivBatchNoClose.setOnClickListener {
+            binding.etBatchNo.setText("")
+        }
+
         binding.tvStartDate.setOnClickListener {
             showSelectDateDialog(binding.tvStartDate, 0, binding)
         }
@@ -89,9 +144,12 @@ class WorkOrderDetailSearchPopupWindow(
             showSelectDateDialog(binding.tvEndDate, 1, binding)
         }
 
+        binding.ivApplyNameClose.setOnClickListener {
+            binding.etApplyName.setText("")
+        }
 
-        binding.ivBatchNoClose.setOnClickListener {
-            binding.etBatchNo.setText("")
+        binding.ivProductDescClose.setOnClickListener {
+            binding.etProductDesc.setText("")
         }
 
         binding.ivProductCodeClose.setOnClickListener {
@@ -112,6 +170,10 @@ class WorkOrderDetailSearchPopupWindow(
             binding.etOrderId.setText("")
         }
 
+        binding.ivFactoryClose.setOnClickListener {
+            binding.etFactory.setText("")
+        }
+
         binding.mbtSearch.setOnClickListener {
             if (this::listener.isInitialized) {
                 var startDate = binding.tvStartDate.text.toString()
@@ -128,19 +190,23 @@ class WorkOrderDetailSearchPopupWindow(
                 }
 
                 val state = when (binding.rgCheckState.checkedRadioButtonId) {
-//                    binding.rbSave.id -> "0"
-                    binding.rbSubmit.id -> "1"
-                    binding.rbAgree.id -> "2"
-                    binding.rbResignation.id -> "3"
-                    binding.rbAgreeNot.id -> "4"
+                    binding.rbStart.id -> "0"
+                    binding.rbChecking.id -> "1"
+                    binding.rbFinish.id -> "2"
                     else -> ""
                 }
 
                 listener.onClick(
-                    WorkOrderCheckListFragment.SearchParams(
-                        state,
+                    WorkOrderFragment.SearchParams(
+                        binding.etApplyName.text.toString(),
+                        binding.etProductDesc.text.toString(),
+                        binding.etProductCode.text.toString(),
                         startDate,
                         endDate,
+                        binding.etOrderId.text.toString(),
+                        binding.etFactory.text.toString(),
+                        state,
+                        batchNo = binding.etBatchNo.text.toString()
                     )
                 )
             }
@@ -151,16 +217,11 @@ class WorkOrderDetailSearchPopupWindow(
 
     private fun initData() {
         searchParams?.let {
-            it.state?.let { state ->
-                when (state) {
-//                    "0" -> holder.binding.tvOrderState.text = "已保存"
-                    "1" -> binding.rbSubmit.isChecked = true
-                    "2" -> binding.rbAgree.isChecked = true
-                    "3" -> binding.rbResignation.isChecked = true
-                    "4" -> binding.rbAgreeNot.isChecked = true
-                }
-            }
-
+            binding.etApplyName.setText(it.applyName)
+            binding.etProductDesc.setText(it.productDesc)
+            binding.etProductCode.setText(it.productCode)
+            binding.etOrderId.setText(it.oaBillNo)
+            binding.etFactory.setText(it.factory)
             val startDate = it.startDate?.split(" ")?.get(0)
             binding.tvStartDate.text = startDate
             val endDate = it.endDate?.split(" ")?.get(0)
@@ -168,13 +229,19 @@ class WorkOrderDetailSearchPopupWindow(
 
             binding.ivStartDateClose.isVisible = !startDate.isNullOrEmpty()
             binding.ivEndDateClose.isVisible = !endDate.isNullOrEmpty()
+
+            when(it.state) {
+                "0" -> binding.rbStart.isChecked = true
+                "1" -> binding.rbChecking.isChecked = true
+                "2" -> binding.rbFinish.isChecked = true
+            }
         }
     }
 
     private fun showSelectDateDialog(
         textView: TextView,
         index: Int,
-        binding: ItemPopupSearchWorkOrderDetailBinding
+        binding: ItemPopupSearchReportBinding
     ) {
         val calendar = Calendar.getInstance() //获取日期格式器对象
 
@@ -224,11 +291,11 @@ class WorkOrderDetailSearchPopupWindow(
                 )
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .build()
-        pvTime.show((mContext as WorkOrderDetailActivity).supportFragmentManager, "timepicker")
+        pvTime.show((mContext as MainActivity).supportFragmentManager, "timepicker")
     }
 
     override fun injectLayout(): Int {
-        return R.layout.item_popup_search_work_order_detail
+        return R.layout.item_popup_search_report
     }
 
     override fun injectAnimationStyle(): Int {
@@ -248,6 +315,6 @@ class WorkOrderDetailSearchPopupWindow(
     }
 
     interface OnSearchBtnClick {
-        fun onClick(searchParams: WorkOrderCheckListFragment.SearchParams)
+        fun onClick(searchParams: WorkOrderFragment.SearchParams)
     }
 }

@@ -16,7 +16,7 @@ class ReportViewModel: AutoDisposViewModel() {
 
     val reportListLiveData = MutableLiveData<LoadListDataModel<List<ReportListInfo>?>>()
 
-    fun getReportList() {
+    fun getReportList(page: Int, ) {
         reportListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
             .getReportList()
@@ -42,6 +42,7 @@ class ReportViewModel: AutoDisposViewModel() {
         RetrofitService.apiService
             .searchReportList(
                 searchParams.applyName,
+                searchParams.batchNo,
                 searchParams.productCode,
                 searchParams.productDesc,
                 searchParams.startDate,
