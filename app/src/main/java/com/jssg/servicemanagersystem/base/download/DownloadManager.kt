@@ -45,6 +45,7 @@ object DownloadManager {
                 RetrofitService.downloadApiServie.getReportListExport(noImage).execute()
             } else {
                 RetrofitService.downloadApiServie.searchReportListExport(
+                    searchParams.applyName,
                     searchParams.productCode,
                     searchParams.productDesc,
                     searchParams.startDate,
