@@ -183,7 +183,12 @@ class ReportFragment : BaseFragment() {
 
         }
 
-        showNoData(binding.table.tableData.lineSize <= 0)
+        //binding.table.setData(空数据) 并不能清空数据
+        if (result.isPullRefresh && result.rows.isNullOrEmpty()) {
+            showNoData(true)
+        } else {
+            showNoData(binding.table.tableData.lineSize <= 0)
+        }
     }
 
     private fun loadData(isRefresh: Boolean) {

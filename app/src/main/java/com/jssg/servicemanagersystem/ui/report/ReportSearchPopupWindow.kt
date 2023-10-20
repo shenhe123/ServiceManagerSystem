@@ -206,7 +206,7 @@ class ReportSearchPopupWindow(
                         binding.etOrderId.text.toString(),
                         binding.etFactory.text.toString(),
                         state,
-                        batchNo = binding.etBatchNo.text.toString()
+                        binding.etBatchNo.text.toString()
                     )
                 )
             }
@@ -218,6 +218,7 @@ class ReportSearchPopupWindow(
     private fun initData() {
         searchParams?.let {
             binding.etApplyName.setText(it.applyName)
+            binding.etBatchNo.setText(it.batchNo ?: "")
             binding.etProductDesc.setText(it.productDesc)
             binding.etProductCode.setText(it.productCode)
             binding.etOrderId.setText(it.oaBillNo)
