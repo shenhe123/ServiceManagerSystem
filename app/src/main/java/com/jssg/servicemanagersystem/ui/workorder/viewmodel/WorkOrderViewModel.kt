@@ -233,7 +233,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
     fun searchWorkOrderDetail(searchParams: WorkOrderCheckListFragment.SearchParams) {
         workOrderCheckListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .searchWorkOrderCheckList(searchParams.state, searchParams.startDate, searchParams.endDate,1, 999)
+            .searchWorkOrderCheckList(searchParams.batchNo, searchParams.state, searchParams.startDate, searchParams.endDate,1, 999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
     }

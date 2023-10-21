@@ -139,6 +139,7 @@ interface ApiService {
 
     @GET("qm/workOrderDetail/list")
     fun searchWorkOrderCheckList(
+        @Query("batchNo") batchNo: String?,
         @Query("state") state: String?,
         @Query("params[\"beginCheckDate\"]") beginApplyDate: String?,
         @Query("params[\"endCheckDate\"]") endApplyDate: String?,

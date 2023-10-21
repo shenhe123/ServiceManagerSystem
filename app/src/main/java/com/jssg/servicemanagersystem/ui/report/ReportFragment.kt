@@ -27,7 +27,6 @@ import com.jssg.servicemanagersystem.ui.account.viewmodel.AccountViewModel
 import com.jssg.servicemanagersystem.ui.report.entity.ReportListInfo
 import com.jssg.servicemanagersystem.ui.report.viewmodel.ReportViewModel
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
-import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
@@ -221,7 +220,18 @@ class ReportFragment : BaseFragment() {
                 )
             ) return@setOnClickListener
 
-            showTipPopupWindow(binding.layoutSearch)
+            ReportSearchDialogFragment
+                .newInstance(searchParams)
+                .setOnClickListener(object : ReportSearchDialogFragment.OnSearchBtnClick {
+                    override fun onClick(searchParams: WorkOrderFragment.SearchParams) {
+                        showProgressbarLoading()
+                        this@ReportFragment.searchParams = searchParams
+                        binding.smartRefreshLayout.setEnableLoadMore(false)
+                        reportViewModel.searchReportList(searchParams)
+                    }
+
+                })
+                .show(childFragmentManager, "report_search_dialog")
         }
 
         binding.tvExport.setOnClickListener {
@@ -293,19 +303,5 @@ class ReportFragment : BaseFragment() {
                 }
             }
         }
-    }
-
-    private fun showTipPopupWindow(target: View) {
-        val popupWindow = ReportSearchPopupWindow(requireContext(), binding.root, searchParams)
-        popupWindow.setOnClickListener(object : ReportSearchPopupWindow.OnSearchBtnClick {
-            override fun onClick(searchParams: WorkOrderFragment.SearchParams) {
-                showProgressbarLoading()
-                this@ReportFragment.searchParams = searchParams
-                binding.smartRefreshLayout.setEnableLoadMore(false)
-                reportViewModel.searchReportList(searchParams)
-            }
-
-        })
-        popupWindow.showAsDropDown(target, 0, 0)
     }
 }

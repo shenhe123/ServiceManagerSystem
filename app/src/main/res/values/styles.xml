@@ -150,4 +150,9 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="NoMarginsDialog" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
 </resources>

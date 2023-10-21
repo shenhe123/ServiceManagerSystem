@@ -1,52 +1,54 @@
 package com.jssg.servicemanagersystem.ui.workorder.popup
 
-import android.content.Context
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimeDialogFragment
-import com.jssg.servicemanagersystem.R
+import com.jssg.servicemanagersystem.base.BaseSearchDialogFragment
 import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.main.MainActivity
 import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
-import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
 
-class WorkOrderSearchPopupWindow(
-    context: Context?,
-    layoutParent: ViewGroup?,
-    searchParams: WorkOrderFragment.SearchParams?
-) :
-    BasePWControl(context, layoutParent) {
+/**
+ * ServiceManagerSystem
+ * Created by he.shen on 2023/10/21.
+ */
+class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
 
-    private var searchParams: WorkOrderFragment.SearchParams?
-    private lateinit var listener: OnSearchBtnClick
+    private var listener: OnSearchBtnClick? = null
+    private var searchParams: WorkOrderFragment.SearchParams? = null
     private lateinit var binding: ItemPopupSearchWorkOrderBinding
 
-    init {
-        this.searchParams = searchParams
-        initData()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = ItemPopupSearchWorkOrderBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun initView() {
-        binding = ItemPopupSearchWorkOrderBinding.bind(mView)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding.layoutApplyName.isVisible = !AccountManager.instance.isEndUser
-        binding.layoutProductDesc.isVisible = !AccountManager.instance.isEndUser
-        binding.layoutProductCode.isVisible = !AccountManager.instance.isEndUser
-        binding.layoutApplyDate.isVisible = !AccountManager.instance.isEndUser
-        binding.layoutFactory.isVisible = !AccountManager.instance.isEndUser
-        binding.layoutCheckState.isVisible = !AccountManager.instance.isEndUser
+        searchParams = arguments?.getParcelable("searchParams")
+        
+        initView()
+        
+        addListener()
+    }
 
-        binding.layoutRoot.setOnClickListener { v: View? -> dismiss() }
+    private fun addListener() {
         binding.etApplyName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -155,7 +157,7 @@ class WorkOrderSearchPopupWindow(
         }
 
         binding.mbtSearch.setOnClickListener {
-            if (this::listener.isInitialized) {
+            listener?.let {
                 var startDate = binding.tvStartDate.text.toString()
                 var endDate = binding.tvEndDate.text.toString()
                 startDate = if (startDate.equals("请选择日期") || startDate.split(" ")[0].isEmpty()) {
@@ -176,7 +178,7 @@ class WorkOrderSearchPopupWindow(
                     else -> ""
                 }
 
-                listener.onClick(
+                it.onClick(
                     WorkOrderFragment.SearchParams(
                         binding.etApplyName.text.toString(),
                         binding.etProductDesc.text.toString(),
@@ -194,7 +196,14 @@ class WorkOrderSearchPopupWindow(
         }
     }
 
-    private fun initData() {
+    private fun initView() {
+        binding.layoutApplyName.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutProductDesc.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutProductCode.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutApplyDate.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutFactory.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutCheckState.isVisible = !AccountManager.instance.isEndUser
+
         searchParams?.let {
             binding.etApplyName.setText(it.applyName)
             binding.etProductDesc.setText(it.productDesc)
@@ -227,7 +236,7 @@ class WorkOrderSearchPopupWindow(
         //chose b
         val pvTime: TimeDialogFragment =
             TimePickerBuilder(
-                mContext
+                requireContext()
             ) { date -> //选中事件回调
                 textView.text = DateUtil.getDateyyMMdd(date.time)
                 if (index == 0) {
@@ -248,17 +257,17 @@ class WorkOrderSearchPopupWindow(
                     )
                 )
                 .setCancelText("取消") //取消按钮文字
-                .setSubmitText(mContext.getString(com.jssg.servicemanagersystem.R.string.app_confirm)) //确认按钮文字
+                .setSubmitText(requireContext().getString(com.jssg.servicemanagersystem.R.string.app_confirm)) //确认按钮文字
                 .setContentTextSize(18) //滚轮文字大小
                 .setTitleSize(18) //标题文字大小
                 .setTitleText("选择过期时间") //标题文字
                 .isCyclic(true) //是否循环滚动
-                .setTextColorCenter(mContext.getColor(com.jssg.servicemanagersystem.R.color.purple_700)) //设置选中项的颜色
-                .setTitleColor(mContext.getColor(com.jssg.servicemanagersystem.R.color.x_text_01)) //标题文字颜色
-                .setSubmitColor(mContext.getColor(com.jssg.servicemanagersystem.R.color.purple_700)) //确定按钮文字颜色
-                .setCancelColor(mContext.getColor(com.jssg.servicemanagersystem.R.color.x_text_01)) //取消按钮文字颜色
-                .setTitleBgColor(mContext.getColor(com.jssg.servicemanagersystem.R.color.white)) //标题背景颜色 Night mode
-                .setBgColor(mContext.getColor(com.jssg.servicemanagersystem.R.color.white)) //滚轮背景颜色 Night mode
+                .setTextColorCenter(requireContext().getColor(com.jssg.servicemanagersystem.R.color.purple_700)) //设置选中项的颜色
+                .setTitleColor(requireContext().getColor(com.jssg.servicemanagersystem.R.color.x_text_01)) //标题文字颜色
+                .setSubmitColor(requireContext().getColor(com.jssg.servicemanagersystem.R.color.purple_700)) //确定按钮文字颜色
+                .setCancelColor(requireContext().getColor(com.jssg.servicemanagersystem.R.color.x_text_01)) //取消按钮文字颜色
+                .setTitleBgColor(requireContext().getColor(com.jssg.servicemanagersystem.R.color.white)) //标题背景颜色 Night mode
+                .setBgColor(requireContext().getColor(com.jssg.servicemanagersystem.R.color.white)) //滚轮背景颜色 Night mode
                 .setDate(calendar) // 如果不设置的话，默认是系统时间*/
                 .setLabel(
                     "年",
@@ -270,30 +279,25 @@ class WorkOrderSearchPopupWindow(
                 )
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .build()
-        pvTime.show((mContext as MainActivity).supportFragmentManager, "timepicker")
+        pvTime.show((requireContext() as MainActivity).supportFragmentManager, "timepicker")
     }
 
-    override fun injectLayout(): Int {
-        return R.layout.item_popup_search_work_order
-    }
-
-    override fun injectAnimationStyle(): Int {
-        return -1
-    }
-
-    override fun injectParamsHeight(): Int {
-        return LinearLayoutCompat.LayoutParams.WRAP_CONTENT
-    }
-
-    override fun injectParamsWight(): Int {
-        return LinearLayoutCompat.LayoutParams.MATCH_PARENT
-    }
-
-    fun setOnClickListener(listener: OnSearchBtnClick) {
+    fun setOnClickListener(listener: OnSearchBtnClick): WorkOrderSearchDialogFragment {
         this.listener = listener
+        return this
     }
 
     interface OnSearchBtnClick {
         fun onClick(searchParams: WorkOrderFragment.SearchParams)
+    }
+
+    companion object {
+        fun newInstance(searchParams: WorkOrderFragment.SearchParams?): WorkOrderSearchDialogFragment {
+            val args = Bundle()
+            args.putParcelable("searchParams", searchParams)
+            val fragment = WorkOrderSearchDialogFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

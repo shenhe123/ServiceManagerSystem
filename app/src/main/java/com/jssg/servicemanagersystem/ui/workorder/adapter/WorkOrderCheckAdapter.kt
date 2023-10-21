@@ -14,6 +14,8 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderCheckInfo
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
+import com.jssg.servicemanagersystem.utils.Utils
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 /**
  * ServiceManagerSystem
@@ -34,6 +36,11 @@ class WorkOrderCheckAdapter :
     ) {
         holder.binding.tvOrderId.text = item.billNo
         holder.binding.tvBatchNo.text = item.batchNo ?: ""
+        holder.binding.tvBatchNo.setOnLongClickListener {
+            Utils.copyStringText(item.batchNo ?: "", context)
+            ToastUtils.showToast("复制成功")
+            true
+        }
         holder.binding.tvPlace.text = item.place
         holder.binding.tvCheckDate.text = item.checkDate
         holder.binding.tvBadNum.text = item.badNum.toString()

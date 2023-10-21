@@ -21,7 +21,7 @@ import com.jssg.servicemanagersystem.ui.dialog.DoubleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.dialog.SingleBtnDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.adapter.WorkOrderAdapter
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
-import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWindow
+import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchDialogFragment
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
@@ -254,7 +254,18 @@ class WorkOrderFragment : BaseFragment() {
         binding.layoutSearch.setOnClickListener {
             if (!RolePermissionUtils.hasPermission(MenuEnum.QM_WORKORDER_QUERY.printableName, true)) return@setOnClickListener
 
-            showTipPopupWindow(binding.layoutSearch)
+            WorkOrderSearchDialogFragment
+                .newInstance(searchParams)
+                .setOnClickListener(object : WorkOrderSearchDialogFragment.OnSearchBtnClick {
+                    override fun onClick(searchParams: SearchParams) {
+                        showProgressbarLoading()
+                        this@WorkOrderFragment.searchParams = searchParams
+                        binding.smartRefreshLayout.setEnableLoadMore(false)
+                        workOrderViewModel.searchWorkOrder(searchParams)
+                    }
+
+                })
+                .show(childFragmentManager, "work_order_search_dialog")
         }
 
         binding.tvCloseCase.setOnClickListener {
@@ -301,20 +312,6 @@ class WorkOrderFragment : BaseFragment() {
         binding.tvCloseCase.text = "结案"
         adapter.isCloseCase = false
         adapter.notifyDataSetChanged()
-    }
-
-    private fun showTipPopupWindow(target: View) {
-        val popupWindow = WorkOrderSearchPopupWindow(requireContext(), binding.root, searchParams)
-        popupWindow.setOnClickListener(object : WorkOrderSearchPopupWindow.OnSearchBtnClick {
-            override fun onClick(searchParams: SearchParams) {
-                showProgressbarLoading()
-                this@WorkOrderFragment.searchParams = searchParams
-                binding.smartRefreshLayout.setEnableLoadMore(false)
-                workOrderViewModel.searchWorkOrder(searchParams)
-            }
-
-        })
-        popupWindow.showAsDropDown(target, 0, 0)
     }
 
     companion object {

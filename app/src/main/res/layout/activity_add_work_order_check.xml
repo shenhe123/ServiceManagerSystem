@@ -429,6 +429,7 @@
                     android:textSize="15sp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
+                    android:inputType="numberDecimal"
                     android:layout_marginStart="12dp"
                     android:background="@drawable/selector_input_stroke"
                     style="@style/SubTitleStyleBold"/>
@@ -459,6 +460,7 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:layout_marginStart="12dp"
+                    android:inputType="numberDecimal"
                     android:background="@drawable/selector_input_stroke"
                     style="@style/SubTitleStyleBold"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
