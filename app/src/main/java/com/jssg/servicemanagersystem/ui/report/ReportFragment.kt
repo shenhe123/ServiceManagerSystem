@@ -170,7 +170,7 @@ class ReportFragment : BaseFragment() {
                 }
             }
 
-            if (binding.table.tableData.lineSize > 0) {
+            if (!isTableEmpty()) {
 //            binding.table.tableData.columns[7].isFixed = true
                 binding.table.tableData.columns[7].isAutoCount = true
                 binding.table.tableData.columns[7].setDrawFormat(
@@ -187,8 +187,12 @@ class ReportFragment : BaseFragment() {
         if (result.isPullRefresh && result.rows.isNullOrEmpty()) {
             showNoData(true)
         } else {
-            showNoData(binding.table.tableData.lineSize <= 0)
+            showNoData(isTableEmpty())
         }
+    }
+
+    private fun isTableEmpty(): Boolean {
+        return binding.table.tableData == null || binding.table.tableData.lineSize <= 0
     }
 
     private fun loadData(isRefresh: Boolean) {

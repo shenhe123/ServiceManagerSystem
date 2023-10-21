@@ -8,9 +8,9 @@ rootProject.ext {
     buildToolsVersion = '30.0.2'
 
     //版本code
-    versionCode = 100056
+    versionCode = 100057
     //版本名称显示
-    versionName = '1.0.0.56'
+    versionName = '1.0.0.57'
 
     // 4.指定Java version[]]]op[=]\
     sourceCompatibility = JavaVersion.VERSION_11

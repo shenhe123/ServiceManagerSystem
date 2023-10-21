@@ -11,6 +11,8 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
+import com.jssg.servicemanagersystem.utils.Utils
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 /**
  * ServiceManagerSystem
@@ -26,7 +28,14 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
     }
 
     override fun convert(holder: VBViewHolder<ItemWorkOrderLayoutBinding>, item: WorkOrderInfo) {
-        holder.binding.tvOrderId.text = item.oaBillNo?.ifEmpty { item.billNo } ?: item.billNo
+        val orderId: String = item.oaBillNo?.ifEmpty { item.billNo } ?: item.billNo
+        holder.binding.tvOrderId.text = orderId
+
+        holder.binding.tvOrderId.setOnLongClickListener {
+            Utils.copyStringText(orderId, context)
+            ToastUtils.showToast("复制成功")
+            true
+        }
 
         holder.binding.tvApplyName.text = item.applyName
         holder.binding.tvApplyDept.text = item.applyDept
