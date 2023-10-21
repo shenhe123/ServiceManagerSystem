@@ -31,6 +31,7 @@ import com.jssg.servicemanagersystem.ui.workorder.popup.WorkOrderSearchPopupWind
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
+import com.jssg.servicemanagersystem.utils.Utils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -179,6 +180,11 @@ class ReportFragment : BaseFragment() {
                         200
                     )
                 )
+
+                binding.table.tableData.columns[0].setOnColumnItemClickListener { column, value, t, position ->
+                    Utils.copyStringText(value, requireContext())
+                    ToastUtils.showToast("复制成功")
+                }
             }
 
         }
