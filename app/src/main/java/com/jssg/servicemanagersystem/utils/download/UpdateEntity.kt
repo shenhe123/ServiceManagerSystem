@@ -12,6 +12,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UpdateEntity(
     val version: String,
+    val versionCode: String,
     val downloadUrl: String,
     val force: Boolean,
     val updateInfo: String,
@@ -20,7 +21,7 @@ data class UpdateEntity(
     fun hasUpdate(): Boolean {
         try {
             val nowVerCode: Int = BuildConfig.VERSION_NAME.replace(".", "").toInt()
-            val serveVersion: Int = version.replace(".", "").toInt()
+            val serveVersion: Int = versionCode.toInt()
             return serveVersion > nowVerCode
         } catch (e: Exception) {
             e.printStackTrace()
