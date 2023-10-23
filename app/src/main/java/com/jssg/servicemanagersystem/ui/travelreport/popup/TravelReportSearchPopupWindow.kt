@@ -128,7 +128,7 @@ class TravelReportSearchPopupWindow(
                     "$endDate 23:59:59"
                 }
 
-                if (!DateUtil.compareDate(startDate, endDate)) {
+                if (startDate.isNotEmpty() && endDate.isNotEmpty() && !DateUtil.compareDate(startDate, endDate)) {
                     ToastUtils.showToast("出差终止日期不能小于起始日期")
                     return@setOnClickListener
                 }
