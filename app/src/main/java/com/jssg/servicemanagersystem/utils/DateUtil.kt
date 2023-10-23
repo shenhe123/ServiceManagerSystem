@@ -39,4 +39,28 @@ object DateUtil {
         }
         return null
     }
+
+    /**
+     * startDate <= endDate return true
+     * @param startDate String
+     * @param endDate String
+     * @return Boolean
+     */
+    fun compareDate(startDate: String, endDate: String): Boolean {
+        var date1: Date? = null
+        try {
+            date1 = FULL_DATE_FORMAT.parse(startDate)
+        } catch (e: ParseException) {
+            LogUtil.e(DateUtil::class.java.simpleName, e.toString())
+        }
+
+        var date2: Date? = null
+        try {
+            date2 = FULL_DATE_FORMAT.parse(endDate)
+        } catch (e: ParseException) {
+            LogUtil.e(DateUtil::class.java.simpleName, e.toString())
+        }
+
+        return date1?.before(date2) == true || date1?.equals(date2) == true
+    }
 }

@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -16,6 +17,7 @@ import com.jssg.servicemanagersystem.databinding.ItemPopupSearchTravelReportBind
 import com.jssg.servicemanagersystem.ui.main.MainActivity
 import com.jssg.servicemanagersystem.ui.travelreport.TravelReportFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
 
@@ -115,15 +117,20 @@ class TravelReportSearchPopupWindow(
             if (this::listener.isInitialized) {
                 var startDate = binding.tvStartDate.text.toString()
                 var endDate = binding.tvEndDate.text.toString()
-                startDate = if (startDate.equals("请选择日期") || startDate.split(" ")[0].isEmpty()) {
+                startDate = if (startDate == "请选择日期" || startDate.split(" ")[0].isEmpty()) {
                     ""
                 } else {
                     "$startDate 00:00:00"
                 }
-                endDate = if (endDate.equals("请选择日期") || endDate.split(" ")[0].isEmpty()) {
+                endDate = if (endDate == "请选择日期" || endDate.split(" ")[0].isEmpty()) {
                     ""
                 } else {
                     "$endDate 23:59:59"
+                }
+
+                if (!DateUtil.compareDate(startDate, endDate)) {
+                    ToastUtils.showToast("出差终止日期不能小于起始日期")
+                    return@setOnClickListener
                 }
 
                 listener.onClick(
