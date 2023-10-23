@@ -25,6 +25,7 @@ import com.jssg.servicemanagersystem.ui.travelreport.adapter.TravelReportAdapter
 import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
 import com.jssg.servicemanagersystem.ui.travelreport.popup.TravelReportSearchPopupWindow
 import com.jssg.servicemanagersystem.ui.travelreport.viewmodel.TravelReportViewModel
+import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.LogUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
@@ -130,6 +131,9 @@ class TravelReportFragment : BaseFragment() {
     private fun judgeRolePermission() {
         binding.fbtnAddNew.isVisible =
             RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_ADD.printableName)
+
+        binding.tvExport.isVisible =
+            RolePermissionUtils.hasPermission(MenuEnum.QM_TRIPREPORT_EXPORT.printableName)
     }
 
     private fun showNoData(isVisible: Boolean) {
@@ -174,6 +178,53 @@ class TravelReportFragment : BaseFragment() {
     }
 
     private fun addListener() {
+
+        binding.tvExport.setOnClickListener {
+            permissionHelper?.request("需要读写权限", Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) { granted, isAlwaysDenied ->
+                if (granted) {
+                    //申请权限成功
+                    val directoryPictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+                    directoryPictures?.let {
+                        val fileDirectory = File(directoryPictures.absolutePath + File.separator + "tripReport")
+                        if (!fileDirectory.exists()) {
+                            fileDirectory.mkdirs()
+                        }
+                        val fileName = "${DateUtil.getFullData(System.currentTimeMillis()).replace(":", ".")}.xls"
+                        val filePath = fileDirectory.absolutePath + File.separator + fileName
+                        LogUtil.e("shenhe", "外置SD卡路径：" + fileDirectory.absolutePath)
+
+                        SingleBtnDialogFragment.newInstance("出差报告导出", "确定要将出差报告全部导出吗？导出后的文件会保存在本地Download/tripReport文件夹的下${fileName}")
+                            .addConfrimClickLisntener(object :SingleBtnDialogFragment.OnConfirmClickLisenter{
+                                override fun onConfrimClick() {
+                                    showProgressbarLoading()
+                                    lifecycleScope.launchWhenResumed {
+                                        DownloadManager.downloadTravelReport(File(filePath)).collect {
+                                            when (it) {
+                                                is DownloadState.InProgress -> {
+//                                                        Log.d("~~~", "download in progress: ${it.progress}.")
+                                                }
+                                                is DownloadState.Success -> {
+//                                                        Log.d("~~~", "download finished.")
+                                                    hideLoading()
+                                                    ToastUtils.showToast("导出成功")
+                                                }
+                                                is DownloadState.Error -> {
+//                                                        Log.d("~~~", "download error: ${it.throwable}.")
+                                                    hideLoading()
+                                                    ToastUtils.showToast(it.throwable.message)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }).show(childFragmentManager, "export_travel_report")
+                    }
+                }
+            }
+        }
 
         adapter.setOnItemClickListener { _, _, position ->
             val travelReportInfo = adapter.data[position]

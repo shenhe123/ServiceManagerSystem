@@ -19,6 +19,22 @@ import java.io.File
  */
 object DownloadManager {
 
+    suspend fun downloadTravelReport(file: File): Flow<DownloadState> {
+        return flow {
+            val response = RetrofitService.downloadApiServie.getTravelReportExport().execute()
+            if (response.isSuccessful) {
+                saveToFile(response.body()!!, file) {
+                    emit(DownloadState.InProgress(it))
+                }
+                emit(DownloadState.Success(file))
+            } else {
+                emit(DownloadState.Error(IOException(response.toString())))
+            }
+        }.catch {
+            emit(DownloadState.Error(it))
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun downloadTravelReport(billNo: String, file: File): Flow<DownloadState> {
         return flow {
             val response = RetrofitService.downloadApiServie.getTravelReportExport(billNo).execute()

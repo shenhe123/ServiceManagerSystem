@@ -228,6 +228,10 @@ interface ApiService {
     fun getTravelReportExport(@Query("billNo") billNo: String): Call<ResponseBody>
 
     @Streaming
+    @POST("qm/tripReport/exportAll")
+    fun getTravelReportExport(): Call<ResponseBody>
+
+    @Streaming
     @GET("qm/workOrderDetail/reportExport")
     fun getReportListExport(
         @Query("pageNum") pageNum: Int,
