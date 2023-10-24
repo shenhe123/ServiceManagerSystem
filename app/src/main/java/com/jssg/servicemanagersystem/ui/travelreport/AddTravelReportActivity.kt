@@ -301,6 +301,11 @@ class AddTravelReportActivity : BaseActivity() {
             return false
         }
 
+        if (!DateUtil.compareDate(startDate, endDate)) {
+            ToastUtils.showToast("出差终止日期不能小于起始日期")
+            return false
+        }
+
         val purpose = binding.etPurpose.text.toString()
         if (purpose.isEmpty()) {
             ToastUtils.showToast("出差目的不能为空")
