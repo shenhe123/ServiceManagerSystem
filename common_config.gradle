@@ -8,7 +8,7 @@ rootProject.ext {
     buildToolsVersion = '30.0.2'
 
     //版本code
-    versionCode = 10100
+    versionCode = 100100
     //版本名称显示
     versionName = '1.0.1'
 
