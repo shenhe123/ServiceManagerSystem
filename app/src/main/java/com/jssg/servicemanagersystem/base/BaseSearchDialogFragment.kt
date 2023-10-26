@@ -20,7 +20,7 @@ open class BaseSearchDialogFragment: AppCompatDialogFragment() {
         dialog?.window?.let {
             val params = it.attributes
             params.x = 0
-            params.y = DpPxUtils.dip2px(requireContext(), 142f)
+            params.y = DpPxUtils.dip2px(requireContext(), 136f)
             it.attributes = params
             it.setGravity(Gravity.TOP)
             it.setLayout(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT)

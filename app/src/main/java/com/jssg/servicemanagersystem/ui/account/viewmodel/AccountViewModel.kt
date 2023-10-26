@@ -13,6 +13,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.account.entity.UserRoles
+import com.jssg.servicemanagersystem.ui.account.usermanager.UserManagerActivity
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkFactoryInfo
 import com.jssg.servicemanagersystem.utils.HUtils
 
@@ -224,10 +225,21 @@ class AccountViewModel : AutoDisposViewModel() {
             .subscribe(createObserver(addNewUserLiveData))
     }
 
-    fun searchUser(input: String) {
+    fun searchUser(searchParams: UserManagerActivity.SearchParams) {
         userListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .searchUser(input, 1, 9999)
+            .searchUser(
+                searchParams.userName,
+                searchParams.nickName,
+                searchParams.phoneNum,
+                searchParams.creator,
+                searchParams.factory,
+                searchParams.expiredStartDate,
+                searchParams.expiredEndDate,
+                searchParams.creatorStartDate,
+                searchParams.creatorEndDate,
+                searchParams.state,
+                1, 9999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(userListLiveData, true, 1))
     }

@@ -3,8 +3,7 @@ package com.jssg.servicemanagersystem.ui.account.usermanager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.os.Parcelable
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,8 +19,10 @@ import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import kotlinx.android.parcel.Parcelize
 
 class UserManagerActivity : BaseActivity() {
+    private var searchParams: SearchParams? = null
     private var clickItemPos: Int? = null
     private var page: Int = 1
     private lateinit var accountViewModel: AccountViewModel
@@ -98,15 +99,21 @@ class UserManagerActivity : BaseActivity() {
             launcherAddUser.launch("")
         }
 
-        binding.mbtSearch.setOnClickListener {
+        binding.layoutSearch.setOnClickListener {
             if (!RolePermissionUtils.hasPermission(MenuEnum.SYSTEM_USER_QUERY.printableName)) return@setOnClickListener
-            val input = binding.inputSearch.text.toString()
-            if (input.isEmpty()) {
 
-                return@setOnClickListener
-            }
-            binding.smartRefreshLayout.setEnableLoadMore(false)
-            accountViewModel.searchUser(input)
+            UserSearchDialogFragment
+                .newInstance(searchParams)
+                .setOnClickListener(object : UserSearchDialogFragment.OnSearchBtnClick {
+                    override fun onClick(searchParams: SearchParams) {
+                        showProgressbarLoading()
+                        this@UserManagerActivity.searchParams = searchParams
+                        binding.smartRefreshLayout.setEnableLoadMore(false)
+                        accountViewModel.searchUser(searchParams)
+                    }
+
+                })
+                .show(supportFragmentManager, "user_search_dialog")
         }
 
         binding.smartRefreshLayout.setOnRefreshLoadMoreListener(object :OnRefreshLoadMoreListener{
@@ -183,6 +190,20 @@ class UserManagerActivity : BaseActivity() {
         }
         accountViewModel.getUserList(page, isRefresh)
     }
+
+    @Parcelize
+    data class SearchParams(
+        val userName: String?, //用户名
+        val nickName: String?, //姓名
+        val phoneNum: String?, //手机号
+        val creator: String?, //创建人
+        val factory: String?, //所属工厂
+        val expiredStartDate: String?, //过期时间
+        val expiredEndDate: String?,
+        val creatorStartDate: String?,//创建时间
+        val creatorEndDate: String?,
+        val state: String, //用户类型
+    ) : Parcelable
 
     companion object {
         fun goActivity(context: Context) {

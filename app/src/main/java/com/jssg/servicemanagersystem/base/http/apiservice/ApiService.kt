@@ -88,7 +88,16 @@ interface ApiService {
 
     @GET("system/user/list")
     fun searchUser(
-        @Query("key") input: String,
+        @Query("userName") userName: String?,
+        @Query("nickName") nickName: String?,
+        @Query("phonenumber") phonenumber: String?,
+        @Query("createBy") createBy: String?,
+        @Query("factory") factory: String?,
+        @Query("params[\"expiredStartDate\"]") expiredStartDate: String?,
+        @Query("params[\"expiredEndDate\"]") expiredEndDate: String?,
+        @Query("params[\"creatorStartDate\"]") creatorStartDate: String?,
+        @Query("params[\"creatorEndDate\"]") creatorEndDate: String?,
+        @Query("userType") userType: String?,
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int
     ): Observable<BaseHttpResult<List<User>?>>
