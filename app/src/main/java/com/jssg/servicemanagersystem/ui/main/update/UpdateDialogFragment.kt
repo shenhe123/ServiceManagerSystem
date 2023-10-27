@@ -56,11 +56,11 @@ class UpdateDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         if (updateEntity == null) dismiss()
         status = MMKV.defaultMMKV()
-            .decodeInt("app_download_" + updateEntity!!.version, DownloadManager.STATUS_PENDING)
-        binding.tvVersion.text = "Version ${updateEntity!!.version}"
+            .decodeInt("app_download_" + updateEntity!!.versionCodeStr, DownloadManager.STATUS_PENDING)
+        binding.tvVersion.text = "Version ${updateEntity!!.versionCodeStr}"
 
         binding.tvUpdateContent.text = updateEntity!!.updateInfo
-        binding.ivCancel.setOnClickListener { v: View? -> dismiss() }
+        binding.ivCancel.setOnClickListener { dismiss() }
 
         //强制升级
         if (updateEntity!!.force) {

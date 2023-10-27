@@ -28,4 +28,8 @@ data class UpdateEntity(
         }
         return false
     }
+
+    val versionCodeStr: String
+        get() = versionCode.toCharArray().joinToString(".")
+
 }
