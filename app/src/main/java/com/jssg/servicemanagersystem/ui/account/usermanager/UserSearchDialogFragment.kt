@@ -243,6 +243,8 @@ class UserSearchDialogFragment: BaseSearchDialogFragment() {
 
         searchParams?.let {
             binding.etUserName.setText(it.userName)
+            binding.etNickName.setText(it.nickName)
+            binding.etPhoneNum.setText(it.phoneNum)
             binding.etCreator.setText(it.creator)
             binding.etUserFactory.setText(it.factory)
 
