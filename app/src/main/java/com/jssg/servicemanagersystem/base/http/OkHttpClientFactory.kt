@@ -42,8 +42,8 @@ object OkHttpClientFactory {
         //        SslUtils.INSTANCE.sslConfig(httpClientBuilder);
         if (BuildConfig.DEBUG) {
             //log 拦截器
-            val loggingInterceptor = HttpLoggerFormatInterceptor()
-            loggingInterceptor.level = HttpLoggerFormatInterceptor.Level.BODY
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             httpClientBuilder.addInterceptor(loggingInterceptor)
         }
 

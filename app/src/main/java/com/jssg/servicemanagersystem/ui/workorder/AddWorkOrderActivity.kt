@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModelProvider
 import com.jssg.servicemanagersystem.base.BaseActivity
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ActivityAddWorkOrderBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkDeptInfo
@@ -43,11 +44,10 @@ class AddWorkOrderActivity : BaseActivity() {
 
         workOrderViewModel.factoryInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                val list = if (result.data.isNullOrEmpty()) {
-                    listOf("请选择工厂")
-                } else {
-                    factoryInfos = result.data!!
-                    result.data!!.map { info -> info.orgShortName }
+                factoryInfos = result.data
+                val list = mutableListOf("请选择工厂")
+                factoryInfos?.let {
+                    list.addAll(it.map { info -> info.orgShortName })
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -60,11 +60,10 @@ class AddWorkOrderActivity : BaseActivity() {
 
         workOrderViewModel.deptInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                val list = if (result.data.isNullOrEmpty()) {
-                    listOf("请选择部门")
-                } else {
-                    deptInfos = result.data!!
-                    result.data!!.map { info -> info.deptName }
+                deptInfos = result.data
+                val list = mutableListOf("请选择部门")
+                deptInfos?.let {
+                    list.addAll(it.map { info -> info.deptName })
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -72,6 +71,18 @@ class AddWorkOrderActivity : BaseActivity() {
                 )
                 adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
                 binding.asDept.adapter = adapter
+
+                //赋值默认部门
+                val defaultDeptName = AccountManager.instance.getUser()?.user?.dept?.deptName
+                defaultDeptName?.let {
+                    val index = list.indexOf(defaultDeptName)
+                    if (index > 0) {
+                        binding.asDept.setSelection(index, false)
+                        deptId = it
+                    } else {
+                        binding.asDept.setSelection(0, false)
+                    }
+                }
             }
         }
 
@@ -100,13 +111,10 @@ class AddWorkOrderActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                factoryInfos?.let {
-                    binding.asFactory.prompt = it[position].orgShortName
-
-                    if (!it[position].orgName.equals("请选择工厂")) {
-                        orgId = it[position].orgShortName
-                    }
-
+                orgId = if (position == 0) {
+                    null
+                } else {
+                    factoryInfos?.get(position - 1)?.orgShortName
                 }
             }
 
@@ -121,12 +129,10 @@ class AddWorkOrderActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                deptInfos?.let {
-                    binding.asDept.prompt = it[position].deptName
-
-                    if (!it[position].deptName.equals("请选择部门")) {
-                        deptId = it[position].deptName
-                    }
+                deptId = if (position == 0) {
+                    null
+                } else {
+                    deptInfos?.get(position - 1)?.deptName
                 }
             }
 
@@ -223,6 +229,11 @@ class AddWorkOrderActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            var priceUnit = binding.etUnitPrice.text.toString()
+            if (priceUnit.isEmpty()) priceUnit = "元/小时"
+
+            var periodUnit = binding.etUnitTime.text.toString()
+            if (periodUnit.isEmpty()) periodUnit = "小时"
             workOrderViewModel.addNewWorkOrder(
                 nickName,
                 phoneNumber,
@@ -232,6 +243,8 @@ class AddWorkOrderActivity : BaseActivity() {
                 checkNum,
                 servicePrice,
                 servicePeriod,
+                priceUnit,
+                periodUnit,
                 serviceTotal,
                 serviceAddress,
                 remark,

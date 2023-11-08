@@ -172,6 +172,8 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         checkNum: String,
         servicePrice: String,
         servicePeriod: String,
+        priceUnit: String,
+        periodUnit: String,
         serviceTotal: String,
         serviceAddress: String,
         remark: String,
@@ -196,6 +198,8 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["tel"] = phoneNumber
         params["servicePeriod"] = servicePeriod
         params["unitPrice"] = servicePrice
+        params["priceUnit"] = priceUnit
+        params["periodUnit"] = periodUnit
         params["checkNum"] = checkNum
         params["totalPrice"] = serviceTotal
         params["serviceStaff"] = serviceName

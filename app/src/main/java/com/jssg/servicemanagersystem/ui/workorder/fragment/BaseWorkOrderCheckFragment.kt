@@ -675,7 +675,7 @@ abstract class BaseWorkOrderCheckFragment : BaseFragment() {
 
         binding.etBadNum.isEnabled = isEditable
         binding.etCheckNum.isEnabled = isEditable
-        binding.etRemark.isEnabled = isEditable
+        binding.etRemark.isEnabled = isEditable || (inputData?.state == 3)
     }
 
     private fun hideAudioRecordButton() {
