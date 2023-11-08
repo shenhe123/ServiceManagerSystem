@@ -9,7 +9,7 @@ import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
  * ServiceManagerSystem
  * Created by he.shen on 2023/8/24.
  */
-class LogManagerAdapter: BaseBindingAdapter<LogInfo, ItemLogInfoBinding>(ItemLogInfoBinding::inflate) {
+class LoginLogManagerAdapter: BaseBindingAdapter<LogInfo, ItemLogInfoBinding>(ItemLogInfoBinding::inflate) {
 
     override fun convert(holder: VBViewHolder<ItemLogInfoBinding>, item: LogInfo) {
         holder.binding.tvLogId.text = item.infoId

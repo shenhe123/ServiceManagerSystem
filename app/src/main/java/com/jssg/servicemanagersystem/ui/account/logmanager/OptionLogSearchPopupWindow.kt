@@ -6,31 +6,34 @@ import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
-import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchLogInfoBinding
-import com.jssg.servicemanagersystem.databinding.ItemPopupSearchWorkOrderBinding
-import com.jssg.servicemanagersystem.ui.main.MainActivity
-import com.jssg.servicemanagersystem.ui.workorder.WorkOrderFragment
+import com.jssg.servicemanagersystem.databinding.ItemPopupSearchOptionLogInfoBinding
+import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.LoginLogFragment
+import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.OptionLogFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
 
-class LogInfoSearchPopupWindow(
+class OptionLogSearchPopupWindow(
     context: Context?,
     layoutParent: ViewGroup?,
-    searchParams: LogManagerActivity.SearchParams?
+    searchParams: OptionLogFragment.SearchParams?
 ) :
-    BasePWControl(context, layoutParent) {
+    BasePWControl(context, layoutParent), View.OnClickListener {
 
-    private var searchParams: LogManagerActivity.SearchParams?
+    private var optionType: String? = null
+    private var searchParams: OptionLogFragment.SearchParams?
     private lateinit var listener: OnSearchBtnClick
-    private lateinit var binding: ItemPopupSearchLogInfoBinding
+    private lateinit var binding: ItemPopupSearchOptionLogInfoBinding
 
     init {
         this.searchParams = searchParams
@@ -38,10 +41,10 @@ class LogInfoSearchPopupWindow(
     }
 
     override fun initView() {
-        binding = ItemPopupSearchLogInfoBinding.bind(mView)
+        binding = ItemPopupSearchOptionLogInfoBinding.bind(mView)
 
         binding.layoutRoot.setOnClickListener { v: View? -> dismiss() }
-        binding.etApplyName.addTextChangedListener(object : TextWatcher {
+        binding.etTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -51,7 +54,20 @@ class LogInfoSearchPopupWindow(
             override fun afterTextChanged(s: Editable) {
                 val content = s.toString()
 
-                binding.ivApplyNameClose.isVisible = content.isNotEmpty()
+                binding.ivTitleClose.isVisible = content.isNotEmpty()
+            }
+        })
+        binding.etOptionName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivOptionNameClose.isVisible = content.isNotEmpty()
             }
         })
 
@@ -63,8 +79,12 @@ class LogInfoSearchPopupWindow(
             showSelectDateDialog(binding.tvEndDate, 1, binding)
         }
 
-        binding.ivApplyNameClose.setOnClickListener {
-            binding.etApplyName.setText("")
+        binding.ivTitleClose.setOnClickListener {
+            binding.etTitle.setText("")
+        }
+
+        binding.ivOptionNameClose.setOnClickListener {
+            binding.etOptionName.setText("")
         }
 
         binding.ivStartDateClose.setOnClickListener {
@@ -76,6 +96,15 @@ class LogInfoSearchPopupWindow(
             binding.tvEndDate.text = ""
             binding.ivEndDateClose.isVisible = false
         }
+
+        binding.rb1.setOnClickListener(this)
+        binding.rb2.setOnClickListener(this)
+        binding.rb3.setOnClickListener(this)
+        binding.rb4.setOnClickListener(this)
+        binding.rb5.setOnClickListener(this)
+        binding.rb7.setOnClickListener(this)
+        binding.rb10.setOnClickListener(this)
+        binding.rb0.setOnClickListener(this)
 
         binding.mbtSearch.setOnClickListener {
             if (this::listener.isInitialized) {
@@ -92,9 +121,18 @@ class LogInfoSearchPopupWindow(
                     "$endDate 23:59:59"
                 }
 
+                val optionStatus = when {
+                    binding.rbSuccess.isChecked -> "0"
+                    binding.rbFailed.isChecked -> "1"
+                    else -> null
+                }
+
                 listener.onClick(
-                    LogManagerActivity.SearchParams(
-                        binding.etApplyName.text.toString(),
+                    OptionLogFragment.SearchParams(
+                        binding.etTitle.text.toString(),
+                        optionType,
+                        binding.etOptionName.text.toString(),
+                        optionStatus,
                         startDate,
                         endDate,
                     )
@@ -107,11 +145,35 @@ class LogInfoSearchPopupWindow(
 
     private fun initData() {
         searchParams?.let {
-            binding.etApplyName.setText(it.userName)
+            binding.etTitle.setText(it.title)
+            binding.etOptionName.setText(it.operName)
 
-            val startDate = it.startDate?.split(" ")?.get(0)
+            if (it.status.isNullOrEmpty()) {
+                binding.rbSuccess.isChecked = false
+                binding.rbFailed.isChecked = false
+            } else {
+                if (it.status == "0") {
+                    binding.rbSuccess.isChecked = true
+                } else {
+                    binding.rbFailed.isChecked = true
+                }
+            }
+
+            when(it.businessType) {
+                "0" -> binding.rb0.isChecked = true
+                "1" -> binding.rb1.isChecked = true
+                "2" -> binding.rb2.isChecked = true
+                "3" -> binding.rb3.isChecked = true
+                "4" -> binding.rb4.isChecked = true
+                "5" -> binding.rb5.isChecked = true
+                "7" -> binding.rb7.isChecked = true
+                "10" -> binding.rb10.isChecked = true
+                else -> resetRadioChecked()
+            }
+
+            val startDate = it.beginTime?.split(" ")?.get(0)
             binding.tvStartDate.text = startDate
-            val endDate = it.endDate?.split(" ")?.get(0)
+            val endDate = it.endTime?.split(" ")?.get(0)
             binding.tvEndDate.text = endDate
 
             binding.ivStartDateClose.isVisible = !startDate.isNullOrEmpty()
@@ -122,7 +184,7 @@ class LogInfoSearchPopupWindow(
     private fun showSelectDateDialog(
         textView: TextView,
         index: Int,
-        binding: ItemPopupSearchLogInfoBinding
+        binding: ItemPopupSearchOptionLogInfoBinding
     ) {
         val calendar = Calendar.getInstance() //获取日期格式器对象
 
@@ -172,11 +234,11 @@ class LogInfoSearchPopupWindow(
                 )
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .build()
-        pvTime.show((mContext as LogManagerActivity).supportFragmentManager, "timepicker")
+        pvTime.show((mContext as LogManagerActivity).supportFragmentManager , "timepicker")
     }
 
     override fun injectLayout(): Int {
-        return R.layout.item_popup_search_log_info
+        return R.layout.item_popup_search_option_log_info
     }
 
     override fun injectAnimationStyle(): Int {
@@ -196,6 +258,23 @@ class LogInfoSearchPopupWindow(
     }
 
     interface OnSearchBtnClick {
-        fun onClick(searchParams: LogManagerActivity.SearchParams)
+        fun onClick(searchParams: OptionLogFragment.SearchParams)
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.rb_1, R.id.rb_0, R.id.rb_2, R.id.rb_3, R.id.rb_4, R.id.rb_5, R.id.rb_7, R.id.rb_10 -> {
+                resetRadioChecked()
+                val checkedRadio = v as AppCompatRadioButton
+                checkedRadio.isChecked = true
+                optionType = checkedRadio.tag.toString()
+            }
+        }
+    }
+
+    private fun resetRadioChecked() {
+        binding.chipGroupOptionType.children.forEach { radio ->
+            (radio as AppCompatRadioButton).isChecked = false
+        }
     }
 }

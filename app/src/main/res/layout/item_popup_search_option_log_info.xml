@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80000000">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="模块名称"
+                android:layout_centerVertical="true"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="36dp"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/tv_title"
+                android:background="@drawable/selector_input_stroke"/>
+
+            <ImageView
+                android:id="@+id/iv_title_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_close"
+                android:padding="6dp"
+                android:layout_alignEnd="@id/et_title"
+                android:layout_centerVertical="true"
+                app:tint="@color/ps_color_light_grey"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/tv_option_name_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="操作人"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/tv_option_name_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="人"
+                android:visibility="invisible"
+                android:layout_toEndOf="@id/tv_option_name_title"
+                android:layout_centerVertical="true"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_option_name"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="36dp"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/tv_option_name_title1"
+                android:background="@drawable/selector_input_stroke"/>
+
+            <ImageView
+                android:id="@+id/iv_option_name_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/svg_close"
+                android:padding="6dp"
+                android:layout_alignEnd="@id/et_option_name"
+                android:layout_centerVertical="true"
+                app:tint="@color/ps_color_light_grey"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="操作类型"
+                android:layout_marginStart="12dp"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_option_type"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="1"
+                    android:text="新增"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="2"
+                    android:text="修改"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="3"
+                    android:text="删除"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="4"
+                    android:text="授权"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="5"
+                    android:text="导出"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="7"
+                    android:text="强退"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="10"
+                    android:text="审核"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="0"
+                    android:text="其他"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="操作状态"
+                android:layout_marginStart="12dp"/>
+
+            <RadioGroup
+                android:id="@+id/rg_option_status"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_success"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:tag="0"
+                    android:text="成功"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_failed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:tag="1"
+                    android:text="失败"/>
+
+            </RadioGroup>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_option_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/tv_option_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="操作日期"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_start_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="12dp"
+                    android:text="请选择日期"
+                    android:paddingStart="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/selector_input_stroke"/>
+
+                <ImageView
+                    android:id="@+id/iv_start_date_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/svg_close"
+                    android:padding="6dp"
+                    android:layout_alignEnd="@id/tv_start_date"
+                    android:layout_centerVertical="true"
+                    app:tint="@color/ps_color_light_grey"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="至"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_end_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="8dp"
+                    android:text="请选择日期"
+                    android:paddingStart="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/selector_input_stroke"/>
+
+                <ImageView
+                    android:id="@+id/iv_end_date_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/svg_close"
+                    android:padding="6dp"
+                    android:layout_alignEnd="@id/tv_end_date"
+                    android:layout_centerVertical="true"
+                    app:tint="@color/ps_color_light_grey"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbt_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="查询"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</FrameLayout>

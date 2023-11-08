@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.account.logmanager.fragment.LoginLogFragment">
+    <RelativeLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/tool_bar">
+
+        <TextView
+            android:id="@+id/input_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:clickable="false"
+            android:textSize="16sp"
+            android:text="@string/app_search"
+            android:background="@drawable/selector_input_stroke"
+            android:paddingStart="40dp"/>
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_alignStart="@id/input_search"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_search"
+            app:tint="@color/x_text_03" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="暂无日志"
+            android:textColor="@color/x_text_03"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

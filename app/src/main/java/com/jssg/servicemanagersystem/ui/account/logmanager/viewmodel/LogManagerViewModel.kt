@@ -6,7 +6,9 @@ import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
-import com.jssg.servicemanagersystem.ui.account.logmanager.LogManagerActivity
+import com.jssg.servicemanagersystem.ui.account.entity.OptionLogInfo
+import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.LoginLogFragment
+import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.OptionLogFragment
 
 /**
  * ServiceManagerSystem
@@ -15,25 +17,51 @@ import com.jssg.servicemanagersystem.ui.account.logmanager.LogManagerActivity
 class LogManagerViewModel: AutoDisposViewModel() {
 
     val logInfoListLiveData = MutableLiveData<LoadListDataModel<List<LogInfo>?>>()
+    val optionInfoListLiveData = MutableLiveData<LoadListDataModel<List<OptionLogInfo>?>>()
 
-    fun getLogInfo(isRefresh: Boolean, page: Int) {
+    fun getLoginLogInfo(isRefresh: Boolean, page: Int) {
         logInfoListLiveData.value = LoadListDataModel(isRefresh)
         RetrofitService.apiService
-            .getLogInfoList(page, 20)
+            .getLoginLogInfoList(page, 20)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(logInfoListLiveData, isRefresh, page))
     }
 
-    fun searchLogInfo(searchParams: LogManagerActivity.SearchParams) {
+    fun searchLoginLogInfo(searchParams: LoginLogFragment.SearchParams) {
         logInfoListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .searchLogInfoList(
+            .searchLoginLogInfoList(
                 searchParams.userName,
                 searchParams.startDate,
                 searchParams.endDate
             )
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(logInfoListLiveData, true, 1))
+    }
+
+    fun getOptionsLogInfo(isRefresh: Boolean, page: Int) {
+        optionInfoListLiveData.value = LoadListDataModel(isRefresh)
+        RetrofitService.apiService
+            .getOptionLogInfoList(page, 20)
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .subscribe(createListObserver(optionInfoListLiveData, isRefresh, page))
+    }
+
+    fun searchOptionsLogInfo(searchParams: OptionLogFragment.SearchParams, isRefresh: Boolean, page: Int) {
+        optionInfoListLiveData.value = LoadListDataModel(true)
+        RetrofitService.apiService
+            .searchOptionLogInfoList(
+                searchParams.title,
+                searchParams.businessType,
+                searchParams.operName,
+                searchParams.status,
+                searchParams.beginTime,
+                searchParams.endTime,
+                page,
+                20
+            )
+            .compose(RxSchedulersHelper.ObsResultWithMain2())
+            .subscribe(createListObserver(optionInfoListLiveData, isRefresh, page))
     }
 
 

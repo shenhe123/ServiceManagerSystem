@@ -3,6 +3,7 @@ package com.jssg.servicemanagersystem.base.http.apiservice
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
+import com.jssg.servicemanagersystem.ui.account.entity.OptionLogInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
@@ -264,17 +265,35 @@ interface ApiService {
     ): Call<ResponseBody>
 
     @GET("monitor/logininfor/list")
-    fun getLogInfoList(
+    fun getLoginLogInfoList(
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int
     ): Observable<BaseHttpResult<List<LogInfo>?>>
 
     @GET("monitor/logininfor/list")
-    fun searchLogInfoList(
+    fun searchLoginLogInfoList(
         @Query("userName") userName: String?,
         @Query("params[\"beginTime\"]") beginApplyDate: String?,
         @Query("params[\"endTime\"]") endApplyDate: String?,
     ): Observable<BaseHttpResult<List<LogInfo>?>>
+
+    @GET("monitor/operlog/list")
+    fun getOptionLogInfoList(
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<OptionLogInfo>?>>
+
+    @GET("monitor/operlog/list")
+    fun searchOptionLogInfoList(
+        @Query("title") title: String?,
+        @Query("businessType") businessType: String?,
+        @Query("operName") operName: String?,
+        @Query("status") status: String?,
+        @Query("params[\"beginTime\"]") beginApplyDate: String?,
+        @Query("params[\"endTime\"]") endApplyDate: String?,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
+    ): Observable<BaseHttpResult<List<OptionLogInfo>?>>
 
     @GET("qm/workOrderDetail/reportList")
     fun getReportList(
