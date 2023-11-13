@@ -55,6 +55,7 @@ data class WorkOrderInfo(
        val serviceAdd: String,   	// 服务地址
        val productCode: String,    // 产品编码
        val productDes: String,    // 产品描述
+       val projectCode: String?,    // 产品项目号
        val batchNo: String?,    // 批次号
        val checkNum: String?,   // 0, // 需排查数量
        val productNum: String?,   // 0, // 问题产品数量

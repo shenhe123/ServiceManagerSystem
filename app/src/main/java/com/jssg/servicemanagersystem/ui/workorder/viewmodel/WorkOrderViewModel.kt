@@ -46,6 +46,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         RetrofitService.apiService
             .searchWorkOrderList(
                 searchParams.applyName,
+                searchParams.tel,
                 searchParams.productCode,
                 searchParams.productDesc,
                 searchParams.startDate,
@@ -182,7 +183,8 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         productCode: String,
         productDesc: String,
         badNum: String,
-        oaBillNo: String?
+        oaBillNo: String?,
+        projectCode: String,
     ) {
         addNewWorkOrderLiveData.value = LoadDataModel()
         val params = HashMap<String, Any>()
@@ -199,13 +201,14 @@ class WorkOrderViewModel : AutoDisposViewModel() {
         params["servicePeriod"] = servicePeriod
         params["unitPrice"] = servicePrice
         params["priceUnit"] = priceUnit
-        params["periodUnit"] = periodUnit
+        params["timeUnit"] = periodUnit
         params["checkNum"] = checkNum
         params["totalPrice"] = serviceTotal
         params["serviceStaff"] = serviceName
         params["salesManager"] = salesManager
         params["serviceAdd"] = serviceAddress
         params["productCode"] = productCode
+        params["projectCode"] = projectCode
         params["oaBillNo"] = oaBillNo ?: ""
         params["productDes"] = productDesc
         params["productNum"] = badNum

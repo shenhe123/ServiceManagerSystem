@@ -149,6 +149,16 @@ class AddWorkOrderActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            if (orgId.isNullOrEmpty()) {
+                ToastUtils.showToast("服务工厂不能为空")
+                return@setOnClickListener
+            }
+
+            if (deptId.isNullOrEmpty()) {
+                ToastUtils.showToast("申请部门不能为空")
+                return@setOnClickListener
+            }
+
             val phoneNumber = binding.etPhoneNum.text.toString()
             if (phoneNumber.isEmpty()) {
                 ToastUtils.showToast("手机号不能为空")
@@ -178,6 +188,12 @@ class AddWorkOrderActivity : BaseActivity() {
             val productCode = binding.etProductCode.text.toString()
             if (productCode.isEmpty()) {
                 ToastUtils.showToast("产品编码不能为空")
+                return@setOnClickListener
+            }
+
+            val projectCode = binding.etProjectCode.text.toString()
+            if (projectCode.isEmpty()) {
+                ToastUtils.showToast("产品项目号不能为空")
                 return@setOnClickListener
             }
 
@@ -253,7 +269,8 @@ class AddWorkOrderActivity : BaseActivity() {
                 productCode,
                 productDesc,
                 badNum,
-                oaBillNo
+                oaBillNo,
+                projectCode
             )
         }
 

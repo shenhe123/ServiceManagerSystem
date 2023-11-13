@@ -42,10 +42,10 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         searchParams = arguments?.getParcelable("searchParams")
-        
-        initView()
-        
+
         addListener()
+
+        initView()
     }
 
     private fun addListener() {
@@ -60,6 +60,19 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
                 val content = s.toString()
 
                 binding.ivApplyNameClose.isVisible = content.isNotEmpty()
+            }
+        })
+        binding.etTel.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivTelClose.isVisible = content.isNotEmpty()
             }
         })
         binding.etProductDesc.addTextChangedListener(object : TextWatcher {
@@ -130,6 +143,10 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
             binding.etApplyName.setText("")
         }
 
+        binding.ivTelClose.setOnClickListener {
+            binding.etTel.setText("")
+        }
+
         binding.ivProductDescClose.setOnClickListener {
             binding.etProductDesc.setText("")
         }
@@ -181,6 +198,7 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
                 it.onClick(
                     WorkOrderFragment.SearchParams(
                         binding.etApplyName.text.toString(),
+                        binding.etTel.text.toString(),
                         binding.etProductDesc.text.toString(),
                         binding.etProductCode.text.toString(),
                         startDate,
@@ -206,6 +224,7 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
 
         searchParams?.let {
             binding.etApplyName.setText(it.applyName)
+            binding.etTel.setText(it.tel)
             binding.etProductDesc.setText(it.productDesc)
             binding.etProductCode.setText(it.productCode)
             binding.etOrderId.setText(it.oaBillNo)

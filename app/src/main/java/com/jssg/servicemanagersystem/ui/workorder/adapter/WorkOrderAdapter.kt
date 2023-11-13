@@ -4,12 +4,10 @@ import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
-import com.jssg.servicemanagersystem.databinding.ItemOnsiteOptionsLayoutBinding
 import com.jssg.servicemanagersystem.databinding.ItemWorkOrderLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
-import com.jssg.servicemanagersystem.utils.DateUtil
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.Utils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
@@ -42,6 +40,7 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
         holder.binding.tvApplyFactory.text = item.sysOrganizationVo?.orgShortName ?: item.orgService
         holder.binding.tvApplyDate.text = item.applyDate?.split(" ")?.get(0) ?: ""
         holder.binding.tvProductDesc.text = item.productDes
+        holder.binding.tvProjectCode.text = item.projectCode ?: ""
 
 //        when(item.state) {
 //            0 -> holder.binding.tvOrderState.text = "已保存"

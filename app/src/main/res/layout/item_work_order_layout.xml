@@ -110,6 +110,28 @@
 
 
         <TextView
+            android:id="@+id/tv_project_code_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="产品项目号"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_review_num"/>
+
+        <TextView
+            android:id="@+id/tv_project_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_project_code_title"
+            app:layout_constraintStart_toStartOf="@id/tv_project_code_title"
+            app:layout_constraintEnd_toStartOf="@id/mcb_check"
+            />
+
+
+        <TextView
             android:id="@+id/tv_product_desc_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,7 +139,7 @@
             android:text="产品名称"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_review_num"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_project_code"/>
 
         <TextView
             android:id="@+id/tv_product_desc"

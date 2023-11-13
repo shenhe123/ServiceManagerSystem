@@ -45,9 +45,9 @@ class UserSearchDialogFragment: BaseSearchDialogFragment() {
 
         searchParams = arguments?.getParcelable("searchParams")
         
-        initView()
-        
         addListener()
+
+        initView()
     }
 
     private fun addListener() {

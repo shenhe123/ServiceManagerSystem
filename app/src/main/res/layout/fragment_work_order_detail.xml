@@ -144,7 +144,7 @@
                 android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/tv_product_desc"
+                android:id="@+id/tv_project_code"
                 style="@style/SubTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,6 +152,17 @@
                 android:elevation="2dp"
                 app:layout_constraintStart_toStartOf="@id/v_product_line"
                 app:layout_constraintTop_toBottomOf="@id/tv_oa_bill_no"
+                tools:text="产品项目号：shenhe" />
+
+            <TextView
+                android:id="@+id/tv_product_desc"
+                style="@style/SubTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:elevation="2dp"
+                app:layout_constraintStart_toStartOf="@id/v_product_line"
+                app:layout_constraintTop_toBottomOf="@id/tv_project_code"
                 tools:text="产品名称：shenhe" />
 
             <TextView
