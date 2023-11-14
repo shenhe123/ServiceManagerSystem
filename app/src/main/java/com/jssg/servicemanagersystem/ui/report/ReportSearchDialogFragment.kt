@@ -211,15 +211,15 @@ class ReportSearchDialogFragment: BaseSearchDialogFragment() {
 
                 listener.onClick(
                     WorkOrderFragment.SearchParams(
-                        binding.etApplyName.text.toString(),
-                        binding.etProductDesc.text.toString(),
-                        binding.etProductCode.text.toString(),
-                        startDate,
-                        endDate,
-                        binding.etOrderId.text.toString(),
-                        binding.etFactory.text.toString(),
-                        state,
-                        binding.etBatchNo.text.toString()
+                        applyName = binding.etApplyName.text.toString(),
+                        productDesc = binding.etProductDesc.text.toString(),
+                        productCode = binding.etProductCode.text.toString(),
+                        startDate = startDate,
+                        endDate = endDate,
+                        oaBillNo = binding.etOrderId.text.toString(),
+                        factory = binding.etFactory.text.toString(),
+                        state = state,
+                        batchNo = binding.etBatchNo.text.toString()
                     )
                 )
             }
