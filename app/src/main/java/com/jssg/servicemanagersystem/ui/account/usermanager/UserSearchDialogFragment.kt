@@ -51,6 +51,8 @@ class UserSearchDialogFragment: BaseSearchDialogFragment() {
     }
 
     private fun addListener() {
+        binding.root.setOnClickListener { dismiss() }
+
         binding.etUserName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }

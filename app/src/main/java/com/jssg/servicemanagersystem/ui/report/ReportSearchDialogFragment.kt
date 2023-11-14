@@ -50,6 +50,7 @@ class ReportSearchDialogFragment: BaseSearchDialogFragment() {
     }
 
     private fun initView() {
+        binding.root.setOnClickListener { dismiss() }
 
         binding.layoutApplyName.isVisible = !AccountManager.instance.isEndUser
         binding.layoutBatchNo.isVisible = !AccountManager.instance.isEndUser

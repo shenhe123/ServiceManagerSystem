@@ -49,6 +49,8 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
     }
 
     private fun addListener() {
+        binding.root.setOnClickListener { dismiss() }
+
         binding.etApplyName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -221,10 +223,13 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
         binding.layoutApplyDate.isVisible = !AccountManager.instance.isEndUser
         binding.layoutFactory.isVisible = !AccountManager.instance.isEndUser
         binding.layoutCheckState.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutProductCode.isVisible = !AccountManager.instance.isEndUser
+
+        binding.etTel.setText(AccountManager.instance.getUser()?.user?.phonenumber)
 
         searchParams?.let {
             binding.etApplyName.setText(it.applyName)
-            binding.etTel.setText(it.tel)
+            binding.etTel.setText(it.tel ?: AccountManager.instance.getUser()?.user?.phonenumber)
             binding.etProductDesc.setText(it.productDesc)
             binding.etProductCode.setText(it.productCode)
             binding.etOrderId.setText(it.oaBillNo)

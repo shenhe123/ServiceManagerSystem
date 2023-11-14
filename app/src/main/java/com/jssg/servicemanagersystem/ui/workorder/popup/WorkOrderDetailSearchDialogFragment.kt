@@ -48,6 +48,8 @@ class WorkOrderDetailSearchDialogFragment: BaseSearchDialogFragment() {
     }
 
     private fun initView() {
+        binding.root.setOnClickListener { dismiss() }
+
         binding.etBatchNo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
