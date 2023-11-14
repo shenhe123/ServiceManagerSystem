@@ -85,7 +85,8 @@
             android:layout_marginEnd="20dp"
             android:gravity="center"
             android:text="无法升级？请点击此处"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="@color/text_600"/>
 
 
     </LinearLayout>
