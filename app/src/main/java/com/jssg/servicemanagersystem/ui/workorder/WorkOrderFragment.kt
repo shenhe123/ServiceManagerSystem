@@ -90,6 +90,12 @@ class WorkOrderFragment : BaseFragment() {
         initViewModel()
     }
 
+    private fun initSearchParams() {
+        if (AccountManager.instance.isEndUser) {
+            searchParams = SearchParams(tel = AccountManager.instance.getUser()?.user?.phonenumber)
+        }
+    }
+
     private fun initViewModel() {
         workOrderViewModel.workOrderListLiveData.observe(viewLifecycleOwner) { result ->
             if (!result.isLoading) {
@@ -133,14 +139,19 @@ class WorkOrderFragment : BaseFragment() {
         accountViewModel.userProfileLiveData.observe(viewLifecycleOwner) { result ->
             if (result.isSuccess) {
                 judgeRolePermission()
+
+                initSearchParams()
+                loadData(true)
             }
         }
 
         lifecycleScope.launchWhenResumed {
             if (AccountManager.instance.getUser() == null) {
                 accountViewModel.getUserProfile()
+            } else {
+                initSearchParams()
+                loadData(true)
             }
-            loadData(true)
         }
 
     }
@@ -182,14 +193,12 @@ class WorkOrderFragment : BaseFragment() {
 
     private fun loadData(isRefresh: Boolean) {
         page = if (isRefresh) {
-            searchParams = null
-            binding.smartRefreshLayout.setEnableLoadMore(true)
             resetCloseCaseStatus()
             1
         } else {
             page + 1
         }
-        workOrderViewModel.getWorkOrderList(isRefresh, page)
+        workOrderViewModel.searchWorkOrder(searchParams, isRefresh, page)
     }
 
     private fun addListener() {
@@ -260,8 +269,7 @@ class WorkOrderFragment : BaseFragment() {
                     override fun onClick(searchParams: SearchParams) {
                         showProgressbarLoading()
                         this@WorkOrderFragment.searchParams = searchParams
-                        binding.smartRefreshLayout.setEnableLoadMore(false)
-                        workOrderViewModel.searchWorkOrder(searchParams)
+                        loadData(true)
                     }
 
                 })
@@ -326,15 +334,15 @@ class WorkOrderFragment : BaseFragment() {
 
     @Parcelize
     data class SearchParams(
-        val applyName: String?,
-        val tel: String?,
-        val productDesc: String?,
-        val productCode: String?,
-        val startDate: String?,
-        val endDate: String?,
-        val oaBillNo: String?,
-        val factory: String,
-        val state: String,
+        val applyName: String? = null,
+        val tel: String? = null,
+        val productDesc: String? = null,
+        val productCode: String? = null,
+        val startDate: String? = null,
+        val endDate: String? = null,
+        val oaBillNo: String? = null,
+        val factory: String? = null,
+        val state: String? = null,
         val batchNo: String? = null,
     ) : Parcelable
 }

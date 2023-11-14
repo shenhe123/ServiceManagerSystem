@@ -31,33 +31,34 @@ class WorkOrderViewModel : AutoDisposViewModel() {
     val workOrderInfoLiveData = MutableLiveData<LoadDataModel<WorkOrderInfo?>>()
     val workOrderCheckInfoLiveData = MutableLiveData<LoadDataModel<WorkOrderCheckInfo?>>()
     val workOrderCheckListLiveData = MutableLiveData<LoadListDataModel<List<WorkOrderCheckInfo>?>>()
-    fun getWorkOrderList(isRefresh: Boolean, page: Int) {
-        workOrderListLiveData.value = LoadListDataModel(isRefresh)
 
-        RetrofitService.apiService
-            .getWorkOrderList(page, 20)
-            .compose(RxSchedulersHelper.ObsResultWithMain2())
-            .subscribe(createListObserver(workOrderListLiveData, isRefresh, page))
-
-    }
-
-    fun searchWorkOrder(searchParams: WorkOrderFragment.SearchParams) {
+    fun searchWorkOrder(
+        searchParams: WorkOrderFragment.SearchParams?,
+        isRefresh: Boolean,
+        page: Int
+    ) {
         workOrderListLiveData.value = LoadListDataModel(true)
-        RetrofitService.apiService
-            .searchWorkOrderList(
-                searchParams.applyName,
-                searchParams.tel,
-                searchParams.productCode,
-                searchParams.productDesc,
-                searchParams.startDate,
-                searchParams.endDate,
-                searchParams.oaBillNo,
-                searchParams.factory,
-                searchParams.state,
-                1,
-                9999)
-            .compose(RxSchedulersHelper.ObsResultWithMain2())
-            .subscribe(createListObserver(workOrderListLiveData, true, 1))
+        val observable = if (searchParams == null) {
+            RetrofitService.apiService
+                .getWorkOrderList(page, 20)
+        } else {
+            RetrofitService.apiService
+                .searchWorkOrderList(
+                    searchParams.applyName,
+                    searchParams.tel,
+                    searchParams.productCode,
+                    searchParams.productDesc,
+                    searchParams.startDate,
+                    searchParams.endDate,
+                    searchParams.oaBillNo,
+                    searchParams.factory,
+                    searchParams.state,
+                    page,
+                    20
+                )
+        }
+        observable.compose(RxSchedulersHelper.ObsResultWithMain2())
+            .subscribe(createListObserver(workOrderListLiveData, isRefresh, page))
     }
 
     fun addWorkOrderDetail(
@@ -139,7 +140,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
     fun getWorkOrderCheckList(billNo: String) {
         workOrderCheckListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .getWorkOrderCheckList(billNo,1, 9999)
+            .getWorkOrderCheckList(billNo, 1, 9999)
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
     }
@@ -240,7 +241,14 @@ class WorkOrderViewModel : AutoDisposViewModel() {
     fun searchWorkOrderDetail(searchParams: WorkOrderCheckListFragment.SearchParams) {
         workOrderCheckListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
-            .searchWorkOrderCheckList(searchParams.batchNo, searchParams.state, searchParams.startDate, searchParams.endDate,1, 999)
+            .searchWorkOrderCheckList(
+                searchParams.batchNo,
+                searchParams.state,
+                searchParams.startDate,
+                searchParams.endDate,
+                1,
+                999
+            )
             .compose(RxSchedulersHelper.ObsResultWithMain2())
             .subscribe(createListObserver(workOrderCheckListLiveData, true, 1))
     }

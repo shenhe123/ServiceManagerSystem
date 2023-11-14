@@ -158,12 +158,12 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
         }
 
         binding.ivStartDateClose.setOnClickListener {
-            binding.tvStartDate.text = ""
+            binding.tvStartDate.text = "请选择日期"
             binding.ivStartDateClose.isVisible = false
         }
 
         binding.ivEndDateClose.setOnClickListener {
-            binding.tvEndDate.text = ""
+            binding.tvEndDate.text = "请选择日期"
             binding.ivEndDateClose.isVisible = false
         }
 
@@ -173,6 +173,20 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
 
         binding.ivFactoryClose.setOnClickListener {
             binding.etFactory.setText("")
+        }
+
+        binding.mbtReset.setOnClickListener {
+            binding.etApplyName.setText("")
+            binding.etTel.setText("")
+            binding.etProductDesc.setText("")
+            binding.etProductCode.setText("")
+            binding.tvStartDate.text = "请选择日期"
+            binding.ivStartDateClose.isVisible = false
+            binding.tvEndDate.text = "请选择日期"
+            binding.ivEndDateClose.isVisible = false
+            binding.etOrderId.setText("")
+            binding.etFactory.setText("")
+            binding.rgCheckState.clearCheck()
         }
 
         binding.mbtSearch.setOnClickListener {
@@ -223,13 +237,13 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
         binding.layoutApplyDate.isVisible = !AccountManager.instance.isEndUser
         binding.layoutFactory.isVisible = !AccountManager.instance.isEndUser
         binding.layoutCheckState.isVisible = !AccountManager.instance.isEndUser
-        binding.layoutProductCode.isVisible = !AccountManager.instance.isEndUser
 
-        binding.etTel.setText(AccountManager.instance.getUser()?.user?.phonenumber)
+        //联系方式 三方人员显示，否则隐藏
+        binding.layoutTel.isVisible = AccountManager.instance.isEndUser
 
         searchParams?.let {
             binding.etApplyName.setText(it.applyName)
-            binding.etTel.setText(it.tel ?: AccountManager.instance.getUser()?.user?.phonenumber)
+            binding.etTel.setText(it.tel)
             binding.etProductDesc.setText(it.productDesc)
             binding.etProductCode.setText(it.productCode)
             binding.etOrderId.setText(it.oaBillNo)
