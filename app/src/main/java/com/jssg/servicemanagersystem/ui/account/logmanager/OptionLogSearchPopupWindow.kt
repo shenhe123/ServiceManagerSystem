@@ -135,6 +135,17 @@ class OptionLogSearchPopupWindow(
             }
         }
 
+        binding.mbtReset.setOnClickListener {
+            binding.etTitle.setText("")
+            binding.etOptionName.setText("")
+            binding.asOptionType.setSelection(0)
+            binding.rgOptionStatus.clearCheck()
+            binding.tvStartDate.text = "请选择日期"
+            binding.ivStartDateClose.isVisible = false
+            binding.tvEndDate.text = "请选择日期"
+            binding.ivEndDateClose.isVisible = false
+        }
+
         binding.mbtSearch.setOnClickListener {
             if (this::listener.isInitialized) {
                 var startDate = binding.tvStartDate.text.toString()
@@ -196,7 +207,7 @@ class OptionLogSearchPopupWindow(
             }
 
             when(it.businessType) {
-                "0" -> binding.asOptionType.setSelection(8)
+                "0" -> binding.asOptionType.setSelection(9)
                 "1" -> binding.asOptionType.setSelection(1)
                 "2" -> binding.asOptionType.setSelection(2)
                 "3" -> binding.asOptionType.setSelection(3)
@@ -204,13 +215,14 @@ class OptionLogSearchPopupWindow(
                 "5" -> binding.asOptionType.setSelection(5)
                 "7" -> binding.asOptionType.setSelection(6)
                 "10" -> binding.asOptionType.setSelection(7)
+                "11" -> binding.asOptionType.setSelection(8)
                 else -> binding.asOptionType.setSelection(0)
             }
 
             val startDate = it.beginTime?.split(" ")?.get(0)
-            binding.tvStartDate.text = startDate
+            binding.tvStartDate.text = startDate ?: "请选择日期"
             val endDate = it.endTime?.split(" ")?.get(0)
-            binding.tvEndDate.text = endDate
+            binding.tvEndDate.text = endDate ?: "请选择日期"
 
             binding.ivStartDateClose.isVisible = !startDate.isNullOrEmpty()
             binding.ivEndDateClose.isVisible = !endDate.isNullOrEmpty()

@@ -65,12 +65,20 @@ class LoginInfoSearchPopupWindow(
         }
 
         binding.ivStartDateClose.setOnClickListener {
-            binding.tvStartDate.text = ""
+            binding.tvStartDate.text = "请选择日期"
             binding.ivStartDateClose.isVisible = false
         }
 
         binding.ivEndDateClose.setOnClickListener {
-            binding.tvEndDate.text = ""
+            binding.tvEndDate.text = "请选择日期"
+            binding.ivEndDateClose.isVisible = false
+        }
+
+        binding.mbtReset.setOnClickListener {
+            binding.etApplyName.setText("")
+            binding.tvStartDate.text = "请选择日期"
+            binding.ivStartDateClose.isVisible = false
+            binding.tvEndDate.text = "请选择日期"
             binding.ivEndDateClose.isVisible = false
         }
 
@@ -107,9 +115,9 @@ class LoginInfoSearchPopupWindow(
             binding.etApplyName.setText(it.userName)
 
             val startDate = it.startDate?.split(" ")?.get(0)
-            binding.tvStartDate.text = startDate
+            binding.tvStartDate.text = startDate ?: "请选择日期"
             val endDate = it.endDate?.split(" ")?.get(0)
-            binding.tvEndDate.text = endDate
+            binding.tvEndDate.text = endDate ?: "请选择日期"
 
             binding.ivStartDateClose.isVisible = !startDate.isNullOrEmpty()
             binding.ivEndDateClose.isVisible = !endDate.isNullOrEmpty()

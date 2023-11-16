@@ -121,11 +121,10 @@ class LoginLogFragment : BaseFragment() {
 
     private fun loadData(isRefresh: Boolean) {
         page = if (isRefresh) {
-            searchParams = null
             1
         } else page + 1
 
-        logManagerViewModel.getLoginLogInfo(isRefresh, page)
+        logManagerViewModel.searchLoginLogInfo(searchParams, isRefresh, page)
     }
 
     private fun showTipPopupWindow(target: View) {
@@ -134,8 +133,8 @@ class LoginLogFragment : BaseFragment() {
             override fun onClick(searchParams: SearchParams) {
                 showProgressbarLoading()
                 this@LoginLogFragment.searchParams = searchParams
-                binding.smartRefreshLayout.setEnableLoadMore(false)
-                logManagerViewModel.searchLoginLogInfo(searchParams)
+                page = 1
+                logManagerViewModel.searchLoginLogInfo(searchParams, true, page)
             }
 
         })

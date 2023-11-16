@@ -30,6 +30,7 @@ class OptionLogManagerAdapter: BaseBindingAdapter<OptionLogInfo, ItemOptionLogIn
             5 -> "导出"
             7 -> "强退"
             10 -> "审核"
+            11 -> "结案"
             else -> "其它"
         }
         holder.binding.tvOptionTime.text = item.operTime

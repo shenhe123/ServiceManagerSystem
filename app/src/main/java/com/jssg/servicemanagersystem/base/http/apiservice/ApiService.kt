@@ -276,6 +276,8 @@ interface ApiService {
         @Query("userName") userName: String?,
         @Query("params[\"beginTime\"]") beginApplyDate: String?,
         @Query("params[\"endTime\"]") endApplyDate: String?,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int
     ): Observable<BaseHttpResult<List<LogInfo>?>>
 
     @GET("monitor/operlog/list")

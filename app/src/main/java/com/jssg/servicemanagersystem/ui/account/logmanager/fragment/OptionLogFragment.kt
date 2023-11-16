@@ -125,11 +125,10 @@ class OptionLogFragment : BaseFragment() {
 
     private fun loadData(isRefresh: Boolean) {
         page = if (isRefresh) {
-            searchParams = null
             1
         } else page + 1
 
-        logManagerViewModel.getOptionsLogInfo(isRefresh, page)
+        logManagerViewModel.searchOptionsLogInfo(searchParams, isRefresh, page)
     }
 
     private fun showTipPopupWindow(target: View) {
