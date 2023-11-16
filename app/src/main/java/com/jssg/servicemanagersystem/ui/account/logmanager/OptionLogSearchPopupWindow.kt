@@ -6,6 +6,8 @@ import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
@@ -30,6 +32,7 @@ class OptionLogSearchPopupWindow(
 ) :
     BasePWControl(context, layoutParent), View.OnClickListener {
 
+    private var optionTypeArray = arrayOf("选择操作类型","新增", "修改", "删除", "授权", "导出", "强退", "审核", "其他")
     private var optionType: String? = null
     private var searchParams: OptionLogFragment.SearchParams?
     private lateinit var listener: OnSearchBtnClick
@@ -106,6 +109,32 @@ class OptionLogSearchPopupWindow(
         binding.rb10.setOnClickListener(this)
         binding.rb0.setOnClickListener(this)
 
+        binding.asOptionType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                optionType = when(position) {
+                    0 -> null
+                    1 -> "1"
+                    2 -> "2"
+                    3 -> "3"
+                    4 -> "4"
+                    5 -> "5"
+                    6 -> "7"
+                    7 -> "10"
+                    8 -> "0"
+                    else -> null
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
         binding.mbtSearch.setOnClickListener {
             if (this::listener.isInitialized) {
                 var startDate = binding.tvStartDate.text.toString()
@@ -144,6 +173,13 @@ class OptionLogSearchPopupWindow(
     }
 
     private fun initData() {
+
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            mContext, R.layout.simple_spinner_left_item, optionTypeArray
+        )
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_left_item)
+        binding.asOptionType.adapter = adapter
+
         searchParams?.let {
             binding.etTitle.setText(it.title)
             binding.etOptionName.setText(it.operName)
@@ -160,15 +196,15 @@ class OptionLogSearchPopupWindow(
             }
 
             when(it.businessType) {
-                "0" -> binding.rb0.isChecked = true
-                "1" -> binding.rb1.isChecked = true
-                "2" -> binding.rb2.isChecked = true
-                "3" -> binding.rb3.isChecked = true
-                "4" -> binding.rb4.isChecked = true
-                "5" -> binding.rb5.isChecked = true
-                "7" -> binding.rb7.isChecked = true
-                "10" -> binding.rb10.isChecked = true
-                else -> resetRadioChecked()
+                "0" -> binding.asOptionType.setSelection(8)
+                "1" -> binding.asOptionType.setSelection(1)
+                "2" -> binding.asOptionType.setSelection(2)
+                "3" -> binding.asOptionType.setSelection(3)
+                "4" -> binding.asOptionType.setSelection(4)
+                "5" -> binding.asOptionType.setSelection(5)
+                "7" -> binding.asOptionType.setSelection(6)
+                "10" -> binding.asOptionType.setSelection(7)
+                else -> binding.asOptionType.setSelection(0)
             }
 
             val startDate = it.beginTime?.split(" ")?.get(0)

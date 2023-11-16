@@ -146,6 +146,33 @@
             app:layout_constraintStart_toStartOf="@id/tv_option_time_title"
             />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_order_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tv_order_id_title, tv_order_id"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_order_id_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="工单号"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_option_time"/>
+
+        <TextView
+            android:id="@+id/tv_order_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id_title"
+            app:layout_constraintStart_toStartOf="@id/tv_order_id_title"
+            />
+
 
         <TextView
             android:id="@+id/tv_option_name_title"
