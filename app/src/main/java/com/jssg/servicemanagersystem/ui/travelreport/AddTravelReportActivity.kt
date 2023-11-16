@@ -54,11 +54,10 @@ class AddTravelReportActivity : BaseActivity() {
 
         travelReportViewModel.factoryInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                val list = if (result.data.isNullOrEmpty()) {
-                    listOf("请选择工厂")
-                } else {
-                    factoryInfos = result.data!!
-                    result.data!!.map { info -> info.orgShortName }
+                factoryInfos = result.data
+                val list = mutableListOf("请选择工厂")
+                factoryInfos?.let {
+                    list.addAll(it.map { info -> info.orgShortName })
                 }
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -71,18 +70,30 @@ class AddTravelReportActivity : BaseActivity() {
 
         travelReportViewModel.deptInfoLiveData.observe(this) { result ->
             if (result.isSuccess) {
-                val list = if (result.data.isNullOrEmpty()) {
-                    listOf("请选择部门")
-                } else {
-                    deptInfos = result.data!!
-                    result.data!!.map { info -> info.deptName }
+                deptInfos = result.data
+                val list = mutableListOf("请选择部门")
+                deptInfos?.let {
+                    list.addAll(it.map { info -> info.deptName })
                 }
+
 
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                     this, R.layout.simple_spinner_item, list
                 )
                 adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
                 binding.asDept.adapter = adapter
+
+                //赋值默认部门
+                val defaultDeptName = AccountManager.instance.getUser()?.user?.dept?.deptName
+                defaultDeptName?.let {
+                    val index = list.indexOf(defaultDeptName)
+                    if (index > 0) {
+                        binding.asDept.setSelection(index, false)
+                        deptInfo = deptInfos?.get(index - 1)
+                    } else {
+                        binding.asDept.setSelection(0, false)
+                    }
+                }
             }
         }
 
@@ -165,15 +176,10 @@ class AddTravelReportActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                factoryInfos?.let {
-                    binding.asFactory.prompt = it[position].orgShortName
-
-                    orgInfo = if (it[position].orgShortName.equals("请选择工厂")) {
-                        null
-                    } else {
-                        it[position]
-                    }
-
+                orgInfo = if (position == 0) {
+                    null
+                } else {
+                    factoryInfos?.get(position - 1)
                 }
             }
 
@@ -188,14 +194,10 @@ class AddTravelReportActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                deptInfos?.let {
-                    binding.asDept.prompt = it[position].deptName
-
-                    deptInfo = if (!it[position].deptName.equals("请选择部门")) {
-                        it[position]
-                    } else {
-                        null
-                    }
+                deptInfo = if (position == 0) {
+                    null
+                } else {
+                    deptInfos?.get(position - 1)
                 }
             }
 
@@ -301,7 +303,7 @@ class AddTravelReportActivity : BaseActivity() {
             return false
         }
 
-        if (!DateUtil.compareDate(startDate, endDate)) {
+        if (!DateUtil.compareDate("$startDate 00:00:00", "$endDate 00:00:00")) {
             ToastUtils.showToast("出差终止日期不能小于起始日期")
             return false
         }
