@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ItemWorkOrderLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
@@ -30,7 +31,15 @@ class WorkOrderAdapter(isCloseCase: Boolean): BaseBindingAdapter<WorkOrderInfo, 
         holder.binding.tvOrderId.text = orderId
 
         holder.binding.tvOrderId.setOnLongClickListener {
-            Utils.copyStringText(orderId, context)
+            if (AccountManager.instance.isAdmin()) {
+                var ids = item.billNo
+                if (!item.oaBillNo.isNullOrEmpty()) {
+                    ids += ", ${item.oaBillNo}"
+                }
+                Utils.copyStringText(ids, context)
+            } else {
+                Utils.copyStringText(orderId, context)
+            }
             ToastUtils.showToast("复制成功")
             true
         }
