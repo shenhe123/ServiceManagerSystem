@@ -1,51 +1,57 @@
 package com.jssg.servicemanagersystem.ui.account.logmanager
 
-import android.content.Context
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimeDialogFragment
 import com.jssg.servicemanagersystem.R
-import com.jssg.servicemanagersystem.databinding.ItemPopupSearchLogInfoBinding
+import com.jssg.servicemanagersystem.base.BaseSearchDialogFragment
 import com.jssg.servicemanagersystem.databinding.ItemPopupSearchOptionLogInfoBinding
-import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.LoginLogFragment
 import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.OptionLogFragment
 import com.jssg.servicemanagersystem.utils.DateUtil
-import com.jssg.servicemanagersystem.widgets.popupwindow.BasePWControl
 import java.util.Calendar
 
-class OptionLogSearchPopupWindow(
-    context: Context?,
-    layoutParent: ViewGroup?,
-    searchParams: OptionLogFragment.SearchParams?
-) :
-    BasePWControl(context, layoutParent), View.OnClickListener {
+/**
+ * ServiceManagerSystem
+ * Created by he.shen on 2023/11/17.
+ */
+class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickListener {
 
     private var optionTypeArray = arrayOf("选择操作类型","新增", "修改", "删除", "授权", "导出", "强退", "审核", "结案", "其他")
     private var optionType: String? = null
-    private var searchParams: OptionLogFragment.SearchParams?
+    private var searchParams: OptionLogFragment.SearchParams? = null
     private lateinit var listener: OnSearchBtnClick
     private lateinit var binding: ItemPopupSearchOptionLogInfoBinding
 
-    init {
-        this.searchParams = searchParams
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = ItemPopupSearchOptionLogInfoBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        addListener()
+
         initData()
     }
 
-    override fun initView() {
-        binding = ItemPopupSearchOptionLogInfoBinding.bind(mView)
-
+    private fun addListener() {
         binding.layoutRoot.setOnClickListener { v: View? -> dismiss() }
         binding.etTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -205,9 +211,10 @@ class OptionLogSearchPopupWindow(
     }
 
     private fun initData() {
+        searchParams = arguments?.getParcelable("searchParams")
 
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            mContext, R.layout.simple_spinner_left_item, optionTypeArray
+            requireContext(), R.layout.simple_spinner_left_item, optionTypeArray
         )
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_left_item)
         binding.asOptionType.adapter = adapter
@@ -260,7 +267,7 @@ class OptionLogSearchPopupWindow(
         //chose b
         val pvTime: TimeDialogFragment =
             TimePickerBuilder(
-                mContext
+                requireContext()
             ) { date -> //选中事件回调
                 textView.text = DateUtil.getDateyyMMdd(date.time)
                 if (index == 0) {
@@ -281,17 +288,17 @@ class OptionLogSearchPopupWindow(
                     )
                 )
                 .setCancelText("取消") //取消按钮文字
-                .setSubmitText(mContext.getString(com.jssg.servicemanagersystem.R.string.app_confirm)) //确认按钮文字
+                .setSubmitText(requireContext().getString(com.jssg.servicemanagersystem.R.string.app_confirm)) //确认按钮文字
                 .setContentTextSize(18) //滚轮文字大小
                 .setTitleSize(18) //标题文字大小
                 .setTitleText("选择登录日志时间") //标题文字
                 .isCyclic(true) //是否循环滚动
-                .setTextColorCenter(mContext.getColor(R.color.purple_700)) //设置选中项的颜色
-                .setTitleColor(mContext.getColor(R.color.x_text_01)) //标题文字颜色
-                .setSubmitColor(mContext.getColor(R.color.purple_700)) //确定按钮文字颜色
-                .setCancelColor(mContext.getColor(R.color.x_text_01)) //取消按钮文字颜色
-                .setTitleBgColor(mContext.getColor(R.color.white)) //标题背景颜色 Night mode
-                .setBgColor(mContext.getColor(R.color.white)) //滚轮背景颜色 Night mode
+                .setTextColorCenter(requireContext().getColor(R.color.purple_700)) //设置选中项的颜色
+                .setTitleColor(requireContext().getColor(R.color.x_text_01)) //标题文字颜色
+                .setSubmitColor(requireContext().getColor(R.color.purple_700)) //确定按钮文字颜色
+                .setCancelColor(requireContext().getColor(R.color.x_text_01)) //取消按钮文字颜色
+                .setTitleBgColor(requireContext().getColor(R.color.white)) //标题背景颜色 Night mode
+                .setBgColor(requireContext().getColor(R.color.white)) //滚轮背景颜色 Night mode
                 .setDate(calendar) // 如果不设置的话，默认是系统时间*/
                 .setLabel(
                     "年",
@@ -303,27 +310,12 @@ class OptionLogSearchPopupWindow(
                 )
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .build()
-        pvTime.show((mContext as LogManagerActivity).supportFragmentManager , "timepicker")
+        pvTime.show(childFragmentManager , "timepicker")
     }
 
-    override fun injectLayout(): Int {
-        return R.layout.item_popup_search_option_log_info
-    }
-
-    override fun injectAnimationStyle(): Int {
-        return -1
-    }
-
-    override fun injectParamsHeight(): Int {
-        return LinearLayoutCompat.LayoutParams.WRAP_CONTENT
-    }
-
-    override fun injectParamsWight(): Int {
-        return LinearLayoutCompat.LayoutParams.MATCH_PARENT
-    }
-
-    fun setOnClickListener(listener: OnSearchBtnClick) {
+    fun setOnClickListener(listener: OnSearchBtnClick): OptionsLogSearchDialogFragment {
         this.listener = listener
+        return this
     }
 
     interface OnSearchBtnClick {
@@ -344,6 +336,15 @@ class OptionLogSearchPopupWindow(
     private fun resetRadioChecked() {
         binding.chipGroupOptionType.children.forEach { radio ->
             (radio as AppCompatRadioButton).isChecked = false
+        }
+    }
+    companion object {
+        fun newInstance(searchParams: OptionLogFragment.SearchParams?): OptionsLogSearchDialogFragment {
+            val args = Bundle()
+            args.putParcelable("searchParams", searchParams)
+            val fragment = OptionsLogSearchDialogFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

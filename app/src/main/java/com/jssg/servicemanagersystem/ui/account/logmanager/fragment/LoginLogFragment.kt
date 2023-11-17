@@ -2,11 +2,11 @@ package com.jssg.servicemanagersystem.ui.account.logmanager.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
@@ -14,7 +14,7 @@ import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentLoginLogBinding
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
-import com.jssg.servicemanagersystem.ui.account.logmanager.LoginInfoSearchPopupWindow
+import com.jssg.servicemanagersystem.ui.account.logmanager.LoginInfoSearchDialogFragment
 import com.jssg.servicemanagersystem.ui.account.logmanager.adapter.LoginLogManagerAdapter
 import com.jssg.servicemanagersystem.ui.account.logmanager.viewmodel.LogManagerViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
@@ -113,9 +113,13 @@ class LoginLogFragment : BaseFragment() {
 
     private fun addListener() {
         binding.layoutSearch.setOnClickListener {
-            if (!RolePermissionUtils.hasPermission(MenuEnum.MONITOR_LOGININFOR_QUERY.printableName, true)) return@setOnClickListener
+            if (!RolePermissionUtils.hasPermission(
+                    MenuEnum.MONITOR_LOGININFOR_QUERY.printableName,
+                    true
+                )
+            ) return@setOnClickListener
 
-            showTipPopupWindow(binding.layoutSearch)
+            showSearchDialogWindow()
         }
     }
 
@@ -127,18 +131,17 @@ class LoginLogFragment : BaseFragment() {
         logManagerViewModel.searchLoginLogInfo(searchParams, isRefresh, page)
     }
 
-    private fun showTipPopupWindow(target: View) {
-        val popupWindow = LoginInfoSearchPopupWindow(requireContext(), binding.root, searchParams)
-        popupWindow.setOnClickListener(object : LoginInfoSearchPopupWindow.OnSearchBtnClick {
-            override fun onClick(searchParams: SearchParams) {
-                showProgressbarLoading()
-                this@LoginLogFragment.searchParams = searchParams
-                page = 1
-                logManagerViewModel.searchLoginLogInfo(searchParams, true, page)
-            }
+    private fun showSearchDialogWindow() {
+        LoginInfoSearchDialogFragment.newInstance(searchParams)
+            .setOnClickListener(object : LoginInfoSearchDialogFragment.OnSearchBtnClick {
+                override fun onClick(searchParams: SearchParams) {
+                    showProgressbarLoading()
+                    this@LoginLogFragment.searchParams = searchParams
+                    page = 1
+                    logManagerViewModel.searchLoginLogInfo(searchParams, true, page)
+                }
 
-        })
-        popupWindow.showAsDropDown(target, 0, 0)
+            }).show(childFragmentManager, "login_info_search")
     }
 
 

@@ -6,11 +6,8 @@ import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
 import com.jssg.servicemanagersystem.databinding.ItemOptionLogInfoBinding
 import com.jssg.servicemanagersystem.ui.account.entity.OptionLogInfo
-import com.jssg.servicemanagersystem.utils.JsonUtils
 import com.jssg.servicemanagersystem.utils.Utils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
-import org.json.JSONArray
-import org.json.JSONObject
 
 
 /**

@@ -9,16 +9,12 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentOptionLogBinding
-import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
 import com.jssg.servicemanagersystem.ui.account.entity.OptionLogInfo
-import com.jssg.servicemanagersystem.ui.account.logmanager.LoginInfoSearchPopupWindow
-import com.jssg.servicemanagersystem.ui.account.logmanager.OptionLogSearchPopupWindow
-import com.jssg.servicemanagersystem.ui.account.logmanager.adapter.LoginLogManagerAdapter
+import com.jssg.servicemanagersystem.ui.account.logmanager.OptionsLogSearchDialogFragment
 import com.jssg.servicemanagersystem.ui.account.logmanager.adapter.OptionLogManagerAdapter
 import com.jssg.servicemanagersystem.ui.account.logmanager.viewmodel.LogManagerViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
@@ -119,7 +115,7 @@ class OptionLogFragment : BaseFragment() {
         binding.layoutSearch.setOnClickListener {
             if (!RolePermissionUtils.hasPermission(MenuEnum.MONITOR_LOGININFOR_QUERY.printableName, true)) return@setOnClickListener
 
-            showTipPopupWindow(binding.layoutSearch)
+            showSearchDialogWindow()
         }
     }
 
@@ -131,18 +127,15 @@ class OptionLogFragment : BaseFragment() {
         logManagerViewModel.searchOptionsLogInfo(searchParams, isRefresh, page)
     }
 
-    private fun showTipPopupWindow(target: View) {
-        val popupWindow = OptionLogSearchPopupWindow(requireContext(), binding.root, searchParams)
-        popupWindow.setOnClickListener(object : OptionLogSearchPopupWindow.OnSearchBtnClick {
+    private fun showSearchDialogWindow() {
+        OptionsLogSearchDialogFragment.newInstance(searchParams).setOnClickListener(object : OptionsLogSearchDialogFragment.OnSearchBtnClick {
             override fun onClick(searchParams: SearchParams) {
                 showProgressbarLoading()
                 this@OptionLogFragment.searchParams = searchParams
                 page = 1
                 logManagerViewModel.searchOptionsLogInfo(searchParams, true, page)
             }
-
-        })
-        popupWindow.showAsDropDown(target, 0, 0)
+        }).show(childFragmentManager, "options_log_search")
     }
 
     companion object {
