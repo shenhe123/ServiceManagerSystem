@@ -32,7 +32,7 @@ class OptionLogSearchPopupWindow(
 ) :
     BasePWControl(context, layoutParent), View.OnClickListener {
 
-    private var optionTypeArray = arrayOf("选择操作类型","新增", "修改", "删除", "授权", "导出", "强退", "审核", "其他")
+    private var optionTypeArray = arrayOf("选择操作类型","新增", "修改", "删除", "授权", "导出", "强退", "审核", "结案", "其他")
     private var optionType: String? = null
     private var searchParams: OptionLogFragment.SearchParams?
     private lateinit var listener: OnSearchBtnClick
@@ -143,7 +143,8 @@ class OptionLogSearchPopupWindow(
                     5 -> "5"
                     6 -> "7"
                     7 -> "10"
-                    8 -> "0"
+                    8 -> "11"
+                    9 -> "0"
                     else -> null
                 }
             }

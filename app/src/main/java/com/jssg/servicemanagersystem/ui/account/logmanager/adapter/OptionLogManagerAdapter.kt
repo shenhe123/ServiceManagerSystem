@@ -1,11 +1,17 @@
 package com.jssg.servicemanagersystem.ui.account.logmanager.adapter
 
+import androidx.core.view.isVisible
+import com.google.gson.JsonParser
 import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
-import com.jssg.servicemanagersystem.databinding.ItemLogInfoBinding
 import com.jssg.servicemanagersystem.databinding.ItemOptionLogInfoBinding
-import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
 import com.jssg.servicemanagersystem.ui.account.entity.OptionLogInfo
+import com.jssg.servicemanagersystem.utils.JsonUtils
+import com.jssg.servicemanagersystem.utils.Utils
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
+import org.json.JSONArray
+import org.json.JSONObject
+
 
 /**
  * ServiceManagerSystem
@@ -34,6 +40,43 @@ class OptionLogManagerAdapter: BaseBindingAdapter<OptionLogInfo, ItemOptionLogIn
             else -> "其它"
         }
         holder.binding.tvOptionTime.text = item.operTime
+
+        //当此日志是派工单相关时
+        if (item.title == "工单") {
+            when(item.businessType) {
+                1 -> { //"新增"
+
+                    val fromJson = JsonParser.parseString(item.operParam).asJsonObject
+                    val billNo = fromJson["billNo"].asString
+                    val oaBillNo = fromJson["oaBillNo"].asString
+                    if (oaBillNo.isNotEmpty()) {
+                        holder.binding.tvOrderId.text = "$billNo, $oaBillNo"
+                    } else {
+                        holder.binding.tvOrderId.text = billNo
+                    }
+                }
+                3 -> {//"删除"
+                    val lastOrderId = item.operUrl.split("/").last()
+                    holder.binding.tvOrderId.text = lastOrderId
+                }
+                11 -> { //"结案"
+                    val fromJson = JsonParser.parseString(item.operParam).asJsonArray
+                    val orderIds = fromJson.joinToString(", ")
+                    holder.binding.tvOrderId.text = orderIds.replace("\"", "")
+                }
+            }
+            holder.binding.groupOrderId.isVisible = true
+        } else {
+            holder.binding.groupOrderId.isVisible = false
+        }
+
+        holder.binding.tvOrderId.setOnLongClickListener {
+            Utils.copyStringText(holder.binding.tvOrderId.text.toString(), context)
+            ToastUtils.showToast("复制成功")
+            true
+        }
     }
+
+
 
 }
