@@ -74,6 +74,20 @@ class OptionLogSearchPopupWindow(
             }
         })
 
+        binding.etOrderId.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivOrderIdClose.isVisible = content.isNotEmpty()
+            }
+        })
+
         binding.tvStartDate.setOnClickListener {
             showSelectDateDialog(binding.tvStartDate, 0, binding)
         }
@@ -88,6 +102,10 @@ class OptionLogSearchPopupWindow(
 
         binding.ivOptionNameClose.setOnClickListener {
             binding.etOptionName.setText("")
+        }
+
+        binding.ivOrderIdClose.setOnClickListener {
+            binding.etOrderId.setText("")
         }
 
         binding.ivStartDateClose.setOnClickListener {
@@ -138,6 +156,7 @@ class OptionLogSearchPopupWindow(
         binding.mbtReset.setOnClickListener {
             binding.etTitle.setText("")
             binding.etOptionName.setText("")
+            binding.etOrderId.setText("")
             binding.asOptionType.setSelection(0)
             binding.rgOptionStatus.clearCheck()
             binding.tvStartDate.text = "请选择日期"
@@ -172,6 +191,7 @@ class OptionLogSearchPopupWindow(
                         binding.etTitle.text.toString(),
                         optionType,
                         binding.etOptionName.text.toString(),
+                        binding.etOrderId.text.toString(),
                         optionStatus,
                         startDate,
                         endDate,

@@ -18,7 +18,7 @@ class OptionLogManagerAdapter: BaseBindingAdapter<OptionLogInfo, ItemOptionLogIn
         holder.binding.tvIpLocation.text = item.operLocation
         holder.binding.tvIpAddress.text = item.operIp
         holder.binding.tvTitle.text = item.title
-        holder.binding.tvOptionName.text = item.operName
+        holder.binding.tvOptionName.text = "${item.nickName}(${item.operName})"
         holder.binding.tvOptionStatus.text = if (item.status == 0) "成功" else "失败"
         //1：新增 2：修改 3：删除 4：授权 5：导出 7：强退 10：审核 0：其它
         holder.binding.tvOptionType.text = when(item.businessType) {

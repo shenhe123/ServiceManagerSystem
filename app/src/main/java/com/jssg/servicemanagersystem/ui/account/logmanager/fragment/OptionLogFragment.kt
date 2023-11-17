@@ -160,6 +160,7 @@ class OptionLogFragment : BaseFragment() {
         val title: String?, //模块名称
         val businessType: String?, //类型
         val operName: String?, //操作人
+        val operParam: String?, //工单编号
         val status: String?, //状态
         val beginTime: String?, //开始时间
         val endTime: String?, //结束时间

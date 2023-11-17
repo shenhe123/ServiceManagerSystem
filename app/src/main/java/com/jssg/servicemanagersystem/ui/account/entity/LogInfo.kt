@@ -19,7 +19,8 @@ data class LogInfo(
     val os: String,
     val params: Params,
     val status: String,
-    val userName: String
+    val userName: String,
+    val nickName: String,
 ) : Parcelable
 
 @Parcelize

@@ -291,6 +291,7 @@ interface ApiService {
         @Query("title") title: String?,
         @Query("businessType") businessType: String?,
         @Query("operName") operName: String?,
+        @Query("operParam") operParam: String?,
         @Query("status") status: String?,
         @Query("params[\"beginTime\"]") beginApplyDate: String?,
         @Query("params[\"endTime\"]") endApplyDate: String?,

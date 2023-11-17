@@ -49,6 +49,7 @@ class LogManagerViewModel: AutoDisposViewModel() {
                     searchParams.title,
                     searchParams.businessType,
                     searchParams.operName,
+                    searchParams.operParam,
                     searchParams.status,
                     searchParams.beginTime,
                     searchParams.endTime,

@@ -16,7 +16,7 @@ class LoginLogManagerAdapter: BaseBindingAdapter<LogInfo, ItemLogInfoBinding>(It
         holder.binding.tvIpLocation.text = item.loginLocation
         holder.binding.tvIpAddress.text = item.ipaddr
         holder.binding.tvLoginTime.text = item.loginTime
-        holder.binding.tvUserName.text = item.userName
+        holder.binding.tvUserName.text = "${item.nickName}(${item.userName})"
     }
 
 }

@@ -19,6 +19,7 @@ data class OptionLogInfo(
     val operIp: String,
     val operLocation: String,
     val operName: String,
+    val nickName: String,
     val operParam: String,
     val operTime: String,
     val operUrl: String,
