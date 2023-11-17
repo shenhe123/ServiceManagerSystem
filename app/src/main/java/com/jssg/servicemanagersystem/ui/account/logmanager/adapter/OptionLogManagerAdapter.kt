@@ -45,7 +45,12 @@ class OptionLogManagerAdapter: BaseBindingAdapter<OptionLogInfo, ItemOptionLogIn
 
                     val fromJson = JsonParser.parseString(item.operParam).asJsonObject
                     val billNo = fromJson["billNo"].asString
-                    val oaBillNo = fromJson["oaBillNo"].asString
+                    val jsonElement = fromJson["oaBillNo"]
+                    val oaBillNo = if (jsonElement.isJsonNull) {
+                        ""
+                    } else {
+                        jsonElement.asString
+                    }
                     if (oaBillNo.isNotEmpty()) {
                         holder.binding.tvOrderId.text = "$billNo, $oaBillNo"
                     } else {
