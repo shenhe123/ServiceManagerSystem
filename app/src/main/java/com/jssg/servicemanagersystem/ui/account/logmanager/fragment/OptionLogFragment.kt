@@ -2,20 +2,21 @@ package com.jssg.servicemanagersystem.ui.account.logmanager.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jssg.servicemanagersystem.base.BaseFragment
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.databinding.FragmentOptionLogBinding
 import com.jssg.servicemanagersystem.ui.account.entity.MenuEnum
-import com.jssg.servicemanagersystem.ui.account.entity.OptionLogInfo
 import com.jssg.servicemanagersystem.ui.account.logmanager.OptionsLogSearchDialogFragment
 import com.jssg.servicemanagersystem.ui.account.logmanager.adapter.OptionLogManagerAdapter
+import com.jssg.servicemanagersystem.ui.account.logmanager.entity.OptionLogChildEntity
+import com.jssg.servicemanagersystem.ui.account.logmanager.entity.OptionLogParentEntity
 import com.jssg.servicemanagersystem.ui.account.logmanager.viewmodel.LogManagerViewModel
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
 import com.jssg.servicemanagersystem.utils.toast.ToastUtils
@@ -90,14 +91,20 @@ class OptionLogFragment : BaseFragment() {
         loadData(true)
     }
 
-    private fun updateLogInfoList(result: LoadListDataModel<List<OptionLogInfo>?>) {
+    private fun updateLogInfoList(result: LoadListDataModel<List<OptionLogParentEntity>?>) {
         result.rows?.let {
             if (result.isPullRefresh) {
+                it.forEach { parent ->
+                    parent.childNode = mutableListOf(OptionLogChildEntity(parent.operParam))
+                }
                 adapter.setList(it)
             } else {
                 if (it.isEmpty()) { //无更多数据
                     binding.smartRefreshLayout.setNoMoreData(true)
                 } else {
+                    it.forEach { parent ->
+                        parent.childNode = mutableListOf(OptionLogChildEntity(parent.operParam))
+                    }
                     adapter.addData(it)
                 }
             }

@@ -6,7 +6,7 @@ import com.jssg.servicemanagersystem.base.http.RxSchedulersHelper
 import com.jssg.servicemanagersystem.base.loadmodel.AutoDisposViewModel
 import com.jssg.servicemanagersystem.base.loadmodel.LoadListDataModel
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
-import com.jssg.servicemanagersystem.ui.account.entity.OptionLogInfo
+import com.jssg.servicemanagersystem.ui.account.logmanager.entity.OptionLogParentEntity
 import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.LoginLogFragment
 import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.OptionLogFragment
 
@@ -17,7 +17,7 @@ import com.jssg.servicemanagersystem.ui.account.logmanager.fragment.OptionLogFra
 class LogManagerViewModel: AutoDisposViewModel() {
 
     val logInfoListLiveData = MutableLiveData<LoadListDataModel<List<LogInfo>?>>()
-    val optionInfoListLiveData = MutableLiveData<LoadListDataModel<List<OptionLogInfo>?>>()
+    val optionInfoListLiveData = MutableLiveData<LoadListDataModel<List<OptionLogParentEntity>?>>()
 
     fun searchLoginLogInfo(searchParams: LoginLogFragment.SearchParams?, isRefresh: Boolean, page: Int) {
         logInfoListLiveData.value = LoadListDataModel(true)

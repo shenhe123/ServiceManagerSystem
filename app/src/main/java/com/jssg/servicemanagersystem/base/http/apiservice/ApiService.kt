@@ -3,12 +3,12 @@ package com.jssg.servicemanagersystem.base.http.apiservice
 import com.jssg.servicemanagersystem.base.entity.BaseHttpResult
 import com.jssg.servicemanagersystem.ui.account.entity.DeptInfo
 import com.jssg.servicemanagersystem.ui.account.entity.LogInfo
-import com.jssg.servicemanagersystem.ui.account.entity.OptionLogInfo
 import com.jssg.servicemanagersystem.ui.account.entity.Role
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import com.jssg.servicemanagersystem.ui.account.entity.UserData
 import com.jssg.servicemanagersystem.ui.account.entity.UserInfo
 import com.jssg.servicemanagersystem.ui.account.entity.UserRoles
+import com.jssg.servicemanagersystem.ui.account.logmanager.entity.OptionLogParentEntity
 import com.jssg.servicemanagersystem.ui.login.entity.LoginEntity
 import com.jssg.servicemanagersystem.ui.report.entity.ReportListInfo
 import com.jssg.servicemanagersystem.ui.travelreport.entity.TravelReportInfo
@@ -284,7 +284,7 @@ interface ApiService {
     fun getOptionLogInfoList(
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int
-    ): Observable<BaseHttpResult<List<OptionLogInfo>?>>
+    ): Observable<BaseHttpResult<List<OptionLogParentEntity>?>>
 
     @GET("monitor/operlog/list")
     fun searchOptionLogInfoList(
@@ -297,7 +297,7 @@ interface ApiService {
         @Query("params[\"endTime\"]") endApplyDate: String?,
         @Query("pageNum") pageNum: Int,
         @Query("pageSize") pageSize: Int
-    ): Observable<BaseHttpResult<List<OptionLogInfo>?>>
+    ): Observable<BaseHttpResult<List<OptionLogParentEntity>?>>
 
     @GET("qm/workOrderDetail/reportList")
     fun getReportList(
