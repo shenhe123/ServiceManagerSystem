@@ -26,6 +26,7 @@ class OptionLogParentProvider : BaseNodeProvider() {
         helper.setText(R.id.tv_log_id, parentEntity.operId)
         helper.setText(R.id.tv_ip_location, parentEntity.operLocation)
         helper.setText(R.id.tv_ip_address, parentEntity.operIp)
+        helper.setText(R.id.tv_oper_url, parentEntity.operUrl)
         helper.setText(R.id.tv_title, parentEntity.title)
         helper.setText(R.id.tv_option_name, "${parentEntity.nickName}(${parentEntity.operName})")
         helper.setText(R.id.tv_option_status, if (parentEntity.status == 0) "成功" else "失败")
@@ -74,8 +75,50 @@ class OptionLogParentProvider : BaseNodeProvider() {
                 }
             }
             helper.setGone(R.id.group_order_id, false)
+        } else if (parentEntity.title == "派工单明细") {
+            when(parentEntity.businessType) {
+                1,2,10 -> { //"新增"、"修改"
+                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonObject
+
+                    val jsonElement = fromJson["billDetailNo"]
+                    if (jsonElement.isJsonNull) {
+                        helper.setText(R.id.tv_order_id, "")
+                    } else {
+                        val billDetailNo = jsonElement.asString
+                        helper.setText(R.id.tv_order_id, billDetailNo)
+                    }
+                }
+                3 -> {//"删除"
+                    val lastOrderId = parentEntity.operUrl.split("/").last()
+                    helper.setText(R.id.tv_order_id, lastOrderId)
+                }
+//                10 -> { //"审核"
+//                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonArray
+//                    val orderIds = fromJson.joinToString(", ")
+//                    helper.setText(R.id.tv_order_id, orderIds.replace("\"", ""))
+//                }
+            }
+            helper.setGone(R.id.group_order_id, false)
+        } else if (parentEntity.title == "用户管理") {
+            when(parentEntity.businessType) {
+                1,2 -> { //"新增"、"修改"
+                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonObject
+
+                    val userNameElement = fromJson["userName"]
+                    val nickNameElement = fromJson["nickName"]
+                    val userName = if (userNameElement.isJsonNull) "" else userNameElement.asString
+                    val nickName = if (nickNameElement.isJsonNull) "" else nickNameElement.asString
+                    helper.setText(R.id.tv_user_name, "$nickName($userName)")
+                }
+                3 -> {//"删除"
+                    val lastOrderId = parentEntity.operUrl.split("/").last()
+                    helper.setText(R.id.tv_user_name, lastOrderId)
+                }
+            }
+            helper.setGone(R.id.group_user_name, false)
         } else {
             helper.setGone(R.id.group_order_id, true)
+            helper.setGone(R.id.group_user_name, true)
         }
 
         val tvOrderId = helper.getView<TextView>(R.id.tv_order_id)
