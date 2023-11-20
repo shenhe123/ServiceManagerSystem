@@ -29,7 +29,7 @@ import java.util.Calendar
 class OptionsLogSearchDialogFragment: BaseSearchDialogFragment() {
 
     private var optionTypeArray = arrayOf("选择操作类型","新增", "修改", "删除", "授权", "导出", "强退", "审核", "结案", "其他")
-    private var optionTitleArray = arrayOf("选择模块名称","工单", "派工单明细", "用户管理", "OSS对象存储", "导出", "强退", "审核", "结案", "其他")
+    private var optionTitleArray = arrayOf("选择模块名称","工单", "派工单明细", "用户管理", "OSS对象存储", "出差报告", "角色管理", "个人信息")
     private var optionType: String? = null
     private var optionTitle: String? = null
     private var searchParams: OptionLogFragment.SearchParams? = null

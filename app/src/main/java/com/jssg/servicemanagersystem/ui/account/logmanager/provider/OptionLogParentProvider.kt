@@ -45,80 +45,95 @@ class OptionLogParentProvider : BaseNodeProvider() {
         helper.setText(R.id.tv_option_type, businessType)
         helper.setText(R.id.tv_option_time, parentEntity.operTime)
 
+        helper.setGone(R.id.group_order_id, true)
+        helper.setGone(R.id.group_user_name, true)
+        helper.setGone(R.id.group_user_id, true)
+
         //当此日志是派工单相关时
-        if (parentEntity.title == "工单") {
-            when(parentEntity.businessType) {
-                1 -> { //"新增"
+        when (parentEntity.title) {
+            "工单" -> {
+                when(parentEntity.businessType) {
+                    1 -> { //"新增"
 
-                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonObject
-                    val billNo = fromJson["billNo"].asString
-                    val jsonElement = fromJson["oaBillNo"]
-                    val oaBillNo = if (jsonElement.isJsonNull) {
-                        ""
-                    } else {
-                        jsonElement.asString
+                        val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonObject
+                        val billNo = fromJson["billNo"].asString
+                        val jsonElement = fromJson["oaBillNo"]
+                        val oaBillNo = if (jsonElement.isJsonNull) {
+                            ""
+                        } else {
+                            jsonElement.asString
+                        }
+                        if (oaBillNo.isNotEmpty()) {
+                            helper.setText(R.id.tv_order_id, "$billNo, $oaBillNo")
+                        } else {
+                            helper.setText(R.id.tv_order_id, billNo)
+                        }
                     }
-                    if (oaBillNo.isNotEmpty()) {
-                        helper.setText(R.id.tv_order_id, "$billNo, $oaBillNo")
-                    } else {
-                        helper.setText(R.id.tv_order_id, billNo)
+                    3 -> {//"删除"
+                        val lastOrderId = parentEntity.operUrl.split("/").last()
+                        helper.setText(R.id.tv_order_id, lastOrderId)
                     }
-                }
-                3 -> {//"删除"
-                    val lastOrderId = parentEntity.operUrl.split("/").last()
-                    helper.setText(R.id.tv_order_id, lastOrderId)
-                }
-                11 -> { //"结案"
-                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonArray
-                    val orderIds = fromJson.joinToString(", ")
-                    helper.setText(R.id.tv_order_id, orderIds.replace("\"", ""))
-                }
-            }
-            helper.setGone(R.id.group_order_id, false)
-        } else if (parentEntity.title == "派工单明细") {
-            when(parentEntity.businessType) {
-                1,2,10 -> { //"新增"、"修改"
-                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonObject
-
-                    val jsonElement = fromJson["billDetailNo"]
-                    if (jsonElement.isJsonNull) {
-                        helper.setText(R.id.tv_order_id, "")
-                    } else {
-                        val billDetailNo = jsonElement.asString
-                        helper.setText(R.id.tv_order_id, billDetailNo)
+                    11 -> { //"结案"
+                        val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonArray
+                        val orderIds = fromJson.joinToString(", ")
+                        helper.setText(R.id.tv_order_id, orderIds.replace("\"", ""))
                     }
                 }
-                3 -> {//"删除"
-                    val lastOrderId = parentEntity.operUrl.split("/").last()
-                    helper.setText(R.id.tv_order_id, lastOrderId)
-                }
-//                10 -> { //"审核"
-//                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonArray
-//                    val orderIds = fromJson.joinToString(", ")
-//                    helper.setText(R.id.tv_order_id, orderIds.replace("\"", ""))
-//                }
+                helper.setGone(R.id.group_order_id, false)
             }
-            helper.setGone(R.id.group_order_id, false)
-        } else if (parentEntity.title == "用户管理") {
-            when(parentEntity.businessType) {
-                1,2 -> { //"新增"、"修改"
-                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonObject
+            "派工单明细" -> {
+                when(parentEntity.businessType) {
+                    1,2,10 -> { //"新增"、"修改"
+                        val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonObject
 
-                    val userNameElement = fromJson["userName"]
-                    val nickNameElement = fromJson["nickName"]
-                    val userName = if (userNameElement.isJsonNull) "" else userNameElement.asString
-                    val nickName = if (nickNameElement.isJsonNull) "" else nickNameElement.asString
-                    helper.setText(R.id.tv_user_name, "$nickName($userName)")
+                        val jsonElement = fromJson["billDetailNo"]
+                        if (jsonElement.isJsonNull) {
+                            helper.setText(R.id.tv_order_id, "")
+                        } else {
+                            val billDetailNo = jsonElement.asString
+                            helper.setText(R.id.tv_order_id, billDetailNo)
+                        }
+                    }
+                    3 -> {//"删除"
+                        val lastOrderId = parentEntity.operUrl.split("/").last()
+                        helper.setText(R.id.tv_order_id, lastOrderId)
+                    }
+    //                10 -> { //"审核"
+    //                    val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonArray
+    //                    val orderIds = fromJson.joinToString(", ")
+    //                    helper.setText(R.id.tv_order_id, orderIds.replace("\"", ""))
+    //                }
                 }
-                3 -> {//"删除"
-                    val lastOrderId = parentEntity.operUrl.split("/").last()
-                    helper.setText(R.id.tv_user_name, lastOrderId)
+                helper.setGone(R.id.group_order_id, false)
+            }
+            "用户管理" -> {
+                when(parentEntity.businessType) {
+                    1,2 -> { //"新增"、"修改"
+                        val fromJson = JsonParser.parseString(parentEntity.operParam).asJsonObject
+
+                        val userNameElement = fromJson["userName"]
+                        val nickNameElement = fromJson["nickName"]
+                        val userIdElement = fromJson["userId"]
+                        val userName = if (userNameElement.isJsonNull) "" else userNameElement.asString
+                        val nickName = if (nickNameElement.isJsonNull) "" else nickNameElement.asString
+                        val userId = if (userIdElement.isJsonNull) "" else userIdElement.asString
+                        helper.setText(R.id.tv_user_name, "$nickName($userName)")
+                        helper.setText(R.id.tv_user_id, "$userId")
+                        helper.setGone(R.id.group_user_id, false)
+                        helper.setGone(R.id.group_user_name, false)
+                    }
+                    3 -> {//"删除"
+                        val lastOrderId = parentEntity.operUrl.split("/").last()
+                        helper.setText(R.id.tv_user_id, lastOrderId)
+                        helper.setGone(R.id.group_user_id, false)
+                    }
                 }
             }
-            helper.setGone(R.id.group_user_name, false)
-        } else {
-            helper.setGone(R.id.group_order_id, true)
-            helper.setGone(R.id.group_user_name, true)
+            else -> {
+                helper.setGone(R.id.group_order_id, true)
+                helper.setGone(R.id.group_user_name, true)
+                helper.setGone(R.id.group_user_id, true)
+            }
         }
 
         val tvOrderId = helper.getView<TextView>(R.id.tv_order_id)
@@ -127,6 +142,22 @@ class OptionLogParentProvider : BaseNodeProvider() {
             ToastUtils.showToast("复制成功")
             true
         }
+
+        val tvUserId = helper.getView<TextView>(R.id.tv_user_id)
+        tvUserId.setOnLongClickListener {
+            Utils.copyStringText(tvUserId.text.toString(), context)
+            ToastUtils.showToast("复制成功")
+            true
+        }
+
+        val tvUserName = helper.getView<TextView>(R.id.tv_user_name)
+        tvUserName.setOnLongClickListener {
+            Utils.copyStringText(tvUserName.text.toString(), context)
+            ToastUtils.showToast("复制成功")
+            true
+        }
+
+
 
 //        setArrowSpin(helper, baseNode, false)
     }

@@ -200,11 +200,39 @@
             />
 
         <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tv_user_id, tv_user_id_title"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/group_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="tv_user_name, tv_user_name_title"
             android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_user_id_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="用户id"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id"/>
+
+        <TextView
+            android:id="@+id/tv_user_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/SecTitleStyle"
+            tools:text="text"
+            android:background="?selectableItemBackground"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_id_title"
+            app:layout_constraintStart_toStartOf="@id/tv_user_id_title"
+            />
 
         <TextView
             android:id="@+id/tv_user_name_title"
@@ -213,8 +241,8 @@
             android:textSize="13sp"
             android:text="用户名称"
             android:layout_marginTop="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_order_id"/>
+            app:layout_constraintEnd_toEndOf="@id/tv_option_name_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_option_name"/>
 
         <TextView
             android:id="@+id/tv_user_name"
@@ -222,9 +250,10 @@
             android:layout_height="wrap_content"
             style="@style/SecTitleStyle"
             tools:text="text"
+            android:gravity="end"
             android:background="?selectableItemBackground"
             app:layout_constraintTop_toBottomOf="@id/tv_user_name_title"
-            app:layout_constraintStart_toStartOf="@id/tv_user_name_title"
+            app:layout_constraintEnd_toEndOf="@id/tv_user_name_title"
             />
 
 
