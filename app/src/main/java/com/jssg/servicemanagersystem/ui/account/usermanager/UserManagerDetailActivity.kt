@@ -32,6 +32,9 @@ import kotlinx.android.parcel.Parcelize
 import java.util.Calendar
 
 class UserManagerDetailActivity : BaseActivity() {
+    private var factoryIsVisible: Boolean = true
+    private var deptIsVisible: Boolean = true
+    private var userTypeIsVisible: Boolean = true
     private var userType: String? = null
     private var userTypeArray: Array<String> = arrayOf()
     private var inputData: InputData? = null
@@ -65,18 +68,28 @@ class UserManagerDetailActivity : BaseActivity() {
             userTypeArray = resources.getStringArray(R.array.sys_user)
 
             binding.layoutFactoryRoot.isVisible = true
-            binding.layoutDept.isVisible = true
-        } else if (AccountManager.instance.isMainFactorCqe || AccountManager.instance.isFactoryCqManagerCqe) {
+            binding.layoutDeptRoot.isVisible = true
+        } else if (AccountManager.instance.isMainFactorCqe) {
             binding.layoutUserType.isVisible = true
             userTypeArray = resources.getStringArray(R.array.main_factor_cqe)
 
             binding.layoutFactoryRoot.isVisible = true
-            binding.layoutDept.isVisible = true
-        } else {
-            binding.layoutUserType.isVisible = false
+            binding.layoutDeptRoot.isVisible = true
+        }  else if (AccountManager.instance.isFactoryCqManagerCqe) {
+            binding.layoutUserType.isVisible = true
+            userTypeArray = resources.getStringArray(R.array.main_factor_cqe)
 
             binding.layoutFactoryRoot.isVisible = false
-            binding.layoutDept.isVisible = false
+            factoryIsVisible = false
+            binding.layoutDeptRoot.isVisible = false
+            deptIsVisible = false
+        } else {
+            binding.layoutUserType.isVisible = false
+            userTypeIsVisible = false
+            binding.layoutFactoryRoot.isVisible = false
+            factoryIsVisible = false
+            binding.layoutDeptRoot.isVisible = false
+            deptIsVisible = false
         }
 
         if (userTypeArray.isNotEmpty()) {
@@ -510,15 +523,21 @@ class UserManagerDetailActivity : BaseActivity() {
         binding.etCardId.isEnabled = editable
         binding.etAddress.isEnabled = editable
         binding.etPassword.isEnabled = editable
-        binding.tvDept.isVisible = !editable
-        binding.layoutDept.isVisible = editable
 
-        binding.layoutFactory.isEnabled = editable
+        if (deptIsVisible) {
+            binding.tvDept.isVisible = !editable
+            binding.layoutDept.isVisible = editable
+            binding.ivDeptClose.isVisible = !deptId.isNullOrEmpty() && editable
+        }
 
-        binding.tvUserType.isVisible = !editable
+        if (factoryIsVisible) {
+            binding.layoutFactory.isEnabled = editable
+            binding.ivFactoryClose.isVisible = !orgId.isNullOrEmpty() && editable
+        }
 
-        binding.ivFactoryClose.isVisible = !orgId.isNullOrEmpty() && editable
-        binding.ivDeptClose.isVisible = !deptId.isNullOrEmpty() && editable
+        if (userTypeIsVisible) {
+            binding.tvUserType.isVisible = !editable
+        }
 
         updateLayoutBackground(binding.layoutNickname)
         updateLayoutBackground(binding.layoutPhoneNum)

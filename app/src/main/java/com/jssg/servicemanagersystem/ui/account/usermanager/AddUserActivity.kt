@@ -58,13 +58,20 @@ class AddUserActivity : BaseActivity() {
             binding.layoutRolesRoot.isVisible = true
             binding.layoutFactoryRoot.isVisible = true
             binding.layoutDept.isVisible = true
-        } else if (AccountManager.instance.isMainFactorCqe || AccountManager.instance.isFactoryCqManagerCqe) {
+        } else if (AccountManager.instance.isMainFactorCqe) {
             binding.layoutUserType.isVisible = true
             userTypeArray = resources.getStringArray(R.array.main_factor_cqe)
 
             binding.layoutRolesRoot.isVisible = true
             binding.layoutFactoryRoot.isVisible = true
             binding.layoutDept.isVisible = true
+        } else if (AccountManager.instance.isFactoryCqManagerCqe) { //工厂质量角色，角色、工厂、部门信息隐藏
+            binding.layoutUserType.isVisible = true
+            userTypeArray = resources.getStringArray(R.array.main_factor_cqe)
+
+            binding.layoutRolesRoot.isVisible = false
+            binding.layoutFactoryRoot.isVisible = false
+            binding.layoutDept.isVisible = false
         } else {
             binding.layoutUserType.isVisible = false
 
