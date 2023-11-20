@@ -34,7 +34,12 @@ class WorkOrderCheckAdapter :
         holder: VBViewHolder<ItemWorkOrderCheckLayoutBinding>,
         item: WorkOrderCheckInfo
     ) {
-        holder.binding.tvOrderId.text = item.billNo
+        holder.binding.tvOrderId.text = item.billDetailNo
+        holder.binding.tvOrderId.setOnLongClickListener {
+            Utils.copyStringText(item.billDetailNo, context)
+            ToastUtils.showToast("复制成功")
+            true
+        }
         holder.binding.tvBatchNo.text = item.batchNo ?: ""
         holder.binding.tvBatchNo.setOnLongClickListener {
             Utils.copyStringText(item.batchNo ?: "", context)
