@@ -26,29 +26,19 @@
                 android:text="模块名称"
                 android:layout_centerVertical="true"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_title"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/as_title"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="4dp"
                 android:layout_marginStart="12dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="36dp"
-                android:gravity="center_vertical"
-                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:textColor="@color/x_text_01"
                 android:layout_toEndOf="@id/tv_title"
-                android:background="@drawable/selector_input_stroke"/>
-
-            <ImageView
-                android:id="@+id/iv_title_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/svg_close"
-                android:padding="6dp"
-                android:layout_alignEnd="@id/et_title"
-                android:layout_centerVertical="true"
-                app:tint="@color/ps_color_light_grey"
-                android:visibility="gone"/>
+                android:background="@drawable/selector_input_stroke"
+                android:textSize="14sp"
+                android:visibility="visible"/>
 
         </RelativeLayout>
 
@@ -149,74 +139,6 @@
                 android:layout_height="wrap_content"
                 android:text="操作类型"
                 android:layout_marginStart="12dp"/>
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_option_type"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rb_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:tag="1"
-                    android:text="新增"/>
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rb_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:tag="2"
-                    android:text="修改"/>
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rb_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:tag="3"
-                    android:text="删除"/>
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rb_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:tag="4"
-                    android:text="授权"/>
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rb_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:tag="5"
-                    android:text="导出"/>
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rb_7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:tag="7"
-                    android:text="强退"
-                    android:visibility="gone"/>
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rb_10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:tag="10"
-                    android:text="审核"/>
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rb_0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:tag="0"
-                    android:text="其他"/>
-
-            </com.google.android.material.chip.ChipGroup>
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/as_option_type"

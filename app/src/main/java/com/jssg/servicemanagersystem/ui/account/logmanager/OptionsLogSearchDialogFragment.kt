@@ -26,10 +26,12 @@ import java.util.Calendar
  * ServiceManagerSystem
  * Created by he.shen on 2023/11/17.
  */
-class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickListener {
+class OptionsLogSearchDialogFragment: BaseSearchDialogFragment() {
 
     private var optionTypeArray = arrayOf("选择操作类型","新增", "修改", "删除", "授权", "导出", "强退", "审核", "结案", "其他")
+    private var optionTitleArray = arrayOf("选择模块名称","工单", "派工单明细", "删除", "授权", "导出", "强退", "审核", "结案", "其他")
     private var optionType: String? = null
+    private var optionTitle: String? = null
     private var searchParams: OptionLogFragment.SearchParams? = null
     private lateinit var listener: OnSearchBtnClick
     private lateinit var binding: ItemPopupSearchOptionLogInfoBinding
@@ -53,19 +55,7 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickLi
 
     private fun addListener() {
         binding.layoutRoot.setOnClickListener { v: View? -> dismiss() }
-        binding.etTitle.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                val content = s.toString()
-
-                binding.ivTitleClose.isVisible = content.isNotEmpty()
-            }
-        })
         binding.etOptionName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -102,10 +92,6 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickLi
             showSelectDateDialog(binding.tvEndDate, 1, binding)
         }
 
-        binding.ivTitleClose.setOnClickListener {
-            binding.etTitle.setText("")
-        }
-
         binding.ivOptionNameClose.setOnClickListener {
             binding.etOptionName.setText("")
         }
@@ -123,15 +109,6 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickLi
             binding.tvEndDate.text = ""
             binding.ivEndDateClose.isVisible = false
         }
-
-        binding.rb1.setOnClickListener(this)
-        binding.rb2.setOnClickListener(this)
-        binding.rb3.setOnClickListener(this)
-        binding.rb4.setOnClickListener(this)
-        binding.rb5.setOnClickListener(this)
-        binding.rb7.setOnClickListener(this)
-        binding.rb10.setOnClickListener(this)
-        binding.rb0.setOnClickListener(this)
 
         binding.asOptionType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -160,8 +137,27 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickLi
             }
         }
 
+        binding.asTitle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                optionTitle = if (position == 0) {
+                    null
+                } else {
+                    optionTitleArray[position]
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
         binding.mbtReset.setOnClickListener {
-            binding.etTitle.setText("")
+            binding.asTitle.setSelection(0)
             binding.etOptionName.setText("")
             binding.etOrderId.setText("")
             binding.asOptionType.setSelection(0)
@@ -195,7 +191,7 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickLi
 
                 listener.onClick(
                     OptionLogFragment.SearchParams(
-                        binding.etTitle.text.toString(),
+                        optionTitle,
                         optionType,
                         binding.etOptionName.text.toString(),
                         binding.etOrderId.text.toString(),
@@ -219,8 +215,21 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickLi
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_left_item)
         binding.asOptionType.adapter = adapter
 
+        val adapter2: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireContext(), R.layout.simple_spinner_left_item, optionTitleArray
+        )
+        adapter2.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_left_item)
+        binding.asTitle.adapter = adapter2
+
         searchParams?.let {
-            binding.etTitle.setText(it.title)
+
+            if (optionTitleArray.contains(it.title)) {
+                val pos = optionTitleArray.indexOf(it.title)
+                binding.asTitle.setSelection(pos)
+            } else {
+                binding.asTitle.setSelection(0)
+            }
+
             binding.etOptionName.setText(it.operName)
 
             if (it.status.isNullOrEmpty()) {
@@ -322,22 +331,6 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment(), View.OnClickLi
         fun onClick(searchParams: OptionLogFragment.SearchParams)
     }
 
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.rb_1, R.id.rb_0, R.id.rb_2, R.id.rb_3, R.id.rb_4, R.id.rb_5, R.id.rb_7, R.id.rb_10 -> {
-                resetRadioChecked()
-                val checkedRadio = v as AppCompatRadioButton
-                checkedRadio.isChecked = true
-                optionType = checkedRadio.tag.toString()
-            }
-        }
-    }
-
-    private fun resetRadioChecked() {
-        binding.chipGroupOptionType.children.forEach { radio ->
-            (radio as AppCompatRadioButton).isChecked = false
-        }
-    }
     companion object {
         fun newInstance(searchParams: OptionLogFragment.SearchParams?): OptionsLogSearchDialogFragment {
             val args = Bundle()
