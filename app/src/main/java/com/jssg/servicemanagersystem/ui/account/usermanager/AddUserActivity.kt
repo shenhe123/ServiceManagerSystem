@@ -58,7 +58,7 @@ class AddUserActivity : BaseActivity() {
             binding.layoutRolesRoot.isVisible = true
             binding.layoutFactoryRoot.isVisible = true
             binding.layoutDept.isVisible = true
-        } else if (AccountManager.instance.isMainFactorCqe) {
+        } else if (AccountManager.instance.isMainFactorCqe || AccountManager.instance.isFactoryCqManagerCqe) {
             binding.layoutUserType.isVisible = true
             userTypeArray = resources.getStringArray(R.array.main_factor_cqe)
 

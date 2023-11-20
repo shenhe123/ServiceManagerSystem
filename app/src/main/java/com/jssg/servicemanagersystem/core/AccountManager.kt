@@ -130,6 +130,10 @@ class AccountManager {
     //是否是main_factor_cqe用户
     val isMainFactorCqe: Boolean
         get() = getUser()?.roles?.contains("main_factor_cqe") == true
+
+    //是否用户工厂质量角色
+    val isFactoryCqManagerCqe: Boolean
+        get() = getUser()?.roles?.contains("factory_cq_manager") == true
     companion object {
         val instance by lazy(LazyThreadSafetyMode.NONE) {
             AccountManager()

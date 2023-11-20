@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import com.jssg.servicemanagersystem.R
 import com.jssg.servicemanagersystem.base.BaseBindingAdapter
 import com.jssg.servicemanagersystem.base.VBViewHolder
+import com.jssg.servicemanagersystem.core.AccountManager
 import com.jssg.servicemanagersystem.databinding.ItemUserManagerLayoutBinding
 import com.jssg.servicemanagersystem.ui.account.entity.User
 import java.math.BigDecimal
@@ -41,7 +42,8 @@ class UserManagerAdapter: BaseBindingAdapter<User, ItemUserManagerLayoutBinding>
         //userId小于100的用户，不允许编辑和修改
         holder.binding.layoutOptionBtn.isVisible = item.userId >= 100
 
-        holder.binding.mbtPermission.isVisible = item.userType?.equals("end_user") == false
+        // 非三方用户 且 当前登录用户非工厂质量角色
+        holder.binding.mbtPermission.isVisible = item.userType?.equals("end_user") == false && !AccountManager.instance.isFactoryCqManagerCqe
     }
 
 }
