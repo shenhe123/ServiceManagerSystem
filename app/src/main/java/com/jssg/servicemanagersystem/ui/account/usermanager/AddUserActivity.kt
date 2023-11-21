@@ -72,6 +72,9 @@ class AddUserActivity : BaseActivity() {
             binding.layoutRolesRoot.isVisible = false
             binding.layoutFactoryRoot.isVisible = false
             binding.layoutDept.isVisible = false
+
+            //工厂默认为当前用户工厂
+            orgId = AccountManager.instance.getUser()?.user?.orgId
         } else {
             binding.layoutUserType.isVisible = false
 

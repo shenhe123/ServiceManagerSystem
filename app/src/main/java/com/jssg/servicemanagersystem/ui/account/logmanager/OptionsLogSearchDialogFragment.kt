@@ -70,7 +70,7 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment() {
             }
         })
 
-        binding.etOrderId.addTextChangedListener(object : TextWatcher {
+        binding.etOperParams.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -80,7 +80,7 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment() {
             override fun afterTextChanged(s: Editable) {
                 val content = s.toString()
 
-                binding.ivOrderIdClose.isVisible = content.isNotEmpty()
+                binding.ivOperParamsClose.isVisible = content.isNotEmpty()
             }
         })
 
@@ -96,8 +96,8 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment() {
             binding.etOptionName.setText("")
         }
 
-        binding.ivOrderIdClose.setOnClickListener {
-            binding.etOrderId.setText("")
+        binding.ivOperParamsClose.setOnClickListener {
+            binding.etOperParams.setText("")
         }
 
         binding.ivStartDateClose.setOnClickListener {
@@ -159,7 +159,7 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment() {
         binding.mbtReset.setOnClickListener {
             binding.asTitle.setSelection(0)
             binding.etOptionName.setText("")
-            binding.etOrderId.setText("")
+            binding.etOperParams.setText("")
             binding.asOptionType.setSelection(0)
             binding.rgOptionStatus.clearCheck()
             binding.tvStartDate.text = "请选择日期"
@@ -194,7 +194,7 @@ class OptionsLogSearchDialogFragment: BaseSearchDialogFragment() {
                         optionTitle,
                         optionType,
                         binding.etOptionName.text.toString(),
-                        binding.etOrderId.text.toString(),
+                        binding.etOperParams.text.toString(),
                         optionStatus,
                         startDate,
                         endDate,
