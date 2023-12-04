@@ -16,6 +16,8 @@ import com.jssg.servicemanagersystem.ui.workorder.entity.WorkOrderInfo
 import com.jssg.servicemanagersystem.ui.workorder.viewmodel.WorkOrderViewModel
 import com.jssg.servicemanagersystem.utils.BigDecimalUtils.bigDecimal
 import com.jssg.servicemanagersystem.utils.RolePermissionUtils
+import com.jssg.servicemanagersystem.utils.Utils
+import com.jssg.servicemanagersystem.utils.toast.ToastUtils
 
 class WorkOrderDetailFragment : BaseFragment() {
     private lateinit var workOrderViewModel: WorkOrderViewModel
@@ -105,6 +107,15 @@ class WorkOrderDetailFragment : BaseFragment() {
                 addNewLauncer.launch(it)
             }
         }
+
+        binding.tvOaBillNo.setOnLongClickListener {
+            inputData?.let {
+                val oaBillNo = if (it.oaBillNo.isNullOrEmpty()) it.billNo else it.oaBillNo
+                Utils.copyStringText(oaBillNo, context)
+                ToastUtils.showToast("复制成功")
+            }
+            true
+        }
     }
 
     private fun initView() {
@@ -114,6 +125,8 @@ class WorkOrderDetailFragment : BaseFragment() {
             binding.tvApplyFactory.text = "申请工厂：${it.orgService}"
             binding.tvApplyDate.text = "申请日期：${it.applyDate ?: ""}"
 
+            val oaBillNo = if (it.oaBillNo.isNullOrEmpty()) it.billNo else it.oaBillNo
+            binding.tvOaBillNo.text = "工单编号：${oaBillNo}"
             binding.tvProjectCode.text = "产品项目号：${it.projectCode ?: ""}"
             binding.tvProductDesc.text = "产品名称：${it.productDes}"
             binding.tvProductCode.text = "产品编码：${it.productCode}"
