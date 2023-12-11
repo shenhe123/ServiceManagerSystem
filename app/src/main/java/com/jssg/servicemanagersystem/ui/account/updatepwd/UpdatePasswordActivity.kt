@@ -55,6 +55,12 @@ class UpdatePasswordActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            if (newPwd.length < 6 || confirmPwd.length < 6) {
+                ToastUtils.showToast("密码长度不能小于6位")
+
+                return@setOnClickListener
+            }
+
             if (!newPwd.equals(confirmPwd, false)) {
                 ToastUtils.showToast("两次密码输入不一致")
                 return@setOnClickListener
