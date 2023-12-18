@@ -64,14 +64,13 @@
             <TextView
                 android:id="@+id/tv_apply_dept"
                 style="@style/SubTitleStyle"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
-                android:layout_weight="1"
+                android:layout_marginTop="12dp"
                 android:elevation="2dp"
                 android:gravity="end"
-                app:layout_constraintEnd_toEndOf="@id/mcd_apply_info_bg"
-                app:layout_constraintTop_toTopOf="@id/tv_apply_name"
+                app:layout_constraintStart_toStartOf="@id/tv_apply_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_apply_name"
                 tools:text="申请部门：销售部" />
 
             <TextView
@@ -82,7 +81,7 @@
                 android:layout_marginTop="12dp"
                 android:elevation="2dp"
                 app:layout_constraintStart_toStartOf="@id/v_title_line"
-                app:layout_constraintTop_toBottomOf="@id/tv_apply_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_apply_dept"
                 tools:text="申请工厂：工厂A" />
 
             <TextView
