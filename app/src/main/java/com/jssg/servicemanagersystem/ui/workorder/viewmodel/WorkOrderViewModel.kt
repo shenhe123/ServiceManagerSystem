@@ -45,6 +45,7 @@ class WorkOrderViewModel : AutoDisposViewModel() {
             RetrofitService.apiService
                 .searchWorkOrderList(
                     searchParams.applyName,
+                    searchParams.checkerName,
                     searchParams.tel,
                     searchParams.productCode,
                     searchParams.productDesc,

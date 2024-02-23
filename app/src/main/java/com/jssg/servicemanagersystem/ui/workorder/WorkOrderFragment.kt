@@ -335,6 +335,7 @@ class WorkOrderFragment : BaseFragment() {
     @Parcelize
     data class SearchParams(
         val applyName: String? = null,
+        val checkerName: String? = null,
         val tel: String? = null,
         val productDesc: String? = null,
         val productCode: String? = null,

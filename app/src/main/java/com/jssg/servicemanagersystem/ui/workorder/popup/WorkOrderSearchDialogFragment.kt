@@ -64,6 +64,20 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
                 binding.ivApplyNameClose.isVisible = content.isNotEmpty()
             }
         })
+
+        binding.etCheckerName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val content = s.toString()
+
+                binding.ivCheckerNameClose.isVisible = content.isNotEmpty()
+            }
+        })
         binding.etTel.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -145,6 +159,10 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
             binding.etApplyName.setText("")
         }
 
+        binding.ivCheckerNameClose.setOnClickListener {
+            binding.etCheckerName.setText("")
+        }
+
         binding.ivTelClose.setOnClickListener {
             binding.etTel.setText("")
         }
@@ -177,6 +195,7 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
 
         binding.mbtReset.setOnClickListener {
             binding.etApplyName.setText("")
+            binding.etCheckerName.setText("")
             binding.etTel.setText("")
             binding.etProductDesc.setText("")
             binding.etProductCode.setText("")
@@ -214,6 +233,7 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
                 it.onClick(
                     WorkOrderFragment.SearchParams(
                         applyName = binding.etApplyName.text.toString(),
+                        checkerName = binding.etCheckerName.text.toString(),
                         tel = binding.etTel.text.toString(),
                         productDesc = binding.etProductDesc.text.toString(),
                         productCode = binding.etProductCode.text.toString(),
@@ -232,6 +252,7 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
 
     private fun initView() {
         binding.layoutApplyName.isVisible = !AccountManager.instance.isEndUser
+        binding.layoutCheckerName.isVisible = !AccountManager.instance.isEndUser
         binding.layoutProductDesc.isVisible = !AccountManager.instance.isEndUser
         binding.layoutProductCode.isVisible = !AccountManager.instance.isEndUser
         binding.layoutApplyDate.isVisible = !AccountManager.instance.isEndUser
@@ -243,6 +264,7 @@ class WorkOrderSearchDialogFragment: BaseSearchDialogFragment() {
 
         searchParams?.let {
             binding.etApplyName.setText(it.applyName)
+            binding.etCheckerName.setText(it.checkerName)
             binding.etTel.setText(it.tel)
             binding.etProductDesc.setText(it.productDesc)
             binding.etProductCode.setText(it.productCode)

@@ -160,6 +160,7 @@ interface ApiService {
     @GET("qm/workOrder/list")
     fun searchWorkOrderList(
         @Query("applyName") applyName: String?,
+        @Query("checkerName") checkerName: String?,
         @Query("tel") tel: String?,
         @Query("productCode") productCode: String?,
         @Query("productDes") productDes: String?,
