@@ -121,7 +121,9 @@ class WorkOrderCheckListFragment : BaseFragment() {
                     override fun onClick(searchParams: SearchParams) {
                         showProgressbarLoading()
                         this@WorkOrderCheckListFragment.searchParams = searchParams
-                        workOrderViewModel.searchWorkOrderDetail(searchParams)
+                        inputData?.let {
+                            workOrderViewModel.searchWorkOrderDetail(searchParams, it.billNo)
+                        }
                     }
 
                 })

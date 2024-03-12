@@ -239,10 +239,11 @@ class WorkOrderViewModel : AutoDisposViewModel() {
 
     }
 
-    fun searchWorkOrderDetail(searchParams: WorkOrderCheckListFragment.SearchParams) {
+    fun searchWorkOrderDetail(searchParams: WorkOrderCheckListFragment.SearchParams, billNo: String) {
         workOrderCheckListLiveData.value = LoadListDataModel(true)
         RetrofitService.apiService
             .searchWorkOrderCheckList(
+                billNo,
                 searchParams.batchNo,
                 searchParams.state,
                 searchParams.startDate,
